@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/11 11:16:17 by jrichir          ###   ########.fr       */
+/*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
+/*   Updated: 2024/09/11 11:18:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef MINISHELL_H
+ #define MINISHELL_H
 
-int	main(int argc, char **argv)
-{
-	/* TEMP */
-	(void)argc;
-	(void)argv;
-	printf("Hello world!\n");
-	/* END TEMP */
-	return (0);
-}
+ #include <stdio.h> 
+
+#endif
