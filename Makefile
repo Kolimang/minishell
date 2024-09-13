@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
+#    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/13 17:26:44 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/13 17:56:01 by lboumahd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,14 @@ CC        := gcc
 
 # readline library (installed with brew)
 RL_LIB    := /Users/jrichir/mybin/opt/readline/lib
-RL_H      := /Users/jrichir/mybin/opt/readline/include
+	RL_H      := /Users/jrichir/mybin/opt/readline/include
+ifeq "$USER" "jrichir"
+	RL_LIB    := /Users/jrichir/mybin/opt/readline/lib
+	RL_H      := /Users/jrichir/mybin/opt/readline/include
+else 
+	RL_LIB    := /Users/lboumahd/.brew/opt/readline/lib
+	RL_H      := /Users/lboumahd/.brew/opt/readline/include
+endif
 
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
