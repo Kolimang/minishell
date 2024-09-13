@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/13 17:13:42 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/13 17:26:44 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,20 +17,21 @@ INC_DIR   := $(ROOT_DIR)/include
 SRC_DIR   := src/
 OBJ_DIR   := build/
 
-NAME     := minishell
-CC       := gcc
+NAME      := minishell
+CC        := gcc
 
-RL_LIB   := /Users/jrichir/mybin/opt/readline/lib
-RL_H     := /Users/jrichir/mybin/opt/readline/include
+# readline library (installed with brew)
+RL_LIB    := /Users/jrichir/mybin/opt/readline/lib
+RL_H      := /Users/jrichir/mybin/opt/readline/include
 
-CFLAGS   := -I$(INC_DIR)   -Wall -Wextra -Werror
+CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
-RM       := rm -f
+RM        := rm -f
 
-FILES    := minishell
+FILES     := minishell
 
-SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 # --------------------------------- RULES --------------------------------------
 
