@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/13 16:31:20 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/13 17:13:42 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,14 @@ OBJ_DIR   := build/
 NAME     := minishell
 CC       := gcc
 
-CFLAGS   := -lreadline -I$(INC_DIR)  -Wall -Wextra -Werror
+RL_LIB   := /Users/jrichir/mybin/opt/readline/lib
+RL_H     := /Users/jrichir/mybin/opt/readline/include
+
+CFLAGS   := -I$(INC_DIR)   -Wall -Wextra -Werror
 
 RM       := rm -f
 
-FILES    := main
+FILES    := minishell
 
 SRCS     := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJS     := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
@@ -37,7 +40,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@echo "Build $(NAME) program."
-	@$(CC) $(OBJS) $(CFLAGS) -o $@
+	@$(CC) $(OBJS) $(CFLAGS) -I$(RL_H) -L$(RL_LIB) -lreadline -o $@
 
 $(OBJ_DIR):
 	@if [ ! -d $(OBJ_DIR) ]; then \
