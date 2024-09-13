@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/11 11:08:42 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/13 16:12:28 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR   := build/
 NAME     := minishell
 CC       := cc
 
-CFLAGS   := -I$(INC_DIR) -Wall -Wextra -Werror
+CFLAGS   := -I$(INC_DIR) -lreadline -Wall -Wextra -Werror
 
 RM       := rm -f
 
