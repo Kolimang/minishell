@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
+#    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 11:10:57 by lboumahd         ###   ########.fr        #
+#    Updated: 2024/09/16 11:18:31 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME      := minishell
 CC        := gcc
 
 #readline library (installed with brew)
-#jefaisdesconflits
+#jefaisdesjolisconflits
 ifeq ($(USER), jrichir)
 	RL_H    := /Users/jrichir/mybin/opt/readline/include
 	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
@@ -30,7 +30,7 @@ else
 	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
-#TEST COMMENT
+#TEEEEST COMMENT
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
 RM        := rm -f
