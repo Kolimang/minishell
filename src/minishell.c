@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/16 12:05:30 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/09/16 12:08:08 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	prompt = NULL;
-	printf("Hello world!\n");
-	prompt = readline("minishell>");
-	printf("User input was: %s\n", prompt);
 /*
 	if(mini_loop () == -1)
 		return failure/exit;
