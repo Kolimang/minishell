@@ -6,7 +6,7 @@
 #    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 11:10:57 by lboumahd         ###   ########.fr        #
+#    Updated: 2024/09/16 11:19:32 by lboumahd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ else
 endif
 
 #TEST COMMENT
+#tessssssssssss
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
 RM        := rm -f
