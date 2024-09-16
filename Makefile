@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 11:23:41 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/16 11:27:06 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,7 @@ OBJ_DIR   := build/
 NAME      := minishell
 CC        := gcc
 
-#readline library (installed with brew)
-#jefaisdesjolisconflits
+#Paths to readline library (installed with brew)
 ifeq ($(USER), jrichir)
 	RL_H    := /Users/jrichir/mybin/opt/readline/include
 	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
@@ -30,8 +29,6 @@ else
 	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
-#TEEEEST COMMENT
-#tessssssssssss
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
 RM        := rm -f
