@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/16 11:36:36 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/09/16 11:40:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@ int	main(int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	prompt = NULL;
 	printf("=== MiNiSHELL v0.1 ===\n\n");
-	while ((prompt = readline("minishell>")))
-		printf("User input was: %s\n", prompt);
+	prompt = NULL;
+	prompt = readline("minishell>");
+	while (prompt)
+	{
+		printf("Last input: %s\n", prompt);
+		prompt = readline("minishell>");
+	}
 	return (0);
 }
