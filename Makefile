@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 16:24:47 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/16 11:27:06 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,6 @@ endif
 
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
-LIBREADLN := -I$(RL_H) -L$(RL_LIB) -lreadline
-
-LIBFT_H := lib/libft
-LIBFT_LIB := lib/libft
- 
-LIBFT     := -I$(LIBFT_H) -L$(LIBFT_LIB) -lft
-
 RM        := rm -f
 
 FILES     := minishell
@@ -51,15 +44,9 @@ OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
-#$(NAME): $(OBJ_DIR) $(LIBFT_M) $(OBJS)
 $(NAME): $(OBJ_DIR) $(OBJS)
-	@(cd include/libftx ; make all)
-#	@$(CC) $(CFLAGS) ./include/libftx/libft.a $(OBJS) -o $@
 	@echo "Build $(NAME) program."
-	@$(CC) $(OBJS) $(CFLAGS) $(LIBREADLN) $(LIBFT) -o $@
-
-# LIBFT_M:
-# 	make -C lib/libft/
+	@$(CC) $(OBJS) $(CFLAGS) -I$(RL_H) -L$(RL_LIB) -lreadline -o $@
 
 $(OBJ_DIR):
 	@if [ ! -d $(OBJ_DIR) ]; then \
@@ -70,13 +57,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@(cd lib/libft ; make clean)
 	@$(RM) $(OBJS)
 	@rm -rf $(OBJ_DIR)
 	@echo "Delete $(NAME) object files and dependencies."
 
 fclean: clean
-	@(cd lib/libft ; make fclean)
 	@$(RM) $(NAME)
 	@echo "Delete $(NAME) program."
 
