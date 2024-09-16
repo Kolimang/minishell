@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
+#    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/13 17:56:01 by lboumahd         ###   ########.fr        #
+#    Updated: 2024/09/16 10:30:20 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,13 @@ OBJ_DIR   := build/
 NAME      := minishell
 CC        := gcc
 
-# readline library (installed with brew)
-RL_LIB    := /Users/jrichir/mybin/opt/readline/lib
-	RL_H      := /Users/jrichir/mybin/opt/readline/include
-ifeq "$USER" "jrichir"
-	RL_LIB    := /Users/jrichir/mybin/opt/readline/lib
-	RL_H      := /Users/jrichir/mybin/opt/readline/include
-else 
-	RL_LIB    := /Users/lboumahd/.brew/opt/readline/lib
-	RL_H      := /Users/lboumahd/.brew/opt/readline/include
+#readline library (installed with brew)
+ifeq ($(USER), jrichir)
+	RL_H    := /Users/jrichir/mybin/opt/readline/include
+	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
+else
+	RL_LIB  := /Users/lboumahd/.brew/opt/readline/lib
+	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
