@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 10:30:20 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/16 10:36:04 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ else
 	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
+#TEST COMMENT
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
 RM        := rm -f
