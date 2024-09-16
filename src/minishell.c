@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/16 14:46:22 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:51:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,12 @@ int	main(int argc, char **argv)
 	(void)argv;
 	printf("\033[0;38;5;214m=== MiNishell v0.1 ===\033[0m\n\n");
 	prompt = "\033[0;32mminishell>\033[0m";
-	cmd = readline(prompt);
-	ft_add_cmd_to_history(cmd);
 	while (1)
 	{
-		printf("Last input: %s\n", cmd);
-		free(cmd);
 		cmd = readline(prompt);
+		printf("Last input: %s\n", cmd);
 		ft_add_cmd_to_history(cmd);
+		free(cmd);
 	}
 	free(cmd);
 	return (0);
