@@ -6,7 +6,7 @@
 #    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/16 10:42:22 by lboumahd         ###   ########.fr        #
+#    Updated: 2024/09/16 11:09:09 by lboumahd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME      := minishell
 CC        := gcc
 
 #readline library (installed with brew)
-#test
+#jefaisdesconflits
 ifeq ($(USER), jrichir)
 	RL_H    := /Users/jrichir/mybin/opt/readline/include
 	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
