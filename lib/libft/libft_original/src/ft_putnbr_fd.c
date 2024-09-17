@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 10:42:50 by jrichir          ###   ########.fr       */
+/*   Created: 2023/11/03 15:10:46 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/25 10:30:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../lib/libft/libft.h"
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	c;
 
-#endif
+	c = '0';
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		if (n != -2147483648)
+			n *= -1;
+		else
+		{
+			ft_putstr_fd("2147483648", fd);
+			return ;
+		}
+	}
+	if (n > 9)
+	{
+		c = (char)((n % 10) + 48);
+		n /= 10;
+		ft_putnbr_fd(n, fd);
+	}
+	else
+		c = (char)n + 48;
+	ft_putchar_fd(c, fd);
+}
