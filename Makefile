@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/17 10:36:37 by jrichir          ###   ########.fr        #
+#    Updated: 2024/09/17 11:03:00 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ endif
 
 CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
-LIBFT     := libft
+LIBFT     := lib/libft/libft.a
 
 LIBREADLFLAGS := -I$(RL_H) -L$(RL_LIB) -lreadline
 # LIBFTFLAGS    := -L$(./lib/libft)
@@ -51,7 +51,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
 	@echo "Build $(NAME) program."
-	@$(CC) $(OBJS) $(CFLAGS) $(LIBREADLFLAGS) $(LIBFTFLAGS) -o $@
+	@$(CC) $(OBJS) $(CFLAGS) $(LIBREADLFLAGS) $(LIBFT) -o $@
 
 $(LIBFT):
 	make -C lib/libft/
