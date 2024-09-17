@@ -1,5 +1,6 @@
 # Folders
 .vscode
+build
 
 # Hidden files
 .DS_Store
