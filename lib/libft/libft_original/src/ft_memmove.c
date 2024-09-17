@@ -1,23 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 10:42:50 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 16:34:42 by jrichir           #+#    #+#             */
+/*   Updated: 2024/03/25 10:30:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../lib/libft/libft.h"
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	char	*cdst;
+	char	*csrc;
 
-#endif
+	if (!dst && !src)
+		return (NULL);
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	if (dst <= src)
+	{
+		while (len--)
+		{
+			*cdst++ = *csrc++;
+		}
+	}
+	else if (dst > src)
+	{
+		cdst += len - 1;
+		csrc += len - 1;
+		while (len--)
+		{
+			*cdst-- = *csrc--;
+		}
+	}
+	return (dst);
+}

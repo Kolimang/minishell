@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 10:42:50 by jrichir          ###   ########.fr       */
+/*   Created: 2023/10/16 15:21:33 by jrichir           #+#    #+#             */
+/*   Updated: 2023/10/25 17:04:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../lib/libft/libft.h"
+// keep pointer protection in this one ?
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	unsigned int		i;
+	char				*cdst;
+	char				*csrc;
 
-#endif
+	if (!dst && !src)
+	{
+		return (0);
+	}
+	cdst = (char *)dst;
+	csrc = (char *)src;
+	i = 0;
+	while (i < n)
+	{
+		cdst[i] = csrc[i];
+		i++;
+	}
+	return (dst);
+}

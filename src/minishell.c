@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/16 14:51:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/09/17 10:46:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ int	main(int argc, char **argv)
 {
 	char	*prompt;
 	char	*cmd;
+	int		res;
 
 	(void)argc;
 	(void)argv;
+	res = ft_isalpha('a');
+	printf("%d\n", res);
 	printf("\033[0;38;5;214m=== MiNishell v0.1 ===\033[0m\n\n");
 	prompt = "\033[0;32mminishell>\033[0m";
 	while (1)
