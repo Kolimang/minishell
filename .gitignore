@@ -1,5 +1,9 @@
 # Folders
 .vscode
+build
+
+# Executable
+minishell
 
 # Hidden files
 .DS_Store
