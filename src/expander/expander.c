@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/09/22 23:09:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:36:48 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,41 +27,59 @@ gets a linked list from lexer ()
 	---- The expansion in here_doc : both '' and ""
 	
 */
-char *get_real_value(char *str, t_env *new_env)
+//returns cleaned str without SQ 
+char *handle_SQ(char **iter)
 {
-	// handling digit or no?? 
-    if (ft_isdigit(str[0]))
-        return strdup("");
-    t_env *env = new_env;
-    while (env)
-    {
-        if (ft_strcmp(env->var, str) == 0) 
-            return (ft_strdup(env->value));
-        env = env->next;
-    }
-    return strdup("");
+	char *str;
+	int i = 0;
+	char *tmp;
+	tmp = *iter;
+	while(++*iter)
+	{
+		if((**iter) == SQ)
+			str = ft_substr(tmp, 0, i - 1);
+		i++;
+	}
+	return(str);
 }
 
-void expand(t_lexems *lexeme, t_env *new_env)
+char *handle_DQ(char **iter, t_env *new_env)
 {
-    char	*str = lexeme->str;
-    char	*clean_str = NULL; 
+	//SQ is treated as literal characters
+}
 
-    //handle SQ
-	//handle ? 
-	
-	 {
-		//join $ with str and return 
-		 return(lexeme->value = ft_strdup(str));  //no exp
-    if (str[0] == '?' && str[1] == '\0')  // If it's just $?
-        return(lexeme->value = get_exit_status());
-	//handle the case where '' is inside DQ !!!!
-		//if its expandable expand it 
-		//if not empty string and skip it 
-    clean_str = get_clean_str(str);
-    lexeme->value = get_real_value(clean_str, new_env); //exp
-    if (clean_str)
-        free(clean_str);
+char *clean(char *tmp, t_lexems *lexeme, t_env *new_env)
+{
+	//set flag for SQ/NQ/DQ
+	//process each case
+	char *str;
+	char *final_str;
+	char *iter;
+	iter = tmp;
+	while(iter++)
+	{
+		if(*iter == SQ)
+			str = handle_SQ(&iter);
+		else if(*iter == DQ)
+			str = handle_DQ(&iter, new_env);
+		else
+			str = handle_NQ();
+		final_str = ft_strjoin(final_str, str);
+	}
+	return(final_str);
+}
+
+void process_regular(t_lexems *lexeme, t_env *new_env)
+{
+    char	*tmp;
+	char *clean_str;
+	if (!lexeme)
+		exit(EXIT_FAILURE);
+	if (lexeme->str == NULL)
+        return;
+	tmp = ft_strdup(lexeme->str);
+	clean_str = clean(tmp, lexeme, new_env);
+	free(tmp);
 }
 
 void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
@@ -69,20 +87,11 @@ void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
 	//$is detected , the str is sent without $ ??????????/ a discuter 
 	//echo "$'USER'" the whole arg is a string 
 	//the SQ or DQ is supposed to arrive enclosed 
-    if (lexeme == NULL || lexeme->str == NULL)
-        return; //ERRORRRRRRRRR RETURN
     if (flag == 1)  // Normal exp case
-    {
-	  //if theres only $ to echo $ only
-        if (lexeme->str[0] == SQ)  //no expansion
-            lexeme->value = ft_strdup(lexeme->str);
-        else if (lexeme->str[0] == DQ) // DQ or NQ, expand
-            expand_DQ(lexeme, new_env); 
-		else 
-			expand_NQ(lexeme, new_lexeme);
-    }
+		process_regular(lexeme, new_env);
     else
-        expand_HR(lexeme);
+		process_HRDOC(lexeme);
+	//error ?? 
 }
 
 //TESTS 
