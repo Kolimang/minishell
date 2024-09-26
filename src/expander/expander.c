@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/09/24 17:36:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:17:18 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,45 +28,58 @@ gets a linked list from lexer ()
 	
 */
 //returns cleaned str without SQ 
-char *handle_SQ(char **iter)
+void *handle_SQ(char **res, char *tmp, int *i)
 {
-	char *str;
-	int i = 0;
-	char *tmp;
-	tmp = *iter;
-	while(++*iter)
+	int start;
+
+	start = *i;
+	while((tmp)[(*i)++])
 	{
-		if((**iter) == SQ)
-			str = ft_substr(tmp, 0, i - 1);
-		i++;
+		if((*tmp) == SQ)
+			return(append_to_str(res, tmp, *i, start));
 	}
-	return(str);
+	exit(EXIT_FAILURE); //no ' found
 }
 
-char *handle_DQ(char **iter, t_env *new_env)
+void	handle_DQ(char **res, char *tmp, int *i, t_env *new_env)
 {
 	//SQ is treated as literal characters
+	int start = 0;
+	while (tmp[(*i)])
+	{
+		start = i;
+		//append no $ or ' after $
+		while((tmp[*i] != '$' && tmp[*i]) ||(tmp[*i] == '$') && tmp[*i + 1] == SQ)
+			i++;
+		append_to_str(res, tmp, *i, start);
+		//start = i;
+		if(tmp[*i] == '$')
+			expander(res, tmp, *i, new_env);
+	}
 }
 
-char *clean(char *tmp, t_lexems *lexeme, t_env *new_env)
+char *handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env)
 {
 	//set flag for SQ/NQ/DQ
 	//process each case
-	char *str;
-	char *final_str;
-	char *iter;
-	iter = tmp;
-	while(iter++)
+	//colelct and append the str
+	char *res;
+	char *final_res;
+	//calloc str;
+	//calloc final_str????
+	int i;
+	i = 0;
+	while(tmp[i++])
 	{
-		if(*iter == SQ)
-			str = handle_SQ(&iter);
-		else if(*iter == DQ)
-			str = handle_DQ(&iter, new_env);
+		if(tmp[i] == SQ)
+			handle_SQ(&res, &tmp, &i);
+		else if(tmp[i] == DQ)
+			handle_DQ(&res, tmp, &i, new_env); 
 		else
-			str = handle_NQ();
-		final_str = ft_strjoin(final_str, str);
+			handle_NQ(&res, tmp, &i, new_env);
+		final_res = ft_strjoin(final_res, res);
 	}
-	return(final_str);
+	return(final_res);
 }
 
 void process_regular(t_lexems *lexeme, t_env *new_env)
@@ -78,24 +91,47 @@ void process_regular(t_lexems *lexeme, t_env *new_env)
 	if (lexeme->str == NULL)
         return;
 	tmp = ft_strdup(lexeme->str);
-	clean_str = clean(tmp, lexeme, new_env);
+	clean_str = handle_exp(tmp, lexeme, new_env);
 	free(tmp);
 }
 
 void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
 {
-	//$is detected , the str is sent without $ ??????????/ a discuter 
-	//echo "$'USER'" the whole arg is a string 
-	//the SQ or DQ is supposed to arrive enclosed 
-    if (flag == 1)  // Normal exp case
-		process_regular(lexeme, new_env);
-    else
-		process_HRDOC(lexeme);
+	//traverse tte la liste, avec ou sans $
+    while(lexeme)
+	{
+		if (flag == 1)  // Normal exp case
+			process_regular(lexeme, new_env);
+    	else
+			process_HRDOC(lexeme);
+		if(lexeme)
+			lexeme = lexeme->next;
 	//error ?? 
 }
+void	expander(char **res, char *tmp, int *i, t_env *new_env)
+{
+	int start;
 
+	*i++;
+	start = *i;
+	if((tmp[(*i)] == ' ') ||(tmp[(*i)] == '\0'))
+		return (append_to_str(res, tmp, *i - 1, start));			
+	else if(ft_isdigit(tmp[*i]))//digit 0 - 9 -> skip num then append to str
+		// return (append_to_str(res, tmp, *i + 1));
+	echo
+		//case of only 1 digit :
+	else if (tmp[*i] == '?') //mise a jour du code d erreur 
+		return (); // find exit error 
+	else
+		replace_var(&);//fetch var in env
+		append_to_str();
+		//var found -> expand then append to str 
+}
+//oblige de rajouter un espace
+void	append_to_str()
 //TESTS 
 /*
+
 bash-3.2$ echo $USER
 lboumahd
 bash-3.2$ echo '$USERl'
