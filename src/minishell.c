@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 16:54:35 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/09/27 16:56:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,77 +51,92 @@ typedef struct s_lexems
 	char 	*value;
 	int		type;
 }	t_lexems;
+
 */
 
-char	*get_start_substr(char *str)
+typedef struct s_cmd_data
 {
-	
+	int	flag_in_sq;
+	int	flag_in_dq;
+	int	flag_delimit_token;
+	int token_in_progress;
+	int token_id;
+}	t_cmd_data;
+
+void init_cmd_data(t_cmd_data *data)
+{
+	data->flag_in_sq = 0;
+	data->flag_in_dq = 0;
+	data->flag_delimit_token = 0;
+	data->token_in_progress = 0;
+	data->token_id = 0;
 }
 
 char	**ft_tokenize(char *cmd)
 {
-	int		len;
-	char	*srch;
-	char	*start;
-	char	*end;
-	char	**substrings;
+	int					i;
+	int					len;
+	unsigned int		tokenstart;
+	t_cmd_data			data;
 
-	len = ft_strlen(cmd);
-	srch = cmd;
-	start = NULL;
-	end = NULL;
-	while (ft_strchr(srch, '\''))
+	if (ft_strlen(cmd) <= 0)
+		return (NULL);
+	init_cmd_data(&data);
+	tokenstart = 0;
+	len = 0;
+	i = 0;
+	while (cmd[i])
 	{
-		start = ft_strchr(srch, '\'');
-		if (start != cmd && *(start - 1) != ' ' && start < &(cmd[len]))
+		if (cmd[i] == ' ')
 		{
-			srch = start + 1;
+			if (data.token_in_progress == 1 && data.flag_in_sq == 0 && data.flag_in_dq == 0)
+				data.flag_delimit_token = 1;
+		}
+		else if (cmd[i] == '\'')
+		{
+			if (data.flag_in_dq == 0 && data.flag_in_sq == 1)
+			{
+				data.flag_in_sq = 0;
+				data.flag_delimit_token = 1;
+				tokenstart += 1;
+				len -= 1;
+			}
+			else if (data.flag_in_dq == 0 && data.flag_in_sq == 0)
+				data.flag_in_sq = 1;
+		}
+		else if (cmd[i] == '\"')
+		{
+			if (data.flag_in_sq == 0 && data.flag_in_dq == 1)
+			{
+				data.flag_in_dq = 0;
+				data.flag_delimit_token = 1;
+				tokenstart += 1;
+				len -= 1;
+			}
+			else if (data.flag_in_sq == 0 && data.flag_in_dq == 0)
+				data.flag_in_dq = 1;
+		}
+		else if (cmd[i + 1] == '\0')
+		{
+			len += 1;
+			data.flag_delimit_token = 1;
 		}
 		else
 		{
-			srch = NULL;
+			data.token_in_progress = 1;
 		}
-	}
-	if (start)
-	{
-		if (*(start + 1) != '\0')
+
+		if (data.flag_delimit_token == 1)
 		{
-			srch = start + 1;
-			while (ft_strchr(srch, '\''))
-			{
-			end = ft_strchr(srch, '\'');
-			if (end != &cmd[len] && *(end + 1) != ' ')
-				srch = end + 1;
-			else
-				srch = NULL;
-			}
+			printf("%d: %s\n", data.token_id, ft_substr(cmd, tokenstart, (size_t)len));
+			tokenstart += len + 1;
+			len = -1;
+			data.token_id++;			
+			data.token_in_progress = 0;
+			data.flag_delimit_token = 0;
 		}
-	}
-	if (start && end)
-	{
-		// use ft_substr() instead
-		substrings = malloc(4 * sizeof(char *));
-		*substrings = malloc((start - cmd + 1) * sizeof(char));
-		if (!*substrings)
-			return (NULL);
-		ft_strlcpy(*substrings, cmd, start - cmd + 1);
-		ft_printf("%s\n", *substrings);
-		*++substrings = malloc((end - start + 1) * sizeof(char));
-		if (!*substrings)
-			return (NULL);
-		ft_strlcpy(*substrings, start + 1, end - start);
-		ft_printf("%s\n", *substrings);
-		*++substrings = malloc((&cmd[len] - end + 1) * sizeof(char));
-		if (!*substrings)
-			return (NULL);
-		ft_strlcpy(*substrings, end + 1, &cmd[len] - end);
-		ft_printf("%s\n", *substrings);
-		*++substrings = NULL;
-		ft_printarray(substrings);
-	}
-	else
-	{
-		ft_printf("%s\n", cmd);
+		len++;
+		i++;
 	}
 	return (NULL);
 }
@@ -132,7 +147,7 @@ int	execute(void)
 	char	*cmd;
 
 	printf("\033[0;38;5;214m=== MiNishell v0.1 ===\033[0m\n\n");
-	prompt = "\033[0;32mminishell>\033[0m";
+	prompt = "\033[0;32mminishell>\033[0m ";
 	while (1)
 	{
 		cmd = readline(prompt);
