@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/27 16:56:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/09/30 17:16:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,15 @@ char	**ft_tokenize(char *cmd)
 		{
 			if (data.token_in_progress == 1 && data.flag_in_sq == 0 && data.flag_in_dq == 0)
 				data.flag_delimit_token = 1;
+			else if (data.token_in_progress == 0 && data.flag_in_sq == 0 && data.flag_in_dq == 0) // MODIFIED
+			{
+				tokenstart += 1;
+				len = -1;
+			}
+			else if (data.flag_in_sq == 1 || data.flag_in_dq == 1) // NEW
+			{
+				data.token_in_progress = 1; // NEW
+			}
 		}
 		else if (cmd[i] == '\'')
 		{
@@ -98,11 +107,21 @@ char	**ft_tokenize(char *cmd)
 			{
 				data.flag_in_sq = 0;
 				data.flag_delimit_token = 1;
-				tokenstart += 1;
-				len -= 1;
+				len += 1;
 			}
 			else if (data.flag_in_dq == 0 && data.flag_in_sq == 0)
+			{
 				data.flag_in_sq = 1;
+				if (data.token_in_progress == 1)
+				{
+					data.flag_delimit_token = 1;
+					len -= 1;
+				}
+				else
+				{
+					data.token_in_progress = 1; //new
+				}
+			}
 		}
 		else if (cmd[i] == '\"')
 		{
@@ -110,33 +129,53 @@ char	**ft_tokenize(char *cmd)
 			{
 				data.flag_in_dq = 0;
 				data.flag_delimit_token = 1;
-				tokenstart += 1;
-				len -= 1;
+				len += 1;
 			}
 			else if (data.flag_in_sq == 0 && data.flag_in_dq == 0)
+			{
 				data.flag_in_dq = 1;
+				if (data.token_in_progress == 1)
+				{
+					data.flag_delimit_token = 1;
+					len -= 1;
+				}
+				else
+				{
+					data.token_in_progress = 1; //new
+				}
+			}
 		}
-		else if (cmd[i + 1] == '\0')
+		else // ni espace, ni SQ, ni DQ
+		{
+			data.token_in_progress = 1;
+			if (len < 1)
+				len = 1;
+		}
+		if (cmd[i + 1] == '\0')
 		{
 			len += 1;
 			data.flag_delimit_token = 1;
+			if (data.flag_in_sq == 1 || data.flag_in_dq == 1)
+				printf("ERROR: unclosed quote.\n");
 		}
-		else
-		{
-			data.token_in_progress = 1;
-		}
-
+		len++; // alpha
 		if (data.flag_delimit_token == 1)
 		{
-			printf("%d: %s\n", data.token_id, ft_substr(cmd, tokenstart, (size_t)len));
-			tokenstart += len + 1;
-			len = -1;
+			printf("%d (len: %d): %s\n", data.token_id, len, ft_substr(cmd, tokenstart, (size_t)len));
+			//tokenstart += len; // alpha
+			tokenstart += len - 1; // alpha
+			//len = -1; // alpha
+			len = 0;
 			data.token_id++;			
 			data.token_in_progress = 0;
 			data.flag_delimit_token = 0;
 		}
-		len++;
+		// len++; // alpha
 		i++;
+		// printf("len: %d\n", len);
+		// printf("inSQ: %d\n", data.flag_in_sq);
+		// printf("cuttok: %d\n", data.flag_delimit_token);
+		// printf("-- -- --\n");
 	}
 	return (NULL);
 }
