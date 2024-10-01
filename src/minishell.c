@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/01 16:36:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/01 16:41:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ typedef struct s_cmd_data
 	int	flag_endq_sep;
 	int	flag_endstr;
 	int	flag_delimit_token;
-	int token_in_progress;
-	int token_id;
+	int	token_in_progress;
+	int	token_id;
 }	t_cmd_data;
 
-void init_cmd_data(t_cmd_data *data)
+void	init_cmd_data(t_cmd_data *data)
 {
 	data->flag_in_sq = 0;
 	data->flag_in_dq = 0;
@@ -102,7 +102,6 @@ t_list	*ft_tokenize(char *cmd)
 				tokenstart += 1;
 			else if (data.flag_in_sq == 1 || data.flag_in_dq == 1)
 				data.token_in_progress = 1;
-
 		}
 		else if (cmd[i] == '\'')
 		{
@@ -160,7 +159,7 @@ t_list	*ft_tokenize(char *cmd)
 				data.flag_endq_sep = 0;
 				len += 1;
 			}
-			else if(data.flag_endstr == 1)
+			else if (data.flag_endstr == 1)
 				len += 1;
 			templexem = ft_substr(cmd, tokenstart, (size_t)(len));
 			// To do: protect outputs from ft_substr and ft_strtrim (mallocs)
@@ -173,7 +172,7 @@ t_list	*ft_tokenize(char *cmd)
 			else
 				ft_lstadd_back(&list_lexems, ft_lstnew(lexem));
 			tokenstart += len;
-			data.token_id++;			
+			data.token_id++;
 			data.token_in_progress = 0;
 			data.flag_delimit_token = 0;
 		}
@@ -193,7 +192,7 @@ int	execute(void)
 	while (1)
 	{
 		cmd = readline(prompt);
-		if(!cmd)
+		if (!cmd)
 			return (1);
 		lexems = ft_tokenize(cmd);
 		if (!lexems)
