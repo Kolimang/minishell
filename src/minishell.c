@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/01 16:03:14 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/01 16:36:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,14 @@ void init_cmd_data(t_cmd_data *data)
 	data->token_id = 0;
 }
 
-char	**ft_tokenize(char *cmd)
+t_list	*ft_tokenize(char *cmd)
 {
 	int					i;
 	int					len;
 	unsigned int		tokenstart;
 	t_cmd_data			data;
 	char				*lexem;
+	t_list				*list_lexems;
 	char				*templexem;
 
 	if (ft_strlen(cmd) <= 0)
@@ -90,6 +91,7 @@ char	**ft_tokenize(char *cmd)
 	tokenstart = 0;
 	len = 0;
 	i = 0;
+	list_lexems = NULL;
 	while (cmd[i])
 	{
 		if (cmd[i] == ' ')
@@ -161,9 +163,15 @@ char	**ft_tokenize(char *cmd)
 			else if(data.flag_endstr == 1)
 				len += 1;
 			templexem = ft_substr(cmd, tokenstart, (size_t)(len));
+			// To do: protect outputs from ft_substr and ft_strtrim (mallocs)
 			lexem = ft_strtrim(templexem, " ");
+			// To do: protect outputs from ft_substr and ft_strtrim (mallocs)
 			free(templexem);
 			printf("[%d] %s\n", data.token_id, lexem);
+			if (!list_lexems)
+				list_lexems = ft_lstnew(lexem);
+			else
+				ft_lstadd_back(&list_lexems, ft_lstnew(lexem));
 			tokenstart += len;
 			data.token_id++;			
 			data.token_in_progress = 0;
@@ -171,13 +179,14 @@ char	**ft_tokenize(char *cmd)
 		}
 		i++;
 	}
-	return (NULL);
+	return (list_lexems);
 }
 
 int	execute(void)
 {
 	char	*prompt;
 	char	*cmd;
+	t_list	*lexems;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL v0.1 ===\033[0m\n\n");
 	prompt = "\033[0;32mminishell>\033[0m ";
@@ -186,7 +195,8 @@ int	execute(void)
 		cmd = readline(prompt);
 		if(!cmd)
 			return (1);
-		if (!ft_tokenize(cmd))
+		lexems = ft_tokenize(cmd);
+		if (!lexems)
 		{
 			free(cmd);
 			return (1);
