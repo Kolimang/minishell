@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/30 17:16:44 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/01 15:41:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ typedef struct s_lexems
 	char 	*value;
 	int		type;
 }	t_lexems;
-
 */
 
 typedef struct s_cmd_data
 {
 	int	flag_in_sq;
 	int	flag_in_dq;
+	int	flag_endq_sep;
+	int	flag_endstr;
 	int	flag_delimit_token;
 	int token_in_progress;
 	int token_id;
@@ -67,6 +68,8 @@ void init_cmd_data(t_cmd_data *data)
 {
 	data->flag_in_sq = 0;
 	data->flag_in_dq = 0;
+	data->flag_endq_sep = 0;
+	data->flag_endstr = 0;
 	data->flag_delimit_token = 0;
 	data->token_in_progress = 0;
 	data->token_id = 0;
@@ -78,6 +81,8 @@ char	**ft_tokenize(char *cmd)
 	int					len;
 	unsigned int		tokenstart;
 	t_cmd_data			data;
+	char				*lexem;
+	char				*templexem;
 
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
@@ -91,15 +96,11 @@ char	**ft_tokenize(char *cmd)
 		{
 			if (data.token_in_progress == 1 && data.flag_in_sq == 0 && data.flag_in_dq == 0)
 				data.flag_delimit_token = 1;
-			else if (data.token_in_progress == 0 && data.flag_in_sq == 0 && data.flag_in_dq == 0) // MODIFIED
-			{
+			else if (data.token_in_progress == 0 && data.flag_in_sq == 0 && data.flag_in_dq == 0)
 				tokenstart += 1;
-				len = -1;
-			}
-			else if (data.flag_in_sq == 1 || data.flag_in_dq == 1) // NEW
-			{
-				data.token_in_progress = 1; // NEW
-			}
+			else if (data.flag_in_sq == 1 || data.flag_in_dq == 1)
+				data.token_in_progress = 1;
+
 		}
 		else if (cmd[i] == '\'')
 		{
@@ -107,19 +108,16 @@ char	**ft_tokenize(char *cmd)
 			{
 				data.flag_in_sq = 0;
 				data.flag_delimit_token = 1;
-				len += 1;
+				data.flag_endq_sep = 1;
 			}
 			else if (data.flag_in_dq == 0 && data.flag_in_sq == 0)
 			{
 				data.flag_in_sq = 1;
 				if (data.token_in_progress == 1)
-				{
 					data.flag_delimit_token = 1;
-					len -= 1;
-				}
 				else
 				{
-					data.token_in_progress = 1; //new
+					data.token_in_progress = 1;
 				}
 			}
 		}
@@ -129,53 +127,49 @@ char	**ft_tokenize(char *cmd)
 			{
 				data.flag_in_dq = 0;
 				data.flag_delimit_token = 1;
-				len += 1;
+				data.flag_endq_sep = 1;
 			}
 			else if (data.flag_in_sq == 0 && data.flag_in_dq == 0)
 			{
 				data.flag_in_dq = 1;
 				if (data.token_in_progress == 1)
-				{
 					data.flag_delimit_token = 1;
-					len -= 1;
-				}
 				else
-				{
-					data.token_in_progress = 1; //new
-				}
+					data.token_in_progress = 1;
 			}
 		}
-		else // ni espace, ni SQ, ni DQ
-		{
+		else
 			data.token_in_progress = 1;
-			if (len < 1)
-				len = 1;
-		}
 		if (cmd[i + 1] == '\0')
 		{
-			len += 1;
+			data.flag_endstr = 1;
 			data.flag_delimit_token = 1;
 			if (data.flag_in_sq == 1 || data.flag_in_dq == 1)
 				printf("ERROR: unclosed quote.\n");
 		}
-		len++; // alpha
 		if (data.flag_delimit_token == 1)
 		{
-			printf("%d (len: %d): %s\n", data.token_id, len, ft_substr(cmd, tokenstart, (size_t)len));
-			//tokenstart += len; // alpha
-			tokenstart += len - 1; // alpha
-			//len = -1; // alpha
-			len = 0;
+			if (&cmd[i] == &cmd[tokenstart])
+				len = 1;
+			else
+				len = &cmd[i] - &cmd[tokenstart];
+			if (data.flag_endq_sep == 1)
+			{
+				data.flag_endq_sep = 0;
+				len += 1;
+			}
+			else if(data.flag_endstr == 1)
+				len += 1;
+			templexem = ft_substr(cmd, tokenstart, (size_t)(len));
+			lexem = ft_strtrim(templexem, " ");
+			free(templexem);
+			printf("[%d] %s\n", data.token_id, lexem);
+			tokenstart += len;
 			data.token_id++;			
 			data.token_in_progress = 0;
 			data.flag_delimit_token = 0;
 		}
-		// len++; // alpha
 		i++;
-		// printf("len: %d\n", len);
-		// printf("inSQ: %d\n", data.flag_in_sq);
-		// printf("cuttok: %d\n", data.flag_delimit_token);
-		// printf("-- -- --\n");
 	}
 	return (NULL);
 }
@@ -185,7 +179,7 @@ int	execute(void)
 	char	*prompt;
 	char	*cmd;
 
-	printf("\033[0;38;5;214m=== MiNishell v0.1 ===\033[0m\n\n");
+	printf("\033[0;38;5;214m=== MiNiSHELL v0.1 ===\033[0m\n\n");
 	prompt = "\033[0;32mminishell>\033[0m ";
 	while (1)
 	{
