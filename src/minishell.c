@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/29 20:14:56 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:45:36 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void cleanup_lexemes(t_lexems *lexeme)
     {
         t_lexems *tmp = lexeme;
         free(lexeme->str);
+		free(lexeme->value);
         lexeme = lexeme->next;
         free(tmp);
     }
@@ -111,24 +112,28 @@ int main(void)
     t_env *env = setup_env();
 
     // Create a list of lexemes (tokens) for testing
-    t_lexems *lexeme1 = create_lexeme("\"$123Lina $46464 $\"");
-    t_lexems *lexeme2 = create_lexeme("$USER");
+    t_lexems *lexeme1 = create_lexeme("$'$USER'");
+	printf("%s\n", getenv("PATH"));
+    // t_lexems *lexeme2 = create_lexeme("\"$12'USER    '   \"");
     // t_lexems *lexeme3 = create_lexeme("'Literal $USER'");
     // t_lexems *lexeme4 = create_lexeme("Exit code: $?");
     // t_lexems *lexeme5 = create_lexeme("\"Mixed $USER and $? quotes\"");
     
     // Chain lexemes together
-    lexeme1->next = lexeme2;
+    // lexeme1->next = lexeme2;
     // lexeme2->next = lexeme3;
     // lexeme3->next = lexeme4;
     // lexeme4->next = lexeme5;
 
     // Call expand_lexer on the lexemes with normal expansion flag
-    expand_lexer(lexeme1, env, 1);  // Flag 1 for normal expansion
+	expand_lexer(lexeme1, env, 1);
+	// expand_lexer(lexeme2, env, 1);  // Flag 1 for normal expansion
     // Clean up memory
-	printf("res : %s\n", lexeme1->value);
-	printf("%s", lexeme2->value);
+	printf("value : %s\n", lexeme1->value);
+	printf("str : %s\n", lexeme1->str);
+	// printf("lex2 : %s", lexeme2->value);
     cleanup_lexemes(lexeme1);
+	//  cleanup_lexemes(lexeme2);
     cleanup_env(env);
     
     return 0;

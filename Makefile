@@ -6,7 +6,7 @@
 #    By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/29 17:40:53 by lboumahd         ###   ########.fr        #
+#    Updated: 2024/10/01 14:43:10 by lboumahd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,7 +112,7 @@ else
 	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
-CFLAGS := -I$(INC_DIR) -Wall -Wextra -Werror
+CFLAGS := -I$(INC_DIR) -Wall -Wextra -Werror #-fsanitize=address
 
 
 LIBFT     := lib/libft/libft.a
