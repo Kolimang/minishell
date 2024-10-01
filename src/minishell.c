@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/01 15:41:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/01 16:03:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,18 +184,22 @@ int	execute(void)
 	while (1)
 	{
 		cmd = readline(prompt);
-		ft_tokenize(cmd);
+		if(!cmd)
+			return (1);
+		if (!ft_tokenize(cmd))
+		{
+			free(cmd);
+			return (1);
+		}
 		ft_add_cmd_to_history(cmd);
 		free(cmd);
 	}
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	(void)argc;
-	(void)argv;
 	if (execute())
-		return (execute());
+		return (1);
 	return (0);
 }
