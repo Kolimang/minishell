@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/29 16:39:42 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:46:07 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ typedef struct s_env
 
 
 // Expander 
-void handle_SQ(char **res, char *tmp, int *i);
-void handle_DQ(char **res, char *tmp, int *i, t_env *new_env);
+void handle_SQ(char **res, char *tmp, int *i, int start);
+void handle_DQ(char **res, char *tmp, int *i,  t_env *new_env);
 char *handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env);
 void process_regular(t_lexems *lexeme, t_env *new_env);
 void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag);
@@ -72,7 +72,17 @@ char *replace_var(char *tmp, int *i, int start, t_env *new_env);
 void append_to_str(char **res, char *tmp, int end, int start);
 
 // To deploy 
-void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems **lexeme);
+void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme);
 void process_HRDOC(t_lexems *lexeme);
+
+//lol
+char	*ft_strldup(char *s, int max_len);
+// static char	*expand(char *str, t_env *local_env);
+
+// static char	*handle_dollar(char *str, int *i, t_env *local_env);
+
+// char	*expaner(char *str, t_env *new_env);
+
+// char	*dup_word(char *str, int *i);
 
 #endif

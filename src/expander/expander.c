@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/01 18:45:00 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:10:04 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 //WHAT TO DO WHEN !str , NULL of EXIT_FAILURE??
 
 
-void handle_SQ(char **res, char *tmp, int *i)
+void handle_SQ(char **res, char *tmp, int *i, int start)
 {
 	(*i)++;
-	int start = *i; 
+	// int start = *i; 
     while (tmp[*i]) 
     {
-        if (tmp[*i] == SQ) 
+		(*i)++;
+	    if (tmp[*i] == SQ) 
         {
-            append_to_str(res, tmp, *i, start); 
+            append_to_str(res, tmp, *i, start + 1); 
             (*i)++; 
-            return; // Exit the function
+            return; 
         }
-        (*i)++; // Increment the index
     }
 	free(res);
     fprintf(stderr, "Error: No closing single quote found.\n"); 
@@ -36,22 +36,22 @@ void handle_SQ(char **res, char *tmp, int *i)
 }
 
 
-void handle_DQ(char **res, char *tmp, int *i, t_env *new_env) {
-    int start = 0;
-    (*i)++; // Move past the opening double quote
-
-    while (tmp[*i]) {
+void handle_DQ(char **res, char *tmp, int *i, t_env *new_env) 
+{
+	int start = 0;
+    (*i)++; 
+    while (tmp[*i]) 
+	{
         start = *i;
-        // Append characters until reaching a closing double quote or $
+		
         while (tmp[*i] != DQ && tmp[*i]) 
-           { // If we encounter $, check if the next character is not a single quote
-	
+           { 
 			if (tmp[*i] == '$' && tmp[*i + 1] != '\'') 
                 break; 
-             (*i)++; 
+        	(*i)++; 
        		}
-       
-        if (tmp[*i] == DQ) {
+        if (tmp[*i] == DQ)
+		{
             append_to_str(res, tmp, *i, start);
             (*i)++;
             return; 
@@ -68,6 +68,57 @@ void handle_DQ(char **res, char *tmp, int *i, t_env *new_env) {
     exit(EXIT_FAILURE); // Handle the error as needed
 }
 
+void dup_word(char **res, char *str, int *i)
+{
+	int		start;
+
+	if (!str || !i)
+		exit(EXIT_FAILURE);
+	start = *i; 
+	while (str[*i])
+	{
+		
+		if (!ft_isalnum(str[*i]) && *i != start && str[*i] != '?')
+		{
+			append_to_str(res, str, *i, start + 1); 
+			return;
+		}
+		(*i)++;  
+	}
+	append_to_str(res, str, *i, start);
+}
+
+void	handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme)
+{
+	(void)lexeme;
+	int start = *i;
+
+	if (tmp[*i] == '$' && (tmp[*i + 1] == DQ || tmp[*i + 1] == SQ))
+	{	
+		if (tmp[*i + 1] == DQ)
+			dup_word(res, tmp, i);
+		else if (tmp[*i + 1] == SQ)
+		{
+			handle_SQ(res, tmp, i, start);
+		}
+		return;
+	}
+	// Handle variable expansion
+	else if (tmp[*i] == '$')
+	{
+		expander(res, tmp, i, new_env);
+		return;
+	}
+	else
+	{
+		while (tmp[*i] && tmp[*i] != '$' && tmp[*i] != SQ && tmp[*i] != DQ)
+		{
+			(*i)++;  // Move *i to the end of the current non-special segment
+		}
+		// Append the portion of the string from start to the current *i
+		append_to_str(res, tmp, *i, start);
+	}
+}
 char	*handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env)
 {
 	char	*res;
@@ -79,16 +130,19 @@ char	*handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env)
 	i = 0;
 	while(tmp[i])
 	{
+		int start = i;
 		if(tmp[i] == SQ)
-			handle_SQ(&res, tmp, &i);
+			handle_SQ(&res, tmp, &i, start);
 		else if(tmp[i] == DQ)
 			handle_DQ(&res, tmp, &i, new_env);
 		else
-			handle_NQ(&res, tmp, &i, new_env, &lexeme); //si on rajoute le lexer apres le parseur 
+			handle_NQ(&res, tmp, &i, new_env, lexeme); //si on rajoute le lexer apres le parseur 
 		// printf("str original: %s\n", res);
-		final_res = ft_strjoin(final_res, res);
-		free(res);
+		// final_res = ft_strjoin(final_res, res);
 	}
+	final_res = ft_strjoin(final_res, res);
+	printf("%s\n", final_res);
+	free(res);
 	return(final_res);
 } 
 
@@ -220,105 +274,15 @@ void	append_to_str(char **res, char *tmp, int end, int start)
     if (!new_part)
         return; 
     ft_strlcpy(new_part, tmp + start, end - start + 1);
-    if (*res) {
+    if (*res)
+	{
         new_res = ft_strjoin(*res, new_part);
         *res = new_res; 
     } else {
         *res = new_part;
         new_part = NULL;
     }
-    if (new_part) {
+    if (new_part) 
         free(new_part);
-    }
-}
-
-// void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems **lexeme)
-// {
-// 	//dollar case
-// 	if(tmp[*i] == '$' && (tmp[*i + 1]))
-// 	//SQ found
-// }
-void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems **lexeme) {
-    int start;
-    char *var = NULL;
-    char *exit_code_str;
-
-    (void)new_env;  // Ignore new_env for now, adjust if necessary
-	(void)lexeme;
-    // Initialize the index
-    (*i)++;
-    start = *i;
-
-    // Handle single quotes
-    if (tmp[start] == '\'') {
-        (*i)++;  // Skip the opening single quote
-        start = *i;
-        // Append characters until the closing single quote
-        while (tmp[*i] && tmp[*i] != '\'') {
-            (*i)++;
-        }
-        append_to_str(res, tmp, *i, start);  // Append the content inside single quotes
-        if (tmp[*i] == '\'') (*i)++;  // Skip the closing single quote
-        return;
-    }
-    // Handle double quotes
-    else if (tmp[start] == '"') {
-        (*i)++;  // Skip the opening double quote
-        start = *i;
-        // Append characters until the closing double quote
-        while (tmp[*i] && tmp[*i] != '"') {
-            if (tmp[*i] == '$') {
-                // Handle variable expansion within double quotes
-                expander(res, tmp, i, new_env);  // Call expander for variable expansion
-            } else {
-                (*i)++;
-            }
-        }
-        append_to_str(res, tmp, *i, start);  // Append the content inside double quotes
-        if (tmp[*i] == '"') (*i)++;  // Skip the closing double quote
-        return;
-    }
-
-    // Handle the case of a dollar sign ($)
-    if (tmp[start] == '$') {
-        (*i)++;  // Skip the dollar sign
-        start = *i;
-
-        // Check for the case where it is a number (e.g., $1)
-        if (ft_isdigit(tmp[*i])) {
-            while (tmp[*i] && tmp[*i] != ' ') {
-                (*i)++;
-            }
-            return append_to_str(res, tmp, *i, start);  // Just append as is
-        }
-        // Handle special case for exit code ($?)
-        else if (tmp[*i] == '?') {
-            exit_code_str = ft_itoa(ret_value);  // Get the exit code
-            *res = ft_strjoin(*res, exit_code_str);  // Append the exit code
-            free(exit_code_str);  // Free the memory
-            (*i)++;
-            return;  // Return after handling exit code
-        }
-        // Handle variable names (e.g., $USER)
-        else {
-            while (ft_isalnum(tmp[*i])) {
-                (*i)++;
-            }
-            append_to_str(&var, tmp, *i, start);  // Extract the variable name
-
-            // Check if the variable exists in the environment
-            char *env_value = getenv(var);
-            if (env_value) {
-                *res = ft_strjoin(*res, env_value);  // Append the variable value if found
-            }
-            free(var);  // Free the variable name memory
-            return;
-        }
-    }
-
-    // Append remaining characters until encountering a special condition
-    while (tmp[*i] && tmp[*i] != '$' && tmp[*i] != '"' && tmp[*i] != '\'') {
-        (*i)++;
-    }
-    append_to_str(res, tmp, *i, start);  // Append the remaining content
+	
 }

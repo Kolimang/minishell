@@ -276,3 +276,130 @@
 // 	free(tab);
 // 	return (to_join);
 // }
+
+// char	*dup_word(char *str, int *i)
+// {
+// 	int		tmp;
+
+// 	if (!str || !i)
+// 		exit(EXIT_FAILURE);
+// 	tmp = *i;
+// 	while (str[++(*i)])
+// 	{
+// 		if (!ft_isalnum(str[*i]) && *i != tmp && str[*i] != '?')
+// 		{
+// 			*i = *i - 1;
+// 			return (ft_strldup(&str[tmp], *i - tmp + 1));
+// 		}
+// 		else if ((ft_isdigit(str[*i]) || str[*i] != '?') && *i == tmp)
+// 		{
+// 			*i = *i - 1;
+// 			return (ft_strldup(&str[tmp], *i - tmp + 1));
+// 		}
+// 	}
+// 	*i = *i - 1;
+// 	return (ft_strdup(&str[tmp]));
+// }
+// static char	*expand(char *str, t_env **local_env)
+// {
+// 	char	*var;
+// 	char	*to_join;
+
+// 	if (!str)
+// 		exit(EXIT_FAILURE);
+// 	var = ft_getenv(str, local_env);
+// 	if (var)
+// 		to_join = ft_strdup(var);
+// 	else
+// 		to_join = ft_strdup("");
+// 	return (to_join);
+// }
+// static char	*handle_dollar(char *str, int *i, t_env **local_env)
+// {
+// 	int		save_i;
+// 	char	*tmp;
+// 	char	*to_join;
+
+// 	if (!str || !i)
+// 		exit(EXIT_FAILURE);
+// 	if (str[++(*i)] == ' ' || str[*i] == '\0')
+// 		to_join = ft_strldup(&str[*i - 1], 1);
+// 	else if (ft_isdigit(str[*i]) || str[*i] == '?')
+// 	{
+// 		tmp = ft_strldup(&str[(*i)++], 1);
+// 		to_join = expand(tmp, local_env);
+// 		free(tmp);
+// 	}
+// 	else
+// 	{
+// 		save_i = *i;
+// 		while (ft_isalnum(str[*i]))
+// 			(*i)++;
+// 		tmp = ft_strldup(&str[save_i], *i - save_i);
+// 		to_join = expand(tmp, local_env);
+// 		free(tmp);
+// 	}
+// 	return (to_join);
+// }
+// char	*ft_strldup(char *s, int max_len)
+// {
+// 	int		len;
+// 	int		i;
+// 	char	*res;
+
+// 	if (!s)
+// 		exit(EXIT_FAILURE);
+// 	len = -1;
+// 	i = -1;
+// 	while (s[++len])
+// 		;
+// 	if (len > max_len)
+// 		len = max_len;
+// 	res = ft_malloc(sizeof(char) * (len) + 1);
+// 	while (s[++i] && i < len)
+// 	{
+// 		res[i] = s[i];
+// 	}
+// 	res[i] = '\0';
+// 	return (res);
+// }
+
+// void	handle_NQ(char **res, char *tmp, int *i, t_env new_env, t_lexems *lexeme)
+// {
+
+// 	char *to_join;
+
+// 	if (tmp[*i] == '$' && (tmp[*i + 1] == DQ || tmp[*i + 1] == SQ))
+// 		return (ft_strdup(""));
+// 	tmp = dup_word(tmp, i);
+// 	*res = expaner(tmp, new_env);
+// 	free(tmp);
+// }
+
+// char	*expaner(char *str, t_env **new_env)
+// {
+// 	char	*expanded;
+// 	char	*to_join;
+// 	int		save_i;
+// 	int		i;
+
+// 	if (!str)
+// 		exit(EXIT_FAILURE);
+// 	//reassign_global(local_env);
+// 	i = 0;
+// 	expanded = ft_calloc_exit(sizeof(char), 1);
+// 	while (str[i])
+// 	{
+// 		save_i = i;
+// 		while ((str[i] && str[i] != '$'))
+// 			i++;
+// 		to_join = ft_strldup(&str[save_i], i - save_i);
+// 		expanded = ft_strjoin(expanded, to_join);
+// 		if (str[i] == '$')
+// 		{
+// 			to_join = handle_dollar(str, &i, new_env);
+// 			expanded = ft_strjoin(expanded, to_join);
+// 		}
+// 	}
+// 	return (expanded);
+// }

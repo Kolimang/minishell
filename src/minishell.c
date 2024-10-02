@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/01 18:45:36 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:08:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_env *setup_env()
     t_env *env = ft_calloc(1, sizeof(t_env));
     
     // Example: Add USER="user_value" to environment
-    env->var_name = ft_strdup("USER");
+    env->var_name = ft_strdup("\"$\'USER\'\"");
     env->var_val = ft_strdup("user_value");
     env->next = ft_calloc(1, sizeof(t_env));
     
@@ -112,7 +112,7 @@ int main(void)
     t_env *env = setup_env();
 
     // Create a list of lexemes (tokens) for testing
-    t_lexems *lexeme1 = create_lexeme("$'$USER'");
+    t_lexems *lexeme1 = create_lexeme("'$?'");
 	printf("%s\n", getenv("PATH"));
     // t_lexems *lexeme2 = create_lexeme("\"$12'USER    '   \"");
     // t_lexems *lexeme3 = create_lexeme("'Literal $USER'");
