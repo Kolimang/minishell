@@ -1,2 +1,8 @@
-To do :
-* Protect value returned from ft_substr (which is malloced, protect all the way back up to exiting the main)
+## To do :
+
+[WiP] Tokenization: 
+		\_ [v] gerer les operateurs : <, << (heredoc), >, >> (append), | (pipe)
+		\_ [ ] Gerer les chemins de fichier (par exemple vers l'executable a executer)
+		\_ [ ] Protect value returned from ft_substr (which is malloced, protect all the way back up to exiting the main)
+		\_ [ ] Heredoc implementation
+				\_ /!\ heredoc input lines should not update command history !
