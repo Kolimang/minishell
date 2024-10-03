@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/02 16:24:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/03 16:35:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_cmd_data
 {
 	int				bool_in_sq;
 	int				bool_in_dq;
+	int				bool_heredoc;
 	int				bool_endq_sep;
 	int				bool_endstr;
 	int				bool_delimit_tok;
@@ -72,6 +73,7 @@ void	init_cmd_data(t_cmd_data *data)
 	data->bool_in_dq = 0;
 	data->bool_endq_sep = 0;
 	data->bool_endstr = 0;
+	data->bool_heredoc = 0;
 	data->bool_delimit_tok = 0;
 	data->bool_tok_in_progress = 0;
 	data->tok_id = 0;
@@ -93,12 +95,76 @@ static int	char_in_set(char *s, char c)
 	return (0);
 }
 
-static int	is_operator(char c)
+static int	is_operator(char c) // add dashes (- & --) in the set ?
 {
 	char	*set;
 
 	set = "<|>";
 	return (char_in_set(set, c));
+}
+
+t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
+{
+	char	*hd_input;
+	t_list	*hd_tokens;
+
+	hd_tokens = NULL;
+	hd_input = NULL;
+	if (dt->bool_heredoc)
+	{
+		while (1)
+		{
+			hd_input = readline("\033[0;32mheredoc>\033[0m ");
+			if (!hd_input)
+			{
+				printf("Sortie par ici.\n");// ##----##  DEBUG  ##----##
+				free(hd_input);
+				return (NULL);
+			}
+			if (!hd_tokens)
+				hd_tokens = ft_lstnew(hd_input);
+			else
+			{
+				if (!ft_strncmp(hd_input, delim, 3))
+				{
+					printf("%s\n", delim);// ##----##  DEBUG (ligne a retirer) ##----##
+					return (hd_tokens);
+				}
+				ft_lstadd_back(&hd_tokens, ft_lstnew(hd_input));
+			}
+		}
+	}
+	return (hd_tokens);
+}
+
+
+void	ft_print_list(t_list *list, char *title)
+{
+	if (!list)
+		return ;
+	if (title && title[0] != '\0')
+		printf("%s\n", title);
+	while (list)
+	{
+		printf("%s\n", list->content);
+		list = list->next;
+	}
+}
+
+char	*find_delim(t_list *tokens)
+{
+	int	i;
+
+	i = 0;
+	while(tokens)
+	{
+		if ((!ft_strncmp(tokens->content, "<<", 2)) && ft_strlen(tokens->content) == 2)
+		{
+			return (tokens->next->content);
+		}
+		tokens = tokens->next;
+	}
+	return (NULL);
 }
 
 t_list	*ft_tokenize(char *cmd)
@@ -119,6 +185,8 @@ t_list	*ft_tokenize(char *cmd)
 		// handle_operators();
 		// handle_spaces();
 		// handle_quotes();
+		// handle_dashes(); // required ?
+		// handle_heredoc(); ? at this point ?
 		// create_node();
 		if (is_operator(cmd[i]))
 		{
@@ -126,8 +194,13 @@ t_list	*ft_tokenize(char *cmd)
 			{
 				if (i > 0 && !is_operator(cmd[i - 1]))
 					data.bool_delimit_tok = 1;
-				else if (i > 0 && is_operator(cmd[i - 1]) && cmd[i - 1] != cmd[i])
-					data.bool_delimit_tok = 1;
+				else if (i > 0 && is_operator(cmd[i - 1]))
+				{
+					if (cmd[i - 1] != cmd[i])
+						data.bool_delimit_tok = 1;
+					else if (cmd[i] == '<')
+						data.bool_heredoc = 1;
+				}
 				//if (cmd[i + 1] && is_operator(cmd[i + 1]))
 				//	data.tok_len += 1;
 			}
@@ -224,20 +297,8 @@ t_list	*ft_tokenize(char *cmd)
 		}
 		i++;
 	}
+	ft_print_list(handle_heredoc(&data, find_delim(list_lexems)), "--- Heredoc input ---");
 	return (list_lexems);
-}
-
-void	ft_print_list(t_list *list, char *title)
-{
-	if (!list)
-		return ;
-	if (title)
-		printf("%s\n", title);
-	while (list)
-	{
-		printf("%s\n", list->content);
-		list = list->next;
-	}
 }
 
 int	execute(void)
