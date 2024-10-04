@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/02 17:46:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:56:00 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,12 @@ enum lex_types
 	ARGS
 };
 
-typedef enum {
-    LEX_TYPE_1, // Define actual types based on your context
-    LEX_TYPE_2,
-    // Add other types as needed
-} lex_types;
 
 typedef struct s_lexems
 {
     int index;
-    char *str;
-    char *value;
+    char *str; //"$USER"
+    char *value; // lboumahd
     enum lex_types type;
     struct s_lexems *next;
 } t_lexems;
@@ -70,19 +65,16 @@ void expander(char **res, char *tmp, int *i, t_env *new_env);
 char *find_var(char *var, t_env *new_env);
 char *replace_var(char *tmp, int *i, int start, t_env *new_env);
 void append_to_str(char **res, char *tmp, int end, int start);
-
-// To deploy 
 void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme);
 void process_HRDOC(t_lexems *lexeme);
+void dup_word(char **res, char *str, int *i);
+//Env
 
-//lol
-char	*ft_strldup(char *s, int max_len);
-// static char	*expand(char *str, t_env *local_env);
-
-// static char	*handle_dollar(char *str, int *i, t_env *local_env);
-
-// char	*expaner(char *str, t_env *new_env);
-
-// char	*dup_word(char *str, int *i);
+t_env	*init_env(char **original_env);
+void	add_env_var(t_env **env, const char *var_name, const char *var_val,
+		int index);
+char	*get_env_var(t_env *env, const char *var_name);
+t_env	*create_env_node(const char *var_name, const char *var_val, int index);
+void	free_env(t_env *env);
 
 #endif

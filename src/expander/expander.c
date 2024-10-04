@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/02 18:10:04 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:12:27 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 void handle_SQ(char **res, char *tmp, int *i, int start)
 {
 	(*i)++;
-	// int start = *i; 
     while (tmp[*i]) 
     {
 		(*i)++;
@@ -31,8 +30,8 @@ void handle_SQ(char **res, char *tmp, int *i, int start)
         }
     }
 	free(res);
-    fprintf(stderr, "Error: No closing single quote found.\n"); 
-    exit(EXIT_FAILURE); // Exit if no closing quote is found
+    printf("Error: No closing single quote found.\n"); 
+    exit(EXIT_FAILURE); 
 }
 
 
@@ -63,30 +62,10 @@ void handle_DQ(char **res, char *tmp, int *i, t_env *new_env)
     }
 	if(res)
 		free(res);
-	//ATTTENNNNNTIONNNNNNNNNN FPRINTF
-    fprintf(stderr, "Error: No closing double quote found.\n");
-    exit(EXIT_FAILURE); // Handle the error as needed
+    printf("Error: No closing double quote found.\n");
+    exit(EXIT_FAILURE); 
 }
 
-void dup_word(char **res, char *str, int *i)
-{
-	int		start;
-
-	if (!str || !i)
-		exit(EXIT_FAILURE);
-	start = *i; 
-	while (str[*i])
-	{
-		
-		if (!ft_isalnum(str[*i]) && *i != start && str[*i] != '?')
-		{
-			append_to_str(res, str, *i, start + 1); 
-			return;
-		}
-		(*i)++;  
-	}
-	append_to_str(res, str, *i, start);
-}
 
 void	handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme)
 {
@@ -168,6 +147,7 @@ void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
 {
     while(lexeme)
 	{
+		//the lexem should have a flag of HDoc
 		if (flag == 1)  // Normal exp case
 			process_regular(lexeme, new_env);
     	// else
@@ -177,45 +157,6 @@ void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
 	//error ?? 
 }
 }
-
-void	expander(char **res, char *tmp, int *i, t_env *new_env)
-{
-	int start;
-	char *var = 0;
-	char *exit_code_str;
-	(void) new_env;
-	
-	(*i)++;
-	start = *i;
-	if((tmp[start] == ' ') ||(tmp[start] == '\0') || (tmp[start] == DQ))
-		return(append_to_str(res, tmp, *i , start - 1));
-	else if(ft_isdigit(tmp[*i]))//digit 0 - 9 -> skip num then append to str
-		{
-			while(tmp[*i] && tmp[*i] != DQ && tmp[*i] != ' ')
-				(*i)++;
-			return(append_to_str(res, tmp, *i, start + 1));
-		}
-	else if (tmp[*i] == '?') //mise a jour du code d erreur 
-	{
-		exit_code_str = ft_itoa(ret_value); 
-		*res = ft_strjoin(*res, exit_code_str);   
-		free(exit_code_str);                                                 // Move past the '?'
-		(*i)++;
-		return; //move pat the ? 
-	}// find exit error 
-	else
-	{ ///BUUUG  = SEGmentation fault 
-		while(ft_isalnum(tmp[*i]))
-			(*i)++;
-		append_to_str(&var, tmp, *i, start);
-		if(getenv(var))
-			*res = ft_strjoin(*res, getenv(var)); //GET THE REAL VALUEEE
-		else 
-			*res = ft_strjoin("", *res);
-		return;
-	}	
-}
-
 
 // char	*find_var(char *var, t_env *new_env) //getenv
 // {
@@ -265,24 +206,4 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 // 	if(new_part)
 // 		free(new_part);
 // }
-void	append_to_str(char **res, char *tmp, int end, int start)
-{
-    char *new_part;
-    char *new_res;
 
-    new_part = malloc((end - start + 1) * sizeof(char)); 
-    if (!new_part)
-        return; 
-    ft_strlcpy(new_part, tmp + start, end - start + 1);
-    if (*res)
-	{
-        new_res = ft_strjoin(*res, new_part);
-        *res = new_res; 
-    } else {
-        *res = new_part;
-        new_part = NULL;
-    }
-    if (new_part) 
-        free(new_part);
-	
-}

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/02 18:08:33 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:05:27 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,49 +51,6 @@
 //TESTTT pour expander only 
 int ret_value = 0;  // Global exit status
 
-// Helper function to create a new lexeme
-t_lexems *create_lexeme(char *str)
-{
-    t_lexems *lexeme = ft_calloc(1, sizeof(t_lexems));
-    if (!lexeme)
-        return NULL;
-    lexeme->str = ft_strdup(str);
-    lexeme->next = NULL;
-    return lexeme;
-}
-
-// Helper function to set up test environment variables
-t_env *setup_env()
-{
-    t_env *env = ft_calloc(1, sizeof(t_env));
-    
-    // Example: Add USER="user_value" to environment
-    env->var_name = ft_strdup("\"$\'USER\'\"");
-    env->var_val = ft_strdup("user_value");
-    env->next = ft_calloc(1, sizeof(t_env));
-    
-    // Add PATH="/usr/bin" to environment
-    env->next->var_name = ft_strdup("PATH");
-    env->next->var_val = ft_strdup("/usr/bin");
-    env->next->next = NULL; // Terminate the list
-    
-    return env;
-}
-
-// Simple cleanup for environment
-void cleanup_env(t_env *env)
-{
-    while (env)
-    {
-        t_env *tmp = env;
-        free(env->var_name);
-        free(env->var_val);
-        env = env->next;
-        free(tmp);
-    }
-}
-
-// Simple cleanup for lexemes
 void cleanup_lexemes(t_lexems *lexeme)
 {
     while (lexeme)
@@ -105,14 +62,31 @@ void cleanup_lexemes(t_lexems *lexeme)
         free(tmp);
     }
 }
+t_lexems *create_lexeme(char *str)
+{
+    if (!str || !*str)  // Check for NULL or empty string
+        return NULL;
+    t_lexems *lexeme = ft_calloc(1, sizeof(t_lexems));
+    if (!lexeme)  // Check if memory allocation was successful
+        return NULL;
+    lexeme->str = ft_strdup(str);
+    if (!lexeme->str)  // Check if strdup was successful
+    {
+        free(lexeme);
+        return NULL;
+    }
+    lexeme->next = NULL;
+    return lexeme;
+}
 
-int main(void)
+int main(int ac, char **av, char **o_env)
 {
     // Set up a test environment with some example variables
-    t_env *env = setup_env();
-
+    t_env *env = init_env(o_env);
+	(void)ac;
+	(void)av;
     // Create a list of lexemes (tokens) for testing
-    t_lexems *lexeme1 = create_lexeme("'$?'");
+    t_lexems *lexeme1 = create_lexeme("$a");
 	printf("%s\n", getenv("PATH"));
     // t_lexems *lexeme2 = create_lexeme("\"$12'USER    '   \"");
     // t_lexems *lexeme3 = create_lexeme("'Literal $USER'");
@@ -129,12 +103,14 @@ int main(void)
 	expand_lexer(lexeme1, env, 1);
 	// expand_lexer(lexeme2, env, 1);  // Flag 1 for normal expansion
     // Clean up memory
+	if(!lexeme1)
+		return 1;
 	printf("value : %s\n", lexeme1->value);
 	printf("str : %s\n", lexeme1->str);
 	// printf("lex2 : %s", lexeme2->value);
     cleanup_lexemes(lexeme1);
 	//  cleanup_lexemes(lexeme2);
-    cleanup_env(env);
+    free_env(env);
     
     return 0;
 }
