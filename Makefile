@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/01 16:14:53 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/04 15:05:29 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,14 @@ LIBREADLFLAGS := -I$(RL_H) -L$(RL_LIB) -lreadline
 
 RM        := rm -f
 
-FILES     := minishell
+# Use wildcard to collect all .c files recursively in src/ and subdirectories
+SRCS := $(wildcard $(SRC_DIR)*/*.c) $(wildcard $(SRC_DIR)*/**/*.c)
+OBJS := $(OBJ_DIR)minishell.o $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS:$(SRC_DIR)minishell.c=))
 
-SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+#Back-up:
+#FILES     := minishell
+#SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+#OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 # --------------------------------- RULES --------------------------------------
 
