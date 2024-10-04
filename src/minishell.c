@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/03 16:35:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/04 13:43:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
 			hd_input = readline("\033[0;32mheredoc>\033[0m ");
 			if (!hd_input)
 			{
-				printf("Sortie par ici.\n");// ##----##  DEBUG  ##----##
 				free(hd_input);
 				return (NULL);
 			}
@@ -126,10 +125,7 @@ t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
 			else
 			{
 				if (!ft_strncmp(hd_input, delim, 3))
-				{
-					printf("%s\n", delim);// ##----##  DEBUG (ligne a retirer) ##----##
 					return (hd_tokens);
-				}
 				ft_lstadd_back(&hd_tokens, ft_lstnew(hd_input));
 			}
 		}
@@ -192,12 +188,14 @@ t_list	*ft_tokenize(char *cmd)
 		{
 			if (data.bool_in_sq == 0 && data.bool_in_dq == 0)
 			{
-				if (i > 0 && !is_operator(cmd[i - 1]))
+				if (i > 0 && !is_operator(cmd[i - 1]) && data.bool_tok_in_progress == 1)
 					data.bool_delimit_tok = 1;
 				else if (i > 0 && is_operator(cmd[i - 1]))
 				{
 					if (cmd[i - 1] != cmd[i])
+					{
 						data.bool_delimit_tok = 1;
+					}
 					else if (cmd[i] == '<')
 						data.bool_heredoc = 1;
 				}
@@ -265,7 +263,7 @@ t_list	*ft_tokenize(char *cmd)
 		}
 		if (data.bool_delimit_tok == 1)
 		{
-			if (&cmd[i] == &cmd[data.tok_start])
+			if (&cmd[i] == &cmd[data.tok_start]) // first if-part can possibly be removed, must be tested
 				data.tok_len = 1;
 			else
 				data.tok_len = &cmd[i] - &cmd[data.tok_start];
