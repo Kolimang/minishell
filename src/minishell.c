@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/04 13:43:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/04 13:53:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
 	t_list	*hd_tokens;
 
 	hd_tokens = NULL;
-	hd_input = NULL;
 	if (dt->bool_heredoc)
 	{
 		while (1)
@@ -132,7 +131,6 @@ t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
 	}
 	return (hd_tokens);
 }
-
 
 void	ft_print_list(t_list *list, char *title)
 {
@@ -193,14 +191,10 @@ t_list	*ft_tokenize(char *cmd)
 				else if (i > 0 && is_operator(cmd[i - 1]))
 				{
 					if (cmd[i - 1] != cmd[i])
-					{
 						data.bool_delimit_tok = 1;
-					}
 					else if (cmd[i] == '<')
 						data.bool_heredoc = 1;
 				}
-				//if (cmd[i + 1] && is_operator(cmd[i + 1]))
-				//	data.tok_len += 1;
 			}
 			else if (data.bool_in_sq == 1 || data.bool_in_dq == 1)
 				data.bool_tok_in_progress = 1;
