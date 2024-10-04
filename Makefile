@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/04 15:05:29 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/04 15:14:47 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,10 @@ $(OBJ_DIR):
 		mkdir -p $(OBJ_DIR); \
 	fi
 
+# Ensure the directory structure for object files exists before compiling
+# Create the directory for the object file if it doesn't exist
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
