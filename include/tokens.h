@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/04 14:54:59 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 12:46:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_cmd_data
 	unsigned int	tok_start;
 }	t_cmd_data;
 
-/*
 enum lex_types
 {
 	I_FILE = 0,
@@ -44,18 +43,8 @@ enum lex_types
 	OPTION = 11
 };
 
-typedef struct s_lexems
-{
-	int		index;
-	char 	*value;
-	int		type;
-}	t_lexems;
-*/
-
 void	init_cmd_data(t_cmd_data *data);
 void	ft_add_cmd_to_history(char *cmd);
-void	ft_printarray(char **lexems);
-int		char_in_set(char *s, char c);
 int		is_operator(char c); // add dashes (- & --) in the set ?
 void	ft_print_list(t_list *list, char *title);
 char	*find_delim(t_list *tokens);

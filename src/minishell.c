@@ -6,11 +6,18 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 11:00:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 12:44:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// Checks if the cmd string is empty, if it is not then it is added to history.
+void	ft_add_cmd_to_history(char *cmd)
+{
+	if (cmd && *cmd)
+		add_history(cmd);
+}
 
 // Checks if the cmd string is empty, if it is not then it is added to history.
 // set SHLVL 
@@ -63,18 +70,6 @@ void cleanup_lexemes(t_lexems *lexeme)
     }
 }
 
-void	ft_printarray(char **lexems)
-{
-	int	i;
-
-	i = 0;
-	while (lexems[i])
-	{
-		printf("%s\n", lexems[i]);
-		i++;
-	}
-}
-
 void	init_cmd_data(t_cmd_data *data)
 {
 	data->bool_in_sq = 0;
@@ -87,20 +82,6 @@ void	init_cmd_data(t_cmd_data *data)
 	data->tok_id = 0;
 	data->tok_len = 0;
 	data->tok_start = 0;
-}
-
-int	char_in_set(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 int	is_operator(char c) // add dashes (- & --) in the set ?
