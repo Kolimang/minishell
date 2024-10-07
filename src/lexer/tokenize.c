@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:16:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:35:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ t_list	*ft_tokenize(char *cmd)
 		create_node(cmd, i, &data, &list_lexems);
 		i++;
 	}
-	ft_print_list(handle_heredoc(&data, find_delim(list_lexems)), "--- Heredoc input ---");
+	ft_print("---- Heredoc input ----\n");
+	ft_print_list(handle_heredoc(&data, find_delim(list_lexems)), NULL);
 	return (list_lexems);
 }
 
+// first if-part inside the main "IF" can possibly be removed, must be tested
 void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexems)
 {
 	char	*templexem;
@@ -56,7 +58,7 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexems)
 
 	if (data->bool_delimit_tok == 1)
 	{
-		if (&cmd[i] == &cmd[data->tok_start]) // first if-part can possibly be removed, must be tested
+		if (&cmd[i] == &cmd[data->tok_start])
 			data->tok_len = 1;
 		else
 			data->tok_len = &cmd[i] - &cmd[data->tok_start];
@@ -68,9 +70,7 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexems)
 		else if (data->bool_endstr == 1)
 			data->tok_len += 1;
 		templexem = ft_substr(cmd, data->tok_start, (size_t)data->tok_len);
-		// To do: protect outputs from ft_substr and ft_strtrim (mallocs)
 		lexem = ft_strtrim(templexem, " ");
-		// To do: protect outputs from ft_substr and ft_strtrim (mallocs)
 		free(templexem);
 		if (lexem[0] != '\0')
 		{

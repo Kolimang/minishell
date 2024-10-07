@@ -6,14 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:16:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:20:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 //TESTTT pour expander only 
-int ret_value = 0;  // Global exit status
+int	g_ret_value = 0;  // Global exit status
 
 void cleanup_lexemes(t_lexems *lexeme)
 {

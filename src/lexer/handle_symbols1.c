@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:13:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:38:49 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	handle_operators(char *cmd, int i, t_cmd_data *data)
 	{
 		if (data->bool_in_sq == 0 && data->bool_in_dq == 0)
 		{
-			if (i > 0 && !is_operator(cmd[i - 1]) && data->bool_tok_in_progress == 1)
+			if (i > 0 && !is_operator(cmd[i - 1])
+				&& data->bool_tok_in_progress == 1)
 				data->bool_delimit_tok = 1;
 			else if (i > 0 && is_operator(cmd[i - 1]))
 			{
@@ -48,9 +49,13 @@ void	handle_spaces(char *cmd, int i, t_cmd_data *data)
 {
 	if (cmd[i] == ' ')
 	{
-		if (data->bool_tok_in_progress == 1 && data->bool_in_sq == 0 && data->bool_in_dq == 0)
-				data->bool_delimit_tok = 1;
-		else if (data->bool_tok_in_progress == 0 && data->bool_in_sq == 0 && data->bool_in_dq == 0)
+		if (data->bool_tok_in_progress == 1
+			&& data->bool_in_sq == 0
+			&& data->bool_in_dq == 0)
+			data->bool_delimit_tok = 1;
+		else if (data->bool_tok_in_progress == 0
+			&& data->bool_in_sq == 0
+			&& data->bool_in_dq == 0)
 			data->tok_start += 1;
 		else if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
 			data->bool_tok_in_progress = 1;

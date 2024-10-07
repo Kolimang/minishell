@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:02:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:36:30 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char	*find_delim(t_list *tokens)
 	int	i;
 
 	i = 0;
-	while(tokens)
+	while (tokens)
 	{
-		if ((!ft_strncmp(tokens->content, "<<", 2)) && ft_strlen(tokens->content) == 2)
+		if ((!ft_strncmp(tokens->content, "<<", 2))
+			&& ft_strlen(tokens->content) == 2)
 		{
 			return (tokens->next->content);
 		}
