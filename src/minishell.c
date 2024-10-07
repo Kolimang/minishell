@@ -6,47 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 15:46:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:02:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// Checks if the cmd string is empty, if it is not then it is added to history.
-// set SHLVL 
-// void	set_shlvl();
-// void	ft_add_cmd_to_history(char *cmd)
-// {
-// 	if (cmd && *cmd)
-// 		add_history(cmd);
-// }
-
-// int	execute(void)
-// {
-// 	char	*prompt;
-// 	char	*cmd;
-
-// 	printf("\033[0;38;5;214m=== MiNishell v0.1 ===\033[0m\n\n");
-// 	prompt = "\033[0;32mminishell>\033[0m";
-// 	while (1)
-// 	{
-// 		cmd = readline(prompt);
-// 		printf("Last input: %s\n", cmd);
-// 		ft_add_cmd_to_history(cmd);
-// 		free(cmd);
-// 	}
-// 	return (0);
-// }
-
-// int	main(int argc, char **argv)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	// set_shlvl();
-// 	if (execute())
-// 		return (execute());
-// 	return (0);
-// }
 
 //TESTTT pour expander only 
 int ret_value = 0;  // Global exit status
@@ -83,51 +47,6 @@ int	is_operator(char c) // add dashes (- & --) in the set ?
 
 	set = "<|>";
 	return (char_in_set(set, c));
-}
-
-t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
-{
-	char	*hd_input;
-	t_list	*hd_tokens;
-
-	hd_tokens = NULL;
-	if (dt->bool_heredoc)
-	{
-		while (1)
-		{
-			hd_input = readline("\033[0;32mheredoc>\033[0m ");
-			if (!hd_input)
-			{
-				free(hd_input);
-				return (NULL);
-			}
-			if (!hd_tokens)
-				hd_tokens = ft_lstnew(hd_input);
-			else
-			{
-				if (!ft_strncmp(hd_input, delim, 3))
-					return (hd_tokens);
-				ft_lstadd_back(&hd_tokens, ft_lstnew(hd_input));
-			}
-		}
-	}
-	return (hd_tokens);
-}
-
-char	*find_delim(t_list *tokens)
-{
-	int	i;
-
-	i = 0;
-	while(tokens)
-	{
-		if ((!ft_strncmp(tokens->content, "<<", 2)) && ft_strlen(tokens->content) == 2)
-		{
-			return (tokens->next->content);
-		}
-		tokens = tokens->next;
-	}
-	return (NULL);
 }
 
 t_list	*ft_tokenize(char *cmd)
