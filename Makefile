@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/04 15:14:47 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/07 10:38:12 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ SRC_DIR   := src/
 OBJ_DIR   := build/
 
 NAME      := minishell
-CC        := gcc
+CC        := gcc -g
 
-#Paths to readline library (installed with brew)
+# Paths to readline library (installed with brew)
 ifeq ($(USER), jrichir)
 	RL_H    := /Users/jrichir/mybin/opt/readline/include
 	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
@@ -48,7 +48,7 @@ OBJS := $(OBJ_DIR)minishell.o $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS:$(
 
 # --------------------------------- RULES --------------------------------------
 
-.PHONY: bonus all clean fclean re
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -73,20 +73,19 @@ $(OBJ_DIR):
 	fi
 
 # Ensure the directory structure for object files exists before compiling
-# Create the directory for the object file if it doesn't exist
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $@) # Create the directory for the object file if it doesn't exist
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C lib/libft/
 	@$(RM) $(OBJS)
 	@rm -rf $(OBJ_DIR)
-	@echo "Delete $(NAME) object files and dependencies."
+	@echo "Deleted $(NAME) object files and dependencies."
 
 fclean: clean
 	make fclean -C lib/libft/
 	@$(RM) $(NAME)
-	@echo "Delete $(NAME) program."
+	@echo "Deleted $(NAME) program."
 
 re: fclean all
