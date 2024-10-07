@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 12:44:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 12:58:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,19 +119,6 @@ t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
 		}
 	}
 	return (hd_tokens);
-}
-
-void	ft_print_list(t_list *list, char *title)
-{
-	if (!list)
-		return ;
-	if (title && title[0] != '\0')
-		printf("%s\n", title);
-	while (list)
-	{
-		printf("%s\n", list->content);
-		list = list->next;
-	}
 }
 
 char	*find_delim(t_list *tokens)

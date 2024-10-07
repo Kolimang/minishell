@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 12:45:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 12:59:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,18 @@ void	ft_printarray(char **array)
 	{
 		printf("%s\n", array[i]);
 		i++;
+	}
+}
+
+void	ft_print_list(t_list *list, char *title)
+{
+	if (!list)
+		return ;
+	if (title && title[0] != '\0')
+		printf("%s\n", title);
+	while (list)
+	{
+		printf("%s\n", list->content);
+		list = list->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 12:46:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 13:00:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ enum lex_types
 void	init_cmd_data(t_cmd_data *data);
 void	ft_add_cmd_to_history(char *cmd);
 int		is_operator(char c); // add dashes (- & --) in the set ?
-void	ft_print_list(t_list *list, char *title);
 char	*find_delim(t_list *tokens);
 t_list	*ft_tokenize(char *cmd);
 void	handle_operators(char *cmd, int i, t_cmd_data *data);
