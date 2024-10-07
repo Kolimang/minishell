@@ -9,7 +9,7 @@
 		\_ [v] Gerer les operateurs : <, << (heredoc), >, >> (append), | (pipe)
 		\_ [ ] Gerer dash et double dash pour les options ?
 		\_ [ ] Gerer les chemins de fichier (par exemple vers l'executable a executer ou vers fichier i/o)
-		\_ [ ] Protect values returned from ft_substr/ft_strtrim (which are malloced, protect all the way back up to exiting the main)
+		\_ [ ] tokenize.c : Protect values returned from ft_substr/ft_strtrim (which are malloced, protect all the way back up to exiting the main)
 		\_ [wip] Heredoc implementation
 				\_ /!\ heredoc input lines should not update command history !
 
