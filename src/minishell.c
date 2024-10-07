@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:09:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:16:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,43 +25,6 @@ void cleanup_lexemes(t_lexems *lexeme)
         lexeme = lexeme->next;
         free(tmp);
     }
-}
-
-void	init_cmd_data(t_cmd_data *data)
-{
-	data->bool_in_sq = 0;
-	data->bool_in_dq = 0;
-	data->bool_endq_sep = 0;
-	data->bool_endstr = 0;
-	data->bool_heredoc = 0;
-	data->bool_delimit_tok = 0;
-	data->bool_tok_in_progress = 0;
-	data->tok_id = 0;
-	data->tok_len = 0;
-	data->tok_start = 0;
-}
-
-t_list	*ft_tokenize(char *cmd)
-{
-	int			i;
-	t_cmd_data	data;
-	t_list		*list_lexems;
-
-	if (ft_strlen(cmd) <= 0)
-		return (NULL);
-	init_cmd_data(&data);
-	i = 0;
-	list_lexems = NULL;
-	while (cmd[i])
-	{
-		handle_operators(cmd, i, &data);
-		handle_spaces(cmd, i, &data);
-		handle_quotes(cmd, i, &data);
-		create_node(cmd, i, &data, &list_lexems);
-		i++;
-	}
-	ft_print_list(handle_heredoc(&data, find_delim(list_lexems)), "--- Heredoc input ---");
-	return (list_lexems);
 }
 
 int	execute(void)
