@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 10:44:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 11:15:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char *handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env);
 void process_regular(t_lexems *lexeme, t_env *new_env);
 void expand_lexer(t_lexems *lexeme, t_env *new_env, int flag);
 void expander(char **res, char *tmp, int *i, t_env *new_env);
-char *find_var(char *var, t_env *new_env);
-char *replace_var(char *tmp, int *i, int start, t_env *new_env);
+//char *find_var(char *var, t_env *new_env);
+//char *replace_var(char *tmp, int *i, int start, t_env *new_env);
 void append_to_str(char **res, char *tmp, int end, int start);
 void handle_NQ(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme);
 void process_HRDOC(t_lexems *lexeme);
