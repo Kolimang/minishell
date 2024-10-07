@@ -1,0 +1,18 @@
+// Checks if the cmd string is empty, if it is not then it is added to history.
+// set SHLVL 
+// void	set_shlvl();
+// void	ft_add_cmd_to_history(char *cmd)
+// {
+// 	if (cmd && *cmd)
+// 		add_history(cmd);
+// }
+
+// int	main(int argc, char **argv)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	// set_shlvl();
+// 	if (execute())
+// 		return (execute());
+// 	return (0);
+// }
