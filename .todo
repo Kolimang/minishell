@@ -1,7 +1,7 @@
 ## To do :
 
-Merge de ns branches
-		\_ [ ] Merge branches tokenize2 && expanderr (avec 2 -r)
+[ ] Merge de ns branches
+		\_ [WiP] Merge branches tokenize2 && expanderr (avec 2 -r)
 		\_ [ ] Delete branch expander (with one final -r)
 
 [WiP] Tokenization:
@@ -13,8 +13,8 @@ Merge de ns branches
 		\_ [wip] Heredoc implementation
 				\_ /!\ heredoc input lines should not update command history !
 
-Parsing : (going from lexem-linked-list list to cmd-linked-list)
-		\_ [ ] Remove wildcards from Makefile and reference all file names
+[ ] Parsing :
+		\_ [ ] Going from lexem-linked-list list to cmd-linked-list.
 
-Finalization :
+[ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names
