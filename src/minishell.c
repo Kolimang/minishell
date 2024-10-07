@@ -6,18 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 12:58:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 15:46:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// Checks if the cmd string is empty, if it is not then it is added to history.
-void	ft_add_cmd_to_history(char *cmd)
-{
-	if (cmd && *cmd)
-		add_history(cmd);
-}
 
 // Checks if the cmd string is empty, if it is not then it is added to history.
 // set SHLVL 
