@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:02:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/07 16:09:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ void	init_cmd_data(t_cmd_data *data)
 	data->tok_id = 0;
 	data->tok_len = 0;
 	data->tok_start = 0;
-}
-
-int	is_operator(char c) // add dashes (- & --) in the set ?
-{
-	char	*set;
-
-	set = "<|>";
-	return (char_in_set(set, c));
 }
 
 t_list	*ft_tokenize(char *cmd)
