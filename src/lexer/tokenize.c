@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:18:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:41:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ t_list	*ft_tokenize(char *cmd)
 		create_node(cmd, i, &data, &list_lexems);
 		i++;
 	}
-	ft_print("---- Heredoc input ----\n");
-	ft_print_list(handle_heredoc(&data, find_delim(list_lexems)), NULL);
+	ft_printf("---- Heredoc input ----\n");
+	ft_print_list(lex_handle_heredoc(&data, find_delim(list_lexems)), NULL);
 	return (list_lexems);
 }
 
