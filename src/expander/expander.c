@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/07 17:20:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 09:24:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	handle_sq(char **res, char *tmp, int *i, int start)
 	exit(EXIT_FAILURE);
 }
 
-void	handle_dq(char **res, char *tmp, int *i, t_env *new_env) 
+void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 {
-	int start;
+	int	start;
 
 	start = 0;
 	(*i)++;
@@ -46,7 +46,7 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 			if (tmp[*i] == '$' && tmp[*i + 1] != '\'')
 				break ;
 			(*i)++;
-	   	}
+		}
 		if (tmp[*i] == DQ)
 		{
 			append_to_str(res, tmp, *i, start);
@@ -67,7 +67,7 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 
 void	handle_nq(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme)
 {
-	int start;
+	int	start;
 
 	start = *i;
 	(void)lexeme;

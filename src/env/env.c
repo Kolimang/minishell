@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/04 14:04:59 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/08 09:26:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*get_env_var(t_env *env, const char *var_name)
 {
@@ -42,7 +41,7 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 			current = current->next;
 		current->next = new_node;
 	}
-}             
+}
 
 t_env	*init_env(char **original_env)
 {
