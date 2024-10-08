@@ -6,23 +6,23 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 12:45:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 14:50:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
- #define TOKENS_H
+# define TOKENS_H
 
-typedef struct	s_lexems
+typedef struct s_lexemes
 {
-	int				index;
-	char			*str; //"$USER"
-	char			*value; // lboumahd
-	int				type;
-	struct s_lexems	*next;
-}	t_lexems;
+	int					index;
+	char				*str; //"$USER"
+	char				*value; // lboumahd
+	int					type;
+	struct s_lexemes	*next;
+}	t_lexemes;
 
-typedef struct	s_cmd_data
+typedef struct s_cmd_data
 {
 	int				bool_in_sq;
 	int				bool_in_dq;
@@ -36,7 +36,7 @@ typedef struct	s_cmd_data
 	unsigned int	tok_start;
 }	t_cmd_data;
 
-enum	lex_types
+enum	e_lex_types
 {
 	I_FILE = 0,
 	I_HEREDOC = 1,
@@ -66,6 +66,8 @@ void	lex_handle_regular(char *cmd, int i, t_cmd_data *data);
 void	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim);
 //void	lex_handle_dashes(char *cmd, int i, t_cmd_data *data);
-void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexems);
+void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes);
+void	reset_token_data(t_cmd_data *data);
+void	set_token_len(char *cmd, int i, t_cmd_data *data);
 
 #endif
