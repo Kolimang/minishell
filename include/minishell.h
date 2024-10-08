@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 17:19:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:01:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 // Include project headers
 # include "tokens.h"
 # include "utils.h"
+# include "expander.h"
 
 int	g_ret_value;
 # define SQ 39

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 09:38:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 09:59:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	cleanup_lexemes(t_lexems *lexeme)
 	}
 }
 
-int	execute(void)
+int	execute(t_env *env)
 {
 	char	*prompt;
 	char	*cmd;
@@ -44,15 +44,26 @@ int	execute(void)
 			return (1);
 		lexems = ft_tokenize(cmd);
 		if (!lexems)
-		{
-			free(cmd);
-			return (1);
-		}
+			return (free(cmd), 1);
 		ft_print_list(lexems, "--- List of lexems ---");
+		ft_expand_lexem_list(lexems, env, 1);
+		ft_print_list(lexems, "--- List of expanded lexems ---");
 		ft_add_cmd_to_history(cmd);
 		free(cmd);
 	}
 	return (0);
+}
+
+// hdoc_flag: 1 for normal expansion ; 2 for heredoc expansion
+void	ft_expand_lexem_list(t_list *list, t_env *env, int hdoc_flag)
+{
+	if (!list)
+		return ;
+	while (list)
+	{
+		expand_lexer(list->content, env, hdoc_flag);
+		list = list->next;
+	}
 }
 
 t_lexems	*create_lexeme(char *str)
@@ -74,39 +85,16 @@ t_lexems	*create_lexeme(char *str)
 	return (lexeme);
 }
 
+// env = test environment
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*env;// Set up a test environment with some example variables
-	t_lexems	*lexeme1;
+	t_env		*env;
 
 	(void)ac;
 	(void)av;
 	env = init_env(o_env);
-	// Create a list of lexemes (tokens) for testing
-	lexeme1 = create_lexeme("$a");
-	printf("%s\n", getenv("PATH"));
-	// t_lexems *lexeme2 = create_lexeme("\"$12'USER    '   \"");
-	// t_lexems *lexeme3 = create_lexeme("'Literal $USER'");
-	// t_lexems *lexeme4 = create_lexeme("Exit code: $?");
-	// t_lexems *lexeme5 = create_lexeme("\"Mixed $USER and $? quotes\"");
-
-	// Chain lexemes together
-	// lexeme1->next = lexeme2;
-	// lexeme2->next = lexeme3;
-	// lexeme3->next = lexeme4;
-	// lexeme4->next = lexeme5;
-
-	// Call expand_lexer on the lexemes with normal expansion flag
-	expand_lexer(lexeme1, env, 1);
-	// expand_lexer(lexeme2, env, 1);  // Flag 1 for normal expansion
-	// Clean up memory
-	if (!lexeme1)
+	if (execute(env))
 		return (1);
-	printf("value : %s\n", lexeme1->value);
-	printf("str : %s\n", lexeme1->str);
-	// printf("lex2 : %s", lexeme2->value);
-	cleanup_lexemes(lexeme1);
-	//  cleanup_lexemes(lexeme2);
 	free_env(env);
 	return (0);
 }
