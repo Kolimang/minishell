@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:36:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:18:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_list	*handle_heredoc(t_cmd_data *dt, char *delim)
+t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 {
 	char	*hd_input;
 	t_list	*hd_tokens;

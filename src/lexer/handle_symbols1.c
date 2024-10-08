@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/07 16:38:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:17:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_operator(char c)
 	return (char_in_set(set, c));
 }
 
-void	handle_operators(char *cmd, int i, t_cmd_data *data)
+void	lex_handle_operators(char *cmd, int i, t_cmd_data *data)
 {
 	if (is_operator(cmd[i]))
 	{
@@ -45,7 +45,7 @@ void	handle_operators(char *cmd, int i, t_cmd_data *data)
 		data->bool_delimit_tok = 1;
 }
 
-void	handle_spaces(char *cmd, int i, t_cmd_data *data)
+void	lex_handle_spaces(char *cmd, int i, t_cmd_data *data)
 {
 	if (cmd[i] == ' ')
 	{
@@ -62,13 +62,13 @@ void	handle_spaces(char *cmd, int i, t_cmd_data *data)
 	}
 }
 
-void	handle_regular(char *cmd, int i, t_cmd_data *data)
+void	lex_handle_regular(char *cmd, int i, t_cmd_data *data)
 {
 	if (!char_in_set("<> '\"", cmd[i]))
 		data->bool_tok_in_progress = 1;
 }
 
-void	handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
+void	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
 {
 	if (cmd[i + 1] == '\0')
 	{
