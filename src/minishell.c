@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 14:58:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:39:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_env *env)
 	char	*cmd;
 	t_list	*lexemes;
 
-	printf("\033[0;38;5;214m=== MiNiSHELL v0.1 ===\033[0m\n\n");
+	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
 	prompt = "\033[0;32mminishell>\033[0m ";
 	while (1)
 	{
