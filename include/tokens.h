@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:16:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:26:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 typedef struct	s_lexems
 {
-	int index;
-	char *str; //"$USER"
-	char *value; // lboumahd
-	enum lex_types type;
-	struct s_lexems *next;
+	int				index;
+	char			*str; //"$USER"
+	char			*value; // lboumahd
+	int				type;
+	struct s_lexems	*next;
 }	t_lexems;
 
-typedef struct s_cmd_data
+typedef struct	s_cmd_data
 {
 	int				bool_in_sq;
 	int				bool_in_dq;
@@ -36,7 +36,7 @@ typedef struct s_cmd_data
 	unsigned int	tok_start;
 }	t_cmd_data;
 
-enum lex_types
+enum	lex_types
 {
 	I_FILE = 0,
 	I_HEREDOC = 1,
