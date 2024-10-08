@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/08 10:21:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:18:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 	exit(EXIT_FAILURE);
 }
 
-void	handle_nq(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme)
+void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
+			t_lexemes *lexeme)
 {
 	int	start;
 
@@ -98,14 +99,13 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env, t_lexems *lexeme)
 	}
 }
 
-char	*handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env)
+char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env)
 {
 	char	*res;
 	char	*final_res;
 	int		i;
 	int		start;
 
-	(void)lexeme;
 	res = ft_calloc(sizeof(char), 1);
 	final_res = ft_calloc(sizeof(char), 1);
 	i = 0;
@@ -117,17 +117,16 @@ char	*handle_exp(char *tmp, t_lexems *lexeme, t_env *new_env)
 		else if (tmp[i] == DQ)
 			handle_dq(&res, tmp, &i, new_env);
 		else
-			handle_nq(&res, tmp, &i, new_env, lexeme); //si on rajoute le lexer apres le parseur 
+			handle_nq(&res, tmp, &i, new_env, lexeme); //si on rajoute lexer apr. parser 
 		// printf("str original: %s\n", res);
 		// final_res = ft_strjoin(final_res, res);
 	}
 	final_res = ft_strjoin(final_res, res);
-	printf("%s\n", final_res);
 	free(res);
 	return (final_res);
 }
 
-void	process_regular(t_lexems *lexeme, t_env *new_env)
+void	process_regular(t_lexemes *lexeme, t_env *new_env)
 {
 	char	*tmp;
 	char	*clean_str;
@@ -147,19 +146,14 @@ void	process_regular(t_lexems *lexeme, t_env *new_env)
 	free(clean_str);
 }
 
-void	expand_lexer(t_lexems *lexeme, t_env *new_env, int flag)
+void	expand_lexer(t_lexemes *lexeme, t_env *new_env, int hdoc_flag)
 {
-	while (lexeme)
-	{
-		//the lexem should have a flag of HDoc
-		if (flag == 1) // Normal exp case
-			process_regular(lexeme, new_env);
-		// else
-		// 	process_HRDOC(lexeme);
-		if (lexeme)
-			lexeme = lexeme->next;
+	//the lexeme should have a flag of HDoc
+	if (hdoc_flag == 1) // Normal exp case
+		process_regular(lexeme, new_env);
+	// else
+	// 		process_hrdoc(lexeme);
 	//error ?? 
-	}
 }
 
 // char	*find_var(char *var, t_env *new_env) //getenv
