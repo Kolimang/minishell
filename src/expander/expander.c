@@ -6,11 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/08 09:24:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:21:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 //WHAT TO DO WHEN !str , NULL of EXIT_FAILURE??
 

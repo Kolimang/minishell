@@ -6,11 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/07 17:06:35 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:21:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 void	dup_word(char **res, char *str, int *i)
 {
