@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:18:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:32:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 				hd_tokens = ft_lstnew(hd_input);
 			else
 			{
-				if (!ft_strncmp(hd_input, delim, 3))
+				if (!ft_strncmp(hd_input, delim, ft_strlen(delim)))
 					return (hd_tokens);
 				ft_lstadd_back(&hd_tokens, ft_lstnew(hd_input));
 			}
@@ -41,19 +41,26 @@ t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 	return (hd_tokens);
 }
 
-char	*find_delim(t_list *tokens)
+char	*find_delim(t_list *list)
 {
-	int	i;
+	int			i;
+	t_lexemes	*lexeme;
+	t_lexemes	*lexeme_next;
 
 	i = 0;
-	while (tokens)
+	while (list)
 	{
-		if ((!ft_strncmp(tokens->content, "<<", 2))
-			&& ft_strlen(tokens->content) == 2)
+		lexeme = list->content;
+		if ((!ft_strncmp(lexeme->str, "<<", 2))
+			&& ft_strlen(lexeme->str) == 2)
 		{
-			return (tokens->next->content);
+			if (list->next)
+			{
+				lexeme_next = list->next->content;
+				return (lexeme_next->str);
+			}
 		}
-		tokens = tokens->next;
+		list = list->next;
 	}
 	return (NULL);
 }

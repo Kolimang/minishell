@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 12:51:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 17:04:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ void	lex_handle_operators(char *cmd, int i, t_cmd_data *data)
 			{
 				if (cmd[i - 1] != cmd[i])
 					data->bool_delimit_tok = 1;
-				else if (cmd[i] == '<')
-					data->bool_heredoc = 1;
+				//else if (cmd[i] == '<')
+					//data->bool_heredoc = 1; DEACTIVATED FOR DEBUGGING
 			}
 		}
-		else if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
-			data->bool_tok_in_progress = 1;
+		//else if (data->bool_in_sq == 1 || data->bool_in_dq == 1) // commented out for test
+		//	data->bool_tok_in_progress = 1; // commented out for test
+		data->bool_tok_in_progress = 1;// added for test
 	}
-	else if (i > 0 && is_operator(cmd[i - 1]))
+	else if (i > 0 && is_operator(cmd[i - 1])) // last condition just added for test
 		data->bool_delimit_tok = 1;
 }
 

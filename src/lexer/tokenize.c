@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 15:04:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 17:14:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_list	*ft_tokenize(char *cmd)
 		create_node(cmd, i, &data, &list_lexemes);
 		i++;
 	}
+	ft_print_lexemes(list_lexemes, 1, ' ', "\033[0;33m[command ]\033[0m"); //Used for debugging
+	ft_printf("hd_delimiter: %s\n", find_delim(list_lexemes));
 	ft_print_list(lex_handle_heredoc(&data, find_delim(list_lexemes)), "hd:\n");
 	return (list_lexemes);
 }
@@ -77,17 +79,18 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 		}
 		else
 			free(lexeme_str);
-		reset_token_data(data);
+		reset_token_data(data, cmd[i]);
 	}
 }
 
-void	reset_token_data(t_cmd_data *data)
+void	reset_token_data(t_cmd_data *data, char current)
 {
 	if (!data)
 		return ;
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	data->bool_tok_in_progress = 0;
+	if (current == ' ')
+		data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }
 
