@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:14:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:24:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include "../lib/libft/libft.h"
 
 // Include project headers
+# include "env.h"
 # include "tokens.h"
 # include "utils.h"
 # include "expander.h"
-# include "env.h"
 
 int	g_ret_value;
 # define SQ 39
