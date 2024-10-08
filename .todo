@@ -5,7 +5,8 @@
 		\_ [ ] Delete branch expander (with one final -r)
 
 [WiP] Tokenization:
-		\_ [ ] Norm: splitter la fonction tokenize en plein de fonctions
+		\_ [ ] Handle correctly whether there is a space separating two tokens or not. Ex: echo "$HOME"test
+		\_ [v] Norm: splitter la fonction tokenize en plein de fonctions
 		\_ [v] Gerer les operateurs : <, << (heredoc), >, >> (append), | (pipe)
 		\_ [ ] Gerer dash et double dash pour les options ?
 		\_ [ ] Gerer les chemins de fichier (par exemple vers l'executable a executer ou vers fichier i/o)
@@ -14,7 +15,7 @@
 				\_ /!\ heredoc input lines should not update command history !
 
 [ ] Parsing :
-		\_ [ ] Going from lexem-linked-list list to cmd-linked-list.
+		\_ [ ] Going from lexeme-linked-list list to cmd-linked-list.
 
 [ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names
