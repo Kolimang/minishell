@@ -1,40 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 16:53:28 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 16:28:46 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
+/*   Updated: 2024/10/08 14:47:42 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-char	*ft_strchr(const char *s, int c)
-{
-	char	*result;
-	int		i;
+void	ft_printarray(char **lexemes);
+int		char_in_set(char *s, char c);
+void	ft_print_list(t_list *list, char *title);
+void	ft_print_lexemes(t_list *list, int option, char separator, char *title);
 
-	if (!s)
-		return (NULL);
-	if ((char)c == '\0')
-	{
-		return (((char *)s) + (ft_strlen(s) * sizeof(char)));
-	}
-	else
-	{
-		i = 0;
-		while (s[i] != '\0')
-		{
-			if (s[i] == (char)c)
-			{
-				result = (char *)&s[i];
-				return (result);
-			}
-			i++;
-		}
-		return (NULL);
-	}
-}
+#endif

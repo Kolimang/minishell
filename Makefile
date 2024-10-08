@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/18 11:51:07 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/18 11:51:16 by jrichir          ###   ########.fr        #
+#    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
+#    Updated: 2024/10/08 15:34:09 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ SRC_DIR   := src/
 OBJ_DIR   := build/
 
 NAME      := minishell
-CC        := gcc
+CC        := gcc -g
 
-#Paths to readline library (installed with brew)
+# Paths to readline library (installed with brew)
 ifeq ($(USER), jrichir)
 	RL_H    := /Users/jrichir/mybin/opt/readline/include
 	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
@@ -37,14 +37,18 @@ LIBREADLFLAGS := -I$(RL_H) -L$(RL_LIB) -lreadline
 
 RM        := rm -f
 
-FILES     := test
+# Use wildcard to collect all .c files recursively in src/ and subdirectories
+SRCS := $(wildcard $(SRC_DIR)*/*.c) $(wildcard $(SRC_DIR)*/**/*.c)
+OBJS := $(OBJ_DIR)minishell.o $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS:$(SRC_DIR)minishell.c=))
 
-SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+#Back-up:
+#FILES     := minishell
+#SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+#OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 # --------------------------------- RULES --------------------------------------
 
-.PHONY: bonus all clean fclean re
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
@@ -68,18 +72,20 @@ $(OBJ_DIR):
 		mkdir -p $(OBJ_DIR); \
 	fi
 
+# Ensure the directory structure for object files exists before compiling
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@) # Create the directory for the object file if it doesn't exist
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C lib/libft/
 	@$(RM) $(OBJS)
 	@rm -rf $(OBJ_DIR)
-	@echo "Delete $(NAME) object files and dependencies."
+	@echo "Deleted $(NAME) object files and dependencies."
 
 fclean: clean
 	make fclean -C lib/libft/
 	@$(RM) $(NAME)
-	@echo "Delete $(NAME) program."
+	@echo "Deleted $(NAME) program."
 
 re: fclean all

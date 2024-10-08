@@ -1,12 +1,18 @@
 # Folders
 .vscode
 build
+exec
 
 # Executable
 minishell
 
+# Files
+out*
+
 # Hidden files
 .DS_Store
+.debug
+.notes
 
 # Prerequisites
 *.d

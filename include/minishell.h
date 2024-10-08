@@ -3,22 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/09/17 11:35:23 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/08 10:24:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+// Include library headers
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
 
-int	ret_value;
+// Include project headers
+# include "env.h"
+# include "tokens.h"
+# include "utils.h"
+# include "expander.h"
+
+int	g_ret_value;
+# define SQ 39
+# define DQ 34
+//SQ DQ changed
+
 #endif
