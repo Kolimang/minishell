@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:10:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:23:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 typedef struct	s_env
 {
-	char *var_name;
-	char *var_val;
-	int index;
-	struct s_env *next;
+	char			*var_name;
+	char			*var_val;
+	int				index;
+	struct s_env	*next;
 }	t_env;
 
 t_env	*init_env(char **original_env);
