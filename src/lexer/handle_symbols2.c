@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 10:17:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/08 10:42:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,4 @@ void	lex_handle_dq(char *cmd, int i, t_cmd_data *data)
 				data->bool_tok_in_progress = 1;
 		}
 	}
-}
-
-void	lex_handle_regular(char *cmd, int i, t_cmd_data *data)
-{
-	if (!char_in_set("<> '\"", cmd[i]))
-		data->bool_tok_in_progress = 1;
 }
