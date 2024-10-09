@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 10:35:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:18:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,13 @@ void	process_regular(t_lexemes *lexeme, t_env *new_env)
 	free(clean_str);
 }
 
-void	expand_lexeme(t_lexemes *lexeme, t_env *new_env, int hdoc_flag)
+// if heredoc token --> type = 1; else if regular token --> type = 0
+void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
 {
-	//the lexeme should have a flag of HDoc
-	if (hdoc_flag == 1) // Normal exp case
+	if (lexeme->type == 0) // Normal exp case
 		process_regular(lexeme, new_env);
-	// else
-	// 		process_hrdoc(lexeme);
+	else
+		process_regular(lexeme, new_env); // temp, to be replaced by process_hrdoc(lexeme);
 	//error ?? 
 }
 
