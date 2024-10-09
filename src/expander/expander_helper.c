@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/08 10:21:13 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 14:25:07 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 		return ;//move past the ?
 	}// find exit error
 	else
-	{ ///BUUUG  = SEGmentation fault
+	{ ///check for tmp[i] == '_'
 		while (ft_isalnum(tmp[*i]))
 			(*i)++;
 		append_to_str(&var, tmp, *i, start);
-		if (get_env_var(new_env, var))
+		if (get_env_val(new_env, var))
 			*res = ft_strjoin(*res, get_env_var(new_env, var)); //GET REAL VALUE
 		else
 			*res = ft_strjoin("", *res);

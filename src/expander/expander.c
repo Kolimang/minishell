@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 13:54:54 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:19:40 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
 		process_regular(lexeme, new_env);
 	else
 		process_regular(lexeme, new_env); // temp, to be replaced by process_hrdoc(lexeme);
+		//process_hrdoc(hd_lexemes_lists??, new_env)
 	//error ?? 
 }
 
