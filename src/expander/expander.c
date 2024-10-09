@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 13:18:18 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:54:54 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ void	handle_sq(char **res, char *tmp, int *i, int start)
 			return ;
 		}
 	}
-	free(res);
-	printf("Error: No closing single quote found.\n");
-	exit(EXIT_FAILURE);
+	// free(res);
+	// exit(EXIT_FAILURE);
 }
 
 void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
@@ -59,10 +58,8 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 			expander(res, tmp, i, new_env);
 		}
 	}
-	if (res)
-		free(res);
-	printf("Error: No closing double quote found.\n");
-	exit(EXIT_FAILURE);
+	// free(res);
+	// exit(EXIT_FAILURE);
 }
 
 void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
@@ -82,7 +79,6 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
 		}
 		return ;
 	}
-	// Handle variable expansion
 	else if (tmp[*i] == '$')
 	{
 		expander(res, tmp, i, new_env);
@@ -91,10 +87,7 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
 	else
 	{
 		while (tmp[*i] && tmp[*i] != '$' && tmp[*i] != SQ && tmp[*i] != DQ)
-		{
 			(*i)++; // Move *i to the end of the current non-special segment
-		}
-		// Append the portion of the string from start to the current *i
 		append_to_str(res, tmp, *i, start);
 	}
 }
@@ -118,8 +111,6 @@ char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env)
 			handle_dq(&res, tmp, &i, new_env);
 		else
 			handle_nq(&res, tmp, &i, new_env, lexeme); //si on rajoute lexer apr. parser 
-		// printf("str original: %s\n", res);
-		// final_res = ft_strjoin(final_res, res);
 	}
 	final_res = ft_strjoin(final_res, res);
 	free(res);

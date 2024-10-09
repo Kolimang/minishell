@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:26:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:57:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ int	main(int ac, char **av, char **o_env)
 
 	(void)ac;
 	(void)av;
+	
+	g_ret_value = 0;
 	env = init_env(o_env);
+	//set_shlvl(env);
 	if (execute(env))
 		return (1);
 	free_env(env);
