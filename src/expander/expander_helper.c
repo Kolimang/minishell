@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 14:25:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:54:49 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 			(*i)++;
 		append_to_str(&var, tmp, *i, start);
 		if (get_env_val(new_env, var))
-			*res = ft_strjoin(*res, get_env_var(new_env, var)); //GET REAL VALUE
+			*res = ft_strjoin(*res, get_env_val(new_env, var)); //GET REAL VALUE
 		else
 			*res = ft_strjoin("", *res);
 		return ;

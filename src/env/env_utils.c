@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 13:43:26 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/09 14:52:04 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_shlvl(t_env *env)
 	char	*tmp;
 	int		val;
 
-	current = get_env_var(env, "SHLVL");
+	current = get_env_val(env, "SHLVL");
 	if(!current)
 		current = "0";
 	
