@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 12:35:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:19:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute(t_env *env)
 		if (!lexemes)
 			return (free(cmd), 1);
 		ft_printf("Here goes\n");
-		ft_expand_lexeme_list(lexemes, env, 1);
+		ft_expand_lexeme_list(lexemes, env);
 		ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m");
 		ft_add_cmd_to_history(cmd);
 		free(cmd);
@@ -55,13 +55,13 @@ int	execute(t_env *env)
 }
 
 // hdoc_flag: 1 for normal expansion ; 2 for heredoc expansion
-void	ft_expand_lexeme_list(t_list *list, t_env *env, int hdoc_flag)
+void	ft_expand_lexeme_list(t_list *list, t_env *env)
 {
 	if (!list)
 		return ;
 	while (list)
 	{
-		expand_lexeme(list->content, env, hdoc_flag);
+		expand_lexeme(list->content, env);
 		list = list->next;
 	}
 }

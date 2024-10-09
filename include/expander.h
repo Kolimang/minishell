@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 10:35:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:19:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define EXPANDER_H
 
 // JP
-void	ft_expand_lexeme_list(t_list *list, t_env *env, int hdoc_flag);
+void	ft_expand_lexeme_list(t_list *list, t_env *env);
 
 // Lina 
 void	handle_sq(char **res, char *tmp, int *i, int start);
 void	handle_dq(char **res, char *tmp, int *i, t_env *new_env);
 char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env);
 void	process_regular(t_lexemes *lexeme, t_env *new_env);
-void	expand_lexeme(t_lexemes *lexeme, t_env *new_env, int flag);
+void	expand_lexeme(t_lexemes *lexeme, t_env *new_env);
 void	expander(char **res, char *tmp, int *i, t_env *new_env);
 //char	*find_var(char *var, t_env *new_env);
 //char	*replace_var(char *tmp, int *i, int start, t_env *new_env);

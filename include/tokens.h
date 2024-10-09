@@ -6,13 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 12:33:02 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:06:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
+// if heredoc token --> type = 1; else type = 0
 typedef struct s_lexemes
 {
 	int					index;

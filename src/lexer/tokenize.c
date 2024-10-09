@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 12:35:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:12:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ t_list	*ft_tokenize(char *cmd)
 	int			i;
 	t_cmd_data	data;
 	t_list		*list_lexemes;
+	t_list		*list_hd_lexemes;
 
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
 	init_cmd_data(&data);
 	i = 0;
 	list_lexemes = NULL;
+	list_hd_lexemes = NULL;
 	while (i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);
@@ -51,6 +53,9 @@ t_list	*ft_tokenize(char *cmd)
 	//ft_print_lexemes(list_lexemes, 1, ' ', "\033[0;33m[command ]\033[0m"); //Used for debugging
 	//ft_printf("hd_delimiter: %s\n", find_delim(list_lexemes)); //Used for debugging
 	ft_print_list(lex_handle_heredoc(&data, find_delim(list_lexemes)), "[hd:]");
+	list_hd_lexemes = lex_handle_heredoc(&data, find_delim(list_lexemes));
+	if (list_hd_lexemes)
+		ft_lstadd_back(&list_lexemes, list_hd_lexemes);
 	return (list_lexemes);
 }
 
@@ -72,6 +77,7 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 			lexeme->index = data->tok_id;
 			lexeme->str = lexeme_str;
 			lexeme->value = NULL;
+			lexeme->type = 0;
 			if (!*list_lexemes)
 				*list_lexemes = ft_lstnew(lexeme);
 			else
