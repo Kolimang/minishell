@@ -5,8 +5,10 @@
 		\_ [v] Delete branch expander (with one final -r)
 
 [WiP] Tokenization:
+		\_ [WiP] split at pipes and handle command by command (lexer->parsing->exec)
 		\_ [wip] Heredoc implementation
-				\_ [ ] handle multiple heredoc-inputs (cat <<eo >f | cat <<eo >>f)
+				\_ [ ] handle heredocs with <<- operator (requires adapting find_delim() function)
+				\_ [v] handle multiple heredoc-inputs (cat <<eo >f | cat <<eo >>f)
 				\_ [v] send heredoc lexemes to expansion
 				\_ /!\ heredoc input lines should not update command history !
 		\_ [v] Fix undesired whitespace in "lina"'bouma'
@@ -19,7 +21,7 @@
 		\_ [ ] tokenize.c : Protect values returned from ft_substr/ft_strtrim (which are malloced, protect all the way back up to exiting the main)
 
 [ ] Parsing :
-		\_ [ ] Going from lexeme-linked-list list to cmd-linked-list.
+		\_ [ ] For each command, go from lexeme-linked-list list to cmd-linked-list.
 
 [ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names

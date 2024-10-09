@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:41:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 16:36:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ t_list	*ft_tokenize(char *cmd)
 		ft_lstadd_back(&list_lexemes, list_hd_lexemes);
 	return (list_lexemes);
 }
+
+// move this func() to heredoc.c
+//t_list	*handle_heredocs(char *cmd, t_list *list_lexemes)
+//{
+//	
+//}
 
 void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 {

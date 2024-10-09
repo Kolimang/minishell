@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:57:33 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:12:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	execute(t_env *env)
 {
 	char	*prompt;
 	char	*cmd;
+	char	**cmds;
 	t_list	*lexemes;
+	int		i;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
 	prompt = "\033[0;32mminishell$\033[0m ";
@@ -42,13 +44,22 @@ int	execute(t_env *env)
 		cmd = readline(prompt);
 		if (!cmd)
 			return (1);
-		lexemes = ft_tokenize(cmd);
-		if (!lexemes)
-			return (free(cmd), 1);
-		ft_expand_lexeme_list(lexemes, env);
-		ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m");
 		ft_add_cmd_to_history(cmd);
+		cmds = ft_split(cmd, '|');
 		free(cmd);
+		i = 0;
+		while (cmds[i])
+		{
+			lexemes = ft_tokenize(cmds[i]);
+			if (!lexemes)
+				return (free(cmd), 1); // temp, not complete, must free all commands
+			ft_expand_lexeme_list(lexemes, env);
+			// parse
+			// exec
+			ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m"); // in place of exec
+			// free_list or delete_list lexemes
+			i++;
+		}
 	}
 	return (0);
 }

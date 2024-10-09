@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:41:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 15:35:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_lexemes
 	char				*str; //"$USER"
 	char				*value; // lboumahd
 	int					type;
+	int					hd_group;
 	struct s_lexemes	*next;
 }	t_lexemes;
 
