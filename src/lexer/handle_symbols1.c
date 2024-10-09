@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 10:40:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 12:10:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	lex_handle_spaces(char *cmd, int i, t_cmd_data *data)
 
 void	lex_handle_regular(char *cmd, int i, t_cmd_data *data)
 {
-	if (!char_in_set("<> '\"", cmd[i]))
+	if (!char_in_set("<> \'\"", cmd[i]))
 		data->bool_tok_in_progress = 1;
 }
 
