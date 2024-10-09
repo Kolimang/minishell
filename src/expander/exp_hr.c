@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 14:24:06 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:54:26 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static void handle_hrdoc_exp(char **res, char *tmp, int *i, t_env *new_env)
 {
-    int start = *i;
+    int start;
 	char *var_name;
 	char *var_value;
 
+	start = *i;
     if (tmp[*i] == '$' && ft_isalnum(tmp[*i + 1]))
     {
         (*i)++;
