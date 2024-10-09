@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 16:32:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 11:11:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 	{
 		while (1)
 		{
-			hd_input = readline("\033[0;32mheredoc>\033[0m ");
+			hd_input = readline("\033[0;35mheredoc>\033[0m ");
 			if (!hd_input)
 			{
 				free(hd_input);

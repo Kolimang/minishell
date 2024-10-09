@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 16:36:36 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 11:10:35 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	execute(t_env *env)
 	t_list	*lexemes;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	prompt = "\033[0;32mminishell>\033[0m ";
+	prompt = "\033[0;32mminishell$\033[0m ";
 	while (1)
 	{
 		cmd = readline(prompt);
@@ -60,7 +60,7 @@ void	ft_expand_lexeme_list(t_list *list, t_env *env, int hdoc_flag)
 		return ;
 	while (list)
 	{
-		expand_lexer(list->content, env, hdoc_flag);
+		expand_lexeme(list->content, env, hdoc_flag);
 		list = list->next;
 	}
 }

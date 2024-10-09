@@ -20,9 +20,9 @@ int	main(int ac, char **av, char **o_env)
 	// lexeme3->next = lexeme4;
 	// lexeme4->next = lexeme5;
 
-	// Call expand_lexer on the lexemes with normal expansion flag
-	expand_lexer(lexeme1, env, 1);
-	// expand_lexer(lexeme2, env, 1);  // Flag 1 for normal expansion
+	// Call expand_lexeme on the lexemes with normal expansion flag
+	expand_lexeme(lexeme1, env, 1);
+	// expand_lexeme(lexeme2, env, 1);  // Flag 1 for normal expansion
 	// Clean up memory
 	if (!lexeme1)
 		return (1);
