@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 17:14:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 12:33:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	lex_handle_quotes(char *cmd, int i, t_cmd_data *data);
 void	lex_handle_sq(char *cmd, int i, t_cmd_data *data);
 void	lex_handle_dq(char *cmd, int i, t_cmd_data *data);
 void	lex_handle_regular(char *cmd, int i, t_cmd_data *data);
-void	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
+int		lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim);
 //void	lex_handle_dashes(char *cmd, int i, t_cmd_data *data);
 void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes);
