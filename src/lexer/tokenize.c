@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:39:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:41:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,16 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 		}
 		else
 			free(lexeme_str);
-		reset_token_data(data, cmd[i]);
+		reset_token_data(data);
 	}
 }
 
-void	reset_token_data(t_cmd_data *data, char current)
+void	reset_token_data(t_cmd_data *data)
 {
 	if (!data)
 		return ;
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	//if (current == ' ')
-	//	data->bool_tok_in_progress = 0;  --> problem with "lina"'bou'
-	(void)current; // just added for debug
 	data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }
