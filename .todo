@@ -5,7 +5,8 @@
 		\_ [ ] Delete branch expander (with one final -r)
 
 [WiP] Tokenization:
-		\_ [ ] Fix crash with ft_strncmp in lex_handle_heredoc (null adress)
+		\_ [ ] expand heredoc lexemes
+		\_ [v] Fix crash with ft_strncmp in lex_handle_heredoc (null adress)
 		\_ [ ] Handle correctly whether there is a space separating two tokens or not. Ex: echo "$HOME"test
 		\_ [v] Norm: splitter la fonction tokenize en plein de fonctions
 		\_ [v] Gerer les operateurs : <, << (heredoc), >, >> (append), | (pipe)
