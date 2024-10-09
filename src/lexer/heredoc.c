@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:05:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 13:36:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 				return (free(hd_input), hd_lexemes_list);
 			ft_lstadd_back(&hd_lexemes_list, ft_lstnew(hd_lexeme));
 		}
-		free(hd_input);
 	}
 	return (hd_lexemes_list);
 }
