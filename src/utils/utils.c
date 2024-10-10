@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 12:00:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:22:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,11 @@ void	ft_print_lexemes(t_list *list, int option, char separator, char *title)
 	{
 		lexeme = list->content;
 		if (option == 1)
-			printf("%s%c", lexeme->str, separator);
+			printf("%s", lexeme->str);
 		else if (option == 2)
-			printf("%s%c", lexeme->value, separator);
+			printf("%s", lexeme->value);
+		if (list->next)
+			printf("%c", separator);
 		list = list->next;
 	}
 	if (separator != '\n')
