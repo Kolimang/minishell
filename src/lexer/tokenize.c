@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 16:34:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:01:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ t_list	*ft_tokenize(char *cmd)
 	return (list_lexemes);
 }
 
-// move this func() to heredoc.c
-//t_list	*handle_heredocs(char *cmd, t_list *list_lexemes)
-//{
-//	
-//}
-
 void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 {
 	char		*templexeme_str;
@@ -70,6 +64,7 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 	if (data->bool_delimit_tok == 1)
 	{
 		set_token_len(cmd, i, data);
+		// printf("i: %d - tokenlen: %d\n", i, data->tok_len); // For DEBUGGING
 		templexeme_str = ft_substr(cmd, data->tok_start, (size_t)data->tok_len);
 		lexeme_str = ft_strtrim(templexeme_str, " ");
 		free(templexeme_str);
@@ -87,17 +82,18 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 		}
 		else
 			free(lexeme_str);
-		reset_token_data(data);
+		reset_token_data(data, cmd[i]);
 	}
 }
 
-void	reset_token_data(t_cmd_data *data)
+void	reset_token_data(t_cmd_data *data, char c)
 {
 	if (!data)
 		return ;
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	data->bool_tok_in_progress = 0;
+	if (c == ' ')	// ou faudra peut-etre ajouter aussi si is_operator(c, set), en tt cas si je reset d'office tok_in_progress a 0, la cmd [<f c] (sans les brackets) foire et le token f disparait
+		data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }
 
