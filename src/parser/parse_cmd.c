@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 15:50:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:00:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,11 @@ t_command	*ft_parse_lexemes(t_list *lexemes, int id)
 				if (node->type == 1)
 				{
 					command->i_heredoc = lexemes;
+					break;
 				}
 				lexemes = lexemes->next;
 			}
 			lexemes = temp->next;
-			// node = lexemes->content;
-			// if (lexemes->next && lexemes->next->content)
-			// 	nextnode = lexemes->next->content;
 		}
 		else if (ft_strncmp(node->value, ">>", 2) == 0)
 		{
