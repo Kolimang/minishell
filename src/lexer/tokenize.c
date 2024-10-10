@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 16:36:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 15:27:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	reset_token_data(t_cmd_data *data)
 	data->bool_delimit_tok = 0;
 }
 
-// second IF-part can possibly be removed, must be tested
 void	set_token_len(char *cmd, int i, t_cmd_data *data)
 {
 	if (!cmd || !data)
@@ -116,6 +115,4 @@ void	set_token_len(char *cmd, int i, t_cmd_data *data)
 		data->bool_endq_sep = 0;
 		data->tok_len += 1;
 	}
-	//else if (data->bool_endstr == 1 )
-	//	data->tok_len += 1;
 }

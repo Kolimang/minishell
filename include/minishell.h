@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/08 15:38:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 14:25:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 # include "tokens.h"
 # include "utils.h"
 # include "expander.h"
+# include "parser.h"
 
 int	g_ret_value;
 # define SQ 39
 # define DQ 34
 //SQ DQ changed
 
-# define VERSION "v0.1.2"
+# define VERSION "v0.1.3"
 #endif

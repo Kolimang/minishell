@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 12:32:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:13:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	lex_handle_spaces(char *cmd, int i, t_cmd_data *data)
 			data->bool_delimit_tok = 1;
 		else if (data->bool_tok_in_progress == 0
 			&& data->bool_in_sq == 0
-			&& data->bool_in_dq == 0)
+			&& data->bool_in_dq == 0
+			&& cmd[i + 1] != '\0') // added for test : <f_ ok mais <f__ plante ('_' etant un espace, pas un underscore)
 			data->tok_start += 1;
 		else if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
 			data->bool_tok_in_progress = 1;
