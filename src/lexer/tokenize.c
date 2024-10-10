@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 15:27:18 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/10 16:34:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ t_list	*ft_tokenize(char *cmd)
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
 	init_cmd_data(&data);
-	i = 0;
+	i = -1;
 	list_lexemes = NULL;
 	list_hd_lexemes = NULL;
-	while (i <= (int)ft_strlen(cmd))
+	while (++i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);
 		lex_handle_spaces(cmd, i, &data);
@@ -48,7 +48,6 @@ t_list	*ft_tokenize(char *cmd)
 		if (lex_handle_end_of_cmd(cmd, i, &data))
 			return (NULL);
 		create_node(cmd, i, &data, &list_lexemes);
-		i++;
 	}
 	list_hd_lexemes = lex_handle_heredoc(&data, find_delim(list_lexemes));
 	if (list_hd_lexemes)
