@@ -5,7 +5,10 @@
 		\_ [v] Delete branch expander (with one final -r)
 
 [WiP] Tokenization:
-		\_ [WiP] split at pipes and handle command by command (lexer->parsing->exec)
+		\_ [ ] Fix bugs
+				\_ [ ] commande <f_ ok mais commande <f__ plante ('_' etant un espace, pas un underscore)
+				\_ [ ] commande <f c donne < c, le f token f disparait!
+		[WiP] split at pipes and handle command by command (lexer->parsing->exec)
 		\_ [wip] Heredoc implementation
 				\_ [ ] handle heredocs with <<- operator (requires adapting find_delim() function)
 				\_ [v] handle multiple heredoc-inputs (cat <<eo >f | cat <<eo >>f)
