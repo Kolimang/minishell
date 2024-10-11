@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 16:24:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/11 11:55:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	execute(t_env *env)
 			lexemes = ft_tokenize(cmds[i]);
 			if (!lexemes)
 				return (free(cmd), 1); // temp, not complete, must free all commands
-			ft_print_lexemes(lexemes, 1, ' ', "\033[0;33m[command ]\033[0m");
+			//ft_print_lexemes(lexemes, 1, ' ', "\033[0;33m[command ]\033[0m");
 			ft_expand_lexeme_list(lexemes, env);
-			ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m"); // in place of exec
+			//ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m"); // in place of exec
 			t_command	*command;
-			command = ft_parse_lexemes(lexemes, i); // turn lexemes-list into commands-list
+			command = ft_parse_lexemes(lexemes, i, ft_arraylen(cmds)); // turn lexemes-list into commands-list
 			ft_print_command(command);
 			// exec
 			// free_list or delete_list lexemes

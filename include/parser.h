@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 17:02:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/11 11:50:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 
 typedef struct s_command
 {
-	int					index;
-	char				*name;
-	char				*options;
-	char				*args;
-	char				*i_file;
-	t_list				*i_heredoc;
-	char				*o_file;
-	char				*o_file_append;
-	struct s_command	*next;
+	int			index;
+	int			argc;
+	char		**args;
+	char		*i_file;
+	char		*i_hd_delimiter;
+	char		*o_file;
+	char		*o_file_append;
+	int			nextpipe;
 }	t_command;
 
-t_command	*ft_parse_lexemes(t_list *lexemes, int id); // turn lexemes-list into commands-list
+t_command	*ft_parse_lexemes(t_list *lexemes, int id, int nb_commands); // turn lexemes-list into commands-list
 void	ft_print_command(t_command *command);
+char	**get_args(t_list *lexemes, int argc);
 
 #endif

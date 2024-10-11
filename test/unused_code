@@ -1,3 +1,75 @@
+t_command	*ft_parse_lexemes(t_list *lexemes, int id, size_t nb_commands)
+{
+	t_command	*command;
+	t_lexemes	*node;
+	t_lexemes	*nextnode;
+	t_list		*temp;
+	int			i;
+
+	command = malloc(sizeof(t_command));
+	if (!command)
+		return (NULL);
+	init_command(command);
+	i = 0;
+	while (lexemes)
+	{
+		temp = lexemes;
+		node = lexemes->content;
+		if (lexemes->next && lexemes->next->content)
+			nextnode = lexemes->next->content;
+		command->index = id;
+		if (ft_strncmp(node->value, "<<", 2) == 0)
+		{
+			while (lexemes)
+			{
+				node = lexemes->content;
+				if (node->type == 1)
+				{
+					command->i_heredoc = lexemes;
+					break;
+				}
+				lexemes = lexemes->next;
+			}
+			lexemes = temp->next;
+		}
+		else if (ft_strncmp(node->value, ">>", 2) == 0)
+		{
+			command->o_file_append = nextnode->value;
+			lexemes = lexemes->next;
+		}
+		else if (ft_strncmp(node->value, "<", 1) == 0)
+		{
+			command->i_file = nextnode->value;
+			lexemes = lexemes->next;
+		}
+		else if (ft_strncmp(node->value, ">", 1) == 0)
+		{
+			command->o_file = nextnode->value;
+			lexemes = lexemes->next;
+		}
+		else if (ft_strncmp(node->value, "-", 1) == 0)
+		{
+			command->options = node->value;
+		}
+		else if (!command->name)
+		{
+			if (node->type == 0)
+				command->name = node->value;
+		}
+		else if (!command->args)
+		{
+			if (node->type == 0)
+				command->args = node->value;
+		}
+		lexemes = lexemes->next;
+	}
+	return (command);
+}
+
+
+
+
+
 int	main(int ac, char **av, char **o_env)
 {
 	t_env		*env;// Set up a test environment with some example variables
