@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/11 11:55:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/11 15:49:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ int	execute(t_env *env)
 		cmd = readline(prompt);
 		if (!cmd)
 			return (1);
+		cmd = ft_strtrim(cmd, " "); // memory leak, refaire ca proprement en dupliquant cmd puis free
+		if (cmd[0] == '|')
+		{
+			perror("syntax error near unexpected token `|'"); // un second msg "Undefined error: 0" s'ajoute a l'output
+			exit (EXIT_FAILURE); // should probably return promt instead of exiting minishell program entirely ?
+		}
 		ft_add_cmd_to_history(cmd);
 		cmds = ft_split(cmd, '|');
 		free(cmd);
