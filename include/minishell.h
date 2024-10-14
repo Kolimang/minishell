@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/10 14:25:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:21:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ int	g_ret_value;
 # define DQ 34
 //SQ DQ changed
 
-# define VERSION "v0.1.3"
+# define VERSION "v0.1.35"
 #endif

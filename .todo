@@ -1,8 +1,8 @@
 ## To do :
 
-[ ] Merge de ns branches
-		\_ [v] Merge branches tokenize2 && expanderr (avec 2 -r)
-		\_ [v] Delete branch expander (with one final -r)
+[ ] minishell.c -> execute()
+		\_ [ ] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
+				commence ou se termine par un pipe (auquel cas `syntax error`)
 
 [WiP] Tokenization:
 		\_ [v] Fix bugs
@@ -24,12 +24,12 @@
 		\_ [ ] tokenize.c : Protect values returned from ft_substr/ft_strtrim (which are malloced, protect all the way back up to exiting the main)
 
 [ ] Parsing :
-		\_ [wip] For each command, go from lexeme-linked-list list to cmd-struct.
-		\_ [ ] Handle multiple input files/heredoc (delimiters) or multiple outputs/appends for a single command
+		\_ [v] For each command, go from lexeme-linked-list list to cmd-struct.
+		\_ [v] Handle multiple input files/heredoc (delimiters) or multiple outputs/appends for a single command
+		\_ [v] Discard command like [$a=lina] (si y a un signe egal et pas de cmd/executable, autrement dit au niveau du parseur s'il y a un seul argument et qu'il contient un signe egal, alors on ignore la commande)
 
 [ ] Exec :
-		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce 
-		qu'on a deja lu
+		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
 
 [ ] Built-ins :
 
@@ -42,8 +42,8 @@
 
 [ ] Testing :
 		\_ [ ] CAS CHIANTS !!! 
-				\_ [ ] echo hello >1 >>2 >3
-				\_ [ ] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
+				\_ [v] echo hello >1 >>2 >3
+				\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
 						--> faire des listes chainees pour les input/output, pour pouvoir supprimer les noeuds/files/fd dejas traites
 						--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere 
 						(par exemple, pour les inputs, f pour file, h pour heredoc)

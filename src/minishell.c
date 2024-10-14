@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/11 15:49:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:14:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	cleanup_lexemes(t_lexemes *lexeme)
 
 int	execute(t_env *env)
 {
-	char	*prompt;
-	char	*cmd;
-	char	**cmds;
-	t_list	*lexemes;
-	int		i;
+	char		*prompt;
+	char		*cmd;
+	char		**cmds;
+	t_list		*lexemes;
+	t_command	*command;
+	int			i;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
 	prompt = "\033[0;32mminishell$\033[0m ";
@@ -44,31 +45,40 @@ int	execute(t_env *env)
 		cmd = readline(prompt);
 		if (!cmd)
 			return (1);
-		cmd = ft_strtrim(cmd, " "); // memory leak, refaire ca proprement en dupliquant cmd puis free
-		if (cmd[0] == '|')
-		{
-			perror("syntax error near unexpected token `|'"); // un second msg "Undefined error: 0" s'ajoute a l'output
-			exit (EXIT_FAILURE); // should probably return promt instead of exiting minishell program entirely ?
-		}
 		ft_add_cmd_to_history(cmd);
 		cmds = ft_split(cmd, '|');
 		free(cmd);
+		i = 0;
+		// first while loop below checks for invalid commands such as `echo hi | | echo hey`
+		// Will have to use a variable-flag to control if we enter the second while-loop or not
+		// depending on the result of the first loop
+		// (after we replace the exit() of the first loop by a break, because it shouldn't be an exit())
+		while (cmds[i]) 
+		{
+			cmds[i] = ft_strtrim(cmds[i], " "); // memory leak, refaire ca proprement en dupliquant cmd puis free
+			if (cmds[i] && (cmds[i][0] == '\0'))
+			{
+				perror("syntax error near unexpected token `|'"); // un second msg "Undefined error: 0" s'ajoute a l'output
+				exit(258); // should probably return promt instead of exiting minishell program entirely ?
+			}
+			i++;
+		}
 		i = 0;
 		while (cmds[i])
 		{
 			lexemes = ft_tokenize(cmds[i]);
 			if (!lexemes)
-				return (free(cmd), 1); // temp, not complete, must free all commands
+				return (printf("HEEERE\n"), free(cmds[i]), 1); // temp, not complete, must free all commands
 			//ft_print_lexemes(lexemes, 1, ' ', "\033[0;33m[command ]\033[0m");
 			ft_expand_lexeme_list(lexemes, env);
 			//ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m"); // in place of exec
-			t_command	*command;
 			command = ft_parse_lexemes(lexemes, i, ft_arraylen(cmds)); // turn lexemes-list into commands-list
-			ft_print_command(command);
-			// exec
+			if (command)
+				ft_print_command(command); // For debug, in place of exec(command)
 			// free_list or delete_list lexemes
 			i++;
 		}
+		free(cmds);
 	}
 	return (0);
 }
