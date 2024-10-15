@@ -67,7 +67,19 @@ t_command	*ft_parse_lexemes(t_list *lexemes, int id, size_t nb_commands)
 }
 
 
+// TEST MAIN
+// int	main(void)
+// {
+// 	char	*str;
 
+// 	str = malloc(23 * sizeof(char));
+// 	ft_strlcpy(str, "     Hello World!     ", 23);
+// 	ft_printf("%s\n", str);
+// 	str = ft_strtrim_replace(str);
+// 	ft_printf("%s\n", str);
+// 	free(str);
+// 	return (0);
+// }
 
 
 int	main(int ac, char **av, char **o_env)
