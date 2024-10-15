@@ -1,8 +1,9 @@
 ## To do :
 
-[ ] minishell.c -> execute()
-		\_ [ ] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
+[WiP] minishell.c -> execute()
+		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
 				commence ou se termine par un pipe (auquel cas `syntax error`)
+		\_ [ ] Rework execute() function to make it shorter (split it into two or three func())
 
 [WiP] Tokenization:
 		\_ [v] Fix bugs

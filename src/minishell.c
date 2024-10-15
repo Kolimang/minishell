@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 13:47:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/15 14:24:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execute(t_env *env)
 				cmds[i] = ft_strtrim_replace(&cmds[i]);
 				if (cmds[i] && (cmds[i][0] == '\0'))
 				{
-					ft_putstr_fd("syntax error near unexpected token `|'\n", 2); // un second msg "Undefined error: 0" s'ajoute a l'output
+					ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 					i = -1;
 					break;
 				}
@@ -75,17 +75,13 @@ int	execute(t_env *env)
 			{
 				lexemes = ft_tokenize(cmds[i]);
 				if (!lexemes)
-					return (printf("HEEERE\n"), free(cmds[i]), 1); // temp, not complete, must free all commands
-				//ft_print_lexemes(lexemes, 1, ' ', "\033[0;33m[command ]\033[0m");
+					return (array_str_free(cmds, ft_arraylen(cmds)), 1);
 				ft_expand_lexeme_list(lexemes, env);
-				//ft_print_lexemes(lexemes, 2, ' ', "\033[0;33m[expanded]\033[0m"); // in place of exec
-				command = ft_parse_lexemes(lexemes, i, ft_arraylen(cmds)); // turn lexemes-list into commands-list
-				if (command)
-					ft_print_command(command); // For debug, in place of exec(command)
-				// free_list or delete_list lexemes
+				command = ft_parse_lexemes(lexemes, i, ft_arraylen(cmds));
+				// exec(command);
 				i++;
 			}
-			free(cmds); // Pas complet pour free toutes les cmds, ne free que le array "conteneur"
+			array_str_free(cmds, ft_arraylen(cmds));
 		}
 		free(cmd);
 	}
@@ -103,7 +99,10 @@ int	main(int ac, char **av, char **o_env)
 	env = init_env(o_env);
 	//set_shlvl(env);
 	if (execute(env))
+	{
+		free_env(env);
 		return (1);
+	}
 	free_env(env);
 	return (0);
 }
