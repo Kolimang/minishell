@@ -33,12 +33,19 @@
 
 [ ] Built-ins :
 
+[ ] Signaux :
+
 [ ] Gestion des erreurs :
 		\_ [ ] Vérifier valeurs de retours
 		\_ [ ] Vérifier messages d'erreur
 
+[ ] Cleaning
+		\_ [ ] Norm compliance
+		\_ [ ] Fix memory leaks
+
 [ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names
+		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
 
 [ ] Testing :
 		\_ [ ] CAS CHIANTS !!! 
