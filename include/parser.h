@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 15:53:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 16:54:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_command
 	int		prevpipe;
 	int		nextpipe;
 	int		is_hrdoc;
-	//int	i_pipe; // equiv to next pipe
+	//int	is_pipe; // equiv to next pipe
 }	t_command;
 
 typedef struct s_redir
