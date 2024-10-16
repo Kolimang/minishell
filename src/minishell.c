@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 11:57:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:27:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ int	check_commands(char **cmds, int *i)
 int	handle_commands(char **cmds, t_env *env, int *i)
 {
 	t_list		*lexemes;
+	t_list		*commands;
 	t_command	*command;
 
+	commands = NULL;
 	*i = 0;
 	while (cmds[*i])
 	{
@@ -68,9 +70,13 @@ int	handle_commands(char **cmds, t_env *env, int *i)
 			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
 		ft_expand_lexeme_list(lexemes, env);
 		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
-		// exec(command);
+		if (!commands)
+			commands->content = ft_lstnew(command);
+		else
+			ft_lstadd_back(&commands->content, ft_lstnew(command));
 		(*i)++;
 	}
+	//exec(commands, env, /* char **global_env */)
 	array_str_free(cmds, ft_arraylen(cmds));
 	return (0);
 }
