@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 13:36:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 14:21:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_print_command(t_command *command)
 	ft_printarray(command->args, ' ');
 	ft_printf("redir            : ");
 	ft_print_redir(command);
-	if(!command->redir_list)
+	if(!command->ls_redirs)
 		ft_printf("(null)");
 	ft_printf("\n");
 	ft_printf("prevpipe         : %d\n", command->prevpipe);
@@ -43,13 +43,13 @@ void	ft_print_redir(t_command *command)
 	t_redir	*redir;
 	t_list	*rdlist;
 
-	while (command->redir_list)
+	while (command->ls_redirs)
 	{
-		rdlist = command->redir_list;
+		rdlist = command->ls_redirs;
 		redir = rdlist->content;
-		ft_printf("%s (%d)", redir->value, redir->redir_type);
-		if (command->redir_list->next)
+		ft_printf("%s (%d)", redir->value, redir->type);
+		if (command->ls_redirs->next)
 			ft_printf(", ");
-		command->redir_list = command->redir_list->next;
+		command->ls_redirs = command->ls_redirs->next;
 	}
 }

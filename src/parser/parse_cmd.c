@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/14 14:35:12 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:11:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	init_command(t_command *command)
 	command->index = 0;
 	command->argc = 0;
 	command->args = NULL;
-	command->redir_list = NULL;
+	command->ls_redirs = NULL;
+	command->io = NULL;
 	command->prevpipe = 0;
 	command->nextpipe = 0;
+	command->is_hrdoc = 0;
 }
 
 char	**get_args(t_list *lexemes, int argc)
@@ -81,13 +83,16 @@ void	handle_lexemes(t_list **lexemes, t_command *command)
 	if ((*lexemes)->next && (*lexemes)->next->content)
 		nextnode = (*lexemes)->next->content;
 	if (ft_strncmp(node->value, "<<", 2) == 0)
-		ft_add_redir(lexemes, command, nextnode->value, HEREDOC);
+	{
+		ft_add_redir(lexemes, command, nextnode->value, HERE_DOC);
+		command->is_hrdoc = 1;
+	}
 	else if (ft_strncmp(node->value, ">>", 2) == 0)
 		ft_add_redir(lexemes, command, nextnode->value, APPEND);
 	else if (ft_strncmp(node->value, "<", 1) == 0)
-		ft_add_redir(lexemes, command, nextnode->value, INPUT);
+		ft_add_redir(lexemes, command, nextnode->value, INFILE);
 	else if (ft_strncmp(node->value, ">", 1) == 0)
-		ft_add_redir(lexemes, command, nextnode->value, OUTPUT);
+		ft_add_redir(lexemes, command, nextnode->value, OUTFILE);
 	else
 	{
 		command->argc += 1;
@@ -101,10 +106,10 @@ void	ft_add_redir(t_list **lexemes, t_command *command, char *redirvalue, int ty
 
 	redir = malloc(sizeof(t_redir));
 	redir->value = redirvalue;
-	redir->redir_type = type;
-	if (!command->redir_list)
-		command->redir_list = ft_lstnew(redir);
+	redir->type = type;
+	if (!command->ls_redirs)
+		command->ls_redirs = ft_lstnew(redir);
 	else
-		ft_lstadd_back(&command->redir_list, ft_lstnew(redir));
+		ft_lstadd_back(&command->ls_redirs, ft_lstnew(redir));
 	*lexemes = (*lexemes)->next;
 }

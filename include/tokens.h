@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/11 11:14:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 13:24:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,6 @@ typedef struct s_cmd_data
 	int				tok_len;
 	unsigned int	tok_start;
 }	t_cmd_data;
-
-enum	e_lex_types
-{
-	I_FILE = 0,
-	I_HEREDOC = 1,
-	O_FILE = 2,
-	O_FILE_APPEND = 3,
-	HEREDOC_DELIMITER = 4,
-	SQ_STRING = 5,
-	DQ_STRING = 6,
-	OPERATOR = 7,
-	EXEC = 8,
-	BUILTIN = 9,
-	ARGS = 10,
-	OPTION = 11
-};
 
 void	init_cmd_data(t_cmd_data *data);
 void	ft_add_cmd_to_history(char *cmd);
