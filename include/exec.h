@@ -6,48 +6,22 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 16:20:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:43:21 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-typedef struct	s_io_fd
-{
-	int	fd_pipe[2];
-	int	std_in;//backup des stdio
-	int std_out;//backup des stdio
-	int	fd_in;//current fd in
-	int	fd_out;//current fd out 
-	int fd_hrdoc;//fd_tmp pour HRDOC
-}	t_io_fd;
 
-typedef enum e_tkn_type
-{
-	INFILE = 0,
-	HERE_DOC,
-	OUTFILE,
-	APPEND,	
-}t_tkn_type;
+void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);
+void	exec(t_list *cmds, t_env *local_env, char **global_env);
+void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io);
 
-typedef struct s_list
-{
-	t_tkn_type		type;
-	char			*name;
-	char			*hr_delimiter;
-	struct s_list	*next;
-	
-}t_list;
-typedef struct s_command
-{
-	int                 pid;//???
-	int					idx; //??
-	char                *name;
-	char                **args;//onlyy args
-	t_redi				*redir;
-	t_io_fd				*io;
-	bool				is_pipe;
-	bool 				is_hrdoc;
-	struct s_command    *next;
-}   t_command;
+// Non existant yet
+init_io_fd(t_io_fd *io);
+execute_redir(t_command *cmd, t_io_fd *io);
+is_builtin(char	*cmdname);
+execute_fork(t_command *cmd, t_env *local_env, char **global_env);
+execute_nofork(t_command *cmd, t_env *local_env, char **global_env);
+
 #endif

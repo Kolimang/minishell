@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/08 15:34:09 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/16 10:12:16 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ else
 	RL_H    := /Users/lboumahd/.brew/opt/readline/include
 endif
 
-CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fsanitize=address
+#CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g
 
 LIBFT     := lib/libft/libft.a
 

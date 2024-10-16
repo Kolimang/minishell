@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 18:44:35 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/16 12:54:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
-#include <stdbool.h>
-#include <sys/wait.h>
+# include <stdbool.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -29,11 +29,19 @@
 # include "tokens.h"
 # include "utils.h"
 # include "expander.h"
-#include "exec.h"
+# include "parser.h"
+# include "exec.h"
 
-int	g_ret_value;
 # define SQ 39
 # define DQ 34
 //SQ DQ changed
-# define VERSION "v0.1.2"
+
+# define VERSION "v0.1.35"
+
+int	check_commands(char **cmds, int *i);
+int	handle_commands(char **cmds, t_env *env, int *i);
+int	execute(t_env *env);
+int	main(int ac, char **av, char **o_env);
+int	ft_check_input_cmd(char **cmdref);
+
 #endif

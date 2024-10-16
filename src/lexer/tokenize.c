@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 13:41:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/11 12:12:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ t_list	*ft_tokenize(char *cmd)
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
 	init_cmd_data(&data);
-	i = 0;
+	i = -1;
 	list_lexemes = NULL;
 	list_hd_lexemes = NULL;
-	while (i <= (int)ft_strlen(cmd))
+	while (++i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);
 		lex_handle_spaces(cmd, i, &data);
@@ -48,11 +48,10 @@ t_list	*ft_tokenize(char *cmd)
 		if (lex_handle_end_of_cmd(cmd, i, &data))
 			return (NULL);
 		create_node(cmd, i, &data, &list_lexemes);
-		i++;
 	}
-	list_hd_lexemes = lex_handle_heredoc(&data, find_delim(list_lexemes));
-	if (list_hd_lexemes)
-		ft_lstadd_back(&list_lexemes, list_hd_lexemes);
+	//list_hd_lexemes = lex_handle_heredoc(&data, find_delim(list_lexemes));
+	//if (list_hd_lexemes)
+	//	ft_lstadd_back(&list_lexemes, list_hd_lexemes);
 	return (list_lexemes);
 }
 
@@ -65,6 +64,7 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 	if (data->bool_delimit_tok == 1)
 	{
 		set_token_len(cmd, i, data);
+		// printf("i: %d - tokenlen: %d\n", i, data->tok_len); // For DEBUGGING
 		templexeme_str = ft_substr(cmd, data->tok_start, (size_t)data->tok_len);
 		lexeme_str = ft_strtrim(templexeme_str, " ");
 		free(templexeme_str);
@@ -82,21 +82,21 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
 		}
 		else
 			free(lexeme_str);
-		reset_token_data(data);
+		reset_token_data(data, cmd[i]);
 	}
 }
 
-void	reset_token_data(t_cmd_data *data)
+void	reset_token_data(t_cmd_data *data, char c)
 {
 	if (!data)
 		return ;
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	data->bool_tok_in_progress = 0;
+	if (c == ' ')	// ou faudra peut-etre ajouter aussi si is_operator(c, set), en tt cas si je reset d'office tok_in_progress a 0, la cmd [<f c] (sans les brackets) foire et le token f disparait
+		data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }
 
-// second IF-part can possibly be removed, must be tested
 void	set_token_len(char *cmd, int i, t_cmd_data *data)
 {
 	if (!cmd || !data)
@@ -110,6 +110,4 @@ void	set_token_len(char *cmd, int i, t_cmd_data *data)
 		data->bool_endq_sep = 0;
 		data->tok_len += 1;
 	}
-	//else if (data->bool_endstr == 1 )
-	//	data->tok_len += 1;
 }
