@@ -1,7 +1,7 @@
 # Folders
 .vscode
 build
-exec
+
 
 # Executable
 minishell
