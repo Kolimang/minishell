@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/15 18:42:51 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:03:12 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,9 @@ void	exec(t_command *cmds, t_env *local_env, char **global_env)
 		else
 			execute_fork(cmds, local_env, global_env);
 		cmds= cmds->next;
+		reset_io(cmds->io);
 	}
 	}
-
-//check if the cmd is built in and not alone
-//check iddf the cmd is non built in  
-// For each command in a pipeline to set up the appropriate input/out
-
 // we keep both env so that we dont turn the linked list to a char, if the path exists in the local env, then we executewith the real env 
 void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 {
@@ -59,11 +55,11 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
         if (cmd->redir->type == HERE_DOC)
         {
             if (pipe(pipe_fd) == -1)
-                return (error("pipe creation failed"));
+                return (perror("pipe creation failed"));
 
             pid = fork();
             if (pid == -1)
-                return (error("fork failed"));
+                return (perror("fork failed"));
 
             if (pid == 0)
                 child_heredoc_process(cmd, local_env, pipe_fd);
@@ -105,7 +101,7 @@ int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]) {
     waitpid(pid, &status, 0);
     if (WIFEXITED(status) && WEXITSTATUS(status) == 0) 
 	{
-        cmd->io->fd_hrdoc = pipe_fd[0];
+        cmd->io->fd_hrdoc = pipe_fd[0];//to close later !!
         return 0;
     }
 	else 
@@ -114,10 +110,7 @@ int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]) {
         return (-1);
     }
 }
-	// checks all the heredocs 
-	//run readline prompt heredoc + expander  
-	//recup tmp
-	//
+
 void	init_io_fd(t_io_fd *files)
 {
 	files->fd_pipe[0] = -1;
@@ -133,3 +126,16 @@ void	init_io_fd(t_io_fd *files)
 		//exit and ret val ???????
 	}
 } 
+
+void	reset_io(t_command *cmd)
+{
+	t_io_fd *io;
+
+	io = cmd->io;
+	if(dup2(io->std_in, STDIN_FILENO) == -1)
+		//return or exiit ?
+	if(dup2(io->std_out, STDOUT_FILENO) == -1)
+		//return of exit?? 
+	close(io->std_in);
+	close(io->std_out); 
+}

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/15 15:35:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:20:32 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_command
 	int					idx; //??
 	char                *name;
 	char                **args;//onlyy args
-	t_list				*redir;
+	t_redi				*redir;
 	t_io_fd				*io;
 	bool				is_pipe;
 	bool 				is_hrdoc;
