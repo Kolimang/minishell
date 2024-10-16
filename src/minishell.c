@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 14:24:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 11:57:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_check_input_cmd(char **cmdref)
 		if (cmd[0] == '|' || last == '|')
 		{
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+			g_ret_value = 258;
 			return (-1);
 		}
 	}
@@ -35,20 +36,55 @@ int	ft_check_input_cmd(char **cmdref)
 	return (0);
 }
 
-int	execute(t_env *env)
+int	check_commands(char **cmds, int *i)
 {
-	char		*prompt;
-	char		*cmd;
-	char		**cmds;
+	while (cmds[*i])
+	{
+		cmds[*i] = ft_strtrim_replace(&cmds[*i]);
+		if (!cmds[*i])
+			return (-1);
+		if (cmds[*i] && (cmds[*i][0] == '\0'))
+		{
+			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+			g_ret_value = 258;
+			*i = -1;
+			break ;
+		}
+		(*i)++;
+	}
+	return (0);
+}
+
+int	handle_commands(char **cmds, t_env *env, int *i)
+{
 	t_list		*lexemes;
 	t_command	*command;
+
+	*i = 0;
+	while (cmds[*i])
+	{
+		lexemes = ft_tokenize(cmds[*i]);
+		if (!lexemes)
+			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
+		ft_expand_lexeme_list(lexemes, env);
+		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
+		// exec(command);
+		(*i)++;
+	}
+	array_str_free(cmds, ft_arraylen(cmds));
+	return (0);
+}
+
+int	execute(t_env *env)
+{
 	int			i;
+	char		*cmd;
+	char		**cmds;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	prompt = "\033[0;32mminishell$\033[0m ";
 	while (1)
 	{
-		cmd = readline(prompt);
+		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
 			return (1);
 		ft_add_cmd_to_history(cmd);
@@ -56,33 +92,10 @@ int	execute(t_env *env)
 		if (i == 0)
 		{
 			cmds = ft_split(cmd, '|');
-			while (cmds[i]) 
-			{
-				cmds[i] = ft_strtrim_replace(&cmds[i]);
-				if (cmds[i] && (cmds[i][0] == '\0'))
-				{
-					ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-					i = -1;
-					break;
-				}
-				i++;
-			}
+			check_commands(cmds, &i);
 		}
 		if (i != -1)
-		{
-			i = 0;
-			while (cmds[i])
-			{
-				lexemes = ft_tokenize(cmds[i]);
-				if (!lexemes)
-					return (array_str_free(cmds, ft_arraylen(cmds)), 1);
-				ft_expand_lexeme_list(lexemes, env);
-				command = ft_parse_lexemes(lexemes, i, ft_arraylen(cmds));
-				// exec(command);
-				i++;
-			}
-			array_str_free(cmds, ft_arraylen(cmds));
-		}
+			handle_commands(cmds, env, &i);
 		free(cmd);
 	}
 	return (0);

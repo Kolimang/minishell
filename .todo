@@ -4,6 +4,8 @@
 		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
 				commence ou se termine par un pipe (auquel cas `syntax error`)
 		\_ [ ] Rework execute() function to make it shorter (split it into two or three func())
+		\_ [ ] Set appropriate return value when syntax error
+		\_ [ ] Investigate memory leaks
 
 [WiP] Tokenization:
 		\_ [v] Fix bugs
@@ -28,7 +30,7 @@
 		\_ [v] For each command, go from lexeme-linked-list list to cmd-struct.
 		\_ [v] Handle multiple input files/heredoc (delimiters) or multiple outputs/appends for a single command
 		\_ [v] Discard command like [$a=lina] (si y a un signe egal et pas de cmd/executable, autrement dit au niveau du parseur s'il y a un seul argument et qu'il contient un signe egal, alors on ignore la commande)
-
+		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
 [ ] Exec :
 		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
 
@@ -43,6 +45,7 @@
 [ ] Cleaning
 		\_ [ ] Norm compliance
 		\_ [ ] Fix memory leaks
+		\_ [ ] Protect mallocs back to main()
 
 [ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names
@@ -57,6 +60,7 @@
 						(par exemple, pour les inputs, f pour file, h pour heredoc)
 				\_ [ ] cat <<eof | (donne un prompt pour le heredoc suivi d'un prompt pour completer la commande... qu'on peut terminer par un pipe, et rebelote)
 				\_ [ ] cat (donne un prompt pour completer la commande, comme qd la commande se termine par un pipe, ET PUIS CA LOOPE jusqu'a Ctrl-D ou Ctrl-C)
+		\_ [ ] . (bash error: `.: filename argument required` (sans les backticks); valeur de retour: 2)
 		\_ [ ] space then enter
 		\_ [ ] pipe alone // space pipe // multiple spaces pipe // command beginning by a pipe (| echo hello)
 		\_ [ ] zut | echo hello
