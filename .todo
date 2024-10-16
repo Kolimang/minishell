@@ -3,9 +3,9 @@
 [WiP] minishell.c -> execute()
 		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
 				commence ou se termine par un pipe (auquel cas `syntax error`)
-		\_ [ ] Rework execute() function to make it shorter (split it into two or three func())
+		\_ [v] Rework execute() function to make it shorter (split it into two or three func())
 		\_ [ ] Set appropriate return value when syntax error
-		\_ [ ] Investigate memory leaks
+		\_ [ ] Investigate memory leaks / protect mallocs back to main
 
 [WiP] Tokenization:
 		\_ [v] Fix bugs
@@ -42,10 +42,12 @@
 		\_ [ ] Vérifier valeurs de retours
 		\_ [ ] Vérifier messages d'erreur
 
-[ ] Cleaning
+[ ] QA checks
 		\_ [ ] Norm compliance
-		\_ [ ] Fix memory leaks
+		\_ [ ] Memory leaks
 		\_ [ ] Protect mallocs back to main()
+		\_ [ ] Protect fd's (open() might fail), close fd's
+		\_ [ ] Norm compliance again :-)
 
 [ ] Finalization :
 		\_ [ ] Remove wildcards from Makefile and reference all file names

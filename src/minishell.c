@@ -6,14 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 12:27:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:52:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 // Global exit status
-int	g_ret_value = 0;
+int	g_ret_value;
 
 int	ft_check_input_cmd(char **cmdref)
 {

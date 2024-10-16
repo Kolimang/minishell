@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 12:02:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 12:52:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdbool.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -28,8 +30,8 @@
 # include "utils.h"
 # include "expander.h"
 # include "parser.h"
+# include "exec.h"
 
-int	g_ret_value;
 # define SQ 39
 # define DQ 34
 //SQ DQ changed

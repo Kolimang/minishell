@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 14:54:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/09 15:53:49 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 	}// find exit error
 	else
 	{ ///check for tmp[i] == '_'
-		while (ft_isalnum(tmp[*i]))
+		while (ft_isalnum(tmp[*i]) || tmp[*i] == '_')
 			(*i)++;
 		append_to_str(&var, tmp, *i, start);
 		if (get_env_val(new_env, var))
