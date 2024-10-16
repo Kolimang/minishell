@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 16:43:21 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:00:29 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env);
 void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io);
 
 // Non existant yet
-init_io_fd(t_io_fd *io);
+void	init_io_fd(t_io_fd *io);
 execute_redir(t_command *cmd, t_io_fd *io);
 is_builtin(char	*cmdname);
 execute_fork(t_command *cmd, t_env *local_env, char **global_env);
