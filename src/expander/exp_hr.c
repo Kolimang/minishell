@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 16:58:02 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:45:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,21 @@ static char *expand_hrdoc(char *tmp, t_env *new_env)
     return (res);
 }
 
-void process_hrdoc(t_lexemes *lexeme, t_env *new_env)
+void process_hrdoc(char *line, t_env *new_env)
 {
     char *tmp;
     char *expanded_str;
 
-    if (!lexeme || !lexeme->str)
+    if (!line)
         return ;
-    tmp = ft_strdup(lexeme->str);
+    tmp = ft_strdup(line);
     if (!tmp)
         return ;
     expanded_str = expand_hrdoc(tmp, new_env);
     free(tmp);
-    if (expanded_str)
-    {
-        free(lexeme->value);
-        lexeme->value = expanded_str;
-    }
+    // if (expanded_str)
+    // {
+    //     free(line);
+    //     lexeme->value = expanded_str;
+    // }
 }
