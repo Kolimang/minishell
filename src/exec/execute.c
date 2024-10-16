@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 16:03:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 16:33:42 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	{
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
-			execute_redir(cmds, cmd->io);
+			execute_redir(cmd, cmd->io);
 		if (is_builtin(cmd->args[0]))	
 		{
 			if (cmds->next)
-				execute_fork(cmds, local_env, global_env);
+				execute_fork(cmd, local_env, global_env);
 			else
-				execute_nofork(cmds, local_env, global_env);
+				execute_nofork(cmd, local_env, global_env);
 		}
 		else
-			execute_fork(cmds, local_env, global_env);
+			execute_fork(cmd, local_env, global_env);
 		cmds = cmds->next;
 	}
 }
