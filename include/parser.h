@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 15:07:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:53:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ typedef enum e_tok_type
 	APPEND,	
 }	t_tok_type;
 
+typedef struct s_io_fd
+{
+	int	fd_pipe[2];
+	int	std_in;//backup des stdio
+	int	std_out;//backup des stdio
+	int	fd_in;//current fd in
+	int	fd_out;//current fd out 
+	int	fd_hrdoc;//fd_tmp pour HRDOC
+}	t_io_fd;
+
 typedef struct s_command
 {
 	int		index;
@@ -45,7 +55,7 @@ typedef struct s_command
 typedef struct s_redir
 {
 	char		*value; // [lina] *name?
-	char		*hd_delimiter;
+	//char		*hd_delimiter; // a priori useless, is set in value
 	t_tok_type	type;
 }	t_redir;
 

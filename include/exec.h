@@ -6,22 +6,12 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 14:16:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 15:55:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
-typedef struct	s_io_fd
-{
-	int	fd_pipe[2];
-	int	std_in;//backup des stdio
-	int	std_out;//backup des stdio
-	int	fd_in;//current fd in
-	int	fd_out;//current fd out 
-	int	fd_hrdoc;//fd_tmp pour HRDOC
-}	t_io_fd;
 
 // typedef enum e_tok_type
 // {
@@ -52,5 +42,16 @@ typedef struct	s_io_fd
 // 	bool 				is_hrdoc;
 // 	struct s_command    *next;
 // }	t_command;
+
+void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);
+void	exec(t_list *cmds, t_env *local_env, char **global_env);
+void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io);
+
+// Non existant yet
+init_io_fd(t_io_fd *io);
+execute_redir(t_list *cmds, t_io_fd *io);
+is_builtin(char	*cmdname);
+execute_fork(t_list *cmds, t_env *local_env, char **global_env);
+execute_nofork(t_list *cmds, t_env *local_env, char **global_env);
 
 #endif

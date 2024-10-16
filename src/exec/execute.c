@@ -6,11 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 15:03:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 16:03:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 // are we gonna loop here or in the main for the cmds? 
 
@@ -22,7 +22,7 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 	{
 			cmd = cmds->content;
 			init_io_fd(cmd->io);
-			get_hrdoc(cmds, local_env, cmd->io);
+			get_hrdoc(cmd, local_env, cmd->io);
 			cmds = cmds->next;
 	}
 }
@@ -34,11 +34,11 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	while (cmds)
 	{
 		cmd = cmds->content;
-		if(cmds->next == NULL && !(cmd->args[0]))
+		if (cmds->next == NULL && !(cmd->args[0]))
 			execute_redir(cmds, cmd->io);
-		if(is_builtin(cmd->args[0]))	
+		if (is_builtin(cmd->args[0]))	
 		{
-			if(cmds->next)
+			if (cmds->next)
 				execute_fork(cmds, local_env, global_env);
 			else
 				execute_nofork(cmds, local_env, global_env);
@@ -56,22 +56,22 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 // we keep both env so that we dont turn the linked list to a char, if the path exists in the local env, then we execute with the real env 
 void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 {
-	int pipe_fd[2];
-	pid_t pid;
+	int		pipe_fd[2];
+	pid_t	pid;
 	t_redir	*redir;
 
-	if(!cmd->is_hrdoc)
-		return;
+	if (!cmd->is_hrdoc)
+		return ;
 	while (cmd->ls_redirs)
 	{
-		redir = cmd->ls_redirs;
+		redir = cmd->ls_redirs->content;
 		if (redir->type == HERE_DOC)
 		{
 			if (pipe(pipe_fd) == -1)
-				return (error("pipe creation failed"));
+				return (perror("pipe creation failed"));
 			pid = fork();
 			if (pid == -1)
-				return (error("fork failed"));
+				return (perror("fork failed"));
 			if (pid == 0)
 				child_heredoc_process(cmd, local_env, pipe_fd);
 			else
@@ -85,7 +85,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 {
 	// how to handle signals?? 
 	// Setup signal handling
-	char *line;
+	char	*line;
 	t_redir	*redir;
 
 	close(fd[0]);
@@ -93,7 +93,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 	while (1) 
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, redir->value) == 0)
+		if (!line || ft_strncmp(line, redir->value, ft_strlen(line)) == 0)
 		{
 			free(line);
 			break ;
@@ -104,7 +104,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 		free(line);
 	}
 	close(fd[1]);
-	exit(0); 
+	exit(0);
 }
 
 int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
