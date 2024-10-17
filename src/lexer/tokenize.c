@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/11 12:12:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:23:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ t_list	*ft_tokenize(char *cmd)
 {
 	int			i;
 	t_cmd_data	data;
-	t_list		*list_lexemes;
-	t_list		*list_hd_lexemes;
+	t_list		*ls_lexemes;
+	t_list		*ls_hd_lexemes;
 
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
 	init_cmd_data(&data);
 	i = -1;
-	list_lexemes = NULL;
-	list_hd_lexemes = NULL;
+	ls_lexemes = NULL;
+	ls_hd_lexemes = NULL;
 	while (++i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);
@@ -47,43 +47,48 @@ t_list	*ft_tokenize(char *cmd)
 		lex_handle_regular(cmd, i, &data);
 		if (lex_handle_end_of_cmd(cmd, i, &data))
 			return (NULL);
-		create_node(cmd, i, &data, &list_lexemes);
+		create_node(cmd, i, &data, &ls_lexemes);
 	}
-	//list_hd_lexemes = lex_handle_heredoc(&data, find_delim(list_lexemes));
-	//if (list_hd_lexemes)
-	//	ft_lstadd_back(&list_lexemes, list_hd_lexemes);
-	return (list_lexemes);
+	//ls_hd_lexemes = lex_handle_heredoc(&data, find_delim(ls_lexemes));
+	//if (ls_hd_lexemes)
+	//	ft_lstadd_back(&ls_lexemes, ls_hd_lexemes);
+	return (ls_lexemes);
 }
 
-void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes)
+void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 {
-	char		*templexeme_str;
-	char		*lexeme_str;
-	t_lexemes	*lexeme;
+	char		*temp_lex_str;
+	char		*lex_str;
+	t_lexeme	*lex;
 
 	if (data->bool_delimit_tok == 1)
 	{
 		set_token_len(cmd, i, data);
-		// printf("i: %d - tokenlen: %d\n", i, data->tok_len); // For DEBUGGING
-		templexeme_str = ft_substr(cmd, data->tok_start, (size_t)data->tok_len);
-		lexeme_str = ft_strtrim(templexeme_str, " ");
-		free(templexeme_str);
-		if (lexeme_str[0] != '\0')
+		temp_lex_str = ft_substr(cmd, data->tok_start, (size_t)data->tok_len);
+		lex_str = ft_strtrim(temp_lex_str, " ");
+		free(temp_lex_str);
+		if (lex_str[0] != '\0')
 		{
-			lexeme = malloc(sizeof(t_lexemes));
-			lexeme->index = data->tok_id;
-			lexeme->str = lexeme_str;
-			lexeme->value = NULL;
-			lexeme->type = 0;
-			if (!*list_lexemes)
-				*list_lexemes = ft_lstnew(lexeme);
+			lex = malloc(sizeof(t_lexeme));
+			lex->index = data->tok_id;
+			lex->str = lex_str;
+			lex->value = NULL;
+			lex->type = 0;
+			if (!*ls_lexemes)
+				*ls_lexemes = ft_lstnew(lex);
 			else
-				ft_lstadd_back(list_lexemes, ft_lstnew(lexeme));
+				ft_lstadd_back(ls_lexemes, ft_lstnew(lex));
 		}
 		else
-			free(lexeme_str);
+			free(lex_str);
 		reset_token_data(data, cmd[i]);
 	}
+}
+
+int	init_lexeme()
+{
+	
+	return (0);
 }
 
 void	reset_token_data(t_cmd_data *data, char c)
@@ -92,7 +97,7 @@ void	reset_token_data(t_cmd_data *data, char c)
 		return ;
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	if (c == ' ')	// ou faudra peut-etre ajouter aussi si is_operator(c, set), en tt cas si je reset d'office tok_in_progress a 0, la cmd [<f c] (sans les brackets) foire et le token f disparait
+	if (c == ' ')
 		data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }

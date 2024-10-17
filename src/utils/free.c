@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 14:19:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:50:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ void	array_str_free(char **array, int limit)
 	free(array);
 }
 
-void	cleanup_lexemes(t_lexemes *lexeme)
+void	cleanup_lexemes(t_lexeme *lex)
 {
-	t_lexemes	*tmp;
+	t_lexeme	*tmp;
 
 	while (lexeme)
 	{
-		tmp = lexeme;
-		free(lexeme->str);
-		free(lexeme->value);
-		lexeme = lexeme->next;
+		tmp = lex;
+		free(lex->str);
+		free(lex->value);
 		free(tmp);
 	}
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/15 15:44:11 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:18:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//WHAT TO DO WHEN !str , NULL of EXIT_FAILURE??
+//WHAT TO DO WHEN !str, NULL of EXIT_FAILURE??
 
 void	handle_sq(char **res, char *tmp, int *i, int start)
 {
@@ -63,12 +63,12 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 }
 
 void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
-			t_lexemes *lexeme)
+			t_lexeme *lex)
 {
 	int	start;
 
 	start = *i;
-	(void)lexeme;
+	(void)lex;
 	if (tmp[*i] == '$' && (tmp[*i + 1] == DQ || tmp[*i + 1] == SQ))
 	{
 		if (tmp[*i + 1] == DQ)
@@ -92,7 +92,7 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
 	}
 }
 
-char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env)
+char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
 {
 	char	*res;
 	char	*final_res;
@@ -110,41 +110,41 @@ char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env)
 		else if (tmp[i] == DQ)
 			handle_dq(&res, tmp, &i, new_env);
 		else
-			handle_nq(&res, tmp, &i, new_env, lexeme); //si on rajoute lexer apr. parser 
+			handle_nq(&res, tmp, &i, new_env, lex); //si on rajoute lexer apr. parser
 	}
 	final_res = ft_strjoin(final_res, res);
 	free(res);
 	return (final_res);
 }
 
-void	process_regular(t_lexemes *lexeme, t_env *new_env)
+void	process_regular(t_lexeme *lex, t_env *new_env)
 {
 	char	*tmp;
 	char	*clean_str;
 
 	tmp = 0;
 	clean_str = 0;
-	if (!lexeme || lexeme->str == NULL)
+	if (!lex || lex->str == NULL)
 		exit(EXIT_FAILURE);
-	tmp = ft_strdup(lexeme->str);
+	tmp = ft_strdup(lex->str);
 	if (!tmp)
 		exit(EXIT_FAILURE);
-	clean_str = handle_exp(tmp, lexeme, new_env);
-	if (lexeme->value)
-		free(lexeme->value);
-	lexeme->value = ft_strdup(clean_str);
+	clean_str = handle_exp(tmp, lex, new_env);
+	if (lex->value)
+		free(lex->value);
+	lex->value = ft_strdup(clean_str);
 	free(tmp);
 	free(clean_str);
 }
 
 // if heredoc token --> type = 1; else if regular token --> type = 0
-void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
+void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 {
-	if (lexeme->type == 0) // Normal exp case
-		process_regular(lexeme, new_env);
+	if (lex->type == 0) // Normal exp case
+		process_regular(lex, new_env);
 	else
 		process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
-		//process_hrdoc(hd_lexemes_lists??, new_env)
+		//process_hrdoc(ls_hd_lexemess??, new_env)
 	//error ?? 
 }
 

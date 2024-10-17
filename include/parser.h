@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 12:42:59 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:12:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ typedef struct s_redir
 }	t_redir;
 
 t_command	*check_cmd(t_command *command);
-t_command	*ft_parse_lexemes(t_list *lexemes, int id, int nb_commands);
-char		**get_args(t_list *lexemes, int argc);
-void		handle_lexemes(t_list **lexemes, t_command *command);
-void		ft_add_redir(t_list **lexemes, t_command *command, char *redirvalue,
+t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands);
+char		**get_args(t_list *ls_lexemes, int argc);
+void		handle_lexemes(t_list **ls_lexemes, t_command *command);
+void		ft_add_redir(t_list **ls_lexemes, t_command *command, char *redirvalue,
 				int type);
 
 // For debugging

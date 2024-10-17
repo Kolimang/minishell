@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/15 13:43:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 14:21:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,20 @@ void	ft_expand_lexeme_list(t_list *list, t_env *env)
 	}
 }
 
-t_lexemes	*create_lexeme(char *str)
+t_lexeme	*create_lexeme(char *str)
 {
-	t_lexemes	*lexeme;
+	t_lexeme	*lex;
 
 	if (!str || !*str) // Check for NULL or empty string
 		return (NULL);
-	lexeme = ft_calloc(1, sizeof(t_lexemes));
-	if (!lexeme) // Check if memory allocation was successful
+	lex = ft_calloc(1, sizeof(t_lexeme));
+	if (!lex) // Check if memory allocation was successful
 		return (NULL);
-	lexeme->str = ft_strdup(str);
-	if (!lexeme->str) // Check if strdup was successful
+	lex->str = ft_strdup(str);
+	if (!lex->str) // Check if strdup was successful
 	{
-		free(lexeme);
+		free(lex);
 		return (NULL);
 	}
-	lexeme->next = NULL;
-	return (lexeme);
+	return (lex);
 }

@@ -6,23 +6,26 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 13:24:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 13:50:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
-// if heredoc token --> type = 1; else if command arg --> type = 2; else type = 0
-typedef struct s_lexemes
+// [str]   Original string
+// [value] Value after expansion
+// [type]  If heredoc token, then type = 1;
+// 			else if command arg, then type = 2;
+// 			else type = 0
+typedef struct s_lexeme
 {
 	int					index;
-	char				*str; //"$USER"
-	char				*value; // lboumahd
+	char				*str;
+	char				*value;
 	int					type;
 	int					hd_group;
-	struct s_lexemes	*next;
-}	t_lexemes;
+}	t_lexeme;
 
 typedef struct s_cmd_data
 {
@@ -52,7 +55,7 @@ void	lex_handle_regular(char *cmd, int i, t_cmd_data *data);
 int		lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim);
 //void	lex_handle_dashes(char *cmd, int i, t_cmd_data *data);
-void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**list_lexemes);
+void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes);
 void	reset_token_data(t_cmd_data *data, char c);
 void	set_token_len(char *cmd, int i, t_cmd_data *data);
 
