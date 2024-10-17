@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 14:52:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 12:25:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	set_shlvl(t_env *env)
 	val = ft_atoi(current);
 	tmp = ft_itoa(val + 1);
 	cmd = malloc (sizeof(char *) * 3);
-	//to finishe once export is coded 
+	//to finish once export is coded 
 	free(cmd);
 	free(tmp);
 }
