@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 14:23:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:00:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,13 @@ t_list	*ft_tokenize(char *cmd)
 		lex_handle_regular(cmd, i, &data);
 		if (lex_handle_end_of_cmd(cmd, i, &data))
 			return (NULL);
-		create_node(cmd, i, &data, &ls_lexemes);
+		if (create_node(cmd, i, &data, &ls_lexemes) == -1)
+			return (NULL);
 	}
-	//ls_hd_lexemes = lex_handle_heredoc(&data, find_delim(ls_lexemes));
-	//if (ls_hd_lexemes)
-	//	ft_lstadd_back(&ls_lexemes, ls_hd_lexemes);
 	return (ls_lexemes);
 }
 
-void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
+int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 {
 	char		*temp_lex_str;
 	char		*lex_str;
@@ -68,27 +66,13 @@ void	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 		lex_str = ft_strtrim(temp_lex_str, " ");
 		free(temp_lex_str);
 		if (lex_str[0] != '\0')
-		{
-			lex = malloc(sizeof(t_lexeme));
-			lex->index = data->tok_id;
-			lex->str = lex_str;
-			lex->value = NULL;
-			lex->type = 0;
-			if (!*ls_lexemes)
-				*ls_lexemes = ft_lstnew(lex);
-			else
-				ft_lstadd_back(ls_lexemes, ft_lstnew(lex));
-		}
+			if (init_lexeme(lex_str, data, ls_lexemes) == -1)
+				return (-1);
 		else
 			free(lex_str);
 		reset_token_data(data, cmd[i]);
+		return (0);
 	}
-}
-
-int	init_lexeme()
-{
-	
-	return (0);
 }
 
 void	reset_token_data(t_cmd_data *data, char c)

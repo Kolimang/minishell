@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 14:44:59 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:04:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_commands(t_list *ls_commands)
 	{
 		cmd = ls_commands->content;
 		array_str_free(cmd->args, ft_arraylen(cmd->args));
-		while(cmd->ls_redirs)
+		while (cmd->ls_redirs)
 		{
 			redir = cmd->ls_redirs->content;
 			free(redir->value);

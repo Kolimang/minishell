@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 14:21:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:04:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_print_command(t_command *command)
 	ft_printarray(command->args, ' ');
 	ft_printf("redir            : ");
 	ft_print_redir(command);
-	if(!command->ls_redirs)
+	if (!command->ls_redirs)
 		ft_printf("(null)");
 	ft_printf("\n");
 	ft_printf("prevpipe         : %d\n", command->prevpipe);

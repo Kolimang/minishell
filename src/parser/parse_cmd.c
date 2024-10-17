@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 13:50:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:03:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,16 @@ void	handle_lexemes(t_list **ls_lexemes, t_command *command)
 	}
 }
 
-void	ft_add_redir(t_list **ls_lexemes, t_command *command, char *redirvalue, int type)
+void	ft_add_redir(t_list **ls_lexemes, t_command *cmd, char *value, int type)
 {
 	t_redir	*redir;
 
 	redir = malloc(sizeof(t_redir));
-	redir->value = redirvalue;
+	redir->value = value;
 	redir->type = type;
-	if (!command->ls_redirs)
-		command->ls_redirs = ft_lstnew(redir);
+	if (!cmd->ls_redirs)
+		cmd->ls_redirs = ft_lstnew(redir);
 	else
-		ft_lstadd_back(&command->ls_redirs, ft_lstnew(redir));
+		ft_lstadd_back(&cmd->ls_redirs, ft_lstnew(redir));
 	*ls_lexemes = (*ls_lexemes)->next;
 }
