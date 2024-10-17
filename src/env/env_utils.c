@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 12:25:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 12:48:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	set_shlvl(t_env *env)
 	int		val;
 
 	current = get_env_val(env, "SHLVL");
-	if(!current)
+	if (!current)
 		current = "0";
-	
 	val = ft_atoi(current);
 	tmp = ft_itoa(val + 1);
 	cmd = malloc (sizeof(char *) * 3);
