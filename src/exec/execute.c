@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 16:44:33 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 13:11:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 
 	while (cmds)
 	{
-			cmd = cmds->content;
-			init_io_fd(cmd->io);
-			get_hrdoc(cmd, local_env, cmd->io);
-			cmds = cmds->next;
+		cmd = cmds->content;
+		init_io_fd(cmd->io);
+		get_hrdoc(cmd, local_env, cmd->io);
+		cmds = cmds->next;
 	}
 }
 
@@ -36,7 +36,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
 			execute_redir(cmd, cmd->io);
-		if (is_builtin(cmd->args[0]))	
+		if (is_builtin(cmd->args[0]))
 		{
 			if (cmds->next)
 				execute_fork(cmd, local_env, global_env);
@@ -50,10 +50,11 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 }
 
 //check if the cmd is built in and not alone
-//check iddf the cmd is non built in  
+//check if the cmd is non built in  
 // For each command in a pipeline to set up the appropriate input/out
 
-// we keep both env so that we dont turn the linked list to a char, if the path exists in the local env, then we execute with the real env 
+// We keep both env so that we dont turn the linked list to a char, if the path 
+// exists in the local env, then we execute with the real env.
 void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 {
 	int		pipe_fd[2];
@@ -83,14 +84,14 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 
 void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 {
-	// how to handle signals?? 
+	// how to handle signals?
 	// Setup signal handling
 	char	*line;
 	t_redir	*redir;
 
 	close(fd[0]);
 	redir = cmd->ls_redirs;
-	while (1) 
+	while (1)
 	{
 		line = readline("> ");
 		if (!line || ft_strncmp(line, redir->value, ft_strlen(line)) == 0)
@@ -98,7 +99,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 			free(line);
 			break ;
 		}
-		process_hrdoc(line, local_env); // to check
+		process_hrdoc(line, local_env);// to check
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);
@@ -107,7 +108,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 	exit(0);
 }
 
-int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
+int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 {
 	int	status;
 
@@ -139,17 +140,17 @@ void	init_io_fd(t_io_fd *files)
 		perror("Failed to duplicate");
 		//exit and ret val ???????
 	}
-} 
+}
 
 void	reset_io(t_command *cmd)
 {
-	t_io_fd *io;
+	t_io_fd	*io;
 
 	io = cmd->io;
-	if(dup2(io->std_in, STDIN_FILENO) == -1)
-		//return or exiit ?
-	if(dup2(io->std_out, STDOUT_FILENO) == -1)
-		//return of exit?? 
+	if (dup2(io->std_in, STDIN_FILENO) == -1)
+		;//return or exit ?
+	if (dup2(io->std_out, STDOUT_FILENO) == -1)
+		;//return of exit ?
 	close(io->std_in);
-	close(io->std_out); 
+	close(io->std_out);
 }
