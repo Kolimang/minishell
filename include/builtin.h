@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 16:18:30 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
+/*   Updated: 2024/10/17 16:19:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-int	ft_echo(char **args)
-{
-	int	i;
-	int	newline;
+int	ft_echo(char **args);
 
-	i = 1;
-	newline = 0;
-	if (ft_strncmp(args[1], "-n", 2 == NULL))
-	{
-		i = 2;
-		newline = 1;
-	}
-	while (args[i])
-	{
-		ft_printf("%s", args[i]);
-		if (args[i + 1])
-			ft_printf(" ");
-		i++;
-	}
-	if (newline == 1)
-		ft_printf("\n");
-}
+#endif
