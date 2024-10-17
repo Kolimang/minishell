@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 14:43:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:07:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int		ft_check_input_cmd(char **cmdref);
 void	array_str_free(char **array, int limit);
 void	free_lexemes(t_list *ls_lexemes);
 void	free_commands(t_list *ls_commands);
+void	free_lists(t_list *ls_lexemes, t_list *ls_commands);
 
 #endif
