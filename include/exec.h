@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 17:00:29 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:38:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io);
 // Non existant yet
 void	init_io_fd(t_io_fd *io);
 execute_redir(t_command *cmd, t_io_fd *io);
-is_builtin(char	*cmdname);
+is_builtin(char *cmdname);
 execute_fork(t_command *cmd, t_env *local_env, char **global_env);
 execute_nofork(t_command *cmd, t_env *local_env, char **global_env);
 
