@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 15:49:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:51:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io);
 void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2]);
 int		parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]);
 int		get_infile(t_command *cmd, char *name, t_io_fd *files, int flag);
+void	reset_io(t_command *cmd);
 
 void	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag);
 void	init_io_fd(t_io_fd *io);
