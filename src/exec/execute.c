@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 13:11:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 15:12:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 	t_redir	*redir;
 
 	close(fd[0]);
-	redir = cmd->ls_redirs;
+	redir = cmd->ls_redirs->content;
 	while (1)
 	{
 		line = readline("> ");
