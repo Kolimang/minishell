@@ -6,19 +6,12 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 16:54:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/17 12:42:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-// enum {
-// 	INPUT = 0,
-// 	HEREDOC = 1,
-// 	OUTPUT = 2,
-// 	APPEND = 3
-// };
 
 typedef enum e_tok_type
 {
@@ -49,22 +42,22 @@ typedef struct s_command
 	int		prevpipe;
 	int		nextpipe;
 	int		is_hrdoc;
-	//int	is_pipe; // equiv to next pipe
 }	t_command;
 
 typedef struct s_redir
 {
-	char		*value; // [lina] *name?
-	//char		*hd_delimiter; // a priori useless, is set in value
+	char		*value;
 	t_tok_type	type;
 }	t_redir;
 
-void		ft_print_command(t_command *command); // For debug
-void		ft_print_redir(t_command *command); // For debug
-t_command	*ft_parse_lexemes(t_list *lexemes, int id, int nb_commands); // turn lexemes-list into commands-list
-char		**get_args(t_list *lexemes, int argc);
-void		ft_add_redir(t_list **lexemes, t_command *command, char *redirvalue, int type);
-void		handle_lexemes(t_list **lexemes, t_command *command);
 t_command	*check_cmd(t_command *command);
+t_command	*ft_parse_lexemes(t_list *lexemes, int id, int nb_commands);
+char		**get_args(t_list *lexemes, int argc);
+void		handle_lexemes(t_list **lexemes, t_command *command);
+void		ft_add_redir(t_list **lexemes, t_command *command, char *redirvalue,
+				int type);
 
+// For debugging
+void		ft_print_command(t_command *command);
+void		ft_print_redir(t_command *command);
 #endif
