@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/16 16:44:33 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:52:45 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 
+	//a gerer le ctrl+D pour auitter que le heredoc
 	while (cmds)
 	{
 			cmd = cmds->content;
@@ -35,7 +36,9 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	{
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
-			execute_redir(cmd, cmd->io);
+			if(execute_redir(cmd, cmd->io)== -1)
+				return;
+			//check ret value if -1 donc problem
 		if (is_builtin(cmd->args[0]))	
 		{
 			if (cmds->next)
@@ -46,6 +49,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		else
 			execute_fork(cmd, local_env, global_env);
 		cmds = cmds->next;
+
 	}
 }
 
@@ -60,6 +64,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	pid_t	pid;
 	t_redir	*redir;
 
+	//a gerer le ctrl+D pour auitter que le heredoc
 	if (!cmd->is_hrdoc)
 		return ;
 	while (cmd->ls_redirs)
@@ -78,6 +83,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 				parent_heredoc_process(cmd, pid, pipe_fd);
 		}
 		cmd->ls_redirs = cmd->ls_redirs->next;
+		reset_io(cmd);
 	}
 }
 
@@ -85,6 +91,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 {
 	// how to handle signals?? 
 	// Setup signal handling
+	//a gerer le ctrl+D pour auitter que le heredoc
 	char	*line;
 	t_redir	*redir;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 12:54:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/16 18:08:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+#include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
