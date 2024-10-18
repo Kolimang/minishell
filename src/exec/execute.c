@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 15:37:09 by jrichir          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   execute.c                                          :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
+// /*   Updated: 2024/10/17 17:38:55 by lboumahd         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
 #include <minishell.h>
 
@@ -65,7 +65,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	pid_t	pid;
 	t_redir	*redir;
 
-	//a gerer le ctrl+D pour auitter que le heredoc
+	//a gerer le ctrl+D pour quitter que le heredoc
 	if (!cmd->is_hrdoc)
 		return ;
 	while (cmd->ls_redirs)
@@ -145,19 +145,25 @@ void	init_io_fd(t_io_fd *files)
 	if (files->std_in == -1 || files->std_out == -1)
 	{
 		perror("Failed to duplicate");
-		//exit and ret val ???????
+		exit(1);// Exit with error code 1
 	}
 }
 
 void	reset_io(t_command *cmd)
 {
-	t_io_fd	*io;
+	t_io_fd *io;
 
 	io = cmd->io;
 	if (dup2(io->std_in, STDIN_FILENO) == -1)
-		;//return or exit ?
+	{
+		perror("Failed to reset stdin");
+		exit(1);
+	}
 	if (dup2(io->std_out, STDOUT_FILENO) == -1)
-		;//return of exit ?
+	{
+		perror("Failed to reset stdout");
+		exit(1);
+	}
 	close(io->std_in);
 	close(io->std_out);
 }

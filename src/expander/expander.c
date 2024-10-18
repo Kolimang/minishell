@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 14:18:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/18 16:15:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
 	return (final_res);
 }
 
-void	process_regular(t_lexeme *lex, t_env *new_env)
+void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 {
 	char	*tmp;
 	char	*clean_str;
@@ -137,25 +137,25 @@ void	process_regular(t_lexeme *lex, t_env *new_env)
 	free(clean_str);
 }
 
-// if heredoc token --> type = 1; else if regular token --> type = 0
-void	expand_lexeme(t_lexeme *lex, t_env *new_env)
-{
-	if (lex->type == 0) // Normal exp case
-		process_regular(lex, new_env);
-	else
-		process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
-		//process_hrdoc(ls_hd_lexemess??, new_env)
-	//error ?? 
-}
+// // if heredoc token --> type = 1; else if regular token --> type = 0
+// void	expand_lexeme(t_lexeme *lex, t_env *new_env)
+// {
+// 	if (lex->type == 0) // Normal exp case
+// 		process_regular(lex, new_env);
+// 	// else
+// 	// 	process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
+// 	// 	//process_hrdoc(ls_hd_lexemes, new_env)
+// 	// //error ?? 
+// }
 
 // char	*find_var(char *var, t_env *new_env) //getenv
 // {
-// 	while(new_env) // determiner le new_env structu
+// 	while (new_env) // determiner le new_env structu
 // 	{
 // 		if (ft_strncmp(new_env->var_name, var, ft_strlen(var) + 1) == 0)
 // 		{	
 // 			var = new_env->var_val;
-// 			return(var);
+// 			return (var);
 // 		}
 // 		new_env = new_env->next;
 // 	}
@@ -164,16 +164,16 @@ void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 
 // char	*replace_var(char *tmp, int *i, int start, t_env *new_env)
 // {
-// 	char *var;
+// 	char	*var;
 
-// 	while(ft_isalnum(tmp[*i]))
+// 	while (ft_isalnum(tmp[*i]))
 // 		i++;
 // 	var = malloc(*i - start + 1);
-// 	if(!var)
+// 	if (!var)
 // 		return (NULL);
 // 	ft_strlcpy(var, tmp, *i - start + 1);
 // 	var = find_var(var, new_env);//if not found return NULL
-// 	return(var);
+// 	return (var);
 // }
 // oblige de rajouter un espace
 // void append_to_str(char **res, char *tmp, int end, int start)
@@ -183,16 +183,16 @@ void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 
 //     new_part = malloc((end - start + 1) * sizeof(char)); 
 //     if (!new_part)
-//         return;
+//         return ;
 //     ft_strlcpy(new_part, tmp + start, end - start + 1);
 //     if (*res)
 //     {
 //         *res = ft_strjoin(*res, new_part);
-// 		// if(new_res)
+// 		// if (new_res)
 // 		// 	free(new_res);
 //     }
 //     else
 //         *res = new_part;
-// 	if(new_part)
+// 	if (new_part)
 // 		free(new_part);
 // }
