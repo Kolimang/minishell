@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 15:04:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/18 16:56:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void	free_commands(t_list *ls_commands)
 void	free_lists(t_list *ls_lexemes, t_list *ls_commands)
 {
 	free_lexemes(ls_lexemes);
-	free_commands(ls_lexemes);
+	free_commands(ls_commands);
 }

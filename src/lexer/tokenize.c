@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 15:00:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/18 16:56:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 {
 	char		*temp_lex_str;
 	char		*lex_str;
-	t_lexeme	*lex;
 
 	if (data->bool_delimit_tok == 1)
 	{
@@ -66,13 +65,16 @@ int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 		lex_str = ft_strtrim(temp_lex_str, " ");
 		free(temp_lex_str);
 		if (lex_str[0] != '\0')
+		{
 			if (init_lexeme(lex_str, data, ls_lexemes) == -1)
 				return (-1);
+		}
 		else
 			free(lex_str);
 		reset_token_data(data, cmd[i]);
 		return (0);
 	}
+	return (-1);
 }
 
 void	reset_token_data(t_cmd_data *data, char c)

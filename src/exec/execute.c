@@ -19,6 +19,7 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 	t_command	*cmd;
 
 	//a gerer le ctrl+D pour auitter que le heredoc
+	(void)global_env; // temp, to allow project compilation
 	while (cmds)
 	{
 		cmd = cmds->content;
@@ -32,6 +33,8 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 
+	(void)local_env; // Temp, only there to allow compilation
+	(void)global_env; // Temp, only there to allow compilation
 	while (cmds)
 	{
 		cmd = cmds->content;
@@ -42,15 +45,22 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		if (is_builtin(cmd->args[0]))	
 		{
 			if (cmds->next)
-				execute_fork(cmd, local_env, global_env);
+				;//execute_fork(cmd, local_env, global_env);
 			else
-				execute_nofork(cmd, local_env, global_env);
+				;//execute_nofork(cmd, local_env, global_env);
 		}
 		else
-			execute_fork(cmd, local_env, global_env);
+			;//execute_fork(cmd, local_env, global_env);
 		cmds = cmds->next;
 
 	}
+}
+
+// Created to allow compilation
+int	is_builtin(char *cmdname)
+{
+	(void)cmdname; // Temp, only there to allow compilation
+	return (1);
 }
 
 //check if the cmd is built in and not alone
@@ -66,6 +76,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	t_redir	*redir;
 
 	//a gerer le ctrl+D pour quitter que le heredoc
+	(void)io; // Temp, only there to allow compilation
 	if (!cmd->is_hrdoc)
 		return ;
 	while (cmd->ls_redirs)

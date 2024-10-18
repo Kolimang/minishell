@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/18 15:55:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/18 16:42:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	reset_io(t_command *cmd);
 int		get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag);
 void	init_io_fd(t_io_fd *io);
 int		execute_redir(t_command *cmd, t_io_fd *io);
-// is_builtin(char	*cmdname);
+int		is_builtin(char	*cmdname); // uncommented and return type int arbitrarily set by JP
 // execute_fork(t_command *cmd, t_env *local_env, char **global_env);
 // execute_nofork(t_command *cmd, t_env *local_env, char **global_env);
 
