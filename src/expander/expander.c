@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/15 15:44:11 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:36:52 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*handle_exp(char *tmp, t_lexemes *lexeme, t_env *new_env)
 	return (final_res);
 }
 
-void	process_regular(t_lexemes *lexeme, t_env *new_env)
+void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
 {
 	char	*tmp;
 	char	*clean_str;
@@ -137,16 +137,16 @@ void	process_regular(t_lexemes *lexeme, t_env *new_env)
 	free(clean_str);
 }
 
-// if heredoc token --> type = 1; else if regular token --> type = 0
-void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
-{
-	if (lexeme->type == 0) // Normal exp case
-		process_regular(lexeme, new_env);
-	else
-		process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
-		//process_hrdoc(hd_lexemes_lists??, new_env)
-	//error ?? 
-}
+// // if heredoc token --> type = 1; else if regular token --> type = 0
+// void	expand_lexeme(t_lexemes *lexeme, t_env *new_env)
+// {
+// 	if (lexeme->type == 0) // Normal exp case
+// 		process_regular(lexeme, new_env);
+// 	// else
+// 	// 	process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
+// 	// 	//process_hrdoc(hd_lexemes_lists??, new_env)
+// 	// //error ?? 
+// }
 
 // char	*find_var(char *var, t_env *new_env) //getenv
 // {

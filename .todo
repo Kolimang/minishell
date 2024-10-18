@@ -31,7 +31,7 @@
 		\_ [v] Handle multiple input files/heredoc (delimiters) or multiple outputs/appends for a single command
 		\_ [v] Discard command like [$a=lina] (si y a un signe egal et pas de cmd/executable, autrement dit au niveau du parseur s'il y a un seul argument et qu'il contient un signe egal, alors on ignore la commande)
 		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
-[ ] Exec :
+[WiP] Exec :
 		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
 
 [ ] Built-ins :

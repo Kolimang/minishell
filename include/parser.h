@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 16:54:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/18 13:05:10 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-// enum {
-// 	INPUT = 0,
-// 	HEREDOC = 1,
-// 	OUTPUT = 2,
-// 	APPEND = 3
-// };
 
 typedef enum e_tok_type
 {
@@ -55,7 +48,6 @@ typedef struct s_command
 typedef struct s_redir
 {
 	char		*value; // [lina] *name?
-	//char		*hd_delimiter; // a priori useless, is set in value
 	t_tok_type	type;
 }	t_redir;
 

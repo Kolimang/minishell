@@ -1,14 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 14:52:45 by lboumahd         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   execute.c                                          :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
+// /*   Updated: 2024/10/17 17:38:55 by lboumahd         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
 #include <minishell.h>
 
@@ -53,10 +53,6 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	}
 }
 
-//check if the cmd is built in and not alone
-//check iddf the cmd is non built in  
-// For each command in a pipeline to set up the appropriate input/out
-
 // we keep both env so that we dont turn the linked list to a char, if the path exists in the local env, then we execute with the real env 
 void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 {
@@ -96,7 +92,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 	t_redir	*redir;
 
 	close(fd[0]);
-	redir = cmd->ls_redirs;
+	redir = cmd->ls_redirs->content;
 	while (1) 
 	{
 		line = readline("> ");
@@ -132,31 +128,36 @@ int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 	}
 }
 
-void	init_io_fd(t_io_fd *files)
+void init_io_fd(t_io_fd *files)
 {
-	files->fd_pipe[0] = -1;
-	files->fd_pipe[1] = -2;
-	files->fd_in = 0;
-	files->fd_out = -1;
-	files->fd_hrdoc = -1;
-	files->std_in = dup(STDIN_FILENO);
-	files->std_out = dup(STDOUT_FILENO);
-	if (files->std_in == -1 || files->std_out == -1)
-	{
-		perror("Failed to duplicate");
-		//exit and ret val ???????
-	}
-} 
-
-void	reset_io(t_command *cmd)
-{
-	t_io_fd *io;
-
-	io = cmd->io;
-	if(dup2(io->std_in, STDIN_FILENO) == -1)
-		//return or exiit ?
-	if(dup2(io->std_out, STDOUT_FILENO) == -1)
-		//return of exit?? 
-	close(io->std_in);
-	close(io->std_out); 
+    files->fd_pipe[0] = -1;
+    files->fd_pipe[1] = -2;
+    files->fd_in = 0;
+    files->fd_out = -1;
+    files->fd_hrdoc = -1;
+    files->std_in = dup(STDIN_FILENO);
+    files->std_out = dup(STDOUT_FILENO);
+    if (files->std_in == -1 || files->std_out == -1)
+    {
+        perror("Failed to duplicate");
+        exit(1);  // Exit with error code 1
+    }
 }
+
+void reset_io(t_command *cmd)
+{
+    t_io_fd *io = cmd->io;
+    if (dup2(io->std_in, STDIN_FILENO) == -1)
+    {
+        perror("Failed to reset stdin");
+        exit(1);
+    }
+    if (dup2(io->std_out, STDOUT_FILENO) == -1)
+    {
+        perror("Failed to reset stdout");
+        exit(1);
+    }
+    close(io->std_in);
+    close(io->std_out);
+}
+

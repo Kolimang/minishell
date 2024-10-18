@@ -6,13 +6,14 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/16 18:08:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:47:20 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+//ret val
+int	g_ret_value;
 // Include library headers
 # include <stdio.h>
 # include <stdlib.h>
@@ -32,6 +33,7 @@
 # include "expander.h"
 # include "parser.h"
 # include "exec.h"
+
 
 # define SQ 39
 # define DQ 34

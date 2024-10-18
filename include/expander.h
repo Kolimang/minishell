@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/09 17:10:55 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:33:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@ void	append_to_str(char **res, char *tmp, int end, int start);
 void	handle_nq(char **res, char *tmp, int *i, t_env *new_env, t_lexemes *lexeme);
 void	dup_word(char **res, char *str, int *i);
 //HR
-void process_hrdoc(t_lexemes *lexeme, t_env *new_env);
+void process_hrdoc(char *line, t_env *new_env);
 #endif
