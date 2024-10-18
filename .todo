@@ -36,9 +36,10 @@
 		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
 
 [ ] Built-ins :
-		\_ [ ] echo with option -n
-		\_ [ ] cd with only a relative or absolute path
-		\_ [ ] pwd with no options
+		\_ [wip] echo with option -n
+		\_ [wip] cd with only a relative or absolute path
+				\_ [?] Gerer le cas de deux arguments (Bash replaces arg[1] by arg[2] in pwd if arg[1] found in pwd)
+		\_ [wip] pwd with no options
 		\_ [ ] export with no options
 		\_ [ ] unset with no options
 		\_ [ ] env with no options or arguments
