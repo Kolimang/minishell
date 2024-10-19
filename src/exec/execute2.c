@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/18 12:59:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/19 12:32:59 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,17 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
             return(handle_error("Failed to open infile"));
         files->fd_in = fd_tmp;
         if (dup2(files->fd_in, STDIN_FILENO) == -1)
-		{
-			close(fd_tmp);
 			return(handle_error("Failed to duplicate infile to stdin"));
-		}
-    }
+		if(close(fd_tmp) == -1)
+			return(-1); // not sure, to check
+	}
     else // HERE_DOC
     {
         files->fd_in = files->fd_hrdoc;
         if (dup2(files->fd_in, STDIN_FILENO) == -1)
             handle_error("Failed to duplicate heredoc to stdin");
-        if (files->fd_hrdoc != -1 && is_last(cmd->ls_redirs))
-            close(files->fd_hrdoc);
+		if(close(files->fd_hrdoc))
+			return (-1); //not sure, to check 
 			//make sure to reset here-doc at the end
     }
 	return(0);
@@ -95,7 +94,7 @@ int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
             return(handle_error("Failed to redirect outfile"));
         files->fd_out = fd_tmp;
 		return(dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
-    }
+	}
     else // append
     {
         fd_tmp = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644);
@@ -104,6 +103,8 @@ int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
         files->fd_out = fd_tmp;
        return(dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
     }
+	if(close(fd_tmp) == -1)
+		return(-1); 
 }
 
 /////////////Functions get_input and get_output to debugg /////////////////////
