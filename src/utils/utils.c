@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 14:25:19 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 13:57:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	ft_arraylen(char **array)
 {
 	int	i;
 
+	if (!array)
+		return (-1);
 	i = 0;
 	while (array[i])
 		i++;
