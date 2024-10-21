@@ -40,7 +40,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	{
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
-			if(execute_redir(cmd, cmd->io)== -1)
+			if (execute_redir(cmd, cmd->io)== -1)
 				return ; //?????
 			//check ret value if -1 donc problem
 		if (is_builtin(cmd->args[0]))	
