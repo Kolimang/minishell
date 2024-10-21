@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/18 16:10:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 10:03:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,20 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 	{
 		fd_tmp = open(name, O_RDONLY);
 		if (fd_tmp == -1)
-			return (handle_error("Failed to open infile"));
+			return(handle_error("Failed to open infile"));
 		files->fd_in = fd_tmp;
 		if (dup2(files->fd_in, STDIN_FILENO) == -1)
-		{
-			close(fd_tmp);
-			return (handle_error("Failed to duplicate infile to stdin"));
-		}
+			return(handle_error("Failed to duplicate infile to stdin"));
+		if(close(fd_tmp) == -1)
+			return(-1); // not sure, to check
 	}
 	else // HERE_DOC
 	{
 		files->fd_in = files->fd_hrdoc;
 		if (dup2(files->fd_in, STDIN_FILENO) == -1)
 			handle_error("Failed to duplicate heredoc to stdin");
-		if (files->fd_hrdoc != -1 && is_last(cmd->ls_redirs))
-			close(files->fd_hrdoc);
+		if(close(files->fd_hrdoc))
+			return (-1); //not sure, to check
 			//make sure to reset here-doc at the end
 	}
 	return(0);
@@ -86,7 +85,8 @@ int	dup_handle(int fd, int target_fd, const char *error_msg)
 
 int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
 {
-	int fd_tmp;
+	int	fd_tmp;
+
 	(void)cmd;
 	if (flag == 0) // Regular outfile
 	{
@@ -94,16 +94,20 @@ int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
 		if (fd_tmp == -1)
 			return(handle_error("Failed to redirect outfile"));
 		files->fd_out = fd_tmp;
-		return(dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
+		return(dup_handle(files->fd_out, STDOUT_FILENO,
+			"Failed to duplicate outfile to stdout"));
 	}
 	else // append
 	{
 		fd_tmp = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (fd_tmp == -1)
-			return(handle_error("Failed to append outfile"));
+			return (handle_error("Failed to append outfile"));
 		files->fd_out = fd_tmp;
-	   return(dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
+		return (dup_handle(files->fd_out, STDOUT_FILENO,
+			"Failed to duplicate outfile to stdout"));
 	}
+	if (close(fd_tmp) == -1)
+		return (-1); 
 }
 
 /////////////Functions get_input and get_output to debugg /////////////////////

@@ -27,6 +27,7 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 		get_hrdoc(cmd, local_env, cmd->io);
 		cmds = cmds->next;
 	}
+	//restore files if heredoc isnt working !!!
 }
 
 void	exec(t_list *cmds, t_env *local_env, char **global_env)
@@ -40,7 +41,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
 			if(execute_redir(cmd, cmd->io)== -1)
-				return ;
+				return ; //?????
 			//check ret value if -1 donc problem
 		if (is_builtin(cmd->args[0]))	
 		{
@@ -50,9 +51,9 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 				;//execute_nofork(cmd, local_env, global_env);
 		}
 		else
-			;//execute_fork(cmd, local_env, global_env);
+			execute_fork(cmd, local_env, global_env);
+		reset_io(cmd);
 		cmds = cmds->next;
-
 	}
 }
 
