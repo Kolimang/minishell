@@ -51,7 +51,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 				;//execute_nofork(cmd, local_env, global_env);
 		}
 		else
-			execute_fork(cmd, local_env, global_env);
+			;//execute_fork(cmd, local_env, global_env);
 		reset_io(cmd);
 		cmds = cmds->next;
 	}

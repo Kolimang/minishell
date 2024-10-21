@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/18 15:58:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 12:57:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	g_ret_value;
 int	check_commands(char **cmds, int *i);
 int	handle_commands(char **cmds, t_env *env, int *i);
 int	execute(t_env *env);
-int	main(int ac, char **av, char **o_env);
+//int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
 
 #endif

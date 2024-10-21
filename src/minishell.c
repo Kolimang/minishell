@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/18 16:00:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 15:07:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,3 @@ int	main(int ac, char **av, char **o_env)
 	free_env(env);
 	return (0);
 }
-

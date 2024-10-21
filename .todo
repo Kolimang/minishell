@@ -37,9 +37,9 @@
 
 [ ] Built-ins :
 		\_ [wip] echo with option -n
-		\_ [wip] cd with only a relative or absolute path
-				\_ [?] Gerer le cas de deux arguments (Bash replaces arg[1] by arg[2] in pwd if arg[1] found in pwd)
-		\_ [wip] pwd with no options
+		\_ [wip] cd
+				\_ [?] handle cd - (goes to OLDPWD if the env var is set) ; (and cd -- ?)
+		\_ [v?] pwd with no options
 		\_ [ ] export with no options
 		\_ [ ] unset with no options
 		\_ [ ] env with no options or arguments

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/21 10:32:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 10:43:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 {
 	int	fd_tmp;
 
+	(void)cmd;// TEMP : to allow compiling
 	if (flag == 0) // Regular infile
 	{
 		fd_tmp = open(name, O_RDONLY);
