@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/21 13:03:41 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:31:52 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 int	execute_nofork(t_command *cmd, t_env *l_env, char **g_env)
 {
+	//void or int ?? what about g_ret_val??
 	int ret_value;
 	//check redirection
 	if (execute_redir(cmd, cmd->io)== -1)
@@ -67,4 +68,24 @@ int exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
     else
         res = -1;  // Error: unknown built-in command
     return res;
+}
+
+int	execute_fork(t_list *cmd, t_env *l_env, char **g_env)
+{
+	t_command cmd;
+	t_list *tmp;
+
+	while(tmp)
+	{
+		//set fds
+			//check redirections
+		//if(cmd->builtin = EXIT)
+			//mini_exxit : dont exit lol ;
+		//if theres redirection put it, otherwhise keep stdin 1st cmd / stdout last cmd
+		//make sure that fd_pipe[0]readend of the pipe
+		//after executing we close the fd_in of the cmd
+		//fd_in become fd_pipe[0] that is the read end of pipe, where the pipe reads
+		tmp = tmp->next;
+	}
+	//recupere le code d'erreur 
 }
