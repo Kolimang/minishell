@@ -34,22 +34,22 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 
-	if(cmds)
+	if (cmds)
 	{
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
+		{
 			if (execute_redir(cmd, cmd->io)== -1)
 			{
 				reset_io(cmd);
 				return ; //?????//check ret value if -1 donc problem
 			}
+		}
 		else
 		{
 			cmd->builtin = is_builtin(cmd->args[0]);
 			if (cmd->builtin && !(cmds->next))
-			{
 				execute_nofork(cmd, local_env, global_env);
-			}
 			else
 				execute_fork(cmds, local_env, global_env);
 		}
