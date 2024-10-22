@@ -18,7 +18,7 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 
-	//a gerer le ctrl+D pour auitter que le heredoc
+	//a gerer le ctrl+D pour quitter que le heredoc
 	(void)global_env; // temp, to allow project compilation
 	while (cmds)
 	{
