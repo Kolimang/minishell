@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/22 13:12:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:30:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 				{
 					curr_path = getcwd(NULL, 0);
 					chdir((const char *)dest_path);
+					ft_printf("%s\n", dest_path);
 					return (update_env(dest_path, curr_path, env), 0);
 				}
 				return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
