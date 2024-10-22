@@ -34,35 +34,31 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 
-	(void)local_env; // Temp, only there to allow compilation
-	(void)global_env; // Temp, only there to allow compilation
-	while (cmds)
+	if(cmds)
 	{
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
 			if (execute_redir(cmd, cmd->io)== -1)
-				return ; //?????
-			//check ret value if -1 donc problem
-		if (is_builtin(cmd->args[0]))	
-		{
-			if (cmds->next)
-				;//execute_fork(cmd, local_env, global_env);
-			else
-				;//execute_nofork(cmd, local_env, global_env);
-		}
+			{
+				reset_io(cmd);
+				return ; //?????//check ret value if -1 donc problem
+			}
 		else
-			;//execute_fork(cmd, local_env, global_env);
+		{
+			cmd->builtin = is_builtin(cmd->args[0]);
+			if (cmd->builtin && !(cmds->next))
+			{
+				execute_nofork(cmd, local_env, global_env);
+			}
+			else
+				execute_fork(cmds, local_env, global_env);
+		}
 		reset_io(cmd);
-		cmds = cmds->next;
 	}
+	else
+		return ;
 }
 
-// Created to allow compilation
-int	is_builtin(char *cmdname)
-{
-	(void)cmdname; // Temp, only there to allow compilation
-	return (1);
-}
 
 //check if the cmd is built in and not alone
 //check if the cmd is non built in  
@@ -75,8 +71,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	int		pipe_fd[2];
 	pid_t	pid;
 	t_redir	*redir;
-
-	//a gerer le ctrl+D pour quitter que le heredoc
+//a gerer le ctrl+D pour quitter que le heredoc
 	(void)io; // Temp, only there to allow compilation
 	if (!cmd->is_hrdoc)
 		return ;

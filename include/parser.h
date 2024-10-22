@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/18 16:00:14 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/21 11:28:00 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ typedef enum e_tok_type
 	OUTFILE,
 	APPEND,	
 }	t_tok_type;
+
+typedef enum e_builtin_type
+{
+	ECHO = 1,
+	CD,
+	PWD,
+	EXPORT,	
+	UNSET,
+	ENV,
+	EXIT,
+}	t_builtin_type;
 
 typedef struct s_io_fd
 {
@@ -42,6 +53,7 @@ typedef struct s_command
 	int		prevpipe;
 	int		nextpipe;
 	int		is_hrdoc;
+	t_builtin_type	builtin;
 }	t_command;
 
 typedef struct s_redir
