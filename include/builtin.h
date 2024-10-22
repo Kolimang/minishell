@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/21 14:03:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/22 14:23:30 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@ int	ft_cd(char **args, t_env *env);
 
 // pwd.c
 int	ft_pwd(char **args, t_env *env);
+
+// export.c
+int	ft_export(char **args, t_env *env);
 
 #endif
