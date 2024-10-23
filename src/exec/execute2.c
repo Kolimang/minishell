@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/21 10:32:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:09:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,26 @@ int	is_last(t_list *redirs)
 
 int	execute_redir(t_command *cmd, t_io_fd *files)
 {
+	t_command *tmp;
 	t_redir	*redir;
 	int		ret;
 
+	tmp = cmd;
 	ret = 0;
-	while (cmd->ls_redirs)
+	while (tmp->ls_redirs)
 	{
 		redir = cmd->ls_redirs->content;
 		if (redir->type == INFILE)
-			ret = get_infile(cmd, redir->value, files, 0);
+			ret = get_infile(tmp, redir->value, files, 0);
 		else if (redir->type == HERE_DOC)
-			ret = get_infile(cmd, redir->value, files, 1);
+			ret = get_infile(tmp, redir->value, files, 1);
 		else if (redir->type == OUTFILE)
-			ret = get_outfile(cmd, redir->value, files, 0);
+			ret = get_outfile(tmp, redir->value, files, 0);
 		else if (redir->type == APPEND)
-			ret = get_outfile(cmd, redir->value, files, 1);
+			ret = get_outfile(tmp, redir->value, files, 1);
 		if (ret == -1)
 			return (ret);
-		cmd->ls_redirs = cmd->ls_redirs->next;
+		tmp->ls_redirs = tmp->ls_redirs->next;
 	}
 	return (0);
 }
@@ -64,6 +66,7 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 	}
 	else // HERE_DOC
 	{
+		//not sure of the fd_hrdoc closing 
 		files->fd_in = files->fd_hrdoc;
 		if (dup2(files->fd_in, STDIN_FILENO) == -1)
 			handle_error("Failed to duplicate heredoc to stdin");

@@ -17,28 +17,31 @@
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
+	t_io_fd	*io;
 
 	//a gerer le ctrl+D pour auitter que le heredoc
 	(void)global_env; // temp, to allow project compilation
 	while (cmds)
 	{
 		cmd = cmds->content;
-		init_io_fd(cmd->io);
-		get_hrdoc(cmd, local_env, cmd->io);
+		get_hrdoc(cmd, local_env, io);
 		cmds = cmds->next;
+		//do I need io??
 	}
-	//restore files if heredoc isnt working !!!
+	//restore files if heredoc isnt working ??
 }
 
 void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
+	t_io_fd		*io;
 
 	if(cmds)
 	{
+		init_io_fd(io);
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
-			if (execute_redir(cmd, cmd->io)== -1)
+			if (execute_redir(cmd, io)== -1)
 			{
 				reset_io(cmd);
 				return ; //?????//check ret value if -1 donc problem
@@ -47,16 +50,13 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		{
 			cmd->builtin = is_builtin(cmd->args[0]);
 			if (cmd->builtin && !(cmds->next))
-			{
 				execute_nofork(cmd, local_env, global_env);
-			}
 			else
 				execute_fork(cmds, local_env, global_env);
 		}
 		reset_io(cmd);
 	}
-	else
-		return ;
+	return ;
 }
 
 
@@ -72,8 +72,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	pid_t	pid;
 	t_redir	*redir;
 //a gerer le ctrl+D pour quitter que le heredoc
-	(void)io; // Temp, only there to allow compilation
-	if (!cmd->is_hrdoc)
+	if (!cmd->fd_hrdoc)
 		return ;
 	while (cmd->ls_redirs)
 	{
@@ -91,7 +90,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 				parent_heredoc_process(cmd, pid, pipe_fd);
 		}
 		cmd->ls_redirs = cmd->ls_redirs->next;
-		reset_io(cmd);
+		// reset_io(io);
 	}
 }
 
@@ -130,7 +129,7 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 	{
-		cmd->io->fd_hrdoc = pipe_fd[0];
+		cmd->fd_hrdoc = pipe_fd[0];
 		return (0);
 	}
 	else
@@ -140,27 +139,21 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 	}
 }
 
-void	init_io_fd(t_io_fd *files)
+void	init_io_fd(t_io_fd *io)
 {
-	files->fd_pipe[0] = -1;
-	files->fd_pipe[1] = -2;
-	files->fd_in = 0;
-	files->fd_out = -1;
-	files->fd_hrdoc = -1;
-	files->std_in = dup(STDIN_FILENO);
-	files->std_out = dup(STDOUT_FILENO);
-	if (files->std_in == -1 || files->std_out == -1)
+	io->fd_in = 0;
+	io->fd_out = -1;
+	io->std_in = dup(STDIN_FILENO);
+	io->std_out = dup(STDOUT_FILENO);
+	if (io->std_in == -1 || io->std_out == -1)
 	{
 		perror("Failed to duplicate");
 		exit(1);// Exit with error code 1
 	}
 }
 
-void	reset_io(t_command *cmd)
+void	reset_io(t_io_fd *io)
 {
-	t_io_fd *io;
-
-	io = cmd->io;
 	if (dup2(io->std_in, STDIN_FILENO) == -1)
 	{
 		perror("Failed to reset stdin");
