@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/22 17:16:55 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:56:04 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@
 	return (0);
 }
 
-int	execute_nofork(t_command *cmd, t_env *l_env, char **g_env)
+int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	//void or int ?? what about g_ret_val??
 	int ret_value;
 	//check redirection
-	if (execute_redir(cmd, cmd->io)== -1)
+	if (execute_redir(cmd, io)== -1)
 	{	
 		reset_io(cmd);
 		return(-1);
@@ -70,21 +70,19 @@ int exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
     return res;
 }
 
-int	execute_fork(t_list *cmds, t_env *l_env, char **g_env)
+int	execute_fork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	t_command *cmd;
 	t_list *tmp;
 	int	fd_pipe[2];
 
-	t_command *prev;
-	prev = NULL;
 	while(tmp)
 	{
 		cmd = tmp->content;
-		if(pipe(fd_pipe) == -1)
+		if(pipe(io->pipe) == -1)
 			return(-1);
 		//save the fd[0]
-		create_child(cmd, fd_pipe, l_env, g_env); // close both fds ??? 
+		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
 		//gets the fd[0]
 			//check redirections
 		//if(cmd->builtin = EXIT)
@@ -98,12 +96,13 @@ int	execute_fork(t_list *cmds, t_env *l_env, char **g_env)
 		tmp = tmp->next;
 	}
 	if(tmp) // creating last child
-		create_child(cmd, l_env, g_env);
+		io->fd_in = create_child(cmd, l_env, g_env);
+		//what to do with fd_in??? c deja gere ici ou gere dans le set fd? 
 	wait_children(tmp->content); 	//recupere le code d'erreur final
 	return(0);
 }
 
-void	create_child(t_command *cmd, int *fd, t_env *l_env, char **g_env)
+int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	cmd->pid = fork();
 	if(cmd->pid == -1)
@@ -112,15 +111,17 @@ void	create_child(t_command *cmd, int *fd, t_env *l_env, char **g_env)
 	{
 		if (cmd->ls_redirs)
 		{
-			close_fds(fd, cmd, cmd->io);
-			execute_redir(cmd, cmd->io);
+			close_fds(cmd, io); // closing the pipe fds 
+			execute_redir(cmd, io);
 		}
 		else
-			set_fds(fd, cmd, cmd->io);
-		//here, we have fd_in and fd_out already set
+			set_fds(cmd, io); //close fd_hrdoc
+		//here, we have fd_in and fd_out already set, close fd_hrdoc if redir
+		//make sure all the fds are closed despite STDINFILENO and STDOUTFILENO
 		if(cmd->args)
 			execute_cmd(cmd, l_env, g_env);
 		//exit error val??
+		return(io->pipe[0]); //return the readend tha has the same content as stdout after execution, fd_in = read_end now ouf
 	}
 }
 
@@ -145,12 +146,16 @@ void wait_children(t_list *cmds)
     }
 }
 
-void	set_fds(int *fd, t_command *cmd, t_io_fd *io)
+void	set_fds(t_command *cmd, t_io_fd *io)
 {
+	/*when you use dup2 to redirect STDOUT_FILENO to pipe_fd[1],
+	any output sent to standard output will be directed into 
+	the write end of the pipe (pipe_fd[1])
+	*/
+	//fd_in is already here pipe_fd[0]
 	if(cmd->prevpipe > 0)
 	{
 		//close fd_in
-		//set fd_in as the fd_pipe[0]
 	}
 	if(cmd->nextpipe > 0)
 	{
@@ -159,7 +164,7 @@ void	set_fds(int *fd, t_command *cmd, t_io_fd *io)
 	}
 }
 
-void	close_fds(int *fd, t_command *cmd, t_io_fd *io)
+void	close_fds(t_command *cmd, t_io_fd *io)
 {
 	t_command *tmp;
 	t_redir	*redir;
@@ -169,18 +174,18 @@ void	close_fds(int *fd, t_command *cmd, t_io_fd *io)
 	flag = 0;
 	flag2 = 0;
 	tmp = cmd;
-	while (tmp->ls_redirs && fd && !(flag2 == 1 && flag == 1))
+	while (tmp->ls_redirs && io->pipe && !(flag2 == 1 && flag == 1))
 	{
 		redir = tmp->ls_redirs;
-		if(flag == 0 && (redir->type == INFILE ||  redir->type == HERE_DOC))
+		if(flag == 0 && (redir->type == INFILE || redir->type == HERE_DOC))
 		{
-			close(fd[1]);
+			close(io->pipe[1]);
 			flag = 1;
 		}
 		else if (flag2 == 0)
 		{	
-			close(fd[0]);
-			flag2 == 1;
+			close(io->pipe[0]);
+			flag2 = 1;
 		}
 		tmp->ls_redirs = tmp->ls_redirs->next;
 	}

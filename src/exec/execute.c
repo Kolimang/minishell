@@ -43,18 +43,18 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		if (cmds->next == NULL && !(cmd->args[0]))
 			if (execute_redir(cmd, io)== -1)
 			{
-				reset_io(cmd);
+				reset_io(io);
 				return ; //?????//check ret value if -1 donc problem
 			}
 		else
 		{
 			cmd->builtin = is_builtin(cmd->args[0]);
 			if (cmd->builtin && !(cmds->next))
-				execute_nofork(cmd, local_env, global_env);
+				execute_nofork(cmd, io, local_env, global_env);
 			else
-				execute_fork(cmds, local_env, global_env);
+				execute_fork(cmds, io, local_env, global_env);
 		}
-		reset_io(cmd);
+		reset_io(io);
 	}
 	return ;
 }
@@ -94,7 +94,7 @@ void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
 	}
 }
 
-void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
+void	child_heredoc_process(t_command *cmd, t_env *local_env, int	fd[2])
 {
 	// how to handle signals?
 	// Setup signal handling
@@ -102,6 +102,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 	char	*line;
 	t_redir	*redir;
 
+	//set_signals_hrdoc ???? 
 	close(fd[0]);
 	redir = cmd->ls_redirs->content;
 	while (1)
@@ -129,11 +130,13 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 	{
+		//ret value??? 
 		cmd->fd_hrdoc = pipe_fd[0];
 		return (0);
 	}
 	else
 	{
+		//ret value??
 		close(pipe_fd[0]);
 		return (-1);
 	}
@@ -141,7 +144,9 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 
 void	init_io_fd(t_io_fd *io)
 {
-	io->fd_in = 0;
+	io->pipe[0] = -1;
+	io->pipe[1] = -1;
+	io->fd_in = STDIN_FILENO;
 	io->fd_out = -1;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);

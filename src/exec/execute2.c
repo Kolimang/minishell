@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/22 16:09:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:24:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 	else // HERE_DOC
 	{
 		//not sure of the fd_hrdoc closing 
-		files->fd_in = files->fd_hrdoc;
+		files->fd_in = cmd->fd_hrdoc;
 		if (dup2(files->fd_in, STDIN_FILENO) == -1)
 			handle_error("Failed to duplicate heredoc to stdin");
-		if (close(files->fd_hrdoc))
+		if (close(cmd->fd_hrdoc))
 			return (-1); //not sure, to check
 			//make sure to reset here-doc at the end
 	}

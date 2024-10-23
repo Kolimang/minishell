@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/23 10:59:08 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:06:42 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_builtin_type
 
 typedef struct s_io_fd
 {
+	int	pipe[2];
 	int	std_in;//backup des stdio
 	int	std_out;//backup des stdio
 	int	fd_in;//current fd in
