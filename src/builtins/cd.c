@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/22 13:30:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/23 16:22:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,14 @@ static int	go(char *dest_path, char *curr_path, t_env *env)
 {
 	if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
 		return (ft_putstr_fd("cd: No such file or directory\n", 2), 1);
-	else if (access(dest_path, R_OK) != 0)
+	else if (access(dest_path, R_OK) != 0) // Probablement a tester apres avoir fait chdir() !
 		return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
 	else
 	{
 		curr_path = getcwd(NULL, 0);
 		chdir((const char *)dest_path);
+		free(dest_path);
+		dest_path = getcwd(NULL, 0);
 	}
 	return (update_env(dest_path, curr_path, env), 0);
 }
@@ -133,11 +135,11 @@ int	ft_cd(char **args, t_env *env)
 	dest_path = NULL;
 	curr_path = NULL;
 	argc = ft_arraylen(args);
-	if (argc == 1 || (argc == 2 && ft_strncmp(args[1], "--", 3)))
+	if (argc == 1 || (argc == 2 && ft_strncmp(args[1], "--", 3) == 0))
 		res = go_home(dest_path, curr_path, env);
-	else if (ft_strncmp(args[1], "--", 3))
+	else if (ft_strncmp(args[1], "--", 3) == 0)
 		res = go(args[2], curr_path, env);
-	else if (ft_strncmp(args[1], "-", 2))
+	else if (ft_strncmp(args[1], "-", 2) == 0)
 		res = go_prev(dest_path, curr_path, env);
 	else
 		res = go(args[1], curr_path, env);

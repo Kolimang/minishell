@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/23 15:46:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/23 16:10:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,11 @@ int	execute(t_env *env)
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
 			return (1);
-		if (*cmd == '1')
-		{
-			args = ft_split("export", ' ');
-			//ft_printarray(args, ' ');
-			ft_export(args, env);
-		}
-		else if (*cmd == '2')
-		{
-			args = ft_split("export XXW ZYXYX= 99 ZYXYX_W=42 1942=ERROR", ' ');
-			//ft_printarray(args, ' ');
-			ft_export(args, env);
-		}
+		args = ft_split(cmd, ' ');
+		ft_cd(args, env);
+		free(args);
+		args = ft_split("pwd", ' ');
+		ft_pwd(args, env);
 	}
 	return (0);
 }
