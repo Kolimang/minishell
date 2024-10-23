@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/22 16:22:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/23 15:44:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,47 @@ static int	check_value(char *str, char **name, char **value)
 	{
 		len = equal - str;
 		*name = ft_substr(str, 0, (size_t)len);
-		*value = ft_substr(str, len, ft_strlen(str) - (size_t)len);
+		*value = ft_substr(str, len + 1, ft_strlen(str) - (size_t)(len + 1));
 	}
 	else
+	{
 		*name = str;
 		*value = NULL;
+	}
+	return (0);
 }
 
 static int	update_env(char *name, char *value, t_env **env)
 {
+	t_env	*head;
+
 	if (!*env)
 		return (1);
-	while (*env)
+	head = *env;
+	while (head)
 	{
-		if (ft_strncmp((*env)->var_name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(head->var_name, name, ft_strlen(name) + 1) == 0)
 			if (value)
 			{
-				if ((*env)->var_val)
-					free((*env)->var_val);
-				(*env)->var_val = value;
+				if (head->var_val)
+					free(head->var_val);
+				head->var_val = value;
 				return (0);
 			}
-		env = (*env)->next;
+		head = head->next;
 	}
 	add_env_var(env, name, value, 1);
+	return (0);
+}
+
+int	ft_env(char **args, t_env *env)
+{
+	if (!env)
+		return (ft_putstr_fd("env: no environment set\n", 2), 1);
+	if (args && args[1])
+		return (ft_putstr_fd("env: too many arguments\n", 2), 1);
+	if (args && !args[1])
+		print_env(env, 2);
 	return (0);
 }
 
@@ -64,19 +81,44 @@ int	ft_export(char **args, t_env *env)
 	int		res;
 
 	res = 0;
-	i = 1;
+	if (args && !args[1])
+		print_env(env, 1);
 	if (args && args[1])
 	{
+		i = 1;
 		while (args[i])
 		{
 			res = check_name(args[i]);
 			if (res)
-				return (ft_putstr_fd("export: `%s': not a valid identifier\n", 2), 1);
-			check_value(args[i], &name, &value);
-			update_env(name, value, &env);
-			// To be tested and checked for missing steps/checks
+				merror(args[0], args[i], "not a valid identifier", 1);
+			else
+			{
+				check_value(args[i], &name, &value);
+				update_env(name, value, &env);
+			}
 			i++;
 		}
 	}
-	return (0);
+	return (res);
+}
+
+int	merror(char *cmd, char *arg, char *msg, int value)
+{
+	if (cmd)
+	{
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": ", 2);
+	}
+	if (arg)
+	{
+		write(2, "`", 1);
+		write(2, arg, ft_strlen(arg));
+		write(2, "': ", 3);
+	}
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+	}
+	write(2, "\n", 1);
+	return (value);
 }

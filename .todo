@@ -41,8 +41,10 @@
 				\_ [?] handle cd - (goes to OLDPWD if the env var is set) ; (and cd -- ?)
 		\_ [v?] pwd with no options
 		\_ [ ] export with no options
+				\_ [?] Quand on exporte plusieurs variables en une fois et qu'une seule a un identifiant invalide, les autres doivent etres creees: OUI.
+				\_ [ ] Si plusieurs identifiants sont invalides, il faut afficher un msg pour chaque identifiant invalide
 		\_ [ ] unset with no options
-		\_ [ ] env with no options or arguments
+		\_ [v] env with no options or arguments
 		\_ [ ] exit with no options
 
 [ ] Signaux :
