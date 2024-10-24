@@ -41,6 +41,7 @@
 				\_ [?] handle cd - (goes to OLDPWD if the env var is set) ; (and cd -- ?)
 		\_ [v?] pwd with no options
 		\_ [ ] export with no options
+				\_ [ ] OLDPWD and PWD can have the same value, no need to check for duplicate value
 				\_ [?] Quand on exporte plusieurs variables en une fois et qu'une seule a un identifiant invalide, les autres doivent etres creees: OUI.
 				\_ [ ] Si plusieurs identifiants sont invalides, il faut afficher un msg pour chaque identifiant invalide
 		\_ [ ] unset with no options
@@ -65,6 +66,8 @@
 		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
 
 [ ] Testing :
+		\_ [ ] echo echo test
+		\_ [ ] $VAR (where 'VAR' has been previously exported with value "echo test")
 		\_ [ ] CAS CHIANTS !!! 
 				\_ [v] echo hello >1 >>2 >3
 				\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2

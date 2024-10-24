@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/23 15:44:18 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/24 12:51:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_export(char **args, t_env *env)
 
 	res = 0;
 	if (args && !args[1])
-		print_env(env, 1);
+		return (print_env(env, 1), 0);
 	if (args && args[1])
 	{
 		i = 1;
