@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/23 15:03:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:13:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,37 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 	}
 }
 
+void	sort_env(t_env *env)
+{
+	t_env	*current;
+	t_env	*compare;
+	t_env	*swap;
+
+	current = env;
+	compare = env;
+	while (current)
+	{
+		while (compare)
+		{
+			if (ft_strncmp(current->var_name, compare->var_name,
+				ft_strlen(current->var_name)) > 0)
+			{
+				if (!compare->next || ft_strncmp(current->var_name, 
+					compare->next->var_name, ft_strlen(current->var_name)) < 0)
+				{
+					swap = compare->next;
+					current->next = compare;
+					compare->next = swap;
+					break ;
+				}
+			}
+			compare = compare->next;
+		}
+		current = current->next;
+		compare = env;
+	}
+}
+
 t_env	*init_env(char **original_env)
 {
 	t_env	*env;
@@ -68,6 +99,7 @@ t_env	*init_env(char **original_env)
 		}
 		i++;
 	}
+	sort_env(env);
 	return (env);
 }
 

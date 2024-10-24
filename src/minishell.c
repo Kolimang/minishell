@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 10:45:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:01:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int	main(int ac, char **av, char **o_env)
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
+	ft_printarray(o_env, '\n');// DEBUG
+	ft_printf("--- --- --- ---\n");// DEBUG
 	env = init_env(o_env);
 	//set_shlvl(env);
 	if (execute(env))

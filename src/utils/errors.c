@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 17:13:29 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
+/*   Updated: 2024/10/24 15:41:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include <minishell.h>
 
-// echo.c
-int	ft_echo(char **args);
-
-// cd.c
-int	ft_cd(char **args, t_env *env);
-
-// pwd.c
-int	ft_pwd(char **args, t_env *env);
-
-// export.c
-int	ft_export(char **args, t_env *env);
-int	print_env(t_env *env, int mode);
-int	ft_env(char **args, t_env *env);
-
-void	sort_env(t_env *env);
-
-#endif
+int	merror(char *cmd, char *arg, char *msg, int value)
+{
+	if (cmd)
+	{
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": ", 2);
+	}
+	if (arg)
+	{
+		write(2, "`", 1);
+		write(2, arg, ft_strlen(arg));
+		write(2, "': ", 3);
+	}
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+	}
+	write(2, "\n", 1);
+	return (value);
+}

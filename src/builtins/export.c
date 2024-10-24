@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 12:51:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/24 17:04:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,40 @@ static int	check_value(char *str, char **name, char **value)
 	return (0);
 }
 
+static void	insert_in_env(t_env **env, const char *var_name, const char *var_val,
+		int index)
+{
+	t_env	*new_node;
+	t_env	*current;
+	t_env	*swap;
+
+	new_node = create_env_node(var_name, var_val, index);
+	if (!new_node)
+		return ;
+	if (!(*env))
+		*env = new_node;
+	else
+	{
+		current = *env;
+		while (current)
+		{
+			if (ft_strncmp(new_node->var_name, current->var_name,
+				ft_strlen(new_node->var_name)) > 0)
+			{
+				if (!current->next || ft_strncmp(new_node->var_name, 
+					current->next->var_name, ft_strlen(new_node->var_name)) < 0)
+				{
+					swap = current->next;
+					current->next = new_node;
+					new_node->next = swap;
+					break ;
+				}
+			}
+			current = current->next;
+		}
+	}
+}
+
 static int	update_env(char *name, char *value, t_env **env)
 {
 	t_env	*head;
@@ -48,17 +82,16 @@ static int	update_env(char *name, char *value, t_env **env)
 	head = *env;
 	while (head)
 	{
-		if (ft_strncmp(head->var_name, name, ft_strlen(name) + 1) == 0)
-			if (value)
-			{
-				if (head->var_val)
-					free(head->var_val);
-				head->var_val = value;
-				return (0);
-			}
+		if (value && !ft_strncmp(head->var_name, name, ft_strlen(name) + 1))
+		{
+			if (head->var_val)
+				free(head->var_val);
+			head->var_val = ft_strdup(value);
+			return (0);
+		}
 		head = head->next;
 	}
-	add_env_var(env, name, value, 1);
+	insert_in_env(env, name, value, 1);
 	return (0);
 }
 
@@ -100,25 +133,4 @@ int	ft_export(char **args, t_env *env)
 		}
 	}
 	return (res);
-}
-
-int	merror(char *cmd, char *arg, char *msg, int value)
-{
-	if (cmd)
-	{
-		write(2, cmd, ft_strlen(cmd));
-		write(2, ": ", 2);
-	}
-	if (arg)
-	{
-		write(2, "`", 1);
-		write(2, arg, ft_strlen(arg));
-		write(2, "': ", 3);
-	}
-	if (msg)
-	{
-		write(2, msg, ft_strlen(msg));
-	}
-	write(2, "\n", 1);
-	return (value);
 }
