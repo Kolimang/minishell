@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/24 12:37:40 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:32:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,27 +145,27 @@ void wait_children(t_list *cmds)
     }
 }
 
-void	set_fds(t_command *cmd, t_io_fd *io)
-{
-	/*when you use dup2 to redirect STDOUT_FILENO to pipe_fd[1],
-	any output sent to standard output will be directed into 
-	the write end of the pipe (pipe_fd[1])
-	*/
-	//fd_in is already here pipe_fd[0]
-	//fd_in first call is STDIN
-	if(cmd->prevpipe > 0)
-	{
-		if(dup2(io->fd_in, STDIN_FILENO) == -1)
-				return ???;
-		if(close(io->fd_in))
-			return ???;//close fd_in
-	}
-	if(cmd->nextpipe > 0)
-	{
-		if(dup2(fd_pipe[1], ))//close unused fds ?
-		//set fd_pipe[1] as the fd_out
-	}
-}
+// void	set_fds(t_command *cmd, t_io_fd *io)
+// {
+// 	/*when you use dup2 to redirect STDOUT_FILENO to pipe_fd[1],
+// 	any output sent to standard output will be directed into 
+// 	the write end of the pipe (pipe_fd[1])
+// 	*/
+// 	//fd_in is already here pipe_fd[0]
+// 	//fd_in first call is STDIN
+// 	if(cmd->prevpipe > 0)
+// 	{
+// 		if(dup2(io->fd_in, STDIN_FILENO) == -1)
+// 				return ???;
+// 		if(close(io->fd_in))
+// 			return ???;//close fd_in
+// 	}
+// 	if(cmd->nextpipe > 0)
+// 	{
+// 		if(dup2(fd_pipe[1], ))//close unused fds ?
+// 		//set fd_pipe[1] as the fd_out
+// 	}
+// }
 
 void	close_fds(t_command *cmd, t_io_fd *io)
 {
