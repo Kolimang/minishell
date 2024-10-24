@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/23 13:24:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:09:09 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,10 @@ int	execute_redir(t_command *cmd, t_io_fd *files)
 	while (tmp->ls_redirs)
 	{
 		redir = cmd->ls_redirs->content;
-		if (redir->type == INFILE)
-			ret = get_infile(tmp, redir->value, files, 0);
-		else if (redir->type == HERE_DOC)
-			ret = get_infile(tmp, redir->value, files, 1);
-		else if (redir->type == OUTFILE)
-			ret = get_outfile(tmp, redir->value, files, 0);
-		else if (redir->type == APPEND)
-			ret = get_outfile(tmp, redir->value, files, 1);
+		if (redir->type == INFILE || redir->type == HERE_DOC)
+			ret = redir_infile(tmp, redir->value, files, redir->type);
+		else if (redir->type == OUTFILE || redir->type == APPEND )
+			ret = redir_outfile(tmp, redir->value, files, redir->type);
 		if (ret == -1)
 			return (ret);
 		tmp->ls_redirs = tmp->ls_redirs->next;
@@ -49,11 +45,11 @@ int	execute_redir(t_command *cmd, t_io_fd *files)
 	return (0);
 }
 
-int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
+int	redir_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 {
 	int	fd_tmp;
 
-	if (flag == 0) // Regular infile
+	if (flag == INFILE) // Regular infile
 	{
 		fd_tmp = open(name, O_RDONLY);
 		if (fd_tmp == -1)
@@ -64,7 +60,7 @@ int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
 		if (close(fd_tmp) == -1)
 			return (-1); // not sure, to check
 	}
-	else // HERE_DOC
+	else if (flag == HERE_DOC) // HERE_DOC
 	{
 		//not sure of the fd_hrdoc closing 
 		files->fd_in = cmd->fd_hrdoc;
@@ -87,12 +83,12 @@ int	dup_handle(int fd, int target_fd, const char *error_msg)
 	return (0);
 }
 
-int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
+int	redir_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
 {
 	int	fd_tmp;
 
 	(void)cmd;
-	if (flag == 0) // Regular outfile
+	if (flag == OUTFILE) // Regular outfile
 	{
 		fd_tmp = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd_tmp == -1)
@@ -169,3 +165,26 @@ int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
 //         return (dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
 //     }
 // }
+
+
+
+void	get_infile(t_command *cmd, t_io_fd *io)
+ {
+	t_list *tmp;
+	t_redir *redir;
+
+	tmp = cmd->ls_redirs;
+	if(tmp)
+	{
+		while (tmp)
+		{	
+			redir = tmp->content;
+			redir_infile(cmd, redir->value, io, redir->type);
+			tmp = tmp->next;
+ 		}
+		return
+	else
+		if (dup2(io->fd_in, STDIN_FILENO) == -1)
+			return (handle_error("Failed to duplicate infile to stdin"));
+	
+ }

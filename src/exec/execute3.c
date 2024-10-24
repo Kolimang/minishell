@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/23 13:56:04 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:37:40 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,20 +104,19 @@ int	execute_fork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 
 int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
+	t_redir	*redir;
+	int	ret;
+	redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
 	if(cmd->pid == -1)
 		return(handle_error("fork"));
 	if (cmd->pid == 0) //in child
 	{
-		if (cmd->ls_redirs)
+		if (cmd->prevpipe > 0)
 		{
-			close_fds(cmd, io); // closing the pipe fds 
-			execute_redir(cmd, io);
+			get_infile(cmd, io);
+			//close(io->pipe[1]);
 		}
-		else
-			set_fds(cmd, io); //close fd_hrdoc
-		//here, we have fd_in and fd_out already set, close fd_hrdoc if redir
-		//make sure all the fds are closed despite STDINFILENO and STDOUTFILENO
 		if(cmd->args)
 			execute_cmd(cmd, l_env, g_env);
 		//exit error val??
@@ -153,13 +152,17 @@ void	set_fds(t_command *cmd, t_io_fd *io)
 	the write end of the pipe (pipe_fd[1])
 	*/
 	//fd_in is already here pipe_fd[0]
+	//fd_in first call is STDIN
 	if(cmd->prevpipe > 0)
 	{
-		//close fd_in
+		if(dup2(io->fd_in, STDIN_FILENO) == -1)
+				return ???;
+		if(close(io->fd_in))
+			return ???;//close fd_in
 	}
 	if(cmd->nextpipe > 0)
 	{
-		//close unused fds ?
+		if(dup2(fd_pipe[1], ))//close unused fds ?
 		//set fd_pipe[1] as the fd_out
 	}
 }
@@ -168,25 +171,37 @@ void	close_fds(t_command *cmd, t_io_fd *io)
 {
 	t_command *tmp;
 	t_redir	*redir;
-	int flag;
+	int flag1;
 	int flag2;
 	
-	flag = 0;
+	flag1 = 0;
 	flag2 = 0;
 	tmp = cmd;
-	while (tmp->ls_redirs && io->pipe && !(flag2 == 1 && flag == 1))
+	while (tmp->ls_redirs && io->pipe && !(flag2 == 1 && flag1 == 1))
 	{
 		redir = tmp->ls_redirs;
-		if(flag == 0 && (redir->type == INFILE || redir->type == HERE_DOC))
+		if(flag1 == 0 && (redir->type == INFILE || redir->type == HERE_DOC))
 		{
-			close(io->pipe[1]);
-			flag = 1;
+			close(io->pipe[0]);
+			flag1 = 1;
 		}
 		else if (flag2 == 0)
 		{	
-			close(io->pipe[0]);
+			close(io->pipe[1]);
 			flag2 = 1;
 		}
 		tmp->ls_redirs = tmp->ls_redirs->next;
 	}
 }
+/*
+if(has infile redirection)
+	get_infile as stdinfileno
+	close read pipe
+else
+	get fd_in as stdinfileno
+if(has outfile redirection)
+	get outfile as stdfileout
+	close write pipe 
+else 
+	get fd_pipe[0] as stdfileout
+*/
