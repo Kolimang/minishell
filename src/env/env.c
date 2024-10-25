@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/24 17:13:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/25 16:02:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,72 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 	}
 }
 
-void	sort_env(t_env *env)
+void	prep_sort_env(t_env **env)
 {
 	t_env	*current;
-	t_env	*compare;
-	t_env	*swap;
+	t_env	*prev_curr;
 
-	current = env;
-	compare = env;
+	current = *env;
+	prev_curr = NULL;
+	sort_env(env, current, prev_curr);
+}
+
+static void	swap_nodes(t_env *prev_min, t_env *min, t_env *prev_curr, t_env *curr)
+{
+	t_env	*temp;
+
+	temp = min->next;
+	if (prev_min != curr)
+		prev_min->next = curr;
+	else
+		min->next = curr;
+	min->next = curr->next;
+	curr->next = temp;
+}
+
+static t_env	*find_min_node(t_env *current, t_env **prev_min)
+{
+	t_env	*minimum;
+	t_env	*compare;
+	t_env	*prev_compare;
+
+	minimum = current;
+	compare = current->next;
+	*prev_min = current;
+	prev_compare = current;
+	while (compare)
+	{
+		if (ft_strncmp(minimum->var_name, compare->var_name,
+			ft_strlen(minimum->var_name) + 1) > 0)
+		{
+			minimum = compare;
+			*prev_min = prev_compare;
+		}
+		prev_compare = compare;
+		compare = compare->next;
+	}
+	return (minimum);
+}
+
+void	sort_env(t_env **env, t_env *current, t_env *prev_curr)
+{
+	t_env	*minimum;
+	t_env	*prev_min;
+
 	while (current)
 	{
-		while (compare)
+		minimum = find_min_node(current, &prev_min);
+
+		if (minimum != current)
 		{
-			if (ft_strncmp(current->var_name, compare->var_name,
-				ft_strlen(current->var_name)) > 0)
-			{
-				if (!compare->next || ft_strncmp(current->var_name, 
-					compare->next->var_name, ft_strlen(current->var_name)) < 0)
-				{
-					swap = compare->next;
-					current->next = compare;
-					compare->next = swap;
-					break ;
-				}
-			}
-			compare = compare->next;
+			if (!prev_curr)
+				*env = minimum;  // Update head if current is head
+			swap_nodes(prev_min, minimum, prev_curr, current);
 		}
-		current = current->next;
-		compare = env;
+
+		// Move `prev_curr` and `current` to the next unsorted node
+		prev_curr = (minimum == current) ? current : minimum;
+		current = prev_curr->next;
 	}
 }
 
@@ -99,7 +137,7 @@ t_env	*init_env(char **original_env)
 		}
 		i++;
 	}
-	sort_env(env);
+	prep_sort_env(&env);
 	return (env);
 }
 
