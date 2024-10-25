@@ -59,7 +59,8 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	}
 	return ;
 }
-static	void	init_hrdoc (t_command *cmd)
+
+void	init_hrdoc (t_command *cmd)
 {
 	if (cmd->fd_hrdoc != -3)
 		{
@@ -93,8 +94,8 @@ int	get_hrdoc(t_command *cmd, t_env *local_env)
 					return(-1);
 		}
 		cmd->ls_redirs = cmd->ls_redirs->next;
-		return(0);
 	}
+	return(0);
 }
 
 void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2])
@@ -147,7 +148,7 @@ void	init_io_fd(t_io_fd *io)
 	io->pipe[0] = -1;
 	io->pipe[1] = -1;
 	io->fd_in = STDIN_FILENO;
-	io->fd_tmp = -2;
+	io->fd_out= -2;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)

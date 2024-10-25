@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/09 15:53:49 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/25 20:33:49 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 	}
 	else if (tmp[*i] == '?') //mise a jour du code d erreur
 	{
-		exit_code_str = ft_itoa(g_ret_value);
-		*res = ft_strjoin(*res, exit_code_str);
+		exit_code_str = ft_itoa(ret_value);
+		*res = ft_strjoin(*res, exit_code_str); 
 		free(exit_code_str);// Move past the '?'
 		(*i)++;
 		return ;//move past the ?

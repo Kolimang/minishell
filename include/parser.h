@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 14:40:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/25 20:08:24 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ typedef struct s_io_fd
 	int	pipe[2];
 	int	std_in;//backup des stdio
 	int	std_out;//backup des stdio
-	int	fd_in;//current fd in
-	int	fd_tmp;//for closing multi fds 
+	int	fd_in;
+	int	fd_out;
+	// int	fd_tmp;//for closing multi fds 
 }	t_io_fd;
 
 typedef struct s_command
