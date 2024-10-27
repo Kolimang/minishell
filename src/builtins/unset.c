@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 19:18:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:30:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_unset(char **args, t_env *env)
 
 	res = 0;
 	if (args && !args[1])
-		return (merror(args[0], NULL, "not enough arguments"));
+		return (merror(args[0], NULL, "not enough arguments", 1));
 	if (args && args[1])
 	{
 		i = 1;
