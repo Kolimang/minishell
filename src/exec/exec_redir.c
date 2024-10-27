@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute2.c                                         :+:      :+:    :+:   */
+/*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:36:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:48:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	handle_error(const char *msg)
-{
-	perror(msg);
-	return (-1);
-}
-
-int	is_last(t_list *redirs)
-{
-	return (redirs && redirs->next == NULL);
-}
 
 int	redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
 {
@@ -111,28 +100,28 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 
 	redir = cmd->ls_redirs->content;
 	//case of first command and last command : redirection + 1ere cmd
-	if(cmd->prevpipe || redir->type == INFILE || redir->type == HERE_DOC)
+	if (cmd->prevpipe || redir->type == INFILE || redir->type == HERE_DOC)
 	{
-		if(get_infile(cmd, io) == -1)
-			return(-1);
-		if(dup2(io->fd_in, STDIN_FILENO) == -1)
-			return(-1);
-		if(close(io->fd_in) == -1)
+		if (get_infile(cmd, io) == -1)
+			return (-1);
+		if (dup2(io->fd_in, STDIN_FILENO) == -1)
+			return (-1);
+		if (close(io->fd_in) == -1)
 			error();//set error ? a voir 
 	}
-	if(cmd->nextpipe || redir->type == OUTFILE || redir->type == APPEND)
+	if (cmd->nextpipe || redir->type == OUTFILE || redir->type == APPEND)
 	{
-		if(get_outfile(cmd, io) == -1)
-			return(-1);
-		if(dup2(io->fd_out, STDOUT_FILENO) == -1)
-			return(-1);
+		if (get_outfile(cmd, io) == -1)
+			return (-1);
+		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
+			return (-1);
 		close(io->fd_out); //fd_out can either be redir or fd_pipe[1]
 		//the data is stored in a kernel buffer. 
 		//Closing fd_pipe[1] doesn't erase this data
 	}
-	if(cmd->nextpipe)//my pipe is gonna use pipe[0] to put the data there
+	if (cmd->nextpipe)//child only needs tow rite fd[1]->data is in buffer kernel
 		close(io->pipe[0]);
-	return(0);
+	return (0);
 }
 
 
@@ -168,3 +157,6 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 //     }
 //     return (0);
 // }
+
+
+ 
