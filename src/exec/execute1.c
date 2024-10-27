@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:56:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:11:51 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ int	exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
 	//revoir si les builtin renvoie une valeur d erreur 
     if (cmd->builtin == 1)
         res = ft_echo(cmd->args);
-    else if (cmd->builtin == 2)
-        res = ft_cd(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 3)
-        res = ft_pwd(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 4)
-        res = ft_export(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 5)
-        res = ft_unset(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 6)
-        res = ft_env(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 7)
-        res = ft_exit(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 2)
+    //     res = ft_cd(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 3)
+    //     res = ft_pwd(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 4)
+    //     res = ft_export(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 5)
+    //     res = ft_unset(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 6)
+    //     res = ft_env(cmd->args, l_env, g_env);
+    // else if (cmd->builtin == 7)
+    //     res = ft_exit(cmd->args, l_env, g_env);
     else
         res = -1; // Error: unknown built-in command
     return (res);
@@ -78,11 +78,11 @@ void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 	char	**full_cmd;
 
 	full_cmd = ft_split(cmd->name, ' ');
-	if (cmd->args[0] == '/' || cmd->args[0] == '.')
-		full_path = check_path(full_cmd, cmd);
+	if (cmd->args[0][0] == '/' || cmd->args[0][0] == '.')
+		full_path = check_path(full_cmd, cmd->args[0]);
 	else
 	{	
-		full_path = get_full_path(full_cmd, local);
+		full_path = get_full_path(full_cmd, global); //TO MODIFY
 		if (!full_path)
 		{
 			ft_putstr_fd("Command not found \n", 2);
@@ -98,3 +98,18 @@ void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 		exit(EXIT_FAILURE);
 	}
 }
+
+char	*check_path(char **full_cmd, char *cmd)
+{
+	char *full_path;
+
+	if (access(full_cmd[0], F_OK | X_OK) == 0)
+			full_path = full_cmd[0];
+	else
+	{
+			perror(cmd);
+			exit(EXIT_FAILURE);
+	}
+	return(full_path);
+}
+

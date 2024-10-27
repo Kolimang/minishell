@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:57:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:06:01 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
 int		exec_builtin(t_command *cmd, t_env *l_env, char **g_env);
 int		is_builtin(char *cmd);
 void	exec_cmd(t_command *cmd, t_env *local, char **global);
+char	*check_path(char **full_cmd, char *cmd);
 
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);
@@ -52,6 +53,7 @@ char	*get_full_path(char **full_cmd, char **env);
 char	**get_paths(char **env);
 void	check_pid(int pid);
 void	free_tab(char **paths);
+
 
 void	return_error(char *arg);
 

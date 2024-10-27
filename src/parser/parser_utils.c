@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 15:04:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:15:32 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_command	*check_cmd(t_command *command)
 
 void	ft_print_command(t_command *command)
 {
-	ft_printf("index            : %d\n", command->index);
+	// ft_printf("index            : %d\n", command->index);
 	ft_printf("argc             : %d\n", command->argc);
 	ft_printf("args             : ");
 	ft_printarray(command->args, ' ');
