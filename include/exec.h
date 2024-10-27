@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:47:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:57:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //execute
 void	exec(t_list *cmds, t_env *local_env, char **global_env);
-int		execute_fork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
+int		execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env);
 int		create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
 void	wait_children(t_list *cmds);
 
@@ -23,7 +23,7 @@ void	wait_children(t_list *cmds);
 int		execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
 int		exec_builtin(t_command *cmd, t_env *l_env, char **g_env);
 int		is_builtin(char *cmd);
-void	exec_cmd(t_command *cmd, t_env *local, t_env *global);
+void	exec_cmd(t_command *cmd, t_env *local, char **global);
 
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);

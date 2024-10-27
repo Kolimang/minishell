@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:40:03 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/27 18:55:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		{
 			if (set_fds(cmd, io)== -1)
 			{
-				reset_fds(io, cmd);
+				reset_io(io, cmd);
 				return ;
 			}
 		}
@@ -44,10 +44,12 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 	return ;
 }
 
-int	execute_fork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
+int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	t_command *cmd;
 	t_list *tmp;
+
+	tmp = cmds;
 
 	while(tmp)
 	{

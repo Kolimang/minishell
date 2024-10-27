@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:49:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:56:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 	//check redirection
 	if (set_fds(cmd, io)== -1)
 	{	
-		reset_io(cmd);
+		reset_io(io, cmd);
 		return (-1);
 	}
 	//execute cmd 
@@ -72,7 +72,7 @@ int	is_builtin(char *cmd)
 		return (7);
 	return (0);
 }
-void	exec_cmd(t_command *cmd, t_env *local, t_env *global)
+void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 {
 	char	*full_path;
 	char	**full_cmd;

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:48:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:53:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	}
 	else
 		io->fd_out = io->pipe[1];
+	return (0);
 }
 
- 
 int	set_fds(t_command *cmd, t_io_fd *io)
 {
 	t_redir	*redir;
@@ -107,7 +107,7 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 		if (dup2(io->fd_in, STDIN_FILENO) == -1)
 			return (-1);
 		if (close(io->fd_in) == -1)
-			error();//set error ? a voir 
+			;//error();//set error ? a voir 
 	}
 	if (cmd->nextpipe || redir->type == OUTFILE || redir->type == APPEND)
 	{
