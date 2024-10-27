@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:49:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:24:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 {
 	int	status;
 
-	//handle signals + ret_value 
+	//handle signals + g_ret_value 
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)

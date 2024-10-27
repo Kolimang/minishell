@@ -48,13 +48,13 @@ void	reset_io(t_io_fd *io, t_command *cmd)
 
 int	handle_error(const char *msg)
 {
-	ret_value = EXIT_FAILURE;
+	g_ret_value = EXIT_FAILURE;
 	perror(msg);
 	return (-1);
 }
 void	return_error(char *arg)
 {
-	ret_value = EXIT_FAILURE;
+	g_ret_value = EXIT_FAILURE;
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:24:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	wait_children(t_list *cmds)
         
         if (WIFEXITED(status))
             // Normal termination
-            ret_value = WEXITSTATUS(status);
+            g_ret_value = WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
             // Terminated by signal
-            ret_value = 128 + WTERMSIG(status);
+            g_ret_value = 128 + WTERMSIG(status);
         tmp = tmp->next;
     }
 }

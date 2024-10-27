@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:24:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	//void or int ?? what about g_ret_val??
-	int	ret_value;
+	int	g_ret_value;
 	//check redirection
 	if (set_fds(cmd, io)== -1)
 	{	
@@ -23,10 +23,10 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 		return (-1);
 	}
 	//execute cmd 
-	ret_value= exec_builtin(cmd, l_env, g_env);
+	g_ret_value= exec_builtin(cmd, l_env, g_env);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
-	return (ret_value);
+	return (g_ret_value);
 }
 
 int	exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
@@ -86,7 +86,7 @@ void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 		if (!full_path)
 		{
 			ft_putstr_fd("Command not found \n", 2);
-			ret_value = 127;
+			g_ret_value = 127;
 			exit(127);
 		}
 	}
