@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/21 10:43:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:16:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,54 +23,22 @@ int	is_last(t_list *redirs)
 	return (redirs && redirs->next == NULL);
 }
 
-int	execute_redir(t_command *cmd, t_io_fd *files)
+int	redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
 {
-	t_redir	*redir;
-	int		ret;
-
-	ret = 0;
-	while (cmd->ls_redirs)
+	if (redir->type == INFILE)
 	{
-		redir = cmd->ls_redirs->content;
-		if (redir->type == INFILE)
-			ret = get_infile(cmd, redir->value, files, 0);
-		else if (redir->type == HERE_DOC)
-			ret = get_infile(cmd, redir->value, files, 1);
-		else if (redir->type == OUTFILE)
-			ret = get_outfile(cmd, redir->value, files, 0);
-		else if (redir->type == APPEND)
-			ret = get_outfile(cmd, redir->value, files, 1);
-		if (ret == -1)
-			return (ret);
-		cmd->ls_redirs = cmd->ls_redirs->next;
-	}
-	return (0);
-}
-
-int	get_infile(t_command *cmd, char *name, t_io_fd *files, int flag)
-{
-	int	fd_tmp;
-
-	(void)cmd;// TEMP : to allow compiling
-	if (flag == 0) // Regular infile
-	{
-		fd_tmp = open(name, O_RDONLY);
-		if (fd_tmp == -1)
+		if(io->fd_in > 0)
+			close(io->fd_in);//not sure 
+		io->fd_in = open(redir->value, O_RDONLY);
+		if (io->fd_in == -1)
 			return (handle_error("Failed to open infile"));
-		files->fd_in = fd_tmp;
-		if (dup2(files->fd_in, STDIN_FILENO) == -1)
-			return (handle_error("Failed to duplicate infile to stdin"));
-		if (close(fd_tmp) == -1)
-			return (-1); // not sure, to check
 	}
-	else // HERE_DOC
+	if(is_last(curr))//probleme d iteration de last redirection
 	{
-		files->fd_in = files->fd_hrdoc;
-		if (dup2(files->fd_in, STDIN_FILENO) == -1)
-			handle_error("Failed to duplicate heredoc to stdin");
-		if (close(files->fd_hrdoc))
-			return (-1); //not sure, to check
-			//make sure to reset here-doc at the end
+		if (redir->type == HERE_DOC)
+		io->fd_in = cmd->fd_hrdoc;
+		else if (redir->type == INFILE)
+			init_hrdoc(cmd);
 	}
 	return (0);
 }
@@ -85,32 +53,88 @@ int	dup_handle(int fd, int target_fd, const char *error_msg)
 	return (0);
 }
 
-int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
+int	get_infile(t_command *cmd, t_io_fd *io)
 {
-	int	fd_tmp;
+	t_list *tmp;
+	t_redir *redir;
 
-	(void)cmd;
-	if (flag == 0) // Regular outfile
-	{
-		fd_tmp = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (fd_tmp == -1)
-			return (handle_error("Failed to redirect outfile"));
-		files->fd_out = fd_tmp;
-		return (dup_handle(files->fd_out, STDOUT_FILENO,
-				"Failed to duplicate outfile to stdout"));
-	}
-	else // append
-	{
-		fd_tmp = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (fd_tmp == -1)
-			return (handle_error("Failed to append outfile"));
-		files->fd_out = fd_tmp;
-		return (dup_handle(files->fd_out, STDOUT_FILENO,
-				"Failed to duplicate outfile to stdout"));
-	}
-	if (close(fd_tmp) == -1)
-		return (-1);
+	tmp = cmd->ls_redirs;
+	while (tmp)
+	{	
+		redir = tmp->content;
+		if(redir_infile(cmd, redir, io, tmp) == -1)
+			return(-1);
+		tmp = tmp->next;
+ 	}
+	return (0);
 }
+
+int	get_outfile(t_command *cmd, t_io_fd *io)
+{
+	t_list *tmp;
+	t_redir *redir;
+
+	tmp = cmd->ls_redirs;
+	while (tmp)
+	{	
+		redir = tmp->content;
+		if(redir_outfile(cmd, redir, io) == -1)
+			return(-1);
+		tmp = tmp->next;
+ 	}
+	return (0);
+}
+
+int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
+{
+	if (redir->type == OUTFILE) // Regular infile
+	{ 
+		io->fd_out = open(redir->value,O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (io->fd_out == -1)
+			return (handle_error("Failed to access outfile"));
+	}
+	else if (redir->type == APPEND)
+	{
+		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if(io->fd_out = -1)
+			return (handle_error("Failed to access outfile"));
+	}
+	else
+		io->fd_out = io->pipe[1];
+}
+
+ 
+int	set_fds(t_command *cmd, t_io_fd *io)
+{
+	t_redir	*redir;
+	int	ret;
+
+	redir = cmd->ls_redirs->content;
+	//case of first command and last command : redirection + 1ere cmd
+	if(cmd->prevpipe || redir->type == INFILE || redir->type == HERE_DOC)
+	{
+		if(get_infile(cmd, io) == -1)
+			return(-1);
+		if(dup2(io->fd_in, STDIN_FILENO) == -1)
+			return(-1);
+		if(close(io->fd_in) == -1)
+			error();//set error ? a voir 
+	}
+	if(cmd->nextpipe || redir->type == OUTFILE || redir->type == APPEND)
+	{
+		if(get_outfile(cmd, io) == -1)
+			return(-1);
+		if(dup2(io->fd_out, STDOUT_FILENO) == -1)
+			return(-1);
+		close(io->fd_out); //fd_out can either be redir or fd_pipe[1]
+		//the data is stored in a kernel buffer. 
+		//Closing fd_pipe[1] doesn't erase this data
+	}
+	if(cmd->nextpipe)//my pipe is gonna use pipe[0] to put the data there
+		close(io->pipe[0]);
+	return(0);
+}
+
 
 /////////////Functions get_input and get_output to debugg /////////////////////
 
@@ -143,27 +167,4 @@ int	get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag)
 //         //     close(files->fd_hrdoc);
 //     }
 //     return (0);
-// }
-
-// int get_outfile(t_command *cmd, char *name, t_io_fd *files, int flag) {
-//     int fd_tmp;
-//     (void)cmd; // To be removed
-//     if (flag == 0) // Regular outfile
-//     {
-//         fd_tmp = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-//         if (fd_tmp == -1)
-//             return (handle_error("Failed to redirect outfile"));
-//         files->fd_out = fd_tmp;
-//         print_redirection("stdout", STDOUT_FILENO, files->fd_out, name);  // Print FD redirection
-//         return (dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
-//     }
-//     else // append
-//     {
-//         fd_tmp = open(name, O_CREAT | O_WRONLY | O_APPEND, 0644);
-//         if (fd_tmp == -1)
-//             return (handle_error("Failed to append outfile"));
-//         files->fd_out = fd_tmp;
-//         print_redirection("stdout", STDOUT_FILENO, files->fd_out, name);  // Print FD redirection
-//         return (dup_handle(files->fd_out, STDOUT_FILENO, "Failed to duplicate outfile to stdout"));
-//     }
 // }

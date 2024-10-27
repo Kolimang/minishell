@@ -17,93 +17,97 @@
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
+	t_list		*tmp_cmds;
 
-	//a gerer le ctrl+D pour quitter que le heredoc
-	(void)global_env; // temp, to allow project compilation
-	while (cmds)
+	(void)global_env; 
+	tmp_cmds = cmds;  
+	while (tmp_cmds) 
 	{
-		cmd = cmds->content;
-		init_io_fd(cmd->io);
-		get_hrdoc(cmd, local_env, cmd->io);
-		cmds = cmds->next;
+		cmd = tmp_cmds->content;
+		cmd->fd_hrdoc = -3;
+		if(get_hrdoc(cmd, local_env) == -1)
+			return ;//return or exit??? 
+		tmp_cmds = tmp_cmds->next; 
 	}
-	//restore files if heredoc isnt working !!!
+	//restore files if heredoc isnt working ??
 }
 
 void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
+	t_io_fd		*io;
 
 	if (cmds)
 	{
+		init_io_fd(io);
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
 		{
-			if (execute_redir(cmd, cmd->io)== -1)
+			if (set_fds(cmd, io)== -1)
 			{
-				reset_io(cmd);
-				return ; //?????//check ret value if -1 donc problem
+				reset_io(io);
+				return ;
 			}
 		}
 		else
 		{
 			cmd->builtin = is_builtin(cmd->args[0]);
 			if (cmd->builtin && !(cmds->next))
-				execute_nofork(cmd, local_env, global_env);
+				execute_nofork(cmd, io, local_env, global_env);
 			else
-				execute_fork(cmds, local_env, global_env);
+				execute_fork(cmds, io, local_env, global_env);
 		}
-		reset_io(cmd);
+		reset_io(io);
 	}
-	else
-		return ;
+	return ;
 }
 
+void	init_hrdoc (t_command *cmd)
+{
+	if (cmd->fd_hrdoc != -3)
+		{
+			close(cmd->fd_hrdoc);
+			cmd->fd_hrdoc = -3;
+		}
+}
 
-//check if the cmd is built in and not alone
-//check if the cmd is non built in  
-// For each command in a pipeline to set up the appropriate input/out
-
-// We keep both env so that we dont turn the linked list to a char, if the path 
-// exists in the local env, then we execute with the real env.
-void	get_hrdoc(t_command *cmd, t_env *local_env, t_io_fd *io)
+int	get_hrdoc(t_command *cmd, t_env *local_env)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
 	t_redir	*redir;
-//a gerer le ctrl+D pour quitter que le heredoc
-	(void)io; // Temp, only there to allow compilation
-	if (!cmd->is_hrdoc)
-		return ;
+
+	//set_signals??
 	while (cmd->ls_redirs)
 	{
+		init_hrdoc(cmd);
 		redir = cmd->ls_redirs->content;
 		if (redir->type == HERE_DOC)
 		{
 			if (pipe(pipe_fd) == -1)
-				return (perror("pipe creation failed"));
+				return (handle_error("pipe creation failed"));
 			pid = fork();
 			if (pid == -1)
-				return (perror("fork failed"));
+				return (handle_error("fork failed"));
 			if (pid == 0)
 				child_heredoc_process(cmd, local_env, pipe_fd);
 			else
-				parent_heredoc_process(cmd, pid, pipe_fd);
+				if (parent_heredoc_process(cmd, pid, pipe_fd) == -1)
+					return(-1);
 		}
 		cmd->ls_redirs = cmd->ls_redirs->next;
-		reset_io(cmd);
 	}
+	return(0);
 }
 
-void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
+void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2])
 {
-	// how to handle signals?
-	// Setup signal handling
-	//a gerer le ctrl+D pour auitter que le heredoc
+	
 	char	*line;
 	t_redir	*redir;
 
-	close(fd[0]);
+	//set_signals_hrdoc
+	close(pipe_fd[0]);
 	redir = cmd->ls_redirs->content;
 	while (1)
 	{
@@ -114,11 +118,11 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int fd[2])
 			break ;
 		}
 		process_hrdoc(line, local_env);// to check
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
+		write(pipe_fd[1], line, ft_strlen(line));
+		write(pipe_fd[1], "\n", 1);
 		free(line);
 	}
-	close(fd[1]);
+	close(pipe_fd[1]);
 	exit(0);
 }
 
@@ -126,11 +130,12 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 {
 	int	status;
 
+	//handle signals + ret_value 
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 	{
-		cmd->io->fd_hrdoc = pipe_fd[0];
+		cmd->fd_hrdoc = pipe_fd[0];
 		return (0);
 	}
 	else
@@ -140,27 +145,23 @@ int	parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 	}
 }
 
-void	init_io_fd(t_io_fd *files)
+void	init_io_fd(t_io_fd *io)
 {
-	files->fd_pipe[0] = -1;
-	files->fd_pipe[1] = -2;
-	files->fd_in = 0;
-	files->fd_out = -1;
-	files->fd_hrdoc = -1;
-	files->std_in = dup(STDIN_FILENO);
-	files->std_out = dup(STDOUT_FILENO);
-	if (files->std_in == -1 || files->std_out == -1)
+	io->pipe[0] = -1;
+	io->pipe[1] = -1;
+	io->fd_in = STDIN_FILENO;
+	io->fd_out= -2;
+	io->std_in = dup(STDIN_FILENO);
+	io->std_out = dup(STDOUT_FILENO);
+	if (io->std_in == -1 || io->std_out == -1)
 	{
 		perror("Failed to duplicate");
-		exit(1);// Exit with error code 1
+		exit(1);//not sure of 1
 	}
 }
 
-void	reset_io(t_command *cmd)
+void	reset_io(t_io_fd *io)
 {
-	t_io_fd *io;
-
-	io = cmd->io;
 	if (dup2(io->std_in, STDIN_FILENO) == -1)
 	{
 		perror("Failed to reset stdin");

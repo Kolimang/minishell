@@ -6,14 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/21 12:57:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:07:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 //ret val
-int	g_ret_value;
+int	ret_value;
 // Include library headers
 # include <stdio.h>
 # include <stdlib.h>
