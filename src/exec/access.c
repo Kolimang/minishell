@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 18:12:18 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:37:44 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char **get_paths(char **env)
 	if (!env[i])
 		return_error("$PATH not found");
 	new_path = ft_split(env[i] + 5, ':');
-	return(new_path);
+	return (new_path);
 }
 char *get_full_path(char **full_cmd, char **env)
 {

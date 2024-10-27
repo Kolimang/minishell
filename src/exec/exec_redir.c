@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:53:02 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
 {
 	if (redir->type == INFILE)
 	{
-		if(io->fd_in > 0)
+		if (io->fd_in > 0)
 			close(io->fd_in);//not sure 
 		io->fd_in = open(redir->value, O_RDONLY);
 		if (io->fd_in == -1)
 			return (handle_error("Failed to open infile"));
 	}
-	if(is_last(curr))//probleme d iteration de last redirection
+	if (is_last(curr))//probleme d iteration de last redirection
 	{
 		if (redir->type == HERE_DOC)
 		io->fd_in = cmd->fd_hrdoc;
@@ -51,8 +51,8 @@ int	get_infile(t_command *cmd, t_io_fd *io)
 	while (tmp)
 	{	
 		redir = tmp->content;
-		if(redir_infile(cmd, redir, io, tmp) == -1)
-			return(-1);
+		if (redir_infile(cmd, redir, io, tmp) == -1)
+			return (-1);
 		tmp = tmp->next;
  	}
 	return (0);

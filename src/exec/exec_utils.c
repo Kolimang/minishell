@@ -67,9 +67,9 @@ int	is_last(t_list *redirs)
 
 void	handle_closing(t_command *cmd, t_io_fd *io)
 {
-	if(cmd->fd_hrdoc != -3)
+	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
-	if(cmd->prevpipe > 0)//free for next fd_in assignement
+	if (cmd->prevpipe > 0)//free for next fd_in assignement
 		close(io->fd_in);
 	close (io->pipe[1]);
 

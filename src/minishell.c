@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 19:07:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:53:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_commands(char **cmds, int *i)
 	return (0);
 }
 
-int	handle_commands(char **cmds, t_env *env, int *i)
+int	handle_commands(char **cmds, t_env *env, int *i, char **g_env)
 {
 	t_list		*lexemes;
 	t_list		*commands;
@@ -76,8 +76,8 @@ int	handle_commands(char **cmds, t_env *env, int *i)
 			ft_lstadd_back(&commands, ft_lstnew(command));
 		(*i)++;
 	}
-	//pre-exec(commands, env, /* char **global_env */)
-	//exec(commands, env, /* char **global_env */)
+	pre_exec(commands, env, g_env);
+	exec(commands, env, g_env);
 	array_str_free(cmds, ft_arraylen(cmds));
 	free_lists(lexemes, commands);
 	return (0);
@@ -108,7 +108,7 @@ int	handle_commands(char **cmds, t_env *env, int *i)
 // 	return (0);
 // }
 
-int	execute(t_env *env)
+int	execute(t_env *env, char**g_env)
 {
 	int			i;
 	char		*cmd;
@@ -128,7 +128,7 @@ int	execute(t_env *env)
 			check_commands(cmds, &i);
 		}
 		if (i != -1)
-			handle_commands(cmds, env, &i);
+			handle_commands(cmds, env, &i, g_env);
 		free(cmd);
 	}
 	return (0);
@@ -144,7 +144,7 @@ int	main(int ac, char **av, char **o_env)
 	g_ret_value = 0;
 	env = init_env(o_env);
 	//set_shlvl(env);
-	if (execute(env))
+	if (execute(env, o_env))
 	{
 		free_env(env);
 		return (1);

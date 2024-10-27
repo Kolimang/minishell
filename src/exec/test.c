@@ -138,7 +138,7 @@
 // 	    if (cmds->next == NULL && !(cmd->args[0]))
 //         {
 //             if (execute_redir(cmd, cmd->io) == -1)
-//                 return;
+//                 return ;
 //         }
 //         else
 //         {
@@ -146,7 +146,7 @@
 //             if (execute_redir(cmd, cmd->io) == -1)
 //             {
 //                 printf("Redirection failed for command: %s\n", cmd->args[0]);
-//                 return;
+//                 return ;
 //             }
 //             for (int i = 0; cmd->args[i]; i++)
 //                 printf("Arg %d: %s\n", i, cmd->args[i]);

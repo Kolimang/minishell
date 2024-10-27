@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   exec_hrdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 17:48:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/27 19:49:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
 
 	(void)global_env; 
 	tmp_cmds = cmds;  
-	while (tmp_cmds) 
+	while (tmp_cmds)
 	{
 		cmd = tmp_cmds->content;
 		cmd->fd_hrdoc = -3;
-		if(get_hrdoc(cmd, local_env) == -1)
+		if (get_hrdoc(cmd, local_env) == -1)
 			return ;//return or exit??? 
 		tmp_cmds = tmp_cmds->next; 
 	}
@@ -61,11 +61,11 @@ int	get_hrdoc(t_command *cmd, t_env *local_env)
 				child_heredoc_process(cmd, local_env, pipe_fd);
 			else
 				if (parent_heredoc_process(cmd, pid, pipe_fd) == -1)
-					return(-1);
+					return (-1);
 		}
 		cmd->ls_redirs = cmd->ls_redirs->next;
 	}
-	return(0);
+	return (0);
 }
 
 void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2])

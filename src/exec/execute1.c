@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:27:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,6 @@ char	*check_path(char **full_cmd, char *cmd)
 			perror(cmd);
 			exit(EXIT_FAILURE);
 	}
-	return(full_path);
+	return (full_path);
 }
 

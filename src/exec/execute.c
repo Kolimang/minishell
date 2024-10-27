@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:55:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 	while(tmp)
 	{
 		cmd = tmp->content;
-		if(pipe(io->pipe) == -1)
-			return(-1);
+		if (pipe(io->pipe) == -1)
+			return (-1);
 		//save the fd[0]
 		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
 		//gets the fd[0]
 			//check redirections
-		//if(cmd->builtin = EXIT)
+		//if (cmd->builtin = EXIT)
 			//mini_exxit : dont exit lol ;
-		if(!tmp->next)
+		if (!tmp->next)
 			break;
 		tmp = tmp->next;
 	}
-	if(tmp) // creating last child
+	if (tmp) // creating last child
 		io->fd_in = create_child(cmd, io, l_env, g_env);
 	wait_children(tmp->content); 	//recupere le code d'erreur final
-	return(0);
+	return (0);
 }
 
 int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
@@ -79,18 +79,18 @@ int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 
 	redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
-	if(cmd->pid == -1)
-		return(handle_error("fork"));
+	if (cmd->pid == -1)
+		return (handle_error("fork"));
 	if (cmd->pid == 0) //in child
 	{
-		if(set_fds(cmd, io) == -1)
-		if(cmd->args)//in case we only have redirections
+		if (set_fds(cmd, io) == -1)
+		if (cmd->args)//in case we only have redirections
 			exec_cmd(cmd, l_env, g_env);
 		//exit_child a coder 
 	}
 	//parent process : 
 		handle_closing(cmd, io);
-		return(io->pipe[0]); //return the readend tha has the same content as stdout after execution, fd_in = read_end now ouf
+		return (io->pipe[0]); //return the readend tha has the same content as stdout after execution, fd_in = read_end now ouf
 	}
 
 void	wait_children(t_list *cmds)
