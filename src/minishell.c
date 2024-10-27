@@ -6,53 +6,53 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 20:30:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:35:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// int	ft_check_input_cmd(char **cmdref)
-// {
-// 	char	last;
-// 	char	*cmd;
+int	ft_check_input_cmd(char **cmdref)
+{
+	char	last;
+	char	*cmd;
 
-// 	cmd = ft_strtrim_replace(cmdref);
-// 	if ((int)ft_strlen(cmd) > 0)
-// 	{
-// 		last = cmd[(int)ft_strlen(cmd) - 1];
-// 		if (cmd[0] == '|' || last == '|')
-// 		{
-// 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-// 			g_ret_value = 258;
-// 			return (-1);
-// 		}
-// 	}
-// 	else if (cmd[0] == '\0')
-// 		return (-1);
-// 	return (0);
-// }
+	cmd = ft_strtrim_replace(cmdref);
+	if ((int)ft_strlen(cmd) > 0)
+	{
+		last = cmd[(int)ft_strlen(cmd) - 1];
+		if (cmd[0] == '|' || last == '|')
+		{
+			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+			g_ret_value = 258;
+			return (-1);
+		}
+	}
+	else if (cmd[0] == '\0')
+		return (-1);
+	return (0);
+}
 
-// int	check_commands(char **cmds, int *i)
-// {
-// 	while (cmds[*i])
-// 	{
-// 		cmds[*i] = ft_strtrim_replace(&cmds[*i]);
-// 		if (!cmds[*i])
-// 			return (-1);
-// 		if (cmds[*i] && (cmds[*i][0] == '\0'))
-// 		{
-// 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-// 			g_ret_value = 258;
-// 			*i = -1;
-// 			break ;
-// 		}
-// 		(*i)++;
-// 	}
-// 	return (0);
-// }
+int	check_commands(char **cmds, int *i)
+{
+	while (cmds[*i])
+	{
+		cmds[*i] = ft_strtrim_replace(&cmds[*i]);
+		if (!cmds[*i])
+			return (-1);
+		if (cmds[*i] && (cmds[*i][0] == '\0'))
+		{
+			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
+			g_ret_value = 258;
+			*i = -1;
+			break ;
+		}
+		(*i)++;
+	}
+	return (0);
+}
 
-int	handle_commands (t_env *env, char **cmds, int *i, char **g_env)
+int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
 {
 	t_list		*lexemes;
 	t_list		*commands;
@@ -80,6 +80,7 @@ int	handle_commands (t_env *env, char **cmds, int *i, char **g_env)
 	// free_lists(lexemes, commands);
 	return (0);
 }
+
 t_list *mock_command_line(void)
 {
     t_list *commands = NULL;
@@ -189,7 +190,7 @@ int	execute(t_env *env, char**g_env)
 			check_commands(cmds, &i);
 		}
 		if (i != -1)
-			handle_commands(cmds, env, &i, g_env);
+			handle_commands(env, cmds, &i, g_env);
 		free(cmd);
 	}
 	return (0);
