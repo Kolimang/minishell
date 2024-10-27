@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 17:49:59 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/27 18:59:35 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	}
 	else
 		io->fd_out = io->pipe[1];
+	return(0);
 }
 
- 
 int	set_fds(t_command *cmd, t_io_fd *io)
 {
 	t_redir	*redir;
