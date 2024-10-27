@@ -6,21 +6,27 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 12:23:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 16:15:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_env_val(t_env *env, const char *var_name)
+t_env	*create_env_node(const char *var_name, const char *var_val, int index)
 {
-	while (env)
-	{
-		if (ft_strncmp(env->var_name, var_name, ft_strlen(var_name) + 1) == 0)
-			return (env->var_val);
-		env = env->next;
-	}
-	return (NULL);
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->var_name = ft_strdup(var_name);
+	if (var_val)
+		new_node->var_val = ft_strdup(var_val);
+	else
+		new_node->var_val = NULL;
+	new_node->index = index;
+	new_node->next = NULL;
+	return (new_node);
 }
 
 void	add_env_var(t_env **env, const char *var_name, const char *var_val,
@@ -32,7 +38,7 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 	new_node = create_env_node(var_name, var_val, index);
 	if (!new_node)
 		return ;
-	if (!*env)
+	if (!(*env))
 		*env = new_node;
 	else
 	{
@@ -68,6 +74,6 @@ t_env	*init_env(char **original_env)
 		}
 		i++;
 	}
-	//pour testerrr add_env_var(&env, "a", "lina", i);
+	sort_env(&env);
 	return (env);
 }

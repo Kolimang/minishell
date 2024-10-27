@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 12:33:48 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
+/*   Updated: 2024/10/24 15:41:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_pwd(char **args, t_env *env)
+int	merror(char *cmd, char *arg, char *msg, int value)
 {
-	char	*path;
-	t_env	*head;
-
-	if (args && args[1])
-		return (ft_putstr_fd("pwd: too many arguments\n", 2), 1);
-	if (!env)
-		return (1);
-	head = env;
-	while (head)
+	if (cmd)
 	{
-		if (ft_strncmp(head->var_name, "PWD", 4) == 0)
-		{
-			ft_printf("%s\n", head->var_val);
-			return (0);
-		}
-		head = head->next;
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": ", 2);
 	}
-	path = getcwd(NULL, 0);
-	if (path)
+	if (arg)
 	{
-		ft_printf("%s\n", path);
-		free(path);
+		write(2, "`", 1);
+		write(2, arg, ft_strlen(arg));
+		write(2, "': ", 3);
 	}
-	return (0);
+	if (msg)
+	{
+		write(2, msg, ft_strlen(msg));
+	}
+	write(2, "\n", 1);
+	return (value);
 }

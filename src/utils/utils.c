@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/21 13:57:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/25 10:48:35 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	ft_printarray(char **array, char separator)
 			ft_printf("%c", separator);
 		i++;
 	}
-	if (separator != '\n')
-		ft_printf("\n");
+	ft_printf("\n");
 }
 
 void	ft_print_list(t_list *list, char *title)
