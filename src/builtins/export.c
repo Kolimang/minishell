@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 16:39:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:22:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@ static int	check_value(char *str, char **name, char **value)
 		*value = NULL;
 	}
 	return (0);
-}
-
-static void	swap_nodes(t_env *node1, t_env *node2)
-{
-	t_env	*swap;
-
-	swap = node1->next;
-	node1->next = node2;
-	node2->next = swap;
 }
 
 int	ft_export(char **args, t_env *env)

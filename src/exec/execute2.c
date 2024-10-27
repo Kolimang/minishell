@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:16:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:36:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ int	get_infile(t_command *cmd, t_io_fd *io)
 
 int	get_outfile(t_command *cmd, t_io_fd *io)
 {
-	t_list *tmp;
-	t_redir *redir;
+	t_list	*tmp;
+	t_redir	*redir;
 
 	tmp = cmd->ls_redirs;
 	while (tmp)
 	{	
 		redir = tmp->content;
-		if(redir_outfile(cmd, redir, io) == -1)
-			return(-1);
+		if (redir_outfile(cmd, redir, io) == -1)
+			return (-1);
 		tmp = tmp->next;
  	}
 	return (0);
@@ -96,7 +96,7 @@ int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	else if (redir->type == APPEND)
 	{
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if(io->fd_out = -1)
+		if (io->fd_out == -1)
 			return (handle_error("Failed to access outfile"));
 	}
 	else
@@ -107,7 +107,7 @@ int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 int	set_fds(t_command *cmd, t_io_fd *io)
 {
 	t_redir	*redir;
-	int	ret;
+	int		ret;
 
 	redir = cmd->ls_redirs->content;
 	//case of first command and last command : redirection + 1ere cmd

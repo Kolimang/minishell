@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   env_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 18:44:46 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
+/*   Updated: 2024/10/27 18:24:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "minishell.h"
 
-// echo.c
-int		ft_echo(char **args);
+void	free_env(t_env *env)
+{
+	t_env	*temp;
 
-// cd.c
-int		ft_cd(char **args, t_env *env);
-
-// pwd.c
-int		ft_pwd(char **args, t_env *env);
-
-// export.c
-int		ft_export(char **args, t_env *env);
-int		print_env(t_env *env, int mode);
-int		ft_env(char **args, t_env *env);
-
-// env.c
-void	sort_env(t_env **env);
-
-#endif
+	while (env)
+	{
+		temp = env;
+		env = env->next;
+		free(temp->var_name);
+		free(temp->var_val);
+		free(temp);
+	}
+}

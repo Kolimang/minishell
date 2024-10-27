@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/25 22:31:08 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/27 18:33:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 	ret_value= exec_builtin(cmd, l_env, g_env);
 	return(ret_value);
 }
-int exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
+int	exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
 {
 	int res;
 	//revoir les inputs pour chaque function

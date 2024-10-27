@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 17:03:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 18:24:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ void	set_shlvl(t_env *env)
 	free(tmp);
 }
 
-void	free_env(t_env *env)
-{
-	t_env	*temp;
-
-	while (env)
-	{
-		temp = env;
-		env = env->next;
-		free(temp->var_name);
-		free(temp->var_val);
-		free(temp);
-	}
-}
-
 char	*get_env_val(t_env *env, const char *var_name)
 {
 	while (env)
@@ -53,6 +39,15 @@ char	*get_env_val(t_env *env, const char *var_name)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+static void	swap_nodes(t_env *node1, t_env *node2)
+{
+	t_env	*swap;
+
+	swap = node1->next;
+	node1->next = node2;
+	node2->next = swap;
 }
 
 // removed a break after swap_nodes() to fit in 25 lines,
@@ -87,7 +82,7 @@ static void	insert_in_env(t_env **env, const char *var_name,
 	}
 }
 
-static int	update_env(char *name, char *value, t_env **env)
+int	update_env(char *name, char *value, t_env **env)
 {
 	t_env	*head;
 
