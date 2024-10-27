@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:24:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:27:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 	char	**full_cmd;
 
 	full_cmd = ft_split(cmd->name, ' ');
-	if (cmd->args[0] == '/' || cmd->args[0] == '.')
-		full_path = check_path(full_cmd, cmd);
+	if (cmd->args[0][0] == '/' || cmd->args[0][0] == '.')
+		full_path = check_path(full_cmd, cmd->args[0]);
 	else
 	{	
-		full_path = get_full_path(full_cmd, local);
+		full_path = get_full_path(full_cmd, global); //TO MODIFY
 		if (!full_path)
 		{
 			ft_putstr_fd("Command not found \n", 2);
@@ -98,3 +98,18 @@ void	exec_cmd(t_command *cmd, t_env *local, char	**global)
 		exit(EXIT_FAILURE);
 	}
 }
+
+char	*check_path(char **full_cmd, char *cmd)
+{
+	char *full_path;
+
+	if (access(full_cmd[0], F_OK | X_OK) == 0)
+			full_path = full_cmd[0];
+	else
+	{
+			perror(cmd);
+			exit(EXIT_FAILURE);
+	}
+	return(full_path);
+}
+
