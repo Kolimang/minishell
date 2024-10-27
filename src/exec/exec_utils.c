@@ -16,7 +16,8 @@
 
 void	init_io_fd(t_io_fd *io)
 {
-	io->pipe[0] = -1;
+	
+	io->pipe[0] = -4;
 	io->pipe[1] = -1;
 	io->fd_in = STDIN_FILENO;
 	io->fd_out= -2;

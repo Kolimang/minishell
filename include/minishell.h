@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 20:24:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:31:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,20 @@
 # include "exec.h"
 # include "builtin.h"
 
+// Global exit status
+int	g_ret_value;
+
 # define SQ 39
 # define DQ 34
 
 # define VERSION "v0.1.38"
 
 int	check_commands(char **cmds, int *i);
-int	handle_commands(char **cmds, t_env *env, int *i, char **g_env);
+int	handle_commands (t_env *env, char **cmds, int *i, char **g_env);
 int	execute(t_env *env, char **g_env);
-//int	main(int ac, char **av, char **o_env);
+int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
+//testlina
+//t_list *mock_command_line(void);
 
 #endif
