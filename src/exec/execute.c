@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 20:21:46 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 
 	if (cmds)
 	{
+		//retirer pour test uniauement
+		io = malloc(sizeof(t_io_fd));
+		if (!io)
+    		return_error("Failed to allocate memory for io_fd");
+		// ------------------------------//
 		init_io_fd(io);
 		cmd = cmds->content;
 		if (cmds->next == NULL && !(cmd->args[0]))
