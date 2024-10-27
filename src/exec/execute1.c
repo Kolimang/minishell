@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 18:56:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/27 19:24:49 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ int	exec_builtin(t_command *cmd, t_env *l_env, char **g_env)
     if (cmd->builtin == 1)
         res = ft_echo(cmd->args);
     else if (cmd->builtin == 2)
-        res = ft_cd(cmd->args, l_env, g_env);
+        res = ft_cd(cmd->args, l_env);
     else if (cmd->builtin == 3)
-        res = ft_pwd(cmd->args, l_env, g_env);
+        res = ft_pwd(cmd->args, l_env);
     else if (cmd->builtin == 4)
-        res = ft_export(cmd->args, l_env, g_env);
+        res = ft_export(cmd->args, l_env);
     else if (cmd->builtin == 5)
-        res = ft_unset(cmd->args, l_env, g_env);
+        res = ft_unset(cmd->args, l_env);
     else if (cmd->builtin == 6)
-        res = ft_env(cmd->args, l_env, g_env);
-    else if (cmd->builtin == 7)
-        res = ft_exit(cmd->args, l_env, g_env);
+        res = ft_env(cmd->args, l_env);
+    //else if (cmd->builtin == 7)
+    //   res = ft_exit(cmd->args, l_env, g_env);
     else
         res = -1; // Error: unknown built-in command
     return (res);
