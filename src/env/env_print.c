@@ -6,11 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 16:39:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 13:26:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 // mode 1 --> export() without arg 
 //      \__ includes empty-string variables AND NULL-valued variables

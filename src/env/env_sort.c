@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 16:25:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 13:14:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ static void	find_minimum(t_env *current, t_env **minimum, t_env **prev_min)
 	}
 }
 
-static void	swap_nodes(t_env *minimum, t_env *current, t_env *prev_curr,
-						t_env *prev_min)
+// static void	swap_nodes(t_env *minimum, t_env *current, t_env *prev_curr,
+// 						t_env *prev_min)
+static void	swap_nodes(t_env *minimum, t_env *current, t_env *prev_min)
 {
 	t_env	*temp;
 
@@ -80,7 +81,7 @@ void	sort_env(t_env **env)
 		if (minimum != current)
 		{
 			updt_head(env, prev_curr, minimum);
-			swap_nodes(minimum, current, prev_curr, prev_min);
+			swap_nodes(minimum, current, prev_min);
 		}
 		prev_curr = minimum;
 		current = minimum->next;
