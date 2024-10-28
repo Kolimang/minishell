@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 18:16:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:19:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lexemes)
 		if (lex_str[0] != '\0')
 		{
 			if (init_lexeme(lex_str, data, ls_lexemes) == -1)
-				return (ft_printf("holy\n"), -1);
+				return (-1);
 		}
 		else
 			free(lex_str);
 		reset_token_data(data, cmd[i]);
 		return (0);
 	}
-	return (0); // was -1 here, testing 0 now
+	return (0);
 }
 
 void	reset_token_data(t_cmd_data *data, char c)
