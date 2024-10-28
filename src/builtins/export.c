@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 16:51:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:46:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	check_value(char *str, char **name, char **value)
 		len = equal - str;
 		*name = ft_substr(str, 0, (size_t)len);
 		*value = ft_substr(str, len + 1, ft_strlen(str) - (size_t)(len + 1));
-		temp = ft_strtrim(*value, " \"");
+		temp = ft_strtrim(*value, " \"\'");
 		free(*value);
 		*value = temp;
 	}
