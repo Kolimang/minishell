@@ -6,13 +6,12 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 13:25:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:22:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// add dashes (- & --) or dot/slash in the set ?
 int	is_operator(char c)
 {
 	char	*set;
@@ -38,10 +37,7 @@ void	lex_handle_operators(char *cmd, int i, t_cmd_data *data)
 					data->bool_heredoc = 1;
 			}
 		}
-		// Thw two lines below commented out for test
-		// else if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
-		//	data->bool_tok_in_progress = 1;
-		data->bool_tok_in_progress = 1;// added for test
+		data->bool_tok_in_progress = 1;
 	}
 	else if (i > 0 && is_operator(cmd[i - 1]))
 		data->bool_delimit_tok = 1;
