@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 17:35:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:39:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	//void or int ?? what about g_ret_val??
-	int	g_ret_value;
 	//check redirection
 	if (set_fds(cmd, io)== -1)
 	{	
