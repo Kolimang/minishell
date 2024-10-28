@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 12:48:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 16:45:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	g_ret_value;
 
 int	check_commands(char **cmds, int *i);
 int	handle_commands (t_env *env, char **cmds, int *i, char **g_env);
-int	execute(t_env *env, char **g_env);
+int	execute(t_env **env, char **g_env);
 int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
 //testlina
