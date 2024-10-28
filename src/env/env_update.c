@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 17:12:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:05:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static int	insert_inside(t_env **env, t_env *new)
 	while (curr)
 	{
 		if (ft_strncmp(new->var_name, curr->var_name,
-				ft_strlen(new->var_name)) > 0)
+				ft_strlen(new->var_name) + 1) > 0)
 		{
 			if (!curr->next || ft_strncmp(new->var_name,
-					curr->next->var_name, ft_strlen(new->var_name)) < 0)
+					curr->next->var_name, ft_strlen(new->var_name) + 1) < 0)
 			{
 				swap_nodes(curr, new);
 				return (0);
@@ -67,7 +67,7 @@ static void	insert_in_env(t_env **env, const char *var_name,
 	else
 	{
 		if (ft_strncmp(new->var_name, (*env)->var_name,
-				ft_strlen(new->var_name)) < 0)
+				ft_strlen(new->var_name) + 1) < 0)
 			replace_head(env, new);
 		else
 			insert_inside(env, new);
