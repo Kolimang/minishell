@@ -3,33 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:52:16 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
+int get_infile(t_command *cmd, t_io_fd *io)
 {
-	if (redir->type == INFILE)
-	{
-		if (io->fd_in > 0)
-			close(io->fd_in);//not sure 
-		io->fd_in = open(redir->value, O_RDONLY);
-		if (io->fd_in == -1)
-			return (handle_error("Failed to open infile"));
+    t_list *tmp;
+    t_redir *redir;
+
+    tmp = cmd->ls_redirs;
+    while (tmp)
+    {    
+        redir = tmp->content;
+        if (redir_infile(cmd, redir, io, tmp) == -1)
+            return (-1);
+        tmp = tmp->next;
+    }
+    return (0);
+}
+
+int redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
+{
+    if (redir->type == INFILE)
+    {
+        if (io->fd_in > 0)
+            close(io->fd_in);  
+        io->fd_in = open(redir->value, O_RDONLY);
+        if (io->fd_in == -1)
+            return handle_error("Failed to open infile");
+    }
+    if (is_last(curr))
+    {
+        if (redir->type == HERE_DOC)
+        { 
+			io->fd_in = cmd->fd_hrdoc;
+		}
+		
+        else if (redir->type == INFILE)
+        {
+			if (cmd->fd_hrdoc != -3)
+			{
+				close(cmd->fd_hrdoc);
+				cmd->fd_hrdoc = -3;
+			}
+    	}
 	}
-	if (is_last(curr))//probleme d iteration de last redirection
-	{
-		if (redir->type == HERE_DOC)
-		io->fd_in = cmd->fd_hrdoc;
-		else if (redir->type == INFILE)
-			init_hrdoc(cmd);
-	}
-	return (0);
+    return (0);
 }
 
 int	dup_handle(int fd, int target_fd, const char *error_msg)
@@ -39,22 +64,6 @@ int	dup_handle(int fd, int target_fd, const char *error_msg)
 		close(fd); // Close the fd on error
 		return (handle_error(error_msg)); // Return error
 	}
-	return (0);
-}
-
-int	get_infile(t_command *cmd, t_io_fd *io)
-{
-	t_list *tmp;
-	t_redir *redir;
-
-	tmp = cmd->ls_redirs;
-	while (tmp)
-	{	
-		redir = tmp->content;
-		if (redir_infile(cmd, redir, io, tmp) == -1)
-			return (-1);
-		tmp = tmp->next;
- 	}
 	return (0);
 }
 
@@ -74,55 +83,73 @@ int	get_outfile(t_command *cmd, t_io_fd *io)
 	return (0);
 }
 
-int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
+// int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
+// {
+// 	if (redir->type == OUTFILE) // Regular infile
+// 	{ 
+// 		io->fd_out = open(redir->value,O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 		if (io->fd_out == -1)
+// 			return (handle_error("Failed to access outfile"));
+// 	}
+// 	else if (redir->type == APPEND)
+// 	{
+// 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 		if (io->fd_out == -1)
+// 			return (handle_error("Failed to access outfile"));
+// 	}
+// 	else
+// 		io->fd_out = io->pipe[1];
+// 	return (0);
+// }
+int redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 {
-	if (redir->type == OUTFILE) // Regular infile
-	{ 
-		io->fd_out = open(redir->value,O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (io->fd_out == -1)
-			return (handle_error("Failed to access outfile"));
-	}
+    if (io->fd_out != -2)
+        close(io->fd_out);
+    if (redir->type == OUTFILE)
+		   io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
-	{
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (io->fd_out == -1)
-			return (handle_error("Failed to access outfile"));
-	}
-	else
-		io->fd_out = io->pipe[1];
-	return (0);
+	else if (io->pipe[1] != -1)
+        io->fd_out = io->pipe[1];
+	else 
+		io->fd_out = STDOUT_FILENO;
+    if (io->fd_out == -1)
+        return (handle_error("Failed to access outfile"));
+	if(!cmd->nextpipe && io->pipe[1] != -1)
+		close(io->pipe[1]);
+    return (0);
 }
 
-int	set_fds(t_command *cmd, t_io_fd *io)
-{
-	t_redir	*redir;
-	int		ret;
 
-	redir = cmd->ls_redirs->content;
-	//case of first command and last command : redirection + 1ere cmd
-	if (cmd->prevpipe || redir->type == INFILE || redir->type == HERE_DOC)
+int set_fds(t_command *cmd, t_io_fd *io) 
+{
+    t_redir *redir = NULL;
+	
+	if(cmd && cmd->ls_redirs)
+		redir = cmd->ls_redirs->content;
+    if (!cmd)
+        return_error("Error: NULL command");
+    if (cmd->prevpipe || (redir && (redir->type == INFILE || redir->type == HERE_DOC))) 
 	{
-		if (get_infile(cmd, io) == -1)
+        if (get_infile(cmd, io) == -1)	
+			 return (-1);
+        if (dup2(io->fd_in, STDIN_FILENO) == -1)
 			return (-1);
-		if (dup2(io->fd_in, STDIN_FILENO) == -1)
-			return (-1);
-		if (close(io->fd_in) == -1)
-			;//error();//set error ? a voir 
+        close(io->fd_in);
 	}
-	if (cmd->nextpipe || redir->type == OUTFILE || redir->type == APPEND)
+    if (cmd->nextpipe || (redir && (redir->type == OUTFILE || redir->type == APPEND))) 
 	{
 		if (get_outfile(cmd, io) == -1)
-			return (-1);
-		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-			return (-1);
-		close(io->fd_out); //fd_out can either be redir or fd_pipe[1]
-		//the data is stored in a kernel buffer. 
-		//Closing fd_pipe[1] doesn't erase this data
-	}
-	if (cmd->nextpipe)//child only needs tow rite fd[1]->data is in buffer kernel
-		close(io->pipe[0]);
-	return (0);
+           return (-1);
+		if(dup2(io->fd_out, STDOUT_FILENO) == -1)
+            return (-1);
+	    close(io->fd_out);
+		if(!cmd->nextpipe && io->pipe[1]!= -1)
+			close(io->pipe[1]);
+    }
+    return 0;
 }
+
 
 
 /////////////Functions get_input and get_output to debugg /////////////////////

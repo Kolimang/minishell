@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 16:45:52 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 18:55:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <readline/readline.h>
