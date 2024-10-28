@@ -84,8 +84,10 @@
 		\_ [ ] zut | ls
 		\_ [ ] echo (passe une ligne avant de rendre le prompt)
 		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
-		
+
 [ ] Finalization :
 		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
 		\_ [ ] Remove wildcards from Makefile and reference all file names
 		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
+		\_ [ ] Remove unnecessary files/folder from remote (.todo, /test, ...)
+		\_ [ ] Final norm check / leak check
