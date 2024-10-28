@@ -6,18 +6,18 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 17:39:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:41:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	//void or int ?? what about g_ret_val??
 	//check redirection
 	if (set_fds(cmd, io)== -1)
-	{	
+	{
 		reset_io(io, cmd);
 		return (-1);
 	}
