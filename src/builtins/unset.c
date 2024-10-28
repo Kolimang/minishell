@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 16:45:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 17:55:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static int	handle_unset(t_env **env, char *var_name)
 	while (curr)
 	{
 		if (!ft_strncmp(curr->var_name, var_name, ft_strlen(var_name) + 1))
+		{
 			unset_node(curr, prev);
+			return (0);
+		}
 		curr = curr->next;
 		prev = prev->next;
 	}
@@ -75,8 +78,6 @@ int	ft_unset(char **args, t_env **env)
 		while (args[i])
 		{
 			handle_unset(env, args[i]);
-			ft_printf("%p\n", *env);//---- DEBUG
-			ft_printf("%s\n", (*env)->var_name);//---- DEBUG
 			i++;
 		}
 	}
