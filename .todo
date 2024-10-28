@@ -37,6 +37,7 @@
 		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
 
 [ ] Built-ins :
+		\_ [ ] /!\ Pass environment as a double pointer up to inside exec_builtin() function /!\
 		\_ [wip] echo with option -n
 		\_ [wip] cd
 				\_ [?] handle cd - (goes to OLDPWD if the env var is set) ; (and cd -- ?)
@@ -45,7 +46,7 @@
 				\_ [ ] OLDPWD and PWD can have the same value, no need to check for duplicate value
 				\_ [?] Quand on exporte plusieurs variables en une fois et qu'une seule a un identifiant invalide, les autres doivent etres creees: OUI.
 				\_ [ ] Si plusieurs identifiants sont invalides, il faut afficher un msg pour chaque identifiant invalide
-		\_ [ ] unset with no options
+		\_ [ ] Test unset with no options
 		\_ [v] env with no options or arguments
 		\_ [ ] exit with no options
 
