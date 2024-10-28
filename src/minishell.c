@@ -6,14 +6,14 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 20:20:36 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:07:08 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 // Global exit status
-int	g_ret_value;
+
 
 // int	ft_check_input_cmd(char **cmdref)
 // {
@@ -63,92 +63,143 @@ int	handle_commands (t_env *env, int *i, char **g_env)
 
 	commands = NULL;
 	*i = 0;
-	// while (cmds[*i])
-	// {
-	// 	lexemes = ft_tokenize(cmds[*i]);
-	// 	if (!lexemes)
-	// 		return (array_str_free(cmds, ft_arraylen(cmds)), 1);
-	// 	ft_expand_lexeme_list(lexemes, env);
-	// 	command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
-	// 	if (!commands)
-	// 		commands = ft_lstnew(command);
-	// 	else
-	// 		ft_lstadd_back(&commands, ft_lstnew(command));
-	// 	(*i)++;
-	// }
 	
-
 	commands = mock_command_line();
+	t_command *cmd = commands->content;
+	
 	pre_exec(commands, env, g_env);
 	exec(commands, env, g_env);
 	// array_str_free(cmds, ft_arraylen(cmds));
 	// free_lists(lexemes, commands);
 	return (0);
 }
+// t_list *mock_command_line(void)
+// {
+//     t_list *commands = NULL;
+//     t_command *cmd1, *cmd2, *cmd3;
+//     t_redir *redir;
+
+//     // First command: echo test
+//     // cmd1 = malloc(sizeof(t_command));
+//     // cmd1->pid = 0;
+//     // cmd1->argc = 2;
+//     // cmd1->name = strdup("echo");
+//     // cmd1->args = malloc(sizeof(char *) * 3);
+//     // cmd1->args[0] = strdup("echo");
+//     // cmd1->args[1] = strdup("test");
+//     // cmd1->args[2] = NULL;
+//     // cmd1->ls_redirs = NULL;
+//     // cmd1->prevpipe = 0;    // No previous pipe
+//     // cmd1->nextpipe = 0;    // Has next pipe
+//     // cmd1->fd_hrdoc = -1;
+//     // cmd1->builtin = ECHO;
+
+//     // Second command: ls -l
+//     cmd2 = malloc(sizeof(t_command));
+//     cmd2->pid = 0;
+//     cmd2->argc = 2;
+//     cmd2->name = strdup("ls");
+//     cmd2->args = malloc(sizeof(char *) * 3);
+//     cmd2->args[0] = strdup("ls");
+//     cmd2->args[1] = strdup("-l");
+//     cmd2->args[2] = NULL;
+//     cmd2->ls_redirs = NULL;
+//     cmd2->prevpipe = 0;    // Has previous pipe
+//     cmd2->nextpipe = 1;    // Has next pipe
+//     cmd2->fd_hrdoc = -3;
+//     cmd2->builtin = 0;
+
+//     // // Third command: cat > output.txt
+//     cmd3 = malloc(sizeof(t_command));
+//     // cmd3->pid = 0;
+//     cmd3->argc = 1;
+//     cmd3->name = strdup("grep");
+//     cmd3->args = malloc(sizeof(char *) * 2);
+//     cmd3->args[0] = strdup("grep");
+//     cmd3->args[1] = "hey";
+    
+//     // // Add redirection for cmd3
+//     redir = malloc(sizeof(t_redir));
+
+//     redir->value = strdup("output.txt");
+//     redir->type = OUTFILE;  // Assuming this is your enum for '>'
+//     cmd3->ls_redirs = ft_lstnew(redir);
+//     cmd3->prevpipe = 1;    // Has previous pipe
+//     cmd3->nextpipe = 0;    // No next pipe
+//     cmd3->fd_hrdoc = -3;
+//     cmd3->builtin = 0;
+//     // // Create linked list
+//     commands = ft_lstnew(cmd2);
+//     ft_lstadd_back(&commands, ft_lstnew(cmd3));
+//     // ft_lstadd_back(&commands, ft_lstnew(cmd3));
+
+//     return (commands);
+// }
 t_list *mock_command_line(void)
 {
-    t_list *commands = NULL;
-    t_command *cmd1, *cmd2, *cmd3;
-    t_redir *redir;
+t_command *cmd1 = malloc(sizeof(t_command));
+cmd1->pid = 0;
+cmd1->argc = 1;
+cmd1->name = strdup("cat");
+cmd1->args = malloc(sizeof(char *) * 2);
+cmd1->args[0] = strdup("cat");
+cmd1->args[1] = NULL;
 
-    // First command: echo test
-    cmd1 = malloc(sizeof(t_command));
-    cmd1->pid = 0;
-    cmd1->argc = 2;
-    cmd1->name = strdup("echo");
-    cmd1->args = malloc(sizeof(char *) * 3);
-    cmd1->args[0] = strdup("echo");
-    cmd1->args[1] = strdup("test");
-    cmd1->args[2] = NULL;
-    cmd1->ls_redirs = NULL;
-    cmd1->prevpipe = 0;    // No previous pipe
-    cmd1->nextpipe = 1;    // Has next pipe
-    cmd1->fd_hrdoc = -1;
-    cmd1->builtin = ECHO;
+// Set up heredoc for cmd1
+t_redir *heredoc_redir = malloc(sizeof(t_redir));
+heredoc_redir->value = strdup("EOF"); // This is the delimiter for the heredoc
+heredoc_redir->type = HERE_DOC;        // Assuming this is the enum/type for heredoc redirection
 
-    // Second command: ls -l
-    cmd2 = malloc(sizeof(t_command));
-    cmd2->pid = 0;
-    cmd2->argc = 2;
-    cmd2->name = strdup("ls");
-    cmd2->args = malloc(sizeof(char *) * 3);
-    cmd2->args[0] = strdup("ls");
-    cmd2->args[1] = strdup("-l");
-    cmd2->args[2] = NULL;
-    cmd2->ls_redirs = NULL;
-    cmd2->prevpipe = 1;    // Has previous pipe
-    cmd2->nextpipe = 1;    // Has next pipe
-    cmd2->fd_hrdoc = -1;
-    cmd2->builtin = 0;
+// Attach heredoc redirection to cmd1
+cmd1->ls_redirs = ft_lstnew(heredoc_redir);
+cmd1->prevpipe = 0;    // No previous pipe
+cmd1->nextpipe = 0;    // Has next pipe
+cmd1->fd_hrdoc = -3;
+cmd1->builtin = 0;
 
-    // Third command: cat > output.txt
-    cmd3 = malloc(sizeof(t_command));
-    cmd3->pid = 0;
-    cmd3->argc = 1;
-    cmd3->name = strdup("cat");
-    cmd3->args = malloc(sizeof(char *) * 2);
-    cmd3->args[0] = strdup("cat");
-    cmd3->args[1] = NULL;
-    
-    // Add redirection for cmd3
-    redir = malloc(sizeof(t_redir));
-    redir->value = strdup("output.txt");
-    redir->type = OUTFILE;  // Assuming this is your enum for '>'
-    cmd3->ls_redirs = ft_lstnew(redir);
-    
-    cmd3->prevpipe = 1;    // Has previous pipe
-    cmd3->nextpipe = 0;    // No next pipe
-    cmd3->fd_hrdoc = -1;
-    cmd3->builtin = 0;
+// Second command: grep "hey"
+// t_command *cmd2 = malloc(sizeof(t_command));
+// cmd2->pid = 0;
+// cmd2->argc = 2;
+// cmd2->name = strdup("grep");
+// cmd2->args = malloc(sizeof(char *) * 3);
+// cmd2->args[0] = strdup("grep");
+// cmd2->args[1] = strdup("hey");
+// cmd2->args[2] = NULL;
+// cmd2->ls_redirs = NULL;
+// cmd2->prevpipe = 1;    // Has previous pipe
+// cmd2->nextpipe = 1;    // Has next pipe
+// cmd2->fd_hrdoc = -3;
+// cmd2->builtin = 0;
 
-    // Create linked list
-    commands = ft_lstnew(cmd1);
-    ft_lstadd_back(&commands, ft_lstnew(cmd2));
-    ft_lstadd_back(&commands, ft_lstnew(cmd3));
+// // Third command: sort > outfile
+// t_command *cmd3 = malloc(sizeof(t_command));
+// cmd3->pid = 0;
+// cmd3->argc = 1;
+// cmd3->name = strdup("ls");
+// cmd3->args = malloc(sizeof(char *) * 2);
+// cmd3->args[0] = strdup("ls");
+// cmd3->args[1] = NULL;
 
-    return (commands);
+// // Set up output redirection for cmd3 to outfile
+// t_redir *outfile_redir = malloc(sizeof(t_redir));
+// outfile_redir->value = strdup("outfile");
+// outfile_redir->type = OUTFILE;  // Assuming this is the enum/type for output redirection '>'
+
+// // Attach output redirection to cmd3
+// cmd3->ls_redirs = ft_lstnew(outfile_redir);
+// cmd3->prevpipe = 1;    // Has previous pipe
+// cmd3->nextpipe = 0;    // No next pipe
+// cmd3->fd_hrdoc = -3;
+// cmd3->builtin = 0;
+
+// Create the linked list of commands
+t_list *commands = ft_lstnew(cmd1);
+// ft_lstadd_back(&commands, ft_lstnew(cmd2));
+// ft_lstadd_back(&commands, ft_lstnew(cmd3));
+
+return commands;
 }
-
 
 // for testing builtins:
 // int	execute(t_env *env)

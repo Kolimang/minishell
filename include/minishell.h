@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 20:17:09 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:52:13 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 //ret val
-int	ret_value;
+int	g_ret_value;
 
 // Include library headers
 # include <stdio.h>
@@ -23,6 +23,7 @@ int	ret_value;
 # include <string.h>
 # include <stdbool.h>
 # include <sys/wait.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 20:04:59 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:48:40 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	wait_children(t_list *cmds);
 int		execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
 int		exec_builtin(t_command *cmd, t_env *l_env, char **g_env);
 int		is_builtin(char *cmd);
-void	exec_cmd(t_command *cmd, t_env *local, char **global);
+int	exec_cmd(t_command *cmd, t_env *local, char **global);
 char	*check_path(char **full_cmd, char *cmd);
 
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);
-void	init_hrdoc (t_command *cmd);
-int		get_hrdoc(t_command *cmd, t_env *local_env);
-void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2]);
+t_command	*init_hrdoc (t_list *cmd);
+int		get_hrdoc(t_list *cmd, t_env *local_env);
+void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2], t_redir *redir);
 int		parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]);
 
 //exec_redir
