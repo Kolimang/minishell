@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 18:22:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 16:51:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	check_name(char *name)
 static int	check_value(char *str, char **name, char **value)
 {
 	char	*equal;
+	char	*temp;
 	int		len;
 
 	equal = ft_strchr(str, '=');
@@ -30,6 +31,9 @@ static int	check_value(char *str, char **name, char **value)
 		len = equal - str;
 		*name = ft_substr(str, 0, (size_t)len);
 		*value = ft_substr(str, len + 1, ft_strlen(str) - (size_t)(len + 1));
+		temp = ft_strtrim(*value, " \"");
+		free(*value);
+		*value = temp;
 	}
 	else
 	{
@@ -39,7 +43,7 @@ static int	check_value(char *str, char **name, char **value)
 	return (0);
 }
 
-int	ft_export(char **args, t_env *env)
+int	ft_export(char **args, t_env **env)
 {
 	char	*name;
 	char	*value;
@@ -48,7 +52,7 @@ int	ft_export(char **args, t_env *env)
 
 	res = 0;
 	if (args && !args[1])
-		return (print_env(env, 1), 0);
+		return (print_env(*env, 1));
 	if (args && args[1])
 	{
 		i = 1;
@@ -60,7 +64,7 @@ int	ft_export(char **args, t_env *env)
 			else
 			{
 				check_value(args[i], &name, &value);
-				update_env(name, value, &env);
+				update_env(name, value, env);
 			}
 			i++;
 		}
