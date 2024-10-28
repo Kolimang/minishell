@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 20:27:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 11:38:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 
 	tmp = cmds;
 
-	while(tmp)
+	while (tmp)
 	{
 		cmd = tmp->content;
 		if (pipe(io->pipe) == -1)

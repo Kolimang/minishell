@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 18:12:18 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 19:37:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 11:38:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_tab(char **paths)
 	int	i;
 	
 	i = 0;
-	while(paths[i])
+	while (paths[i])
 	{
 		free(paths[i]);
 		i++;	
