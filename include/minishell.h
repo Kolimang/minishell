@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 20:31:12 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/28 12:48:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -40,7 +41,7 @@ int	g_ret_value;
 # define SQ 39
 # define DQ 34
 
-# define VERSION "v0.1.38"
+# define VERSION "v0.1.39"
 
 int	check_commands(char **cmds, int *i);
 int	handle_commands (t_env *env, char **cmds, int *i, char **g_env);
