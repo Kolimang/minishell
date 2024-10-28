@@ -58,26 +58,23 @@
 
 [ ] QA checks
 		\_ [ ] Norm compliance
+		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
 		\_ [ ] Memory leaks
 		\_ [ ] Protect mallocs back to main()
 		\_ [ ] Protect fd's (open() might fail), close fd's
 		\_ [ ] Norm compliance again :-)
 
-[ ] Finalization :
-		\_ [ ] Remove wildcards from Makefile and reference all file names
-		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
-
 [ ] Testing :
 		\_ [ ] echo echo test
 		\_ [ ] $VAR (where 'VAR' has been previously exported with value "echo test")
 		\_ [ ] CAS CHIANTS !!! 
-				\_ [v] echo hello >1 >>2 >3
-				\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
-						--> faire des listes chainees pour les input/output, pour pouvoir supprimer les noeuds/files/fd dejas traites
-						--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere 
-						(par exemple, pour les inputs, f pour file, h pour heredoc)
-				\_ [ ] cat <<eof | (donne un prompt pour le heredoc suivi d'un prompt pour completer la commande... qu'on peut terminer par un pipe, et rebelote)
-				\_ [ ] cat (donne un prompt pour completer la commande, comme qd la commande se termine par un pipe, ET PUIS CA LOOPE jusqu'a Ctrl-D ou Ctrl-C)
+		\_ [v] echo hello >1 >>2 >3
+		\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
+		--> faire des listes chainees pour les input/output, pour pouvoir supprimer les noeuds/files/fd dejas traites
+		--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere 
+		(par exemple, pour les inputs, f pour file, h pour heredoc)
+		\_ [ ] cat <<eof | (donne un prompt pour le heredoc suivi d'un prompt pour completer la commande... qu'on peut terminer par un pipe, et rebelote)
+		\_ [ ] cat (donne un prompt pour completer la commande, comme qd la commande se termine par un pipe, ET PUIS CA LOOPE jusqu'a Ctrl-D ou Ctrl-C)
 		\_ [ ] . (bash error: `.: filename argument required` (sans les backticks); valeur de retour: 2)
 		\_ [ ] space then enter
 		\_ [ ] pipe alone // space pipe // multiple spaces pipe // command beginning by a pipe (| echo hello)
@@ -87,3 +84,8 @@
 		\_ [ ] zut | ls
 		\_ [ ] echo (passe une ligne avant de rendre le prompt)
 		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
+		
+[ ] Finalization :
+		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
+		\_ [ ] Remove wildcards from Makefile and reference all file names
+		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
