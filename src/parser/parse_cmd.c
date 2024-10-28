@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 19:15:13 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:34:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	**get_args(t_list *ls_lexemes, int argc)
 }
 
 // Turn lexemes-list into commands-list
+// Used to set `command->index = id;` but command->index removed from struct
 t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 {
 	t_command	*command;
@@ -58,7 +59,6 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 	if (!command)
 		return (NULL);
 	init_command(command);
-	// command->index = id;
 	if (id < nb_commands - 1)
 		command->nextpipe = 1;
 	else if (id > 0)

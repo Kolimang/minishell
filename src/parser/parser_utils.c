@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 19:15:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:34:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ t_command	*check_cmd(t_command *command)
 	return (command);
 }
 
+// Function used for debugging
+// Used to do `ft_printf("index            : %d\n", command->index);`
+// but command->index removed from t_command struct
 void	ft_print_command(t_command *command)
 {
-	// ft_printf("index            : %d\n", command->index);
 	ft_printf("argc             : %d\n", command->argc);
 	ft_printf("args             : ");
 	ft_printarray(command->args, ' ');
