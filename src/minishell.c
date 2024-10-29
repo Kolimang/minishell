@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 12:47:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 14:03:30 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ int	main(int ac, char **av, char **o_env)
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
+	init_signals();
 	env = init_env(o_env);
 	if (!env)
 		return (1);
