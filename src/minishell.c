@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 10:44:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 10:55:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,10 @@ int	execute(t_env **env, char **g_env)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			return (1);
+			return (EXIT_FAILURE);
 		args = ft_split(cmd, ' ');
+		if (!args)
+			return (EXIT_FAILURE);
 		if (!ft_strncmp(args[0], "cd", 3))
 			ft_cd(args, *env);
 		else if (!ft_strncmp(args[0], "echo", 5))
@@ -172,7 +174,7 @@ int	execute(t_env **env, char **g_env)
 			ft_unset(args, env);
 		else if (!ft_strncmp(args[0], "exit", 5))
 			ft_exit(args, *env);
-		free(args);
+		array_str_free(args, ft_arraylen(args));
 	}
 	return (0);
 }
