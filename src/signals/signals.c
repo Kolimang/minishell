@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:03:41 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 14:04:52 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 14:12:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_sighandler(int signum)
+void	ft_sighandler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -24,7 +24,7 @@ int	ft_sighandler(int signum)
 	}
 	else if (signum == SIGQUIT)
 	{
-		
+		;// ignore
 	}
 }
 
