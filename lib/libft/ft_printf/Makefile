@@ -6,14 +6,14 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/20 12:26:19 by jrichir           #+#    #+#              #
-#    Updated: 2024/03/19 13:55:32 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/29 09:43:05 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	libftprintf.a
 
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror
+CFLAGS			=	-g -Wall -Wextra -Werror
 INC				=	-I include
 AR				=	ar
 ARFLAGS 		=	rcs
