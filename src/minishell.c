@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 12:25:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 12:47:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,68 +148,68 @@ t_list *mock_command_line(void)
 }
 
 // for testing builtins:
-// int	execute(t_env **env, char **g_env)
-// {
-// 	char	**args;
-// 	char	*cmd;
-// 	(void)g_env;
-// 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-// 	while (1)
-// 	{
-// 		cmd = readline("\033[0;32mminishell$\033[0m ");
-// 		if (!cmd)
-// 			return (EXIT_FAILURE);
-// 		ft_add_cmd_to_history(cmd);
-// 		args = ft_split(cmd, ' ');
-// 		if (!args)
-// 			return (EXIT_FAILURE);
-// 		if (!ft_strncmp(args[0], "cd", 3))
-// 			ft_cd(args, *env);
-// 		else if (!ft_strncmp(args[0], "echo", 5))
-// 			ft_echo(args);
-// 		else if (!ft_strncmp(args[0], "pwd", 4))
-// 			ft_pwd(args, *env);
-// 		else if (!ft_strncmp(args[0], "export", 7))
-// 			ft_export(args, env);
-// 		else if (!ft_strncmp(args[0], "env", 4))
-// 			ft_env(args, *env);
-// 		else if (!ft_strncmp(args[0], "unset", 6))
-// 			ft_unset(args, env);
-// 		else if (!ft_strncmp(args[0], "exit", 5))
-// 			ft_exit(args, *env);
-// 		array_str_free(args, ft_arraylen(args));
-// 		free(cmd);
-// 	}
-// 	return (0);
-// }
-
-int	execute(t_env *env, char**g_env)
+int	execute(t_env **env, char **g_env)
 {
-	int			i;
-	char		*cmd;
-	char		**cmds;
-
+	char	**args;
+	char	*cmd;
+	(void)g_env;
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
 	while (1)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			return (1);
+			return (EXIT_FAILURE);
 		ft_add_cmd_to_history(cmd);
-		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
-		{
-			cmds = ft_split(cmd, '|');
-			if (!cmds)
-				return (EXIT_FAILURE);
-			if (check_commands(cmds, &i) == EXIT_SUCCESS)
-				handle_commands(env, cmds, &i, g_env);
-			else
-				array_str_free(cmds, ft_arraylen(cmds));
-		}
+		args = ft_split(cmd, ' ');
+		if (!args)
+			return (EXIT_FAILURE);
+		if (!ft_strncmp(args[0], "cd", 3))
+			ft_cd(args, *env);
+		else if (!ft_strncmp(args[0], "echo", 5))
+			ft_echo(args);
+		else if (!ft_strncmp(args[0], "pwd", 4))
+			ft_pwd(args, *env);
+		else if (!ft_strncmp(args[0], "export", 7))
+			ft_export(args, env);
+		else if (!ft_strncmp(args[0], "env", 4))
+			ft_env(args, *env);
+		else if (!ft_strncmp(args[0], "unset", 6))
+			ft_unset(args, env);
+		else if (!ft_strncmp(args[0], "exit", 5))
+			ft_exit(args, *env);
+		array_str_free(args, ft_arraylen(args));
 		free(cmd);
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
+
+// int	execute(t_env *env, char**g_env)
+// {
+// 	int			i;
+// 	char		*cmd;
+// 	char		**cmds;
+
+// 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
+// 	while (1)
+// 	{
+// 		cmd = readline("\033[0;32mminishell$\033[0m ");
+// 		if (!cmd)
+// 			return (1);
+// 		ft_add_cmd_to_history(cmd);
+// 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
+// 		{
+// 			cmds = ft_split(cmd, '|');
+// 			if (!cmds)
+// 				return (EXIT_FAILURE);
+// 			if (check_commands(cmds, &i) == EXIT_SUCCESS)
+// 				handle_commands(env, cmds, &i, g_env);
+// 			else
+// 				array_str_free(cmds, ft_arraylen(cmds));
+// 		}
+// 		free(cmd);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
 //env = test environment
 int	main(int ac, char **av, char **o_env)
