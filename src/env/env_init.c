@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/27 16:15:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 10:43:18 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ t_env	*create_env_node(const char *var_name, const char *var_val, int index)
 	if (!new_node)
 		return (NULL);
 	new_node->var_name = ft_strdup(var_name);
+	if (!new_node->var_name)
+		return (NULL);
 	if (var_val)
+	{
 		new_node->var_val = ft_strdup(var_val);
+		if (!new_node->var_val)
+			return (NULL);
+	}
 	else
 		new_node->var_val = NULL;
 	new_node->index = index;
@@ -29,7 +35,7 @@ t_env	*create_env_node(const char *var_name, const char *var_val, int index)
 	return (new_node);
 }
 
-void	add_env_var(t_env **env, const char *var_name, const char *var_val,
+int	add_env_var(t_env **env, const char *var_name, const char *var_val,
 		int index)
 {
 	t_env	*new_node;
@@ -37,7 +43,7 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 
 	new_node = create_env_node(var_name, var_val, index);
 	if (!new_node)
-		return ;
+		return (EXIT_FAILURE);
 	if (!(*env))
 		*env = new_node;
 	else
@@ -47,6 +53,7 @@ void	add_env_var(t_env **env, const char *var_name, const char *var_val,
 			current = current->next;
 		current->next = new_node;
 	}
+	return (0);
 }
 
 t_env	*init_env(char **original_env)
@@ -58,22 +65,22 @@ t_env	*init_env(char **original_env)
 	int		i;
 
 	env = NULL;
-	current = NULL;
 	index = 0;
-	i = 0;
-	while (original_env[i])
+	i = -1;
+	while (original_env[++i])
 	{
 		sep = ft_strchr(original_env[i], '=');
 		if (sep)
 		{
 			*sep = '\0';
 			current = create_env_node(original_env[i], sep + 1, index++);
+			if (!current)
+				return (NULL);
 			*sep = '=';
-			add_env_var(&env, current->var_name, current->var_val,
-				current->index);
+			if (add_env_var(&env, current->var_name, current->var_val,
+				current->index) == EXIT_FAILURE)
+				return (NULL);
 		}
-		i++;
 	}
-	sort_env(&env);
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 16:50:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 10:44:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,12 +206,14 @@ int	execute(t_env **env, char **g_env)
 //env = test environment
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*env;
+	t_env	*env;
 
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
 	env = init_env(o_env);
+	if (!env)
+		return (1);
 	//set_shlvl(env);
 	if (execute(&env, o_env))
 	{

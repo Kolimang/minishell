@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/27 18:19:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 10:35:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_env
 }	t_env;
 
 t_env	*init_env(char **original_env);
-void	add_env_var(t_env **env, const char *var_name, const char *var_val,
+int		add_env_var(t_env **env, const char *var_name, const char *var_val,
 			int index);
 char	*get_env_val(t_env *env, const char *var_name);
 t_env	*create_env_node(const char *var_name, const char *var_val, int index);

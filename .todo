@@ -1,3 +1,8 @@
+==88042==    definitely lost: 1,189 bytes in 38 blocks
+==88042==    indirectly lost: 1,543 bytes in 74 blocks
+==88042==      possibly lost: 0 bytes in 0 blocks
+==88042==    still reachable: 301,741 bytes in 219 blocks
+==88042==         suppressed: 18,003 bytes in 163 blocks
 
 ## To do :
 
@@ -51,6 +56,7 @@
 		\_ [ ] exit with no options
 
 [ ] Signaux :
+		\_ [ ] Use pre-existing struct termios --> permet de masquer l'affichage de '^C' qd on fait Control-C
 
 [ ] Gestion des erreurs :
 		\_ [ ] Vérifier valeurs de retours
