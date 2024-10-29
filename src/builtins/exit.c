@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 12:57:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 15:21:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	arg_is_number(char *arg)
+static int	arg_is_number(char *arg)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ int	ft_exit(char **args, t_env *env)
 
 	ft_printf("exit\n");
 	argc = ft_arraylen(args);
-	if (args[1] && !arg_is_number(args[1]))
+	if (args && args[1] && !arg_is_number(args[1]))
 	{
 		g_ret_value = 255;
 		merror(args[0], args[1], "numeric argument required", 1);
