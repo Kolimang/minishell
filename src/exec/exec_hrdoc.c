@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 18:01:05 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/29 10:29:54 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ void pre_exec(t_list *cmds, t_env *local_env, char **global_env)
     tmp_cmds = cmds;
     while (tmp_cmds)
     {
-        cmd = tmp_cmds->content;
-        cmd->fd_hrdoc = -3;
-        if (get_hrdoc(tmp_cmds, local_env) == -1)
+		cmd = init_hrdoc(tmp_cmds);
+        if (get_hrdoc(cmd, local_env) == -1)
             return;
         tmp_cmds = tmp_cmds->next;
     }
@@ -42,19 +41,18 @@ t_command *init_hrdoc(t_list *cmds)
     return (cmd);
 }
 
-int get_hrdoc(t_list *cmd, t_env *local_env)
+int get_hrdoc(t_command *cmd, t_env *local_env)
 {
     int pipe_fd[2];
     pid_t pid;
     t_redir *redir;
-    t_command *cmds;
+	t_list *redir_node;
 
-    while (cmd)
-    {
-        cmds = init_hrdoc(cmd);
-        if (cmds && cmds->ls_redirs)
+ 	//pour test sans redirection check if cmd->ls_redir exists
+	redir_node = cmd->ls_redirs;
+    while (redir_node)
         {
-            redir = cmds->ls_redirs->content;
+			redir = redir_node->content;
             if (redir->type == HERE_DOC)
             {
                 if (pipe(pipe_fd) == -1)
@@ -63,15 +61,14 @@ int get_hrdoc(t_list *cmd, t_env *local_env)
                 if (pid == -1)
                     return (handle_error("fork failed"));
                 if (pid == 0)
-                    child_heredoc_process(cmds, local_env, pipe_fd, redir);
-                else if (parent_heredoc_process(cmds, pid, pipe_fd) == -1)
+                    child_heredoc_process(cmd, local_env, pipe_fd, redir);  // Handle heredoc in child
+                else if (parent_heredoc_process(cmd, pid, pipe_fd) == -1)
                     return (-1);
             }
+            redir_node = redir_node->next;
         }
-        cmd = cmd->next;
-    }
-    return (0);
-}
+      return (0);
+	}
 
 void child_heredoc_process(t_command *cmd, t_env *local_env, int pipe_fd[2], t_redir *redir)
 {
@@ -81,9 +78,10 @@ void child_heredoc_process(t_command *cmd, t_env *local_env, int pipe_fd[2], t_r
     while (1)
     {
         line = readline("> ");
+		line = process_hrdoc(line, local_env);
         if (!line)
             break;
-        if (ft_strncmp(line, redir->value, ft_strlen(redir->value) + 1) == 0) // Compare with delimiter
+        if (ft_strncmp(line, redir->value, ft_strlen(redir->value) + 1) == 0) 
         {
             free(line);
             break;
@@ -104,7 +102,7 @@ void child_heredoc_process(t_command *cmd, t_env *local_env, int pipe_fd[2], t_r
 int parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2])
 {
     int status;
-    close(pipe_fd[1]);  // Close write end immediately
+    close(pipe_fd[1]);
     waitpid(pid, &status, 0);
     if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
     {

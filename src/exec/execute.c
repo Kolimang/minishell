@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 18:07:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:37:07 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 	{
 		cmd = tmp->content;
 		if (!tmp->next)
-			break;
+			break;	
 		if (pipe(io->pipe) == -1)
 			return (-1);
 		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
@@ -63,33 +63,33 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 	if (tmp) // creating last child
 		io->fd_in = create_child(cmd, io, l_env, g_env);
 		// set_fds(cmd, io);
-
 	wait_children(cmds);
 	if(cmd->prevpipe)
 		close(io->fd_in);
     if(io->pipe[0] != -1)
 		close(io->pipe[1]);
    	if (cmd->fd_hrdoc != -3)
-	close(cmd->fd_hrdoc);
+		close(cmd->fd_hrdoc);
 	close(io->fd_out); 	//recupere le code d'erreur final
 	return (0);
 }
 
 int create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
+	t_redir *redir;
+	if(cmd->ls_redirs)
+		redir = cmd->ls_redirs->content;
     cmd->pid = fork();
     if (cmd->pid == -1)
         return (handle_error("fork"));
-    
     if (cmd->pid == 0)  // Child process
     {
         if (set_fds(cmd, io) == -1)
-            exit(EXIT_FAILURE);
-        if (cmd->args)
+			 exit(EXIT_FAILURE);
+		if (cmd->args)
             exec_cmd(cmd, l_env, g_env);
-        exit(1);  // Exit if exec fails
+        exit(1);
     }
-    
     // Return the read end of the pipe for the next command
     if(cmd->prevpipe)
 		return (io->pipe[0]);

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 16:48:40 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/29 12:06:29 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*check_path(char **full_cmd, char *cmd);
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_env *local_env, char **global_env);
 t_command	*init_hrdoc (t_list *cmd);
-int		get_hrdoc(t_list *cmd, t_env *local_env);
+int		get_hrdoc(t_command *cmd, t_env *local_env);
 void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2], t_redir *redir);
 int		parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]);
 
@@ -56,5 +56,9 @@ void	free_tab(char **paths);
 
 
 void	return_error(char *arg);
+
+//debbuuuugggg
+void eprintf(const char *format, ...);
+void debug_print_fds(const char* msg, t_command *cmd, t_io_fd *io);
 
 #endif

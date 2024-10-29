@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_hr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 13:47:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 09:27:23 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,18 @@ static char	*expand_hrdoc(char *tmp, t_env *new_env)
 	}
 	return (res);
 }
-
-void	process_hrdoc(char *line, t_env *new_env)
+char	*process_hrdoc(char *line, t_env *new_env)
 {
 	char	*tmp;
 	char	*expanded_str;
 
 	if (!line)
-		return ;
+		return (NULL);
 	tmp = ft_strdup(line);
 	if (!tmp)
-		return ;
+		return (NULL);
 	expanded_str = expand_hrdoc(tmp, new_env);
 	free(tmp);
-	// if (expanded_str)
-	// {
-	// 	free(line);
-	// 	lex->value = expanded_str;
-	// }
+	free(line);
+	return(expanded_str);
 }
