@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 11:26:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 12:25:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ int	check_commands(char **cmds, int *i)
 	{
 		cmds[*i] = ft_strtrim_replace(&cmds[*i]);
 		if (!cmds[*i])
-			return (-1);
+			return (EXIT_FAILURE);
 		if (cmds[*i] && (cmds[*i][0] == '\0'))
 		{
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 			g_ret_value = 258;
 			*i = -1;
-			break ;
+			return (EXIT_FAILURE);
 		}
 		(*i)++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
@@ -148,38 +148,40 @@ t_list *mock_command_line(void)
 }
 
 // for testing builtins:
-int	execute(t_env **env, char **g_env)
-{
-	char	**args;
-	char	*cmd;
-	(void)g_env;
-	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	while (1)
-	{
-		cmd = readline("\033[0;32mminishell$\033[0m ");
-		if (!cmd)
-			return (EXIT_FAILURE);
-		args = ft_split(cmd, ' ');
-		if (!args)
-			return (EXIT_FAILURE);
-		if (!ft_strncmp(args[0], "cd", 3))
-			ft_cd(args, *env);
-		else if (!ft_strncmp(args[0], "echo", 5))
-			ft_echo(args);
-		else if (!ft_strncmp(args[0], "pwd", 4))
-			ft_pwd(args, *env);
-		else if (!ft_strncmp(args[0], "export", 7))
-			ft_export(args, env);
-		else if (!ft_strncmp(args[0], "env", 4))
-			ft_env(args, *env);
-		else if (!ft_strncmp(args[0], "unset", 6))
-			ft_unset(args, env);
-		else if (!ft_strncmp(args[0], "exit", 5))
-			ft_exit(args, *env);
-		array_str_free(args, ft_arraylen(args));
-	}
-	return (0);
-}
+// int	execute(t_env **env, char **g_env)
+// {
+// 	char	**args;
+// 	char	*cmd;
+// 	(void)g_env;
+// 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
+// 	while (1)
+// 	{
+// 		cmd = readline("\033[0;32mminishell$\033[0m ");
+// 		if (!cmd)
+// 			return (EXIT_FAILURE);
+// 		ft_add_cmd_to_history(cmd);
+// 		args = ft_split(cmd, ' ');
+// 		if (!args)
+// 			return (EXIT_FAILURE);
+// 		if (!ft_strncmp(args[0], "cd", 3))
+// 			ft_cd(args, *env);
+// 		else if (!ft_strncmp(args[0], "echo", 5))
+// 			ft_echo(args);
+// 		else if (!ft_strncmp(args[0], "pwd", 4))
+// 			ft_pwd(args, *env);
+// 		else if (!ft_strncmp(args[0], "export", 7))
+// 			ft_export(args, env);
+// 		else if (!ft_strncmp(args[0], "env", 4))
+// 			ft_env(args, *env);
+// 		else if (!ft_strncmp(args[0], "unset", 6))
+// 			ft_unset(args, env);
+// 		else if (!ft_strncmp(args[0], "exit", 5))
+// 			ft_exit(args, *env);
+// 		array_str_free(args, ft_arraylen(args));
+// 		free(cmd);
+// 	}
+// 	return (0);
+// }
 
 int	execute(t_env *env, char**g_env)
 {
@@ -199,11 +201,12 @@ int	execute(t_env *env, char**g_env)
 			cmds = ft_split(cmd, '|');
 			if (!cmds)
 				return (EXIT_FAILURE);
-			check_commands(cmds, &i);
-			handle_commands(env, cmds, &i, g_env);
+			if (check_commands(cmds, &i) == EXIT_SUCCESS)
+				handle_commands(env, cmds, &i, g_env);
+			else
+				array_str_free(cmds, ft_arraylen(cmds));
 		}
 		free(cmd);
-		array_str_free(cmds, ft_arraylen(cmds));
 	}
 	return (EXIT_SUCCESS);
 }
