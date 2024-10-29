@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 12:44:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 12:49:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_exit(char **args, t_env *env)
 {
 	int	argc;
 
-	argc = ft_strlen(args);
+	argc = ft_arraylen(args);
 	if (argc > 2)
 	{
 		g_ret_value = 1;
