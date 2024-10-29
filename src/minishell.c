@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 10:55:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 11:26:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_check_input_cmd(char **cmdref)
 	char	*cmd;
 
 	cmd = ft_strtrim_replace(cmdref);
+	if (!cmd)
+		return (EXIT_FAILURE);
 	if ((int)ft_strlen(cmd) > 0)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
@@ -25,12 +27,12 @@ int	ft_check_input_cmd(char **cmdref)
 		{
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 			g_ret_value = 258;
-			return (-1);
+			return (EXIT_FAILURE);
 		}
 	}
 	else if (cmd[0] == '\0')
-		return (-1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	check_commands(char **cmds, int *i)
@@ -179,31 +181,32 @@ int	execute(t_env **env, char **g_env)
 	return (0);
 }
 
-// int	execute(t_env *env, char**g_env)
-// {
-// 	int			i;
-// 	char		*cmd;
-// 	char		**cmds;
+int	execute(t_env *env, char**g_env)
+{
+	int			i;
+	char		*cmd;
+	char		**cmds;
 
-// 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-// 	while (1)
-// 	{
-// 		cmd = readline("\033[0;32mminishell$\033[0m ");
-// 		if (!cmd)
-// 			return (1);
-// 		ft_add_cmd_to_history(cmd);
-// 		i = ft_check_input_cmd(&cmd);
-// 		if (i == 0)
-// 		{
-// 			cmds = ft_split(cmd, '|');
-// 			check_commands(cmds, &i);
-// 		}
-// 		if (i != -1)
-// 			handle_commands(env, cmds, &i, g_env);
-// 		free(cmd);
-// 	}
-// 	return (0);
-// }
+	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
+	while (1)
+	{
+		cmd = readline("\033[0;32mminishell$\033[0m ");
+		if (!cmd)
+			return (1);
+		ft_add_cmd_to_history(cmd);
+		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
+		{
+			cmds = ft_split(cmd, '|');
+			if (!cmds)
+				return (EXIT_FAILURE);
+			check_commands(cmds, &i);
+			handle_commands(env, cmds, &i, g_env);
+		}
+		free(cmd);
+		array_str_free(cmds, ft_arraylen(cmds));
+	}
+	return (EXIT_SUCCESS);
+}
 
 //env = test environment
 int	main(int ac, char **av, char **o_env)
@@ -217,12 +220,12 @@ int	main(int ac, char **av, char **o_env)
 	if (!env)
 		return (1);
 	//set_shlvl(env);
-	if (execute(&env, o_env))
+	if (execute(&env, o_env) == EXIT_FAILURE)
 	{
 		free_env(env);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	//handle_commands(env, &i, o_env);
 	free_env(env);
-	return (0);
+	return (EXIT_SUCCESS);
 }
