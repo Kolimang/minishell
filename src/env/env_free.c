@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 13:26:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/29 10:53:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	free_env(t_env *env)
 		temp = env;
 		env = env->next;
 		free(temp->var_name);
+		temp->var_name = NULL;
 		free(temp->var_val);
+		temp->var_val = NULL;
 		free(temp);
+		temp = NULL;
 	}
 }
