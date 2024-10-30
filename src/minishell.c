@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 09:41:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:01:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_commands(char **cmds, int *i)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
+int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 {
 	t_list		*lexemes;
 	t_list		*commands;
@@ -75,7 +75,7 @@ int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
 			ft_lstadd_back(&commands, ft_lstnew(command));
 		(*i)++;
 	}
-	pre_exec(commands, env, g_env);
+	pre_exec(commands, *env, g_env);
 	exec(commands, env, g_env);
 	// array_str_free(cmds, ft_arraylen(cmds));
 	// free_lists(lexemes, commands);
@@ -250,7 +250,7 @@ int	execute(t_env **env, char **g_env)
 	return (0);
 }
 
-// int	execute(t_env *env, char**g_env)
+// int	execute(t_env **env, char**g_env)
 // {
 // 	int			i;
 // 	char		*cmd;
