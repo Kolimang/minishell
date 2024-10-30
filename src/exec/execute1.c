@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 10:06:36 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 11:05:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env)
 	else if (cmd->builtin == 6)
 		res = ft_env(cmd->args, *l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmd->args, *l_env);
+	   res = ft_exit(cmd->args, *l_env, 0);
 	else
 		res = -1; // Error: unknown built-in command
 	return (res);

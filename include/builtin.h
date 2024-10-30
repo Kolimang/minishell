@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 16:49:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 11:05:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	sort_env(t_env **env);
 int		ft_unset(char **args, t_env **env);
 
 // exit.c
-int		ft_exit(char **args, t_env *env);
+int		ft_exit(char **args, t_env *env, int eof);
 
 #endif
