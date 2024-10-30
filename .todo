@@ -69,6 +69,7 @@
 		\_ [ ] Vérifier messages d'erreur
 
 [ ] QA checks
+		\_ [ ] Maximum user-input size ? Test very long command/arguments
 		\_ [ ] Norm compliance
 		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
 		\_ [ ] Memory leaks
