@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 10:03:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 16:13:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+//# include <termios.h>
 # include "../lib/libft/libft.h"
 
 // Include project headers
@@ -52,5 +53,8 @@ int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
 //testlina
 //t_list *mock_command_line(void);
+
+// added by jp
+int	rl_replace_line(char *, int);
 
 #endif

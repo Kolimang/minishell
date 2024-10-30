@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 10:06:36 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 11:08:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 {
     t_redir *redir = NULL;
     
-    debug_print_fds("Before set_fds", cmd, io);
+    //debug_print_fds("Before set_fds", cmd, io);
     
     if (!cmd)
         return_error("Error: NULL command");  

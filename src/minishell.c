@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 11:05:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 15:09:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ int	execute(t_env **env, char**g_env)
 	while (1)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
+		//ft_printf("commande: %s\n", cmd);
+		//sleep(1);
 		if (!cmd)
 			ft_exit(NULL, *env, 1);
 		ft_add_cmd_to_history(cmd);
@@ -349,7 +351,9 @@ t_list *mock_command_line(void)
 int	main(int ac, char **av, char **o_env)
 {
 	t_env	*env;
+	struct termios	*test;
 
+	//tcgetattr(4, test);
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;

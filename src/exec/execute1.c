@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 11:05:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 15:01:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,23 +153,23 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 {
 	char *command_path;
 	
-	dprintf(2, "Executing command: %s\n", cmd->args[0]);
-	debug_print_fds("Before exec_cmd", cmd, NULL);
+	//dprintf(2, "Executing command: %s\n", cmd->args[0]);
+	//debug_print_fds("Before exec_cmd", cmd, NULL);
 
 	// Search for command in PATH
 	command_path = find_command_path(cmd->args[0], g_env);
 	if (!command_path)
 	{
 		dprintf(2, "Command not found: %s\n", cmd->args[0]);
-		return -1;
+		return (-1);
 	}
 
 	// Verify file descriptors before execve
 	int stdin_status = fcntl(STDIN_FILENO, F_GETFD);
 	int stdout_status = fcntl(STDOUT_FILENO, F_GETFD);
 	
-	dprintf(2, "Before execve - stdin_status: %d, stdout_status: %d\n", 
-			stdin_status, stdout_status);
+	//dprintf(2, "Before execve - stdin_status: %d, stdout_status: %d\n", 
+	//		stdin_status, stdout_status);
 	
 	if (execve(command_path, cmd->args, g_env) == -1)
 	{
