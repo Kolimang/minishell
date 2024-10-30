@@ -19,7 +19,7 @@ void	init_io_fd(t_io_fd *io)
 	io->pipe[0] = -1;
 	io->pipe[1] = -1;
 	io->fd_in = STDIN_FILENO;
-	io->fd_out= -2;
+	io->fd_out= STDOUT_FILENO;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)
@@ -45,9 +45,7 @@ void reset_io(t_io_fd *io, t_command *cmd) {
 				cmd->fd_hrdoc = -3;
 			}
     // Close only if they are valid and were actually used
-    if (io->std_in != -1)
         close(io->std_in);
-    if (io->std_out != -1)
         close(io->std_out);
 }
 
@@ -69,15 +67,3 @@ int	is_last(t_list *redirs)
 {
 	return (redirs && redirs->next == NULL);
 }
-
-// void	handle_closing(t_command *cmd, t_io_fd *io)
-// {
-// 	if (cmd->fd_hrdoc != -3)
-// 		close(cmd->fd_hrdoc);
-// //free for next fd_in assignement
-// 	close(io->fd_in);
-// 	close(io->fd_out);
-// 	close (io->pipe[1]);
-// 	close(io->pipe[0]);
-
-// }
