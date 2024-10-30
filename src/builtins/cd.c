@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 09:28:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:10:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ int	ft_cd(char **args, t_env *env)
 		res = go(args[2], curr_path, env);
 	else
 		res = go(args[1], curr_path, env);
-	free(args);
 	if (res > 0)
 		return (1);
 	return (0);

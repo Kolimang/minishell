@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 09:30:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:10:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ int	ft_export(char **args, t_env **env)
 			i++;
 		}
 	}
-	return (free(args), res);
+	return (res);
 }
