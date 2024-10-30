@@ -1,3 +1,14 @@
+==90754==    definitely lost: 1,184 bytes in 37 blocks
+==90754==    indirectly lost: 1,543 bytes in 74 blocks
+==90754==      possibly lost: 0 bytes in 0 blocks
+==90754==    still reachable: 305,803 bytes in 224 blocks
+==90754==         suppressed: 18,003 bytes in 163 blocks
+
+==88042==    definitely lost: 1,189 bytes in 38 blocks
+==88042==    indirectly lost: 1,543 bytes in 74 blocks
+==88042==      possibly lost: 0 bytes in 0 blocks
+==88042==    still reachable: 301,741 bytes in 219 blocks
+==88042==         suppressed: 18,003 bytes in 163 blocks
 
 ## To do :
 
@@ -51,12 +62,14 @@
 		\_ [ ] exit with no options
 
 [ ] Signaux :
+		\_ [ ] Use pre-existing struct termios --> permet de masquer l'affichage de '^C' qd on fait Control-C
 
 [ ] Gestion des erreurs :
 		\_ [ ] Vérifier valeurs de retours
 		\_ [ ] Vérifier messages d'erreur
 
 [ ] QA checks
+		\_ [ ] Maximum user-input size ? Test very long command/arguments
 		\_ [ ] Norm compliance
 		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
 		\_ [ ] Memory leaks

@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 15:59:07 by jrichir           #+#    #+#              #
-#    Updated: 2024/09/17 10:27:49 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/29 09:54:05 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@
 # ------------------------------- VARIABLES ------------------------------------
 
 NAME := libft_original.a
-CC := cc
+CC := cc -g2 -O1 -fno-omit-frame-pointer
 CFLAGS := -Wall -Wextra -Werror
 INC = -I include
 AR := ar -cr

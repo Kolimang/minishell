@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/28 18:43:22 by jrichir          ###   ########.fr        #
+#    Updated: 2024/10/29 10:10:08 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC_DIR   := src/
 OBJ_DIR   := build/
 
 NAME      := minishell
-CC        := gcc -g
+CC        := cc -g2 -O1 -fno-omit-frame-pointer
 
 # Paths to readline library (installed with brew)
 ifeq ($(USER), jrichir)

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 19:01:02 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 09:35:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_check_input_cmd(char **cmdref)
 	char	*cmd;
 
 	cmd = ft_strtrim_replace(cmdref);
+	if (!cmd)
+		return (EXIT_FAILURE);
 	if ((int)ft_strlen(cmd) > 0)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
@@ -25,12 +27,12 @@ int	ft_check_input_cmd(char **cmdref)
 		{
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 			g_ret_value = 258;
-			return (-1);
+			return (EXIT_FAILURE);
 		}
 	}
 	else if (cmd[0] == '\0')
-		return (-1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	check_commands(char **cmds, int *i)
@@ -39,17 +41,17 @@ int	check_commands(char **cmds, int *i)
 	{
 		cmds[*i] = ft_strtrim_replace(&cmds[*i]);
 		if (!cmds[*i])
-			return (-1);
+			return (EXIT_FAILURE);
 		if (cmds[*i] && (cmds[*i][0] == '\0'))
 		{
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 			g_ret_value = 258;
 			*i = -1;
-			break ;
+			return (EXIT_FAILURE);
 		}
 		(*i)++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
@@ -62,7 +64,6 @@ int	handle_commands(t_env *env, char **cmds, int *i, char **g_env)
 	*i = 0;
 	while (cmds[*i])
 	{
-		ft_printf("cmd[%d]: %s\n", *i, cmds[*i]);
 		lexemes = ft_tokenize(cmds[*i]);
 		if (!lexemes)
 			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
@@ -128,8 +129,11 @@ int	execute(t_env **env, char **g_env)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			return (1);
+			ft_exit(NULL, *env);//return (EXIT_FAILURE);
+		ft_add_cmd_to_history(cmd);
 		args = ft_split(cmd, ' ');
+		if (!args)
+			return (EXIT_FAILURE);
 		if (!ft_strncmp(args[0], "cd", 3))
 			ft_cd(args, *env);
 		else if (!ft_strncmp(args[0], "echo", 5))
@@ -144,7 +148,8 @@ int	execute(t_env **env, char **g_env)
 			ft_unset(args, env);
 		else if (!ft_strncmp(args[0], "exit", 5))
 			ft_exit(args, *env);
-		free(args);
+		array_str_free(args, ft_arraylen(args));
+		free(cmd);
 	}
 	return (0);
 }
@@ -162,35 +167,40 @@ int	execute(t_env **env, char **g_env)
 // 		if (!cmd)
 // 			return (1);
 // 		ft_add_cmd_to_history(cmd);
-// 		i = ft_check_input_cmd(&cmd);
-// 		if (i == 0)
+// 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 // 		{
 // 			cmds = ft_split(cmd, '|');
-// 			check_commands(cmds, &i);
+// 			if (!cmds)
+// 				return (EXIT_FAILURE);
+// 			if (check_commands(cmds, &i) == EXIT_SUCCESS)
+// 				handle_commands(env, cmds, &i, g_env);
+// 			else
+// 				array_str_free(cmds, ft_arraylen(cmds));
 // 		}
-// 		if (i != -1)
-// 			handle_commands(env, cmds, &i, g_env);
 // 		free(cmd);
 // 	}
-// 	return (0);
+// 	return (EXIT_SUCCESS);
 // }
 
 //env = test environment
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*env;
+	t_env	*env;
 
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
+	init_signals();
 	env = init_env(o_env);
+	if (!env)
+		return (1);
 	//set_shlvl(env);
-	if (execute(&env, o_env))
+	if (execute(&env, o_env) == EXIT_FAILURE)
 	{
 		free_env(env);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	//handle_commands(env, &i, o_env);
 	free_env(env);
-	return (0);
+	return (EXIT_SUCCESS);
 }

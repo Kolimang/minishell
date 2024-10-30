@@ -1,41 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   sighandle.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 09:36:18 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
+/*   Updated: 2024/10/29 14:27:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef SIGHANDLE_H
+# define SIGHANDLE_H
 
-int	ft_echo(char **args)
-{
-	int	i;
-	int	newline;
+void	init_signals(void);
+void	ft_sighandler(int signum);
 
-	i = 1;
-	newline = 1;
-	if (args && args[1])
-	{
-		if (ft_strncmp(args[1], "-n", 3) == 0)
-		{
-			i = 2;
-			newline = 0;
-		}
-		while (args[i])
-		{
-			ft_printf("%s", args[i]);
-			if (args[i + 1])
-				ft_printf(" ");
-			i++;
-		}
-	}
-	if (newline == 1)
-		ft_printf("\n");
-	free(args);
-	return (0);
-}
+#endif
