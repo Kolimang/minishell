@@ -19,7 +19,7 @@ void	init_io_fd(t_io_fd *io)
 	io->pipe[0] = -1;
 	io->pipe[1] = -1;
 	io->fd_in = STDIN_FILENO;
-	io->fd_out= STDOUT_FILENO;
+	io->fd_out= -2;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)
@@ -44,7 +44,7 @@ void reset_io(t_io_fd *io, t_command *cmd) {
 				close(cmd->fd_hrdoc);
 				cmd->fd_hrdoc = -3;
 			}
-    // Close only if they are valid and were actually used
+
         close(io->std_in);
         close(io->std_out);
 }
@@ -63,7 +63,20 @@ void	return_error(char *arg)
 	exit(EXIT_FAILURE);
 }
 
-int	is_last(t_list *redirs)
+// int	is_last(t_list *curr, t_redir *redir)
+// {
+// 	t_redir * tmp;
+// 	while(curr)
+// 	{
+// 		tmp = curr->content;
+// 		curr = curr->next;
+// 	}
+// 	if(tmp != redir)
+// 		return (0);
+// 	return(1);
+// }
+int is_last(t_list *curr)
 {
-	return (redirs && redirs->next == NULL);
+    // Return 1 if curr is the last node (i.e., next is NULL), otherwise return 0
+    return (curr->next == NULL);
 }

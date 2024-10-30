@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 12:06:29 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:38:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int		set_fds(t_command *cmd, t_io_fd *io);
 void	init_io_fd(t_io_fd *io);
 void	reset_io(t_io_fd *io, t_command *cmd);
 int		handle_error(const char *msg);
-int		is_last(t_list *redirs);
+int		is_last(t_list *curr);
+// int	is_last(t_list *curr, t_redir *redir);
 void	handle_closing(t_command *cmd, t_io_fd *io);
 
 //access

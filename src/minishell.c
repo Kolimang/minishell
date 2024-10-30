@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 13:05:24 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:39:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,28 +274,40 @@ t_list *mock_command_line(void)
     heredoc_redir1->value = strdup("EOF");
     heredoc_redir1->type = HERE_DOC;
 
-    // t_redir *heredoc_redir2 = malloc(sizeof(t_redir));
-    // heredoc_redir2->value = strdup("EOF1");
-    // heredoc_redir2->type = HERE_DOC;
+    t_redir *redir1 = malloc(sizeof(t_redir));
+    redir1->value = strdup("infile1");
+    redir1->type = INFILE;
+	t_redir *redir2 = malloc(sizeof(t_redir));
+    redir2->value = strdup("infile");
+    redir2->type = INFILE;
+	t_redir *redir3 = malloc(sizeof(t_redir));
+    redir3->value = strdup("outfile");
+    redir3->type = OUTFILE;
+	t_redir *redir4 = malloc(sizeof(t_redir));
+    redir4->value = strdup("out");
+    redir4->type = OUTFILE;
 
-    // t_redir *heredoc_redir3 = malloc(sizeof(t_redir));
-    // heredoc_redir3->value = strdup("EOF2");
-    // heredoc_redir3->type = HERE_DOC;
+    t_redir *heredoc_redir3 = malloc(sizeof(t_redir));
+    heredoc_redir3->value = strdup("EOF2");
+    heredoc_redir3->type = HERE_DOC;
 
     // Attach heredoc redirections to cmd1
-    cmd1->ls_redirs = ft_lstnew(heredoc_redir1);
-    // ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir2));
-    // ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir3));
+    cmd1->ls_redirs = ft_lstnew(redir1);
+	//  cmd1->ls_redirs = ft_lstnew(redir2);
+	//  ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir3));
+    ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(redir3));
+    // ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(redir2));
+	
 
     cmd1->prevpipe = 0;    // No previous pipe
-    cmd1->nextpipe = 1;    // No next pipe
+    cmd1->nextpipe = 0;    // No next pipe
     cmd1->fd_hrdoc = -3;
     cmd1->builtin = 0;
 
 	//second cmd
 	t_command *cmd2 = malloc(sizeof(t_command));
     cmd2->pid = 0;
-    cmd2->argc = 1;
+    cmd2->argc = 2;
     cmd2->name = strdup("cat");
     cmd2->args = malloc(sizeof(char *) * 2);
     cmd2->args[0] = strdup("cat");
@@ -305,21 +317,21 @@ t_list *mock_command_line(void)
     t_redir *heredoc_redir4 = malloc(sizeof(t_redir));
     // heredoc_redir4->value = strdup("EOF");
     // heredoc_redir4->type = HERE_DOC;
-	heredoc_redir4->value = strdup("EOF");
-    heredoc_redir4->type = HERE_DOC;
+	heredoc_redir4->value = strdup("out");
+    heredoc_redir4->type = OUTFILE;
 	cmd2->prevpipe = 0;    // No previous pipe
     cmd2->nextpipe = 0;    // No next pipe
     cmd2->fd_hrdoc = -3;
     cmd2->builtin = 0;
   	
-	t_redir *redir1 = malloc(sizeof(t_redir));
-    redir1->value = strdup("output");
-    redir1->type = OUTFILE;
-	cmd2->ls_redirs = ft_lstnew(redir1);
-	ft_lstnew(redir1);
-	//ft_lstadd_back(&(cmd2->ls_redirs), ft_lstnew(redir1));
-	// Create the linked list of commands
-	t_list *commands = ft_lstnew(cmd2);
+	// t_redir *redir1 = malloc(sizeof(t_redir));
+    // redir1->value = strdup("out");
+    // redir1->type = OUTFILE;
+	// cmd2->ls_redirs = ft_lstnew(redir1);
+	// ft_lstnew(heredoc_redir4);
+	// ft_lstadd_back(&(cmd2->ls_redirs), ft_lstnew(heredoc_redir4));
+	//Create the linked list of commands
+	t_list *commands = ft_lstnew(cmd1);
 	
 	// ft_lstadd_back(&commands, ft_lstnew(cmd2));
     return commands;

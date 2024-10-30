@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 15:37:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 11:58:51 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void exec(t_list *cmds, t_env *local_env, char **global_env) {
     t_io_fd *io;
 
 	cmd = cmds->content;
-    if (cmds) {
+	    if (cmds) {
         io = malloc(sizeof(t_io_fd));
         if (!io)
             return_error("Failed to allocate memory for io_fd");
         init_io_fd(io);
-
         cmd = cmds->content;
         if (cmds->next == NULL && !(cmd->args[0])) {
             if (set_fds(cmd, io) == -1) {
@@ -57,20 +56,12 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 			break;	
 		if (pipe(io->pipe) == -1)
 			return (-1);
-		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
+		io->fd_in = create_child(cmd, io, l_env, g_env);
 		tmp = tmp->next;
 	}
 	if (tmp) // creating last child
 		io->fd_in = create_child(cmd, io, l_env, g_env);
-		// set_fds(cmd, io);
 	wait_children(cmds);
-	if(cmd->prevpipe)
-		close(io->fd_in);
-    if(io->pipe[0] != -1)
-		close(io->pipe[1]);
-   	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
-	close(io->fd_out); 	//recupere le code d'erreur final
 	return (0);
 }
 
@@ -82,19 +73,21 @@ int create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
     cmd->pid = fork();
     if (cmd->pid == -1)
         return (handle_error("fork"));
-    if (cmd->pid == 0)  // Child process
+    if (cmd->pid == 0)
     {
-        if (set_fds(cmd, io) == -1)
+		if (set_fds(cmd, io) == -1)
 			 exit(EXIT_FAILURE);
 		if (cmd->args)
             exec_cmd(cmd, l_env, g_env);
-        exit(1);
+        exit(g_ret_value);
     }
-    // Return the read end of the pipe for the next command
-    if(cmd->prevpipe)
-		return (io->pipe[0]);
-	else
-		return(-1);
+	if(cmd->prevpipe)
+		close(io->fd_in);
+    if(io->pipe[0] != -1)
+		close(io->pipe[1]);
+	if(cmd->fd_hrdoc != -3)
+		close(cmd->fd_hrdoc);
+	return (io->pipe[0]);
 }
 
 void	wait_children(t_list *cmds)
