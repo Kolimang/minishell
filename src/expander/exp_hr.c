@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exp_hr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 09:27:23 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:04:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ char	*process_hrdoc(char *line, t_env *new_env)
 	expanded_str = expand_hrdoc(tmp, new_env);
 	free(tmp);
 	free(line);
-	return(expanded_str);
+	return (expanded_str);
 }

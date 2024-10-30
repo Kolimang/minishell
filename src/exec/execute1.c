@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 09:55:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,9 @@ char *find_command_path(const char *cmd, char **g_env)
 //         exit(EXIT_FAILURE);
 //     }
 // 	 eprintf("here\n");
-//     return 0;  // Should never reach this if execve succeeds
+//     return (0);  // Should never reach this if execve succeeds
 // }
-int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
+int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 {
 	char *command_path;
 	
@@ -179,5 +179,5 @@ int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 	}
 	// Should never reach here
 	free(command_path);
-	return 0;
+	return (0);
 }

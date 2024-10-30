@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 09:57:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		free_tab(char **paths);
 void		return_error(char *arg);
 
 //debbuuuugggg
-void eprintf(const char *format, ...);
-void debug_print_fds(const char* msg, t_command *cmd, t_io_fd *io);
+void	eprintf(const char *format, ...);
+void	debug_print_fds(const char* msg, t_command *cmd, t_io_fd *io);
 
 #endif

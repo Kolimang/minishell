@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 09:45:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_command	*init_hrdoc(t_list *cmds)
 	return (cmd);
 }
 
-int get_hrdoc(t_command *cmd, t_env *local_env)
+int	get_hrdoc(t_command *cmd, t_env *local_env)
 {
 	int		pipe_fd[2];
 	pid_t	pid;

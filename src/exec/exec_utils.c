@@ -29,7 +29,7 @@ void	init_io_fd(t_io_fd *io)
 	}
 }
 
-void reset_io(t_io_fd *io, t_command *cmd) {
+void	reset_io(t_io_fd *io, t_command *cmd) {
     // Reset stdin and stdout to their original values
     if (dup2(io->std_in, STDIN_FILENO) == -1) {
         perror("Failed to reset stdin");

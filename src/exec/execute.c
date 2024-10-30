@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 09:57:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/10/30 10:04:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 	{
 		cmd = tmp->content;
 		if (!tmp->next)
-			break;	
+			break ;	
 		if (pipe(io->pipe) == -1)
 			return (-1);
 		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
@@ -66,9 +66,9 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 		io->fd_in = create_child(cmd, io, l_env, g_env);
 		// set_fds(cmd, io);
 	wait_children(cmds);
-	if(cmd->prevpipe)
+	if (cmd->prevpipe)
 		close(io->fd_in);
-	if(io->pipe[0] != -1)
+	if (io->pipe[0] != -1)
 		close(io->pipe[1]);
    	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
@@ -80,7 +80,7 @@ int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	t_redir	*redir;
 
-	if(cmd->ls_redirs)
+	if (cmd->ls_redirs)
 		redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
 	if (cmd->pid == -1)
@@ -94,7 +94,7 @@ int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 		exit(1);
 	}
 	// Return the read end of the pipe for the next command
-	if(cmd->prevpipe)
+	if (cmd->prevpipe)
 		return (io->pipe[0]);
 	else
 		return (-1);

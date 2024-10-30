@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 12:55:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 10:06:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int get_infile(t_command *cmd, t_io_fd *io)
+int	get_infile(t_command *cmd, t_io_fd *io)
 {
     t_list *tmp;
     t_redir *redir;
@@ -28,7 +28,7 @@ int get_infile(t_command *cmd, t_io_fd *io)
     return (0);
 }
 
-int redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
+int	redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
 {
     if (redir->type == INFILE)
     {
@@ -84,7 +84,7 @@ int redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr)
 //     }
 //     return (0);
 // }
-int get_outfile(t_command *cmd, t_io_fd *io)
+int	get_outfile(t_command *cmd, t_io_fd *io)
 {
     t_list *tmp;
     t_redir *redir;
@@ -106,7 +106,7 @@ int get_outfile(t_command *cmd, t_io_fd *io)
     if (last_out_redir)
         return redir_outfile(cmd, last_out_redir, io);
         
-    return 0;
+    return (0);
 }
 
 // int redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
@@ -123,11 +123,11 @@ int get_outfile(t_command *cmd, t_io_fd *io)
 // 		io->fd_out = STDOUT_FILENO;
 //     if (io->fd_out == -1)
 //         return (handle_error("Failed to access outfile"));
-// 	if(!cmd->nextpipe && io->pipe[1] != -1)
+// 	if (!cmd->nextpipe && io->pipe[1] != -1)
 // 		close(io->pipe[1]);
 //     return (0);
 // }
-int redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
+int	redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 {
     dprintf(2, "Entering redir_outfile\n");
     
@@ -165,7 +165,7 @@ int redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 // {
 //     t_redir *redir = NULL;
 	
-// 	if(cmd && cmd->ls_redirs)
+// 	if (cmd && cmd->ls_redirs)
 // 		redir = cmd->ls_redirs->content;
 //     if (!cmd)
 //         return_error("Error: NULL command");
@@ -182,16 +182,16 @@ int redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 // 		if (get_outfile(cmd, io) == -1)
 //            return (-1);
 // 		//eprintf("%i\n", io->fd_out);
-// 		if(dup2(io->fd_out, STDOUT_FILENO) == -1)
+// 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 //             return (-1);
 // 	    close(io->fd_out);
 // 		//eprintf("%i\n", STDOUT_FILENO);
-// 		if(!cmd->nextpipe && io->pipe[1]!= -1)
+// 		if (!cmd->nextpipe && io->pipe[1]!= -1)
 // 			close(io->pipe[1]);
 //     }
-//     return 0;
+//     return (0);
 // }
-int set_fds(t_command *cmd, t_io_fd *io)
+int	set_fds(t_command *cmd, t_io_fd *io)
 {
     t_redir *redir = NULL;
     
@@ -244,7 +244,7 @@ int set_fds(t_command *cmd, t_io_fd *io)
         close(io->pipe[1]);
         io->pipe[1] = -1;
     }
-    return 0;
+    return (0);
 }
 
 
