@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 11:58:51 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:20:21 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void exec(t_list *cmds, t_env *local_env, char **global_env) {
         init_io_fd(io);
         cmd = cmds->content;
         if (cmds->next == NULL && !(cmd->args[0])) {
-            if (set_fds(cmd, io) == -1) {
+			if (set_fds(cmd, io) == -1) {
                 reset_io(io, cmd);
                 return;
             }
