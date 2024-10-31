@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/31 15:10:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:41:13 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,15 @@ int create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 	t_redir *redir;
 	if(cmd->ls_redirs)
 		redir = cmd->ls_redirs->content;
+   //eprintf("avant fork : %d\n" ,cmd->pid);
     cmd->pid = fork();
     if (cmd->pid == -1)
         return (handle_error("fork"));
-    if (cmd->pid == 0)
+   	//eprintf("apres fork : %d\n" ,cmd->pid);
+	if (cmd->pid == 0)
     {
 		if (set_fds(cmd, io) == -1)
-			 exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		if (cmd->args)
             exec_cmd(cmd, l_env, g_env);
         exit(g_ret_value);
@@ -100,14 +102,12 @@ void	wait_children(t_list *cmds)
     while (tmp)
     {
         cmd = tmp->content;
+		// printf("%d\n", cmd->pid);
 		waitpid(cmd->pid, &status, 0);
         if (WIFEXITED(status))
             g_ret_value = WEXITSTATUS(status);
         else if (WIFSIGNALED(status))
             g_ret_value = 128 + WTERMSIG(status);
-        tmp = tmp->next;
+		tmp = tmp->next;
     }
 }
-
-
-
