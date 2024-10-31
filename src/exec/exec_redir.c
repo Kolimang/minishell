@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/31 19:31:58 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:39:36 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,25 @@ int	has_redir_in(t_list *ls_redir)
 	t_list *redir = ls_redir;
 	while(redir)
 	{
-		t_redir *ikhan = redir->content;
-		printf("%s\n", ikhan->value);
 		if(is_redir_in(redir->content))
 			return(1);
 		redir = redir->next;
 	}
 	return(0);
 }
+
 int	has_redir_out(t_list *ls_redir)
 {
 	t_list *redir = ls_redir;
 	while(redir)
 	{
-		t_redir *ikhan = redir->content;
-		printf("%s\n", ikhan->value);
 		if(is_redir_out(redir->content))
 			return(1);
 		redir = redir->next;
 	}
 	return(0);
 }
+
 int	is_last_redir(t_list *ls_redir)
 {
 	t_list *tmp;
@@ -56,29 +54,14 @@ int	is_last_redir(t_list *ls_redir)
 	}
 	return(flag);
 }
+
 int	is_redir_in(t_redir *redir)
 {
 	if(redir->type == INFILE || redir->type == HERE_DOC)
 		return(1);
 	return(0);
 }
-// int redir_infile(t_command *cmd, t_io_fd *io)
-// {
-// 	t_list *tmp;
-// 	t_redir *redir;
 
-// 	tmp = cmd->ls_redirs;
-// 	while(tmp)
-// 	{
-// 		redir = tmp->content;
-// 		if(is_redir_in(redir))
-// 			if(get_infile(cmd, redir, io) == -1)
-// 				return(-1);
-// 		tmp = tmp->next;
-// 	}
-	
-// 	return(1);
-// }
 int redir_infile(t_command *cmd, t_io_fd *io)
 {
     t_list *tmp;
@@ -97,16 +80,13 @@ int redir_infile(t_command *cmd, t_io_fd *io)
         }
         tmp = tmp->next;
     }
-
-    // If no input redirection was found, set up default input
     if (!has_infile)
     {
         if (cmd->prevpipe)
-            io->fd_in = io->pipe[0];  // Read from previous pipe
+            io->fd_in = io->pipe[0];
         else
-            io->fd_in = STDIN_FILENO;  // Read from standard input
+            io->fd_in = STDIN_FILENO;
     }
-
     return (1);
 }
 int get_infile(t_command *cmd, t_redir *redir, t_io_fd *io)
@@ -126,7 +106,6 @@ int get_infile(t_command *cmd, t_redir *redir, t_io_fd *io)
             close(io->fd_in);
         io->fd_in = cmd->fd_hrdoc;
     }
-    
     if (redir->type == INFILE && is_last_redir(cmd->ls_redirs))
     {
         if (cmd->fd_hrdoc != -3)
@@ -164,9 +143,10 @@ int redir_outfile(t_command *cmd, t_io_fd *io)
 {
     t_list *tmp;
     t_redir *redir;
-    int has_outfile = 0;  // Flag to track if we found any output redirections
+    int has_outfile;  // Flag to track if we found any output redirections
 
-    tmp = cmd->ls_redirs;
+	has_outfile = 0;
+	tmp = cmd->ls_redirs;
     while (tmp)
     {
         redir = tmp->content;
@@ -178,7 +158,6 @@ int redir_outfile(t_command *cmd, t_io_fd *io)
         }
         tmp = tmp->next;
     }
-
     if (!has_outfile)
     {
         if (cmd->nextpipe)
@@ -186,9 +165,9 @@ int redir_outfile(t_command *cmd, t_io_fd *io)
         else
             io->fd_out = STDOUT_FILENO;  // Write to standard output
     }
-
     return (1);
 }
+
 int get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 {
     if (io->fd_out != -2)
@@ -209,61 +188,26 @@ int get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
     return (0);
 }
 
-// int	set_fds(t_command *cmd, t_io_fd *io) 
-// {
-//     t_redir *redir = NULL;
-//     int i = 0;
+int	set_fds(t_command *cmd, t_io_fd *io)
+{
+	t_list	*tmp;
 
-	
-//     if (!cmd)
-//         return_error("Error: NULL command");
-// 	//number of inputs
-// 	//number of outputs?
-//         // printf("Current redir type: %d\n", redir->type);
-		
-//         if (cmd->prevpipe || redir_infile(cmd, io)) 
-//         {
-			
-// 			if (dup2(io->fd_in, STDIN_FILENO) == -1)
-//     			return(-1);    
-// 			close(io->fd_in);
-// 		}
-//         // Handle outfile and append redirection
-//         if (cmd->nextpipe || redir_outfile(cmd, io)) 
-//         {
-//             if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-//                 return (-1);
-//             close(io->fd_out);
-//             if (io->pipe[1] != -1)
-//                 close(io->pipe[1]); 
-//         }
-//     return 0;
-// }
-int	set_fds(t_command *cmd, t_io_fd *io) 
-{
-	t_list *tmp = cmd->ls_redirs;
-	
-	if (cmd->prevpipe || has_redir_in(cmd->ls_redirs)) 
-{
-	redir_infile(cmd, io);
-    if (dup2(io->fd_in, STDIN_FILENO) == -1)
-    {
-        perror("dup2 failed for fd_in");
-        return (-1);    
-    }
-    close(io->fd_in);
-}
-	if (cmd->nextpipe || has_redir_out(cmd->ls_redirs)) 
-{
-    redir_outfile(cmd, io);
-	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-    {
-        perror("dup2 failed for fd_out");
-        return (-1);
-    }
-    close(io->fd_out);
-    if (io->pipe[1] != -1)
-        close(io->pipe[1]); 
-}
-return 0;
+	tmp = cmd->ls_redirs;
+	if (cmd->prevpipe || has_redir_in(cmd->ls_redirs))
+	{
+		redir_infile(cmd, io);
+		if (dup2(io->fd_in, STDIN_FILENO) == -1)
+			return (perror("dup2 failed for fd_in"), -1);
+		close(io->fd_in);
+	}
+	if (cmd->nextpipe || has_redir_out(cmd->ls_redirs))
+	{
+		redir_outfile(cmd, io);
+		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
+			return(perror("dup2 failed for fd_out"), -1);
+		close(io->fd_out);
+		if (io->pipe[1] != -1)
+			close(io->pipe[1]);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/31 19:29:28 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:33:47 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ t_list *mock_command_line(void)
     cmd->ls_redirs = ft_lstnew(redir_infile1);
     // ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_infile1));
 	// ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile2)); 
-	// ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc));// < infile1
+	ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc));// < infile1
 	ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile));
 	
 	t_command *cmd2 = malloc(sizeof(t_command));
@@ -319,8 +319,8 @@ t_list *mock_command_line(void)
     cmd2->fd_hrdoc = -3;
     cmd2->builtin = 0;
 
-	cmd2->ls_redirs = ft_lstnew(redir_outfile2);
-	// ft_lstadd_back(&(cmd2->ls_redirs),ft_lstnew(redir_heredoc2));
+	cmd2->ls_redirs = ft_lstnew(redir_infile1);
+	ft_lstadd_back(&(cmd2->ls_redirs),ft_lstnew(redir_heredoc2));
 	// ft_lstadd_back(&(cmd2->ls_redirs), ft_lstnew(redir_outfile2));
 
     t_list *commands = ft_lstnew(cmd);
