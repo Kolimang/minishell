@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 19:26:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:10:53 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,8 +294,8 @@ t_list *mock_command_line(void)
     redir_outfile->type = OUTFILE;
 
     t_redir *redir_outfile2 = malloc(sizeof(t_redir));
-    redir_outfile2->value = strdup("outfile2");
-    redir_outfile2->type = OUTFILE;
+    redir_outfile2->value = strdup("outfile");
+    redir_outfile2->type = APPEND;
 
     // Create the redirection list in the correct order
     cmd->ls_redirs = ft_lstnew(redir_infile1); // < infile
@@ -304,16 +304,17 @@ t_list *mock_command_line(void)
     // ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile));
 	// ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile2)); 
 	
-	// ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc2));// < infile1
-	ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_infile2));
+	ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc));// < infile1
+	// ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_infile2));
    // > outfile2
 	 ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile2));
+	 ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc2));
 	ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_infile3));
-    // Print types to verify
-    printf("Redirection Type: %d\n", redir_infile1->type);
-    printf("Redirection Type: %d\n", redir_infile2->type);
-    printf("Redirection Type: %d\n", redir_outfile2->type);
-    printf("Redirection Type: %d\n", redir_infile3->type);
+    // // Print types to verify
+    // printf("Redirection Type: %d\n", redir_infile1->type);
+    // printf("Redirection Type: %d\n", redir_infile2->type);
+    // printf("Redirection Type: %d\n", redir_outfile2->type);
+    // printf("Redirection Type: %d\n", redir_infile3->type);
 
     cmd->prevpipe = 0;
     cmd->nextpipe = 0;

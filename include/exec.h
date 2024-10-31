@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 17:40:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 13:50:45 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,20 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2], t_r
 int		parent_heredoc_process(t_command *cmd, pid_t pid, int pipe_fd[2]);
 
 //exec_redir
-int		redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr);
-int		dup_handle(int fd, int target_fd, const char *error_msg);
-int		get_infile(t_command *cmd,t_io_fd *io, t_list *redirs);
-int		get_outfile(t_command *cmd, t_io_fd *io, t_list *redirs);
-int		redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io);
-int		set_fds(t_command *cmd, t_io_fd *io);
+int	is_redir_in(t_redir *redir);
+int redir_infile(t_command *cmd, t_io_fd *io);
+int get_infile(t_command *cmd, t_redir *redir, t_io_fd *io);
+int	is_redir_out(t_redir *redir);
+int redir_outfile(t_command *cmd, t_io_fd *io);
+int get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io);
+int	set_fds(t_command *cmd, t_io_fd *io) ;
+
+// int		redir_infile(t_command *cmd, t_redir *redir, t_io_fd *io, t_list *curr);
+// int		dup_handle(int fd, int target_fd, const char *error_msg);
+// int		get_infile(t_command *cmd,t_io_fd *io, t_list *redirs);
+// int		get_outfile(t_command *cmd, t_io_fd *io, t_list *redirs);
+// int		redir_outfile(t_command *cmd, t_redir *redir, t_io_fd *io);
+// int		set_fds(t_command *cmd, t_io_fd *io);
 
 //exec_utils
 void	init_io_fd(t_io_fd *io);

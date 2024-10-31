@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 18:20:55 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:15:58 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	is_builtin(char *cmd)
 #include <string.h>
 #include <errno.h>
 
-// Helper function to locate command in PATH (find_command_path)
 char *find_command_path(const char *cmd, char **g_env)
 {
     char *path_env = getenv("PATH");  // Alternatively, parse `g_env` for PATH
@@ -124,29 +123,6 @@ char *find_command_path(const char *cmd, char **g_env)
     return NULL;  // Command not found in PATH
 }
 
-// Function to locate and execute the command
-// int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
-// {
-//     char *command_path;
-
-//     // Step 1: Search for the command in the environment paths
-//     command_path = find_command_path(cmd->args[0], g_env);
-// 	if (!command_path)
-//     {
-//         perror("Command not found");
-//         return -1;
-//     }
-
-//     // Step 2: Execute the command using execve
-//     if (execve(command_path, cmd->args, g_env) == -1)
-//     {
-//         perror("Execution failed");
-//         free(command_path);  // Clean up if execve fails
-//         exit(EXIT_FAILURE);
-//     }
-// 	 eprintf("here\n");
-//     return 0;  // Should never reach this if execve succeeds
-// }
 int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 {
     char *command_path;
@@ -162,12 +138,9 @@ int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
         return -1;
     }
 
-    // Verify file descriptors before execve
     int stdin_status = fcntl(STDIN_FILENO, F_GETFD);
     int stdout_status = fcntl(STDOUT_FILENO, F_GETFD);
     
-   
-	
     if (execve(command_path, cmd->args, g_env) == -1)
     {
         perror("Execution failed");
@@ -175,7 +148,6 @@ int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
         exit(EXIT_FAILURE);
     }
 
-    // Should never reach here
     free(command_path);
     return 0;
 }
