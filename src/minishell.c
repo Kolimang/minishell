@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/31 19:33:47 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:16:31 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	handle_commands (t_env *env, int *i, char **g_env)
 	
 	commands = mock_command_line();
 	t_command *cmd = commands->content;
-	
 	pre_exec(commands, env, g_env);
 	exec(commands, env, g_env);
 	// array_str_free(cmds, ft_arraylen(cmds));
@@ -301,10 +300,10 @@ t_list *mock_command_line(void)
     redir_outfile2->value = strdup("outfile2");
     redir_outfile2->type =OUTFILE;
 
-    cmd->ls_redirs = ft_lstnew(redir_infile1);
+    cmd->ls_redirs = ft_lstnew(redir_infile2);
     // ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_infile1));
 	// ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile2)); 
-	ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc));// < infile1
+	// ft_lstadd_back(&(cmd->ls_redirs),ft_lstnew(redir_heredoc));// < infile1
 	ft_lstadd_back(&(cmd->ls_redirs), ft_lstnew(redir_outfile));
 	
 	t_command *cmd2 = malloc(sizeof(t_command));
@@ -315,16 +314,31 @@ t_list *mock_command_line(void)
     cmd2->args[0] = strdup("cat");
     cmd2->args[1] = NULL;
 	cmd2->prevpipe = 1;
-    cmd2->nextpipe = 0;
+    cmd2->nextpipe = 1;
     cmd2->fd_hrdoc = -3;
     cmd2->builtin = 0;
 
-	cmd2->ls_redirs = ft_lstnew(redir_infile1);
+	cmd2->ls_redirs = ft_lstnew(redir_infile2);
 	ft_lstadd_back(&(cmd2->ls_redirs),ft_lstnew(redir_heredoc2));
 	// ft_lstadd_back(&(cmd2->ls_redirs), ft_lstnew(redir_outfile2));
+	t_command *cmd3 = malloc(sizeof(t_command));
+    cmd3->pid = 0;
+    cmd3->pid = 0;
+    cmd3->argc = 1;
+    cmd3->name = strdup("catw");
+    cmd3->args = malloc(sizeof(char *) * 2);
+    cmd3->args[0] = strdup("catw");
+    cmd3->args[1] = NULL;
+	cmd3->prevpipe = 1;
+    cmd3->nextpipe = 0;
+    cmd3->fd_hrdoc = -3;
+    cmd3->builtin = 1;
 
+	cmd3->ls_redirs = ft_lstnew(redir_outfile2);
+	// ft_lstadd_back(&(cmd3->ls_redirs),ft_lstnew(redir_outfile2));	
     t_list *commands = ft_lstnew(cmd);
 	ft_lstadd_back(&commands, ft_lstnew(cmd2));
+	ft_lstadd_back(&commands, ft_lstnew(cmd3));
     return commands;
 }
 
@@ -409,12 +423,13 @@ t_list *mock_command_line(void)
 
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*env;
+	t_env		*l_env;
 
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
-	env = init_env(o_env);
+	l_env = init_env(o_env);
+	
 	int i;
 	//set_shlvl(env);
 	// if (execute(env, o_env))
@@ -422,7 +437,8 @@ int	main(int ac, char **av, char **o_env)
 	// 	free_env(env);
 	// 	return (1);
 	// }
-	handle_commands(env, &i, o_env);
-	free_env(env);
+	handle_commands(l_env, &i, o_env);
+	free_env(l_env);
 	return (0);
 }
+	

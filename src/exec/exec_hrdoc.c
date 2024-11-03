@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/31 14:52:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:15:10 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int get_hrdoc(t_command *cmd, t_env *local_env)
     t_redir *redir;
 	t_list *redir_node;
 
- 	//pour test sans redirection check if cmd->ls_redir exists
 	redir_node = cmd->ls_redirs;
     while (redir_node)
         {
