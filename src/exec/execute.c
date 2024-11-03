@@ -6,47 +6,102 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/03 16:43:08 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:18:47 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //check EXIIIIIIT attention 
-void	exec(t_list *cmds, t_env *local_env, char **global_env) 
+
+
+t_io_fd	*initialize_io_fd(void)
+{
+	t_io_fd	*io;
+
+	io = malloc(sizeof(t_io_fd));
+	if (io)
+		init_io_fd(io);
+	return (io);
+}
+
+int	handle_single_command(t_command *cmd, t_io_fd *io)
+{
+	if (set_fds(cmd, io) == -1)
+	{
+		reset_io(io, cmd);
+		return (-1);
+	}
+	return (0);
+}
+
+void	execute_command(t_list *cmds, t_command *cmd, t_io_fd *io, t_env *local_env, char **global_env)
+{
+	cmd->builtin = is_builtin(cmd->args[0]);
+	if (cmd->builtin && !(cmds->next))
+		execute_nofork(cmd, io, local_env, global_env);
+	else
+		execute_fork(cmds, io, local_env, global_env);
+}
+
+void	exec(t_list *cmds, t_env *local_env, char **global_env)
 {
 	t_command	*cmd;
 	t_io_fd		*io;
 
-	t_env		*env = local_env;
+	if (!cmds)
+		return;
+
+	io = initialize_io_fd();
+	if (!io)
+		return_error("Failed to allocate memory for io_fd");
+
 	cmd = cmds->content;
-	if (cmds)
+	if (cmds->next == NULL && !(cmd->args[0]))
 	{
-		io = malloc(sizeof(t_io_fd));
-		if (!io)
-			return_error("Failed to allocate memory for io_fd");
-		init_io_fd(io);
-		cmd = cmds->content;
-		if (cmds->next == NULL && !(cmd->args[0]))
-		{
-			if (set_fds(cmd, io) == -1)
-			{
-				reset_io(io, cmd);
-				return ;
-			}
-		}
-		else
-		{
-			cmd->builtin = is_builtin(cmd->args[0]);
-			if (cmd->builtin && !(cmds->next))
-				execute_nofork(cmd, io, local_env, global_env);
-			else
-				execute_fork(cmds, io, local_env, global_env);
-		}
-		reset_io(io, cmd);
+		if (handle_single_command(cmd, io) == -1)
+			return ;
 	}
-	return ;
+	else
+	{
+		execute_command(cmds, cmd, io, local_env, global_env);
+	}
+	reset_io(io, cmd);
+	free(io);
 }
+// void	exec(t_list *cmds, t_env *local_env, char **global_env) 
+// {
+// 	t_command	*cmd;
+// 	t_io_fd		*io;
+
+// 	if (cmds)
+// 	{
+// 		io = malloc(sizeof(t_io_fd));
+// 		if (!io)
+// 			return_error("Failed to allocate memory for io_fd");
+// 		init_io_fd(io);
+// 		cmd = cmds->content;
+// 		if (cmds->next == NULL && !(cmd->args[0]))
+// 		{
+// 			if (set_fds(cmd, io) == -1)
+// 			{
+// 				reset_io(io, cmd);
+// 				return ;
+// 			}
+// 		}
+// 		else
+// 		{
+// 			cmd->builtin = is_builtin(cmd->args[0]);
+// 			if (cmd->builtin && !(cmds->next))
+// 				execute_nofork(cmd, io, local_env, global_env);
+// 			else
+// 				execute_fork(cmds, io, local_env, global_env);
+// 		}
+// 		reset_io(io, cmd);
+// 	}
+// 	return ;
+// }
+
 
 int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 {

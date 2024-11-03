@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/03 16:16:31 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:19:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,9 +325,9 @@ t_list *mock_command_line(void)
     cmd3->pid = 0;
     cmd3->pid = 0;
     cmd3->argc = 1;
-    cmd3->name = strdup("catw");
+    cmd3->name = strdup("cat");
     cmd3->args = malloc(sizeof(char *) * 2);
-    cmd3->args[0] = strdup("catw");
+    cmd3->args[0] = strdup("cat");
     cmd3->args[1] = NULL;
 	cmd3->prevpipe = 1;
     cmd3->nextpipe = 0;
