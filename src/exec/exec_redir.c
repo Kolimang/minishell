@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/03 19:06:32 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:12:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	get_infile(t_command *cmd, t_redir *redir, t_io_fd *io)
 {
 	if (redir->type == INFILE)
 	{
-		eprintf("hereinfile\n");
 		if (io->fd_in > 0)
 			close(io->fd_in);
 		io->fd_in = open(redir->value, O_RDONLY);
@@ -164,10 +163,7 @@ int	get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	if (io->fd_out != -2)
 		close(io->fd_out);
 	if (redir->type == OUTFILE)
-	{
-		eprintf("the outfile : %s\n", redir->value);
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	}
 	else if (redir->type == APPEND)
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (io->fd_out == -1)
