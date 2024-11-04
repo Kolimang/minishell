@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:49:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 13:56:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 }
 
 //check EXIIIIIIT attention 
-void	exec(t_list *cmds, t_env *local_env, char **global_env)
+void	exec(t_list *cmds, t_env **local_env, char **global_env)
 {
 	t_command	*cmd;
 	t_io_fd		*io;
@@ -55,7 +55,7 @@ void	exec(t_list *cmds, t_env *local_env, char **global_env)
 		if (cmd->builtin && !(cmds->next))
 			execute_nofork(cmd, io, local_env, global_env);
 		else
-			execute_fork(cmds, io, local_env, global_env);
+			execute_fork(cmds, io, *local_env, global_env);
 	}
 	reset_io(io, cmd);
 	free(io);
