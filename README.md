@@ -4,3 +4,6 @@
 ** Questions en suspens / Points a garder en tête **
 1. L'historique doit-il perdurer quand on quitte minishell puis le relance ?
 2. expand $SHLVL en fonction du niveau de fork
+
+
+Latest update 3.11 is in final exec :))

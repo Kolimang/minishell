@@ -6,44 +6,59 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 10:04:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 13:49:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//check EXIIIIIIT attention 
+t_io_fd	*initialize_io_fd(void)
+{
+	t_io_fd	*io;
 
-void	exec(t_list *cmds, t_env **local_env, char **global_env) {
+	io = malloc(sizeof(t_io_fd));
+	if (io)
+		init_io_fd(io);
+	return (io);
+}
+
+int	handle_single_command(t_command *cmd, t_io_fd *io)
+{
+	if (set_fds(cmd, io) == -1)
+	{
+		reset_io(io, cmd);
+		return (-1);
+	}
+	return (0);
+}
+
+//check EXIIIIIIT attention 
+void	exec(t_list *cmds, t_env *local_env, char **global_env)
+{
 	t_command	*cmd;
 	t_io_fd		*io;
 
+	if (!cmds)
+		return ;
+	io = initialize_io_fd();
+	if (!io)
+		return_error("Failed to allocate memory for io_fd");
 	cmd = cmds->content;
-	if (cmds)
+	if (cmds->next == NULL && !(cmd->args[0]))
 	{
-		io = malloc(sizeof(t_io_fd));
-		if (!io)
-			return_error("Failed to allocate memory for io_fd");
-		init_io_fd(io);
-		cmd = cmds->content;
-		if (cmds->next == NULL && !(cmd->args[0])) {
-			if (set_fds(cmd, io) == -1)
-			{
-				reset_io(io, cmd);
-				return ;
-			}
-		}
-		else
-		{
-			cmd->builtin = is_builtin(cmd->args[0]);
-			if (cmd->builtin && !(cmds->next))
-				execute_nofork(cmd, io, local_env, global_env);
-			else 
-				execute_fork(cmds, io, *local_env, global_env);
-		}
-		reset_io(io, cmd);  // Reset std_in and std_out after execution
+		if (handle_single_command(cmd, io) == -1)
+			return ;
 	}
-	return ;
+	else
+	{
+		cmd->builtin = is_builtin(cmd->args[0]);
+		if (cmd->builtin && !(cmds->next))
+			execute_nofork(cmd, io, local_env, global_env);
+		else
+			execute_fork(cmds, io, local_env, global_env);
+	}
+	reset_io(io, cmd);
+	free(io);
 }
 
 int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
@@ -56,27 +71,19 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 	{
 		cmd = tmp->content;
 		if (!tmp->next)
-			break ;	
+			break ;
 		if (pipe(io->pipe) == -1)
 			return (-1);
-		io->fd_in = create_child(cmd, io, l_env, g_env); // return smh fd_in updated with read end of pipe
+		create_child(cmd, io, l_env, g_env);
 		tmp = tmp->next;
 	}
-	if (tmp) // creating last child
-		io->fd_in = create_child(cmd, io, l_env, g_env);
-		// set_fds(cmd, io);
+	if (tmp)
+		create_child(cmd, io, l_env, g_env);
 	wait_children(cmds);
-	if (cmd->prevpipe)
-		close(io->fd_in);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-   	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
-	close(io->fd_out); 	//recupere le code d'erreur final
 	return (0);
 }
 
-int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
+void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	t_redir	*redir;
 
@@ -84,26 +91,31 @@ int	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 		redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
 	if (cmd->pid == -1)
-		return (handle_error("fork"));
-	if (cmd->pid == 0)  // Child process
+	{
+		handle_error("fork");
+		return ;
+	}
+	if (cmd->pid == 0)
 	{
 		if (set_fds(cmd, io) == -1)
-			 exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		if (cmd->args)
 			exec_cmd(cmd, l_env, g_env);
-		exit(1);
+		exit(g_ret_value);
 	}
-	// Return the read end of the pipe for the next command
 	if (cmd->prevpipe)
-		return (io->pipe[0]);
-	else
-		return (-1);
+		close(io->fd_in);
+	if (io->pipe[0] != -1)
+		close(io->pipe[1]);
+	if (cmd->fd_hrdoc != -3)
+		close(cmd->fd_hrdoc);
+	io->fd_in = io->pipe[0];
 }
 
 void	wait_children(t_list *cmds)
 {
 	t_command	*cmd;
-	t_list		*tmp;	
+	t_list		*tmp;
 	int			status;
 
 	tmp = cmds;

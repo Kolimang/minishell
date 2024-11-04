@@ -6,50 +6,29 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 15:01:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 13:53:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
-// {
-// 	//void or int ?? what about g_ret_val??
-// 	int	ret_value;
-// 	//check redirection
-// 	if (set_fds(cmd, io)== -1)
-// 	{	
-// 		reset_io(io, cmd);
-// 		return (-1);
-// 	}
-// 	//execute cmd 
-// 	ret_value = exec_builtin(cmd, l_env, g_env);
-// 	if (cmd->fd_hrdoc != -3)
-// 		close(cmd->fd_hrdoc);
-// 	return (ret_value);
-// }
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env)
+int	execute_nofork(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	int	ret_value;
 
-	// Set up redirections
 	if (set_fds(cmd, io) == -1)
-	{
-		//reset_io(io, cmd);
 		return (-1);
-	}
-	// Execute builtin
 	ret_value = exec_builtin(cmd, l_env, g_env);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
+// res = -1; --> Error: unknown built-in command
 int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env)
 {
 	int	res;
-	//revoir les inputs pour chaque function
-	//revoir si les builtin renvoie une valeur d erreur 
+
 	if (cmd->builtin == 1)
 		res = ft_echo(cmd->args);
 	else if (cmd->builtin == 2)
@@ -57,21 +36,20 @@ int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env)
 	else if (cmd->builtin == 3)
 		res = ft_pwd(cmd->args, *l_env);
 	else if (cmd->builtin == 4)
-		res = ft_export(cmd->args, l_env);
+		res = ft_export(cmd->args, *l_env);
 	else if (cmd->builtin == 5)
-		res = ft_unset(cmd->args, l_env);
+		res = ft_unset(cmd->args, *l_env);
 	else if (cmd->builtin == 6)
-		res = ft_env(cmd->args, *l_env);
+		res = ft_env(cmd->args, l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmd->args, *l_env, 0);
+	   res = ft_exit(cmd->args, l_env, 0);
 	else
-		res = -1; // Error: unknown built-in command
+		res = -1;
 	return (res);
 }
 
 int	is_builtin(char *cmd)
 {
-	//check EXIIIIIIT attention 
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
@@ -89,95 +67,103 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
-#include <errno.h>
-
-// Helper function to locate command in PATH (find_command_path)
-char *find_command_path(const char *cmd, char **g_env)
+char	**get_paths(t_env *tmp)
 {
-	char *path_env = getenv("PATH");  // Alternatively, parse `g_env` for PATH
-	char *path_dup = strdup(path_env);
-	char *dir = strtok(path_dup, ":");
-	char *full_path = NULL;
+	char	**new_path;
+	t_env	*l_env;
 
-	// Check each directory in PATH
-	while (dir)
+	l_env = tmp;
+	new_path = NULL;
+	while (l_env)
 	{
-		// Allocate memory for full path (directory + command)
-		full_path = malloc(strlen(dir) + strlen(cmd) + 2);  // +1 for '/' and +1 for '\0'
-		sprintf(full_path, "%s/%s", dir, cmd);
-
-		// Check if the command exists in this directory
-		if (access(full_path, X_OK) == 0)
+		if (ft_strnstr(l_env->var_name, "PATH", 4))
 		{
-			free(path_dup);
-			return full_path;  // Command found
+			new_path = ft_split(l_env->var_val, ':');
+			break ;
 		}
-
-		free(full_path);  // Clean up and check next directory
-		dir = strtok(NULL, ":");
+		l_env = l_env->next;
 	}
-	free(path_dup);
-	return NULL;  // Command not found in PATH
+	if (!new_path)
+		handle_error("$PATH not found");
+	return (new_path);
 }
 
-// Function to locate and execute the command
-// int exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
-// {
-//     char *command_path;
-
-//     // Step 1: Search for the command in the environment paths
-//     command_path = find_command_path(cmd->args[0], g_env);
-// 	if (!command_path)
-//     {
-//         perror("Command not found");
-//         return -1;
-//     }
-
-//     // Step 2: Execute the command using execve
-//     if (execve(command_path, cmd->args, g_env) == -1)
-//     {
-//         perror("Execution failed");
-//         free(command_path);  // Clean up if execve fails
-//         exit(EXIT_FAILURE);
-//     }
-// 	 eprintf("here\n");
-//     return (0);  // Should never reach this if execve succeeds
-// }
-int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
+char	*get_full_path(char **full_cmd, t_env *l_env)
 {
-	char *command_path;
-	
-	//dprintf(2, "Executing command: %s\n", cmd->args[0]);
-	//debug_print_fds("Before exec_cmd", cmd, NULL);
+	char	*full_path;
+	char	**paths;
+	int		i;
 
-	// Search for command in PATH
-	command_path = find_command_path(cmd->args[0], g_env);
-	if (!command_path)
+	i = 0;
+	paths = get_paths(l_env);
+	if (!paths)
+		return (NULL);
+	full_cmd[0] = ft_strjoin("/", full_cmd[0]);
+	while (paths[i])
 	{
-		dprintf(2, "Command not found: %s\n", cmd->args[0]);
-		return (-1);
+		full_path = ft_strjoin(paths[i], full_cmd[0]);
+		if (access(full_path, F_OK | X_OK) == 0)
+		{
+			free_tab(paths);
+			return (full_path);
+		}
+		free(full_path);
+		i++;
 	}
+	free_tab(paths);
+	free(full_cmd[0]);
+	return (NULL);
+}
 
-	// Verify file descriptors before execve
-	int stdin_status = fcntl(STDIN_FILENO, F_GETFD);
-	int stdout_status = fcntl(STDOUT_FILENO, F_GETFD);
-	
-	//dprintf(2, "Before execve - stdin_status: %d, stdout_status: %d\n", 
-	//		stdin_status, stdout_status);
-	
-	if (execve(command_path, cmd->args, g_env) == -1)
+void	free_tab(char **paths)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i])
 	{
-		perror("Execution failed");
-		free(command_path);
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
+}
+
+char	*find_path(char **full_cmd, char *cmd)
+{
+	if (access(full_cmd[0], F_OK | X_OK) == 0)
+		return (full_cmd[0]);
+	else
+	{
+		perror(cmd);
 		exit(EXIT_FAILURE);
 	}
-	// Should never reach here
-	free(command_path);
+	return (NULL);
+}
+
+int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
+{
+	char	*pathname;
+	char	**full_cmd;
+
+	full_cmd = ft_split(cmd->args[0], ' ');
+	if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
+		pathname = find_path(full_cmd, cmd->args[0]);
+	else
+		pathname = get_full_path(full_cmd, l_env);
+	if (!pathname)
+	{
+		ft_putstr_fd("Command not found\n", 2);
+		g_ret_value = 127;
+		exit(EXIT_FAILURE);
+	}
+	if (execve(pathname, full_cmd, g_env) == -1)
+	{
+		perror("Execution failure");
+		g_ret_value = 127;
+		free_tab(full_cmd);
+		free(pathname);
+		exit(EXIT_FAILURE);
+	}
+	free_tab(full_cmd);
 	return (0);
 }

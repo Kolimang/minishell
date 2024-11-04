@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/04 11:57:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 13:29:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 typedef enum e_tok_type
 {
-	INFILE = 0,
+	INFILE = 1,
 	HERE_DOC,
 	OUTFILE,
 	APPEND,	
