@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 15:09:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 12:27:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 //     cmd3->args = malloc(sizeof(char *) * 2);
 //     cmd3->args[0] = strdup("grep");
 //     cmd3->args[1] = "hey";
-    
+	
 //     // // Add redirection for cmd3
 //     redir = malloc(sizeof(t_redir));
 
@@ -283,61 +283,61 @@ int	execute(t_env **env, char**g_env)
 //env = test environment
 t_list *mock_command_line(void)
 {
-    // First command: cat with multiple heredocs
-    t_command *cmd1 = malloc(sizeof(t_command));
-    cmd1->pid = 0;
-    cmd1->argc = 1;
-    cmd1->name = strdup("cat");
-    cmd1->args = malloc(sizeof(char *) * 2);
-    cmd1->args[0] = strdup("cat");
-    cmd1->args[1] = NULL;
+	// First command: cat with multiple heredocs
+	t_command *cmd1 = malloc(sizeof(t_command));
+	cmd1->pid = 0;
+	cmd1->argc = 1;
+	cmd1->name = strdup("cat");
+	cmd1->args = malloc(sizeof(char *) * 2);
+	cmd1->args[0] = strdup("cat");
+	cmd1->args[1] = NULL;
 
-    // Set up multiple heredocs for cmd1
-    t_redir *heredoc_redir1 = malloc(sizeof(t_redir));
-    heredoc_redir1->value = strdup("EOF");
-    heredoc_redir1->type = HERE_DOC;
+	// Set up multiple heredocs for cmd1
+	t_redir *heredoc_redir1 = malloc(sizeof(t_redir));
+	heredoc_redir1->value = strdup("EOF");
+	heredoc_redir1->type = HERE_DOC;
 
-    // t_redir *heredoc_redir2 = malloc(sizeof(t_redir));
-    // heredoc_redir2->value = strdup("EOF1");
-    // heredoc_redir2->type = HERE_DOC;
+	// t_redir *heredoc_redir2 = malloc(sizeof(t_redir));
+	// heredoc_redir2->value = strdup("EOF1");
+	// heredoc_redir2->type = HERE_DOC;
 
-    // t_redir *heredoc_redir3 = malloc(sizeof(t_redir));
-    // heredoc_redir3->value = strdup("EOF2");
-    // heredoc_redir3->type = HERE_DOC;
+	// t_redir *heredoc_redir3 = malloc(sizeof(t_redir));
+	// heredoc_redir3->value = strdup("EOF2");
+	// heredoc_redir3->type = HERE_DOC;
 
-    // Attach heredoc redirections to cmd1
-    cmd1->ls_redirs = ft_lstnew(heredoc_redir1);
-    // ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir2));
-    // ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir3));
+	// Attach heredoc redirections to cmd1
+	cmd1->ls_redirs = ft_lstnew(heredoc_redir1);
+	// ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir2));
+	// ft_lstadd_back(&(cmd1->ls_redirs), ft_lstnew(heredoc_redir3));
 
-    cmd1->prevpipe = 0;    // No previous pipe
-    cmd1->nextpipe = 1;    // No next pipe
-    cmd1->fd_hrdoc = -3;
-    cmd1->builtin = 0;
+	cmd1->prevpipe = 0;    // No previous pipe
+	cmd1->nextpipe = 1;    // No next pipe
+	cmd1->fd_hrdoc = -3;
+	cmd1->builtin = 0;
 
 	//second cmd
 	t_command *cmd2 = malloc(sizeof(t_command));
-    cmd2->pid = 0;
-    cmd2->argc = 1;
-    cmd2->name = strdup("cat");
-    cmd2->args = malloc(sizeof(char *) * 2);
-    cmd2->args[0] = strdup("cat");
-    cmd2->args[1] = NULL;
+	cmd2->pid = 0;
+	cmd2->argc = 1;
+	cmd2->name = strdup("cat");
+	cmd2->args = malloc(sizeof(char *) * 2);
+	cmd2->args[0] = strdup("cat");
+	cmd2->args[1] = NULL;
 
-    // Set up multiple heredocs for cmd1
-    t_redir *heredoc_redir4 = malloc(sizeof(t_redir));
-    // heredoc_redir4->value = strdup("EOF");
-    // heredoc_redir4->type = HERE_DOC;
+	// Set up multiple heredocs for cmd1
+	t_redir *heredoc_redir4 = malloc(sizeof(t_redir));
+	// heredoc_redir4->value = strdup("EOF");
+	// heredoc_redir4->type = HERE_DOC;
 	heredoc_redir4->value = strdup("EOF");
-    heredoc_redir4->type = HERE_DOC;
+	heredoc_redir4->type = HERE_DOC;
 	cmd2->prevpipe = 0;    // No previous pipe
-    cmd2->nextpipe = 0;    // No next pipe
-    cmd2->fd_hrdoc = -3;
-    cmd2->builtin = 0;
+	cmd2->nextpipe = 0;    // No next pipe
+	cmd2->fd_hrdoc = -3;
+	cmd2->builtin = 0;
   	
 	t_redir *redir1 = malloc(sizeof(t_redir));
-    redir1->value = strdup("output");
-    redir1->type = OUTFILE;
+	redir1->value = strdup("output");
+	redir1->type = OUTFILE;
 	cmd2->ls_redirs = ft_lstnew(redir1);
 	ft_lstnew(redir1);
 	//ft_lstadd_back(&(cmd2->ls_redirs), ft_lstnew(redir1));
@@ -345,22 +345,21 @@ t_list *mock_command_line(void)
 	t_list *commands = ft_lstnew(cmd2);
 	
 	// ft_lstadd_back(&commands, ft_lstnew(cmd2));
-    return commands;
+	return commands;
 }
 
 int	main(int ac, char **av, char **o_env)
 {
 	t_env	*env;
-	struct termios	*test;
 
-	//tcgetattr(4, test);
+
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
 	init_signals();
 	env = init_env(o_env);
-	if (!env)
-		return (1);
+	if (!env || change_term_attr() == 1)
+		return (EXIT_FAILURE);
 	//set_shlvl(env);
 	if (execute(&env, o_env) == EXIT_FAILURE)
 	{

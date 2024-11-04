@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/25 20:08:24 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:57:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ typedef enum e_tok_type
 
 typedef enum e_builtin_type
 {
-	ECHO = 1,
-	CD,
-	PWD,
-	EXPORT,	
-	UNSET,
-	ENV,
-	EXIT,
+	B_ECHO = 1,
+	B_CD,
+	B_PWD,
+	B_EXPORT,	
+	B_UNSET,
+	B_ENV,
+	B_EXIT,
 }	t_builtin_type;
 
 typedef struct s_io_fd

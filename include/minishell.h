@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 16:13:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 11:54:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-//# include <termios.h>
+# include <termios.h>
 # include "../lib/libft/libft.h"
 
 // Include project headers
