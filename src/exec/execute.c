@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/03 19:10:37 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:37:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,11 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 
 void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 {
-	t_redir	*redir;
-
-	if (cmd->ls_redirs)
-		redir = cmd->ls_redirs->content;
+	//set parent signal 
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 	{
+		g_ret_value = 99; //idk whats the ret val lol 
 		handle_error("fork");
 		return ;
 	}
@@ -99,7 +97,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 	{
 		if (set_fds(cmd, io) == -1)
 			exit(EXIT_FAILURE);
-		if (cmd->args)
+		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, l_env, g_env);
 		exit(g_ret_value);
 	}

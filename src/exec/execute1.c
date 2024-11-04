@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/03 16:33:53 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:21:49 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 	{
 		perror("Execution failure");
 		g_ret_value = 127;
-		free_tab(full_cmd);
+		//free_tab(full_cmd);
 		free(pathname);
 		exit(EXIT_FAILURE);
 	}
