@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:56:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:30:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	exec(t_list *cmds, t_env **local_env, char **global_env)
 	if (!io)
 		return_error("Failed to allocate memory for io_fd");
 	cmd = cmds->content;
+	//printf("%s\n", cmd->args[0]);
 	if (cmds->next == NULL && !(cmd->args[0]))
 	{
 		if (handle_single_command(cmd, io) == -1)
@@ -99,7 +100,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 	{
 		if (set_fds(cmd, io) == -1)
 			exit(EXIT_FAILURE);
-		if (cmd->args)
+		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, l_env, g_env);
 		exit(g_ret_value);
 	}
