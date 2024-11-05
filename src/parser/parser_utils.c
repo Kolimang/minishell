@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 18:34:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 11:20:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ t_command	*check_cmd(t_command *command)
 	return (command);
 }
 
-// Function used for debugging
-// Used to do `ft_printf("index            : %d\n", command->index);`
-// but command->index removed from t_command struct
+// Used for debugging
 void	ft_print_command(t_command *command)
 {
 	ft_printf("argc             : %d\n", command->argc);
@@ -32,8 +30,6 @@ void	ft_print_command(t_command *command)
 	ft_printarray(command->args, ' ');
 	ft_printf("redir            : ");
 	ft_print_redir(command);
-	if (!command->ls_redirs)
-		ft_printf("(null)");
 	ft_printf("\n");
 	ft_printf("prevpipe         : %d\n", command->prevpipe);
 	ft_printf("nextpipe         : %d\n", command->nextpipe);
@@ -44,14 +40,22 @@ void	ft_print_redir(t_command *command)
 {
 	t_redir	*redir;
 	t_list	*rdlist;
+	t_list	*initial;
 
+	initial = command->ls_redirs;
+	if (!initial)
+	{
+		ft_printf("(null)");
+		return ;
+	}
 	while (command->ls_redirs)
 	{
 		rdlist = command->ls_redirs;
 		redir = rdlist->content;
-		ft_printf("%s (%d)", redir->value, redir->type);
+		ft_printf("%s (type:%d)", redir->value, redir->type);
 		if (command->ls_redirs->next)
 			ft_printf(", ");
 		command->ls_redirs = command->ls_redirs->next;
 	}
+	command->ls_redirs = initial;
 }
