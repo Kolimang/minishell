@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 14:40:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:33:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	**get_args(t_list *ls_lexemes, int argc)
 }
 
 // Turn lexemes-list into commands-list
-// Used to set `command->index = id;` but command->index removed from struct
 t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 {
 	t_command	*command;
@@ -70,7 +69,10 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 	{
 		ret = handle_lexemes(&ls_lexemes, command, 1);
 		if (ret)
+		{
+			g_ret_value = ret;
 			return (NULL);
+		}
 		ls_lexemes = ls_lexemes->next;
 	}
 	command->args = get_args(start, command->argc);
@@ -87,51 +89,38 @@ int	is_redir_symbol(t_lexeme *node)
 	return (0);
 }
 
+void	set_as_arg(t_command *command, t_lexeme *node)
+{
+	command->argc += 1;
+	node->type = 2;
+}
+
 int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
 
 	node = (*ls_lexemes)->content;
-	if (is_redir_symbol(node) && !(*ls_lexemes)->next)
-	{
-		//g_ret_value = 258;
+	if (!is_redir_symbol(node))
+		return (set_as_arg(command, node), 0);
+	if (!(*ls_lexemes)->next)
 		return (merror("minishell", NULL,
-			"syntax error near unexpected token `newline\'", 258));
-	}
-	else if (is_redir_symbol(node) &&
-		is_redir_symbol((*ls_lexemes)->next->content))
-	{
-		nextnode = (*ls_lexemes)->next->content;
-		//g_ret_value = 258;
+				"syntax error near unexpected token `newline\'", 258));
+	nextnode = (*ls_lexemes)->next->content;
+	if (is_redir_symbol(nextnode))
 		return (merror("minishell: syntax error near unexpected token",
-			NULL, nextnode->value, 258));
-	}
-	else if (is_redir_symbol(node) && ft_strlen(node->value) > 2)
+				NULL, nextnode->value, 258));
+	if (ft_strlen(node->value) > 2)
 		return (merror("minishell",
-			NULL, "syntax error (bad redirection symbol)", 258));
-	if ((*ls_lexemes)->next && (*ls_lexemes)->next->content)
-	{
-		nextnode = (*ls_lexemes)->next->content;
-		if (ft_strncmp(node->value, ">>", 2) == 0
-			|| ft_strncmp(node->value, "<<", 2) == 0
-			|| ft_strncmp(node->value, "<", 1) == 0
-			|| ft_strncmp(node->value, ">", 1) == 0)
-			flag = 0;
-		if (ft_strncmp(node->value, ">>", 3) == 0)
-			ft_add_redir(ls_lexemes, command, nextnode->value, APPEND);
-		else if (ft_strncmp(node->value, "<<", 3) == 0)
-			ft_add_redir(ls_lexemes, command, nextnode->value, HERE_DOC);
-		else if (ft_strncmp(node->value, "<", 2) == 0)
-			ft_add_redir(ls_lexemes, command, nextnode->value, INFILE);
-		else if (ft_strncmp(node->value, ">", 2) == 0)
-			ft_add_redir(ls_lexemes, command, nextnode->value, OUTFILE);
-	}
-	if (flag)
-	{
-		command->argc += 1;
-		node->type = 2;
-	}
+				NULL, "syntax error (bad redirection symbol)", 258));
+	if (ft_strncmp(node->value, ">>", 3) == 0)
+		ft_add_redir(ls_lexemes, command, nextnode->value, APPEND);
+	else if (ft_strncmp(node->value, "<<", 3) == 0)
+		ft_add_redir(ls_lexemes, command, nextnode->value, HERE_DOC);
+	else if (ft_strncmp(node->value, "<", 2) == 0)
+		ft_add_redir(ls_lexemes, command, nextnode->value, INFILE);
+	else if (ft_strncmp(node->value, ">", 2) == 0)
+		ft_add_redir(ls_lexemes, command, nextnode->value, OUTFILE);
 	return (0);
 }
 

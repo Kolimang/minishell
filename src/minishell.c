@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 14:26:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 15:52:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_commands(char **cmds, int *i)
 			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
 			g_ret_value = 258;
 			*i = -1;
-			return (EXIT_FAILURE);
+			return (258);
 		}
 		(*i)++;
 	}
@@ -64,6 +64,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 	*i = 0;
 	while (cmds[*i])
 	{
+		g_ret_value = 0; // DEBUG
 		lexemes = ft_tokenize(cmds[*i]);
 		if (!lexemes)
 			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
@@ -71,8 +72,10 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 		if (DEBUG) // DEBUG
 			ft_print_lexemes(lexemes, 2, ' ', "Lexemes: ");
 		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
+		// if (DEBUG) // DEBUG
+		// 	printf("g_ret_value: %d\n", g_ret_value);
 		if (!command)
-			return (g_ret_value);
+			return (g_ret_value); // DEBUG
 		if (!commands)
 			commands = ft_lstnew(command);
 		else
