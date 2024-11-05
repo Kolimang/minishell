@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/05 12:44:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:56:49 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 		pathname = get_full_path(full_cmd, l_env);
 	if (!pathname)
 	{
-		ft_putstr_fd("command not found\n", 2);
+		merror(cmd->args[0], NULL, "command not found", 127);
 		exit(127);
 	}
 	real_full = build_full_cmd(pathname, cmd);

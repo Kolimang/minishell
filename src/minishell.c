@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 12:38:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:59:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 			commands = ft_lstnew(command);
 		else
 			ft_lstadd_back(&commands, ft_lstnew(command));
-		// DEBUG
-		ft_print_command(command);
+		if (DEBUG) // DEBUG
+			ft_print_command(command);
 		(*i)++;
 	}
 	pre_exec(commands, *env, g_env);
