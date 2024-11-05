@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/04 16:28:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:24:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 	t_command	*command;
 	t_list		*start;
 	int			i;
+	int			ret;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
@@ -67,19 +68,45 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 	start = ls_lexemes;
 	while (ls_lexemes)
 	{
-		handle_lexemes(&ls_lexemes, command, 1);
+		ret = handle_lexemes(&ls_lexemes, command, 1);
+		if (ret)
+			return (NULL);
 		ls_lexemes = ls_lexemes->next;
 	}
 	command->args = get_args(start, command->argc);
 	return (check_cmd(command));
 }
 
-void	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
+int	is_redir_symbol(t_lexeme *node)
+{
+	if (ft_strncmp(node->value, ">>", 3) == 0
+	|| ft_strncmp(node->value, "<<", 3) == 0
+	|| ft_strncmp(node->value, "<", 2) == 0
+	|| ft_strncmp(node->value, ">", 2) == 0)
+		return (1);
+	return (0);
+}
+
+int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
 
 	node = (*ls_lexemes)->content;
+	if (is_redir_symbol(node) && !(*ls_lexemes)->next)
+	{
+		g_ret_value = 258;
+		return (merror("minishell", NULL,
+			"syntax error near unexpected token `newline\'", 258));
+	}
+	else if (is_redir_symbol(node) &&
+		is_redir_symbol((*ls_lexemes)->next->content))
+	{
+		nextnode = (*ls_lexemes)->next->content;
+		g_ret_value = 258;
+		return (merror("minishell: syntax error near unexpected token",
+			NULL, nextnode->value, 258));
+	}
 	if ((*ls_lexemes)->next && (*ls_lexemes)->next->content)
 	{
 		nextnode = (*ls_lexemes)->next->content;
@@ -100,6 +127,7 @@ void	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 		command->argc += 1;
 		node->type = 2;
 	}
+	return (0);
 }
 
 void	ft_add_redir(t_list **ls_lexemes, t_command *cmd, char *value, int type)
