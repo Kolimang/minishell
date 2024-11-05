@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 13:58:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 14:16:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 			flag = 0;
 		if (ft_strncmp(node->value, ">>", 2) == 0)
 			ft_add_redir(ls_lexemes, command, nextnode->value, APPEND);
+		else if (ft_strncmp(node->value, "<<", 2) == 0)
+			ft_add_redir(ls_lexemes, command, nextnode->value, HERE_DOC);
 		else if (ft_strncmp(node->value, "<", 1) == 0)
 			ft_add_redir(ls_lexemes, command, nextnode->value, INFILE);
 		else if (ft_strncmp(node->value, ">", 1) == 0)
