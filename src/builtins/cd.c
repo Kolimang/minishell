@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 10:10:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:23:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 static int	go(char *dest_path, char *curr_path, t_env *env)
 {
 	if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
-		return (ft_putstr_fd("cd: No such file or directory\n", 2), 1);
-	else if (access(dest_path, R_OK) != 0)
-		return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
+		return (merror("cd", dest_path, "No such file or directory", 1));
+	else if (access(dest_path, X_OK) != 0)
+		return (merror("cd", dest_path, "Permission denied", 1));
 	else
 	{
 		curr_path = getcwd(NULL, 0);
