@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:47:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:13:34 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	reset_io(t_io_fd *io, t_command *cmd)
 int	handle_error(const char *msg)
 {
 	g_ret_value = EXIT_FAILURE;
+	write(2, "minishell: ", 12);
 	perror(msg);
 	return (-1);
 }

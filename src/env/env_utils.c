@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 17:12:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:05:11 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	set_shlvl(t_env *env)
 	val = ft_atoi(current);
 	tmp = ft_itoa(val + 1);
 	cmd = malloc (sizeof(char *) * 3);
+	//ft_export
 	//to finish once export is coded
 	free(cmd);
 	free(tmp);

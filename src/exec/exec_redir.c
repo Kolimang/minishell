@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:44:13 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:12:24 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	get_infile(t_command *cmd, t_redir *redir, t_io_fd *io)
 			close(io->fd_in);
 		io->fd_in = open(redir->value, O_RDONLY);
 		if (io->fd_in == -1)
-			return (handle_error("Failed to open infile"));
+			return (handle_error(redir->value));
 	}
 	else if (redir->type == HERE_DOC)
 	{
@@ -167,7 +167,7 @@ int	get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	else if (redir->type == APPEND)
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (io->fd_out == -1)
-		return (handle_error("Failed to access outfile"));
+		return (handle_error(redir->value));
 	if (!cmd->nextpipe && io->pipe[1] != -1)
 		close(io->pipe[1]);
 	return (0);
@@ -180,14 +180,16 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 	tmp = cmd->ls_redirs;
 	if (cmd->prevpipe || has_redir_in(cmd->ls_redirs))
 	{
-		redir_infile(cmd, io);
+		if(redir_infile(cmd, io) == -1)
+			return(-1);
 		if (dup2(io->fd_in, STDIN_FILENO) == -1)
 			return (perror("dup2 failed for fd_in"), -1);
 		close(io->fd_in);
 	}
 	if (cmd->nextpipe || has_redir_out(cmd->ls_redirs))
 	{
-		redir_outfile(cmd, io);
+		if(redir_outfile(cmd, io) == -1)
+			return(-1);
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 			return (perror("dup2 failed for fd_out"), -1);
 		close(io->fd_out);
