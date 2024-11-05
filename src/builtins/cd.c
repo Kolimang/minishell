@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 13:23:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:34:30 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,11 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 	return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
 }
 
-static int	go(char *dest_path, char *curr_path, t_env *env)
+static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 {
-	if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
+	if (allowedoption && dest_path[0] == '-')
+		return (merror("cd", dest_path, "no option supported for cd", 1));
+	else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
 		return (merror("cd", dest_path, "No such file or directory", 1));
 	else if (access(dest_path, X_OK) != 0)
 		return (merror("cd", dest_path, "Permission denied", 1));
@@ -154,9 +156,9 @@ int	ft_cd(char **args, t_env *env)
 		|| (!ft_strncmp(args[1], "--", 3) && !ft_strncmp(args[2], "-", 2)))
 		res = go_prev(dest_path, curr_path, env);
 	else if (!ft_strncmp(args[1], "--", 3))
-		res = go(args[2], curr_path, env);
+		res = go(args[2], curr_path, env, 0);
 	else
-		res = go(args[1], curr_path, env);
+		res = go(args[1], curr_path, env, 1);
 	if (res > 0)
 		return (1);
 	return (0);
