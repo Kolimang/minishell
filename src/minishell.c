@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/04 16:30:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 12:05:18 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,7 +375,7 @@ int	main(int ac, char **av, char **o_env)
 	l_env = init_env(o_env);
 	if (!l_env || change_term_attr() == 1)
 		return (EXIT_FAILURE);
-	//set_shlvl(env);
+	//set_shlvl(l_env);
 	if (execute(&l_env, o_env) == EXIT_FAILURE)
 	{
 		free_env(l_env);
