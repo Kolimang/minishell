@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 15:38:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 16:46:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	g_ret_value;
 # define DQ 34
 
 # define VERSION "v0.4"
-# define DEBUG 1
+# define DEBUG 0
 
 int	check_commands(char **cmds, int *i);
 int	handle_commands (t_env **env, char **cmds, int *i, char **g_env);
