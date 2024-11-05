@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 12:24:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/05 13:58:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 
 int	is_redir_symbol(t_lexeme *node)
 {
-	if (ft_strncmp(node->value, ">>", 3) == 0
-	|| ft_strncmp(node->value, "<<", 3) == 0
-	|| ft_strncmp(node->value, "<", 2) == 0
-	|| ft_strncmp(node->value, ">", 2) == 0)
+	if (ft_strncmp(node->value, ">>", 2) == 0
+	|| ft_strncmp(node->value, "<<", 2) == 0
+	|| ft_strncmp(node->value, "<", 1) == 0
+	|| ft_strncmp(node->value, ">", 1) == 0)
 		return (1);
 	return (0);
 }
@@ -95,7 +95,7 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 	node = (*ls_lexemes)->content;
 	if (is_redir_symbol(node) && !(*ls_lexemes)->next)
 	{
-		g_ret_value = 258;
+		//g_ret_value = 258;
 		return (merror("minishell", NULL,
 			"syntax error near unexpected token `newline\'", 258));
 	}
@@ -103,7 +103,7 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 		is_redir_symbol((*ls_lexemes)->next->content))
 	{
 		nextnode = (*ls_lexemes)->next->content;
-		g_ret_value = 258;
+		//g_ret_value = 258;
 		return (merror("minishell: syntax error near unexpected token",
 			NULL, nextnode->value, 258));
 	}
