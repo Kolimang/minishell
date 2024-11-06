@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 10:10:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 11:11:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ int	ft_pwd(char **args, t_env *env)
 	t_env	*head;
 
 	if (args && args[1])
-		return (ft_putstr_fd("pwd: too many arguments\n", 2), 1);
+		return (merror(args[0], NULL, "too many arguments", 1));
 	if (!env)
-		return (1);
+		return (set_exit_status(1));
 	head = env;
 	while (head)
 	{
 		if (ft_strncmp(head->var_name, "PWD", 4) == 0)
 		{
 			ft_printf("%s\n", head->var_val);
-			return (0);
+			return (set_exit_status(0));
 		}
 		head = head->next;
 	}
@@ -37,5 +37,5 @@ int	ft_pwd(char **args, t_env *env)
 		ft_printf("%s\n", path);
 		free(path);
 	}
-	return (0);
+	return (set_exit_status(0));
 }

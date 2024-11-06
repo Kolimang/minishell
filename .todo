@@ -12,6 +12,16 @@
 
 ## To do :
 
+
+
+-> segfault quand `echo A | cat > file`  puis ensuite  `$?`
+-> verifier exit codes
+-> rework fonction merror en fonctin du type d'erreur
+-> proteger ft_unset() si pas d'environnement
+-> signaux sans sigaction ?
+-> valgrind sur Linux sans readline
+-> mettre le dollar du prompt en couleur qd exit-status precedent en erreur ?
+
 [WiP] minishell.c -> execute()
 		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
 				commence ou se termine par un pipe (auquel cas `syntax error`)
@@ -79,6 +89,10 @@
 
 [ ] Testing :
 		\_ [ ] echo echo test
+		\_ [ ] echo ()
+		\_ [ ] echo -(
+		\_ [ ] echo --(
+		\_ [ ] echo () hey
 		\_ [ ] $VAR (where 'VAR' has been previously exported with value "echo test")
 		\_ [ ] CAS CHIANTS !!! 
 		\_ [v] echo hello >1 >>2 >3

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 13:34:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 11:03:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,6 @@ int	ft_cd(char **args, t_env *env)
 		res = go(args[1], curr_path, env, 1);
 	if (res > 0)
 		return (1);
-	return (0);
+	ft_printf("cd return 0\n");//DEBUG
+	return (set_exit_status(0));
 }

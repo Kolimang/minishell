@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/30 12:57:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 11:07:41 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	ft_exit(char **args, t_env *env, int eof)
 	array_str_free(args, ft_arraylen(args));
 	free_env(env);
 	// free command(s) ?
-	exit(g_ret_value);
+	exit(g_ret_value); // Check if I should really return that value
 }

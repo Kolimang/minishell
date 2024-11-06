@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/24 15:41:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 11:06:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ int	merror(char *cmd, char *arg, char *msg, int value)
 		write(2, msg, ft_strlen(msg));
 	}
 	write(2, "\n", 1);
-	return (value);
+	return (set_exit_status(value));
 }
