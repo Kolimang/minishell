@@ -55,7 +55,7 @@ int	ft_check_input_cmd(char **cmdref);
 //testlina
 //t_list *mock_command_line(void);
 
-// added by jp - Comment out on Linux Mint
-int	rl_replace_line(char *, int);
+// Commented out bcz conflict with different prototype found in PATH on Ubuntu/Mint
+//int	rl_replace_line(char *, int);
 
 #endif
