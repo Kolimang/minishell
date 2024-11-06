@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 11:02:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 15:48:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_commands(t_list *ls_commands);
 void	free_lists(t_list *ls_lexemes, t_list *ls_commands);
 
 // errors.c
-int	merror(char *cmd, char *arg, char *msg, int value);
+int	merror(char *cmd, char *arg, char *arg_q, int type);
 
 // utils2.c
 int	set_exit_status(int exitcode);

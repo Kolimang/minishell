@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 13:02:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 16:39:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	ft_check_input_cmd(char **cmdref)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
 		if (cmd[0] == '|' || last == '|')
-			return (merror(NULL, NULL,
-				"syntax error near unexpected token `|'", 258));
+			return (merror(NULL, NULL, "|", 258)); //"syntax error near unexpected token `|'", 258)); //return (merror(NULL, NULL, "syntax error near unexpected token `|'", 258));
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
@@ -254,9 +253,9 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 
 int	execute(t_env **env, char**g_env)
 {
-	int			i;
-	char		*cmd;
-	char		**cmds;
+	int		i;
+	char	*cmd;
+	char	**cmds;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
 	while (1)
@@ -280,6 +279,7 @@ int	execute(t_env **env, char**g_env)
 	}
 	return (EXIT_SUCCESS);
 }
+
 /*
 t_list *mock_command_line(void)
 {

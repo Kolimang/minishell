@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/06 15:19:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 17:11:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,7 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 	else
 		pathname = get_full_path(full_cmd, l_env);
 	if (!pathname)
-	{
-		merror(cmd->args[0], NULL, "command not found", 127);
-		exit(127);
-	}
+		exit(merror(cmd->args[0], NULL, NULL, 127));
 	real_full = build_full_cmd(pathname, cmd);
 	full = ft_split(real_full, ' ');
 	free(real_full);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 15:14:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 15:49:35 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 	if (allowedoption && dest_path[0] == '-')
 		return (merror("cd", dest_path, "no option supported for cd", 1));
 	else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
-		return (merror("cd", dest_path, "No such file or directory", 1));
+		return (merror("cd", dest_path, NULL, 1));  //DEBUG
 	else if (access(dest_path, X_OK) != 0)
 		return (merror("cd", dest_path, "Permission denied", 1));
 	else
