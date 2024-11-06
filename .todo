@@ -13,8 +13,10 @@
 ## To do :
 
 -> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
+-> export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
 -> revoir pertinence du pointeur &i dans execute ?
 -> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
+	-> pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
 -> rework fonction merror en fonctin du type d'erreur
 -> proteger ft_unset() si pas d'environnement
 -> signaux sans sigaction ?
