@@ -12,10 +12,9 @@
 
 ## To do :
 
-
-
--> segfault quand `echo A | cat > file`  puis ensuite  `$?`
--> verifier exit codes
+-> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
+-> revoir pertinence du pointeur &i dans execute ?
+-> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
 -> rework fonction merror en fonctin du type d'erreur
 -> proteger ft_unset() si pas d'environnement
 -> signaux sans sigaction ?

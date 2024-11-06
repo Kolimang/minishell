@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 11:42:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 13:02:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ int	ft_check_input_cmd(char **cmdref)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
 		if (cmd[0] == '|' || last == '|')
-		{
-			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-			g_ret_value = 258;
-			return (EXIT_FAILURE);
-		}
+			return (merror(NULL, NULL,
+				"syntax error near unexpected token `|'", 258));
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
@@ -44,10 +41,9 @@ int	check_commands(char **cmds, int *i)
 			return (EXIT_FAILURE);
 		if (cmds[*i] && (cmds[*i][0] == '\0'))
 		{
-			ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-			g_ret_value = 258;
 			*i = -1;
-			return (258);
+			return (merror(NULL, NULL,
+				"syntax error near unexpected token `|'", 258));
 		}
 		(*i)++;
 	}
@@ -274,6 +270,7 @@ int	execute(t_env **env, char**g_env)
 			cmds = ft_split(cmd, '|');
 			if (!cmds)
 				return (EXIT_FAILURE);
+			i = 0;
 			if (check_commands(cmds, &i) == EXIT_SUCCESS)
 				handle_commands(env, cmds, &i, g_env);
 			else
