@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/05 12:56:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/06 15:19:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,31 @@ void	free_tab(char **paths)
 	free(paths);
 }
 
+// char	*find_path(char **full_cmd, char *cmd)
+// {
+// 	if (access(full_cmd[0], F_OK | X_OK) == 0)
+// 		return (full_cmd[0]);
+// 	else
+// 	{
+// 		perror(cmd);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	return (NULL);
+// }
+
 char	*find_path(char **full_cmd, char *cmd)
 {
 	if (access(full_cmd[0], F_OK | X_OK) == 0)
 		return (full_cmd[0]);
-	else
+	else if (access(full_cmd[0], F_OK) != 0)
 	{
 		perror(cmd);
-		exit(EXIT_FAILURE);
+		exit(127);
+	}
+	else if (access(full_cmd[0], X_OK) != 0)
+	{
+		perror(cmd);
+		exit(126);
 	}
 	return (NULL);
 }
