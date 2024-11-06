@@ -51,7 +51,7 @@ void	ft_print_list(t_list *list, char *title)
 		printf("%s\n", title);
 	while (list)
 	{
-		printf("%s\n", list->content);
+		printf("%s\n", (char *)list->content);
 		list = list->next;
 	}
 }
