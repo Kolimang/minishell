@@ -12,6 +12,9 @@
 
 #include <minishell.h>
 
+// Global var definition (declaration in header file)
+int		g_ret_value;
+
 int	ft_check_input_cmd(char **cmdref)
 {
 	char	last;
@@ -369,7 +372,7 @@ t_list *mock_command_line(void)
 
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*l_env;
+	t_env	*l_env;
 
 	(void)ac;
 	(void)av;

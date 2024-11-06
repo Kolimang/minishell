@@ -38,14 +38,14 @@
 # include "exec.h"
 # include "builtin.h"
 
-// Global exit status
-int	g_ret_value;
-
 # define SQ 39
 # define DQ 34
 
 # define VERSION "v0.4"
 # define DEBUG 0
+
+// Global variable declaration (cannot be defined here, just declared)
+extern int	g_ret_value;
 
 int	check_commands(char **cmds, int *i);
 int	handle_commands (t_env **env, char **cmds, int *i, char **g_env);
@@ -55,7 +55,7 @@ int	ft_check_input_cmd(char **cmdref);
 //testlina
 //t_list *mock_command_line(void);
 
-// added by jp
-int	rl_replace_line(char *, int);
+// added by jp - Comment out on Linux Mint
+//int	rl_replace_line(char *, int);
 
 #endif
