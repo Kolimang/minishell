@@ -82,7 +82,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 	pre_exec(commands, *env, g_env);
 	exec(commands, env, g_env);
 	// array_str_free(cmds, ft_arraylen(cmds));
-	// free_lists(lexemes, commands);
+	free_lists(lexemes, NULL);// free_lists(lexemes, commands); 
 	return (0);
 }
 // t_list *mock_command_line(void)
@@ -261,7 +261,8 @@ int	execute(t_env **env, char**g_env)
 	char	**cmds;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	while (1)
+	int j = -1;//DEBUG VALGRIND
+	while (++j < 2)//while (1) //DEBUG VALGRIND
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
