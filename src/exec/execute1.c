@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/06 15:19:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 10:48:43 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ char	**get_paths(t_env *tmp)
 		}
 		l_env = l_env->next;
 	}
-	if (!new_path)
-		handle_error("$PATH not found");
+	// if (!new_path)
+	// 	handle_error("$PATH not found");
 	return (new_path);
 }
 
