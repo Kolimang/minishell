@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/18 16:15:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 12:02:22 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
 		if (tmp[*i + 1] == DQ)
 			dup_word(res, tmp, i);
 		else if (tmp[*i + 1] == SQ)
-		{
-			handle_sq(res, tmp, i, start);
-		}
+			handle_sq(res, tmp, i, start + 1);
 		return ;
 	}
 	else if (tmp[*i] == '$')
