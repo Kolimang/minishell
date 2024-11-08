@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 16:39:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 13:58:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,10 +385,10 @@ int	main(int ac, char **av, char **o_env)
 	//set_shlvl(l_env);
 	if (execute(&l_env, o_env) == EXIT_FAILURE)
 	{
-		free_env(l_env);
+		free_env(&l_env);
 		return (EXIT_FAILURE);
 	}
 	//handle_commands(env, &i, o_env);
-	free_env(l_env);
+	free_env(&l_env);
 	return (EXIT_SUCCESS);
 }
