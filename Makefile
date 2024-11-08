@@ -6,32 +6,34 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/30 16:54:20 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/08 16:01:41 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------- VARIABLES ------------------------------------
 
 ROOT_DIR  := $(realpath .)
+INC_DIR   := $(ROOT_DIR)/include
 
 SRC_DIR   := src/
 OBJ_DIR   := build/
 
 NAME      := minishell
 
+CC		  := cc
+
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
-    CC				:=	cc -g3 -fno-omit-frame-pointer -Wno-unused-result
-	INC_DIR			:= $(ROOT_DIR)/include_linux
+	INC_DIR2		:= $(ROOT_DIR)/include_linux
+    CFLAGS			+=	-Wno-unused-result
 	LIBREADLFLAGS	:= -lreadline
 else
-    CC				:=	cc -g3 -fno-omit-frame-pointer
-	INC_DIR			:= $(ROOT_DIR)/include
+	INC_DIR2		:= $(ROOT_DIR)/include_macos
 
 #	Paths to readline library (installed with brew)
 	ifeq ($(USER), jrichir)
-		RL_H    	:= /Users/jrichir/.brew/opt/readline/include
 #	    RL_H    	+= /Users/jrichir/mybin/opt/readline/include
+		RL_H    	:= /Users/jrichir/.brew/opt/readline/include
 		RL_LIB  	:= /Users/jrichir/mybin/opt/readline/lib
 	else
 		RL_LIB  	:= /Users/lboumahd/.brew/opt/readline/lib
@@ -40,7 +42,7 @@ else
 	LIBREADLFLAGS 	:= -I$(RL_H) -L$(RL_LIB) -lreadline
 endif
 
-CFLAGS    := -I$(INC_DIR)
+CFLAGS    := -I$(INC_DIR) -I$(INC_DIR2) -g3 -fno-omit-frame-pointer
 # CFLAGS    := -I$(INC_DIR) -g -fsanitize=address
 # CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fsanitize=address
 # CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g
