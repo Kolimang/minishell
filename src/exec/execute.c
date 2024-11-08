@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 15:30:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 11:52:58 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	exec(t_list *cmds, t_env **local_env, char **global_env)
 	if (!io)
 		return_error("Failed to allocate memory for io_fd");
 	cmd = cmds->content;
-	//printf("%s\n", cmd->args[0]);
 	if (cmds->next == NULL && !(cmd->args[0]))
 	{
 		if (handle_single_command(cmd, io) == -1)
@@ -66,7 +65,6 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 {
 	t_command	*cmd;
 	t_list		*tmp;
-
 	tmp = cmds;
 	while (tmp)
 	{
