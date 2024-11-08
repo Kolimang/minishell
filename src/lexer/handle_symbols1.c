@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/28 18:22:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 16:30:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
 		data->bool_delimit_tok = 1;
 		if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
 		{
-			printf("ERROR: unclosed quote.\n");
-			return (1);
+			printf("minishell: syntax error: unclosed quote\n");
+			return (set_exit_status(258));
 		}
 	}
 	return (0);
