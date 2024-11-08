@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/29 10:35:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 12:39:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		add_env_var(t_env **env, const char *var_name, const char *var_val,
 			int index);
 char	*get_env_val(t_env *env, const char *var_name);
 t_env	*create_env_node(const char *var_name, const char *var_val, int index);
-void	free_env(t_env *env);
+void	free_env(t_env **env);
 void	set_shlvl(t_env *env);
 // jp
 int	update_env(char *name, char *value, t_env **env);

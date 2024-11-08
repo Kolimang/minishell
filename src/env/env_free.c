@@ -6,16 +6,18 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 10:53:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 12:38:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_env(t_env *env)
+void	free_env(t_env **envdp)
 {
 	t_env	*temp;
+	t_env	*env;
 
+	env = *envdp;
 	while (env)
 	{
 		temp = env;
