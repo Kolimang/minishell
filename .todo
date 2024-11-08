@@ -12,15 +12,35 @@
 
 ## To do :
 
+
+
 -> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
+
 -> export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
+
 -> revoir pertinence du pointeur &i dans execute ?
+
 -> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
 	-> pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
+
 -> rework fonction merror en fonctin du type d'erreur
+
 -> proteger ft_unset() si pas d'environnement
+
 -> signaux sans sigaction ?
+
+-> valgrind sur MacOS sans readline
+https://github.com/mdabir1203/Valgrind_Suppression_MacOs
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./minishell
+
 -> valgrind sur Linux sans readline
+https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
+valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minimalraw.log ./minimal
+cat ./minimalraw.log | ./parse_valgrind_suppressions.sh > minimal.supp
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=msh.supp -s ./minishell
+echo hey guys | cat > file
+
 -> mettre le dollar du prompt en couleur qd exit-status precedent en erreur ?
 
 [WiP] minishell.c -> execute()
@@ -117,5 +137,5 @@
 		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
 		\_ [ ] Remove wildcards from Makefile and reference all file names
 		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
-		\_ [ ] Remove unnecessary files/folder from remote (.todo, /test, ...)
+		\_ [ ] Remove unnecessary files/folder from remote (.todo, /test, valgrind's ignore_readline.supp, ...)
 		\_ [ ] Final norm check / leak check

@@ -48,9 +48,14 @@
 # ------------------------------- VARIABLES ------------------------------------
 
 NAME := gnl.a
-CC := cc -g2 -O1 -fno-omit-frame-pointer
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+    CC			:=	cc -g3 -fno-omit-frame-pointer -Wno-unused-result
+else
+    CC			:=	cc -g3 -fno-omit-frame-pointer
+endif
 CFLAGS := -Wall -Wextra -Werror
-INC = -I include
+INC := -I include
 AR := ar -cr
 RM := rm -f
 

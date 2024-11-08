@@ -6,11 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 13:02:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 13:58:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// Global var definition (declaration in header file)
+int		g_ret_value;
 
 int	ft_check_input_cmd(char **cmdref)
 {
@@ -24,8 +27,7 @@ int	ft_check_input_cmd(char **cmdref)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
 		if (cmd[0] == '|' || last == '|')
-			return (merror(NULL, NULL,
-				"syntax error near unexpected token `|'", 258));
+			return (merror(NULL, NULL, "|", 258)); //"syntax error near unexpected token `|'", 258)); //return (merror(NULL, NULL, "syntax error near unexpected token `|'", 258));
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
@@ -80,7 +82,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 	pre_exec(commands, *env, g_env);
 	exec(commands, env, g_env);
 	// array_str_free(cmds, ft_arraylen(cmds));
-	// free_lists(lexemes, commands);
+	free_lists(lexemes, NULL);// free_lists(lexemes, commands); 
 	return (0);
 }
 // t_list *mock_command_line(void)
@@ -254,12 +256,13 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 
 int	execute(t_env **env, char**g_env)
 {
-	int			i;
-	char		*cmd;
-	char		**cmds;
+	int		i;
+	char	*cmd;
+	char	**cmds;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	while (1)
+	int j = -1;//DEBUG VALGRIND
+	while (++j < 2)//while (1) //DEBUG VALGRIND
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
@@ -280,6 +283,7 @@ int	execute(t_env **env, char**g_env)
 	}
 	return (EXIT_SUCCESS);
 }
+
 /*
 t_list *mock_command_line(void)
 {
@@ -369,7 +373,7 @@ t_list *mock_command_line(void)
 
 int	main(int ac, char **av, char **o_env)
 {
-	t_env		*l_env;
+	t_env	*l_env;
 
 	(void)ac;
 	(void)av;
@@ -381,10 +385,10 @@ int	main(int ac, char **av, char **o_env)
 	//set_shlvl(l_env);
 	if (execute(&l_env, o_env) == EXIT_FAILURE)
 	{
-		free_env(l_env);
+		free_env(&l_env);
 		return (EXIT_FAILURE);
 	}
 	//handle_commands(env, &i, o_env);
-	free_env(l_env);
+	free_env(&l_env);
 	return (EXIT_SUCCESS);
 }

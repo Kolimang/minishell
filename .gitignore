@@ -9,6 +9,8 @@ minishell
 
 # Files
 out*
+#   Valgrind suppression file
+#ignore_readline.supp 
 
 # Hidden files
 .DS_Store

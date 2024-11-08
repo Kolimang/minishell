@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/08 12:39:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/04 14:00:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-typedef struct s_env
-{
-	char			*var_name;
-	char			*var_val;
-	int				index;
-	struct s_env	*next;
-}	t_env;
+// echo.c
+int		ft_echo(char **args);
 
-t_env	*init_env(char **original_env);
-int		add_env_var(t_env **env, const char *var_name, const char *var_val,
-			int index);
-char	*get_env_val(t_env *env, const char *var_name);
-t_env	*create_env_node(const char *var_name, const char *var_val, int index);
-void	free_env(t_env **env);
-void	set_shlvl(t_env *env);
-// jp
-int	update_env(char *name, char *value, t_env **env);
+// cd.c
+int		ft_cd(char **args, t_env *env);
+
+// pwd.c
+int		ft_pwd(char **args, t_env *env);
+
+// export.c
+int		ft_export(char **args, t_env **env);
+int		ft_env(char **args, t_env *env);
+int		print_env(t_env *env, int mode);
+
+// env.c
+void	sort_env(t_env **env);
+
+// unset.c
+int		ft_unset(char **args, t_env **env);
+
+// exit.c
+int		ft_exit(char **args, t_env *env, int eof);
 
 #endif

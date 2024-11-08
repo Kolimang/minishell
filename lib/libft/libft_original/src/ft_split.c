@@ -16,11 +16,9 @@ static int	ft_count_strings(char const *s, char c)
 {
 	unsigned int	i;
 	unsigned int	str_count;
-	char			*str;
 
 	str_count = 0;
 	i = 0;
-	str = (char *)s;
 	while (s[i])
 	{
 		while (s[i] == c)

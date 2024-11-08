@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_free.c                                         :+:      :+:    :+:   */
+/*   sighandle.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/08 12:38:34 by jrichir          ###   ########.fr       */
+/*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
+/*   Updated: 2024/11/04 12:28:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef SIGHANDLE_H
+# define SIGHANDLE_H
 
-void	free_env(t_env **envdp)
-{
-	t_env	*temp;
-	t_env	*env;
+int		change_term_attr(void);
+void	init_signals(void);
+void	ft_sighandler(int signum);
 
-	env = *envdp;
-	while (env)
-	{
-		temp = env;
-		env = env->next;
-		free(temp->var_name);
-		temp->var_name = NULL;
-		free(temp->var_val);
-		temp->var_val = NULL;
-		free(temp);
-		temp = NULL;
-	}
-}
+#endif

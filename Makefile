@@ -13,21 +13,31 @@
 # ------------------------------- VARIABLES ------------------------------------
 
 ROOT_DIR  := $(realpath .)
-INC_DIR   := $(ROOT_DIR)/include
+
 SRC_DIR   := src/
 OBJ_DIR   := build/
 
 NAME      := minishell
-CC        := cc -g2 -O1 -fno-omit-frame-pointer
 
-# Paths to readline library (installed with brew)
-ifeq ($(USER), jrichir)
-	RL_H    := /Users/jrichir/.brew/opt/readline/include
-#    RL_H    += /Users/jrichir/mybin/opt/readline/include
-	RL_LIB  := /Users/jrichir/mybin/opt/readline/lib
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+    CC				:=	cc -g3 -fno-omit-frame-pointer -Wno-unused-result
+	INC_DIR			:= $(ROOT_DIR)/include_linux
+	LIBREADLFLAGS	:= -lreadline
 else
-	RL_LIB  := /Users/lboumahd/.brew/opt/readline/lib
-	RL_H    := /Users/lboumahd/.brew/opt/readline/include
+    CC				:=	cc -g3 -fno-omit-frame-pointer
+	INC_DIR			:= $(ROOT_DIR)/include
+
+#	Paths to readline library (installed with brew)
+	ifeq ($(USER), jrichir)
+		RL_H    	:= /Users/jrichir/.brew/opt/readline/include
+#	    RL_H    	+= /Users/jrichir/mybin/opt/readline/include
+		RL_LIB  	:= /Users/jrichir/mybin/opt/readline/lib
+	else
+		RL_LIB  	:= /Users/lboumahd/.brew/opt/readline/lib
+		RL_H    	:= /Users/lboumahd/.brew/opt/readline/include
+	endif
+	LIBREADLFLAGS 	:= -I$(RL_H) -L$(RL_LIB) -lreadline
 endif
 
 CFLAGS    := -I$(INC_DIR)
@@ -36,8 +46,6 @@ CFLAGS    := -I$(INC_DIR)
 # CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g
 
 LIBFT     := lib/libft/libft.a
-
-LIBREADLFLAGS := -I$(RL_H) -L$(RL_LIB) -lreadline
 
 RM        := rm -f
 
