@@ -16,18 +16,20 @@
 
 -> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
 
+-> [done] proteger ft_unset() si pas d'environnement
+
 -> export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
 
 -> revoir pertinence du pointeur &i dans execute ?
 
 -> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
-	-> pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
+	-> [this one is fixed] pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
 
--> rework fonction merror en fonctin du type d'erreur
-
--> proteger ft_unset() si pas d'environnement
+-> rework fonction merror en fonction du type d'erreur
 
 -> signaux sans sigaction ?
+
+-> mettre le dollar du prompt en couleur qd exit-status precedent en erreur ?
 
 -> valgrind sur MacOS sans readline
 https://github.com/mdabir1203/Valgrind_Suppression_MacOs
@@ -38,10 +40,8 @@ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressi
 https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
 valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minimalraw.log ./minimal
 cat ./minimalraw.log | ./parse_valgrind_suppressions.sh > minimal.supp
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=msh.supp -s ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh.supp -s ./minishell
 echo hey guys | cat > file
-
--> mettre le dollar du prompt en couleur qd exit-status precedent en erreur ?
 
 [WiP] minishell.c -> execute()
 		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
