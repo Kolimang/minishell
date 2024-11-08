@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/08 15:11:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/08 15:16:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ int	ft_exit(char **args, t_env *env, int eof)
 		g_ret_value = 255;
 		merror(args[0], args[1], "numeric argument required", 1);
 	}
-	if (args && args[1] && arg_is_number(args[1]))
-	{
+	if (args && args[1] && arg_is_number(args[1])
+		&& ft_atoi(args[1] >= 0))
 		g_ret_value = ft_atoi(args[1]) % 256;
-	}
 	else if (argc > 2)
 	{
 		g_ret_value = 1;
