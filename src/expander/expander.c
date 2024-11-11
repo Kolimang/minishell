@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/08 12:02:22 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:15:28 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,11 @@ void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
 	// exit(EXIT_FAILURE);
 }
 
-void	handle_nq(char **res, char *tmp, int *i, t_env *new_env,
-			t_lexeme *lex)
+void	handle_nq(char **res, char *tmp, int *i, t_env *new_env)
 {
 	int	start;
 
 	start = *i;
-	(void)lex;
 	if (tmp[*i] == '$' && (tmp[*i + 1] == DQ || tmp[*i + 1] == SQ))
 	{
 		if (tmp[*i + 1] == DQ)
@@ -108,7 +106,7 @@ char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
 		else if (tmp[i] == DQ)
 			handle_dq(&res, tmp, &i, new_env);
 		else
-			handle_nq(&res, tmp, &i, new_env, lex); //si on rajoute lexer apr. parser
+			handle_nq(&res, tmp, &i, new_env); //si on rajoute lexer apr. parser
 	}
 	final_res = ft_strjoin(final_res, res);
 	free(res);
