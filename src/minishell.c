@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/08 13:58:55 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/11 10:31:27 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,8 +261,8 @@ int	execute(t_env **env, char**g_env)
 	char	**cmds;
 
 	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
-	int j = -1;//DEBUG VALGRIND
-	while (++j < 2)//while (1) //DEBUG VALGRIND
+	//int j = -1;//DEBUG VALGRIND
+	while(1) //DEBUG VALGRIND
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)

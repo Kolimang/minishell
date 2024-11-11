@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/08 15:26:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/11 12:03:50 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ char	**get_paths(t_env *tmp)
 		}
 		l_env = l_env->next;
 	}
-	// if (!new_path)
-	// 	handle_error("$PATH not found");
 	return (new_path);
 }
 
@@ -129,18 +127,6 @@ void	free_tab(char **paths)
 	}
 	free(paths);
 }
-
-// char	*find_path(char **full_cmd, char *cmd)
-// {
-// 	if (access(full_cmd[0], F_OK | X_OK) == 0)
-// 		return (full_cmd[0]);
-// 	else
-// 	{
-// 		perror(cmd);
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	return (NULL);
-// }
 
 char	*find_path(char **full_cmd, char *cmd)
 {
@@ -197,6 +183,11 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 	char	*real_full;
 	char	**full;
 
+	cmd->builtin = is_builtin(cmd->args[0]);
+	if (cmd->builtin)
+		g_ret_value = exec_builtin(cmd, &l_env, g_env);
+	else
+	{
 	full_cmd = ft_split(cmd->args[0], ' ');
 	if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
 		pathname = find_path(full_cmd, cmd->args[0]);
@@ -210,5 +201,6 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 	execute_command(pathname, full, g_env);
 	free_tab(full);
 	free_tab(full_cmd);
+	}
 	return (0);
 }
