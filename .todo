@@ -1,3 +1,17 @@
+==586385== LEAK SUMMARY:
+==586385==    definitely lost: 2,318 bytes in 87 blocks
+==586385==    indirectly lost: 4,407 bytes in 160 blocks
+==586385==      possibly lost: 0 bytes in 0 blocks
+==586385==    still reachable: 141 bytes in 6 blocks
+==586385==         suppressed: 208,301 bytes in 228 blocks
+
+==586030== LEAK SUMMARY:
+==586030==    definitely lost: 2,318 bytes in 87 blocks
+==586030==    indirectly lost: 4,407 bytes in 160 blocks
+==586030==      possibly lost: 0 bytes in 0 blocks
+==586030==    still reachable: 146 bytes in 7 blocks
+==586030==         suppressed: 208,301 bytes in 228 blocks
+
 ==90754==    definitely lost: 1,184 bytes in 37 blocks
 ==90754==    indirectly lost: 1,543 bytes in 74 blocks
 ==90754==      possibly lost: 0 bytes in 0 blocks
@@ -11,8 +25,6 @@
 ==88042==         suppressed: 18,003 bytes in 163 blocks
 
 ## To do :
-
-
 
 -> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
 
