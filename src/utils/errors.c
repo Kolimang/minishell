@@ -56,12 +56,32 @@ static int	syntaxerror(char *arg_q, int type)
 	return (set_exit_status(type));
 }
 
+static int	invalid_identifier(char *cmd, char *arg, int type)
+{
+	write(2, "minishell: ", 11);
+	if (cmd)
+	{
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": ", 2);
+	}
+	if (arg)
+	{
+		write(2, "'", 1);
+		write(2, arg, ft_strlen(arg));
+		write(2, "' : ", 4);
+	}
+	write(2, "not a valid identifier\n", 23);
+	return (set_exit_status(1));
+}
+
 int	merror(char *cmd, char *arg, char *arg_q, int type)
 {
 	if (type == 1)
 		return(nofileordir(cmd, arg, type));
 	else if (type == 11)
 		return(nofileordir(cmd, arg, type));
+	else if (type == 10)
+		return(invalid_identifier(cmd, arg_q, type));
 	else if (type == 258)
 		return(syntaxerror(arg_q, type));
 	else if (type == 127)

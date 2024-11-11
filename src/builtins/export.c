@@ -14,8 +14,17 @@
 
 static int	check_name(char *name)
 {
+	int	i;
+
 	if (!ft_isalpha(name[0]) && name[0] != '_')
 		return (1);
+	i = 1;
+	while (name[i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
@@ -60,7 +69,7 @@ int	ft_export(char **args, t_env **env)
 		{
 			res = check_name(args[i]);
 			if (res)
-				merror(args[0], args[i], "not a valid identifier", 1);
+				merror(args[0], NULL, args[i], 10);
 			else
 			{
 				check_value(args[i], &name, &value);
