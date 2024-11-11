@@ -66,6 +66,17 @@ static void	updt_head(t_env **env, t_env *prev_curr, t_env *minimum)
 	}
 }
 
+t_env	*clone_env(t_env *env)
+{
+	t_env	*clone;
+	char	**env_as_array;
+
+	env_as_array = env_to_array(env, get_env_len(env));
+	clone = init_env(env_as_array);
+	array_str_free(env_as_array, ft_arraylen(env_as_array));
+	return (clone);
+}
+
 void	sort_env(t_env **env)
 {
 	t_env	*prev_curr;

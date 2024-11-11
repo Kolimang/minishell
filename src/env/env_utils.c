@@ -41,3 +41,59 @@ char	*get_env_val(t_env *env, const char *var_name)
 	}
 	return (NULL);
 }
+
+int	get_env_len(t_env *env)
+{
+	t_env	*temp;
+	int		len;
+
+	if (!env)
+		return (0);
+	temp = env;
+	len = 0;
+	while (temp)
+	{
+		temp = temp->next;
+		len += 1;
+	}
+	return (len);
+}
+
+static char	*node_to_line(t_env *node)
+{
+	char	*line;
+	char	*templine;
+
+	templine = ft_strjoin(node->var_name, "=");
+	if (!templine)
+		return (NULL);
+	line =  ft_strjoin(templine, node->var_val);
+	free(templine);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
+char	**env_to_array(t_env *env, int len)
+{
+	t_env	*temp;
+	int		i;
+	char	**array;
+	char	*line;
+	char	*templine;
+
+	len = get_env_len(env);
+	array = malloc((len + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	temp = env;
+	i = 0;
+	while (temp)
+	{
+		array[i] = node_to_line(temp);
+		temp = temp->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
+}

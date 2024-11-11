@@ -28,7 +28,12 @@ char	*get_env_val(t_env *env, const char *var_name);
 t_env	*create_env_node(const char *var_name, const char *var_val, int index);
 void	free_env(t_env **env);
 void	set_shlvl(t_env *env);
-// jp
-int	update_env(char *name, char *value, t_env **env);
+
+int		update_env(char *name, char *value, t_env **env);
+int		print_env_sorted(t_env *env);
+int		print_env_unsorted(t_env *env);
+int		get_env_len(t_env *env);
+t_env	*clone_env(t_env *env);
+char	**env_to_array(t_env *env, int len);
 
 #endif
