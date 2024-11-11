@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 15:27:13 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/11 15:48:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define MINISHELL_H
 
 // Include library headers
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
 # include <stdbool.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <sys/stat.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/readline.h>
