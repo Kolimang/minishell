@@ -9,6 +9,7 @@ minishell
 
 # Files
 out*
+f
 #   Valgrind suppression file
 #ignore_readline.supp 
 
