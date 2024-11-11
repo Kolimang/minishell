@@ -21,6 +21,8 @@ static int	check_name(char *name)
 	i = 1;
 	while (name[i])
 	{
+		if (name[i] == '=')
+			break ;
 		if (!ft_isalnum(name[i]) && name[i] != '_')
 			return (1);
 		i++;
