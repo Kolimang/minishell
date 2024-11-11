@@ -12,6 +12,22 @@
 
 #include <minishell.h>
 
+static int	is_no_newl_option(char *arg)
+{
+	int	i;
+
+	if (arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_echo(char **args)
 {
 	int	i;
@@ -21,10 +37,12 @@ int	ft_echo(char **args)
 	newline = 1;
 	if (args && args[1])
 	{
-		if (ft_strncmp(args[1], "-n", 3) == 0)
+		while (args[i])
 		{
-			i = 2;
+			if (!is_no_newl_option(args[i]))
+				break;
 			newline = 0;
+			i++;
 		}
 		while (args[i])
 		{
