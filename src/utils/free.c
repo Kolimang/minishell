@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/18 16:56:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/11 11:55:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,19 @@ void	array_str_free(char **array, int limit)
 void	free_lexemes(t_list *ls_lexemes)
 {
 	t_lexeme	*lex;
+	t_list		*temp;
 
 	while (ls_lexemes)
 	{
-		lex = ls_lexemes->content;
+		temp = ls_lexemes;
+		ls_lexemes = ls_lexemes->next;
+		lex = temp->content;
 		free(lex->str);
 		free(lex->value);
 		free(lex);
-		ls_lexemes = ls_lexemes->next;
+		lex = NULL;
+		free(temp);
+		temp = NULL;
 	}
 }
 
@@ -44,19 +49,26 @@ void	free_commands(t_list *ls_commands)
 {
 	t_command	*cmd;
 	t_redir		*redir;
+	t_list		*temp;
+	t_list		*temp2;
 
 	while (ls_commands)
 	{
-		cmd = ls_commands->content;
+		temp = ls_commands;
+		ls_commands = ls_commands->next;
+		cmd = temp->content;
 		array_str_free(cmd->args, ft_arraylen(cmd->args));
 		while (cmd->ls_redirs)
 		{
-			redir = cmd->ls_redirs->content;
-			free(redir->value);
+			temp2 = cmd->ls_redirs;
 			cmd->ls_redirs = cmd->ls_redirs->next;
+			redir = temp2->content;
+			free(redir->value);
+			free(redir);
+			free(temp2);
 		}
 		free(cmd);
-		ls_commands = ls_commands->next;
+		free(temp);
 	}
 }
 
