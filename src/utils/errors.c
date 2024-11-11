@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 13:48:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/11 16:36:37 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ static int	nofileordir(char *cmd, char *arg, int type)
 		write(2, arg, ft_strlen(arg));
 		write(2, ": ", 3);
 	}
-	write(2, "No such file or directory\n", 26);
+	if (type == 11)
+	{
+		write(2, "Not a directory\n", 16);
+		type = 1;
+	}
+	else
+		write(2, "No such file or directory\n", 26);
 	return (set_exit_status(type));
 }
 
@@ -53,6 +59,8 @@ static int	syntaxerror(char *arg_q, int type)
 int	merror(char *cmd, char *arg, char *arg_q, int type)
 {
 	if (type == 1)
+		return(nofileordir(cmd, arg, type));
+	else if (type == 11)
 		return(nofileordir(cmd, arg, type));
 	else if (type == 258)
 		return(syntaxerror(arg_q, type));
