@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 11:11:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/12 15:43:37 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,18 @@ int	ft_pwd(char **args, t_env *env)
 	}
 	return (set_exit_status(0));
 }
+// suggestiin 
+// int	ft_pwd(char **args, t_env *env)
+// {
+// 	char	buf[1024];
+
+// 	if (args && args[1])
+// 		return (merror(args[0], NULL, "too many arguments", 1));
+// 	if (getcwd(buf, 1024))
+// 	{
+// 		ft_putendl_fd(buf, 1);
+// 		return (0);
+// 	}
+// 	perror("pwd");
+// 	return (1);
+// }
