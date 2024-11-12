@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:57:55 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/12 14:39:46 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		wait_children(t_list *cmds);
 
 //execute1
 int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env);
-int			exec_builtin(t_command *cmd, t_env **l_env, char **g_env);
+int			exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag);
 int			is_builtin(char *cmd);
 int			exec_cmd(t_command *cmd, t_env *l_env, char **g_env);
 char		*find_path(char **full_cmd, char *cmd);

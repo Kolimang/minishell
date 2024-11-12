@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/11 12:47:38 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:37:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env)
 
 	if (set_fds(cmd, io) == -1)
 		return (-1);
-	ret_value = exec_builtin(cmd, l_env, g_env);
+	ret_value = exec_builtin(cmd, l_env, g_env, 0);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
 // res = -1; --> Error: unknown built-in command
-int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env)
+int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag)
 {
 	int	res;
 
@@ -42,7 +42,7 @@ int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env)
 	else if (cmd->builtin == 6)
 		res = ft_env(cmd->args, *l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmd->args, *l_env, 0);
+	   res = ft_exit(cmd->args, *l_env, 0, flag);
 	else
 		res = -1;
 	return (res);
@@ -185,7 +185,7 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		g_ret_value = exec_builtin(cmd, &l_env, g_env);
+		g_ret_value = exec_builtin(cmd, &l_env, g_env, 1);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');
