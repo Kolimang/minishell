@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/11 11:15:28 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:00:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,14 @@ void	handle_sq(char **res, char *tmp, int *i, int start)
 	(*i)++;
 	while (tmp[*i])
 	{
-		(*i)++;
 		if (tmp[*i] == SQ)
 		{
 			append_to_str(res, tmp, *i, start + 1);
 			(*i)++;
 			return ;
 		}
+		(*i)++;
 	}
-	// free(res);
-	// exit(EXIT_FAILURE);
 }
 
 void	handle_dq(char **res, char *tmp, int *i, t_env *new_env)
