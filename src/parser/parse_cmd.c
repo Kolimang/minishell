@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/13 15:04:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:17:16 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
-	t_list		*temp;
+	t_list		**temp;
 
 	node = (*ls_lexemes)->content;
 	if (!is_redir_symbol(node))
