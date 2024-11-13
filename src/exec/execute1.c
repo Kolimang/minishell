@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/12 14:37:03 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:10:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_full_path(char **full_cmd, t_env *l_env)
 	paths = get_paths(l_env);
 	if (!paths)
 		return (NULL);
-	full_cmd[0] = ft_strjoin("/", full_cmd[0]);
+	full_cmd[0] = ft_strjoin_replace("/", full_cmd[0], 2);
 	while (paths[i])
 	{
 		full_path = ft_strjoin(paths[i], full_cmd[0]);
