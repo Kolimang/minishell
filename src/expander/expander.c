@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/12 15:00:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:24:35 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,13 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env)
 char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
 {
 	char	*res;
+	char	*temp_res;
 	char	*final_res;
 	int		i;
 	int		start;
 
 	res = ft_calloc(sizeof(char), 1);
-	final_res = ft_calloc(sizeof(char), 1);
+	temp_res = ft_calloc(sizeof(char), 1);
 	i = 0;
 	while (tmp[i])
 	{
@@ -106,8 +107,9 @@ char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
 		else
 			handle_nq(&res, tmp, &i, new_env); //si on rajoute lexer apr. parser
 	}
-	final_res = ft_strjoin(final_res, res);
+	final_res = ft_strjoin(temp_res, res);
 	free(res);
+	free(temp_res);
 	return (final_res);
 }
 
