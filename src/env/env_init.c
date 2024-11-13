@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 10:43:18 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/13 15:14:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ t_env	*init_env(char **original_env)
 			current = create_env_node(original_env[i], sep + 1, index++);
 			if (!current)
 				return (NULL);
-			*sep = '=';
+			//*sep = '=';
 			if (add_env_var(&env, current->var_name, current->var_val,
 				current->index) == EXIT_FAILURE)
 				return (NULL);
+			free_env(current);
 		}
 	}
 	return (env);
