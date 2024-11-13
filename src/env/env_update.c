@@ -74,20 +74,29 @@ static void	insert_in_env(t_env **env, const char *var_name,
 	}
 }
 
-int	update_env(char *name, char *value, t_env **env)
+int	update_env(char *name, char *value, t_env **env, int mode)
 {
 	t_env	*head;
+	char	*temp;
 
 	if (!*env)
 		return (1);
 	head = *env;
+	temp = NULL;
 	while (head)
 	{
 		if (value && !ft_strncmp(head->var_name, name, ft_strlen(name) + 1))
 		{
 			if (head->var_val)
+			{
+				temp = ft_strdup(head->var_val);
 				free(head->var_val);
-			head->var_val = ft_strdup(value);
+			}
+			if (mode == 0)
+				head->var_val = ft_strdup(value);
+			else if (mode == 1)
+				head->var_val = ft_strjoin(temp, value);
+			free(temp);
 			return (0);
 		}
 		head = head->next;

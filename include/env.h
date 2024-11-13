@@ -29,7 +29,7 @@ t_env	*create_env_node(const char *var_name, const char *var_val, int index);
 void	free_env(t_env **env);
 void	set_shlvl(t_env *env);
 
-int		update_env(char *name, char *value, t_env **env);
+int		update_env(char *name, char *value, t_env **env, int mode);
 int		print_env_sorted(t_env *env);
 int		print_env_unsorted(t_env *env);
 int		get_env_len(t_env *env);
