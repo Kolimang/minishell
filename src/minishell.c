@@ -99,7 +99,7 @@ int	execute(t_env **env, char**g_env)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			ft_exit(NULL, *env, 1);
+			ft_exit(NULL, *env, 1, 0); // have set flag-argument to zero -- correct ?
 		ft_add_cmd_to_history(cmd);
 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
