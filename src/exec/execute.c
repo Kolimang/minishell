@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/12 17:59:38 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:41:43 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec(t_list *cmds, t_env **local_env, char **global_env)
 	{
 		cmd->builtin = is_builtin(cmd->args[0]);
 		if (cmd->builtin && !(cmds->next))
-			execute_nofork(cmd, io, local_env, global_env);
+			execute_nofork(cmd, io, local_env, cmds);
 		else
 			execute_fork(cmds, io, *local_env, global_env);
 	}

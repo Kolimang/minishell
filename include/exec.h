@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:36:24 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:50:16 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void		create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
 void		wait_children(t_list *cmds);
 
 //execute1
-int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env);
-int			exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag);
+int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds);
+int			exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag);
 int			is_builtin(char *cmd);
 int			exec_cmd(t_command *cmd, t_env *l_env, char **g_env);
 char		*find_path(char **full_cmd, char *cmd);

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:30:21 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:49:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 	t_list	*tmp;
 
 	tmp = cmd->ls_redirs;
-	// cmd->flag = 0;
 	if (cmd->prevpipe || has_redir_in(cmd->ls_redirs))
 	{
 		if(redir_infile(cmd, io) == -1)

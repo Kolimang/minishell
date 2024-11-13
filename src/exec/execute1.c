@@ -6,26 +6,26 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:36:05 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:42:15 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env)
+int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
 {
 	int	ret_value;
 
 	if (set_fds(cmd, io) == -1)
 		return (-1);
-	ret_value = exec_builtin(cmd, l_env, g_env, 0);
+	ret_value = exec_builtin(cmd, l_env, cmds, 0);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
 // res = -1; --> Error: unknown built-in command
-int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag)
+int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
 {
 	int	res;
 
