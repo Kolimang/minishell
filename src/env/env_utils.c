@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/05 12:05:11 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:00:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ void	set_shlvl(t_env *env)
 
 char	*get_env_val(t_env *env, const char *var_name)
 {
-	while (env)
+	t_env	*temp;
+
+	temp = env;
+	while (temp)
 	{
-		if (ft_strncmp(env->var_name, var_name, ft_strlen(var_name) + 1) == 0)
-			return (env->var_val);
-		env = env->next;
+		if (ft_strncmp(temp->var_name, var_name, ft_strlen(var_name) + 1) == 0)
+			return (temp->var_val);
+		temp = temp->next;
 	}
 	return (NULL);
 }
