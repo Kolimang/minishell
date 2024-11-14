@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 16:20:14 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:48:05 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 	return (0);
 }
 
-//check EXIIIIIIT attention 
 void	exec(t_list *cmds, t_envs *envs)
 {
 	t_command	*cmd;

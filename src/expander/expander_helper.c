@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 19:07:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 17:01:19 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,46 +31,54 @@ void	dup_word(char **res, char *str, int *i)
 	append_to_str(res, str, *i, start);
 }
 
-// char	*var = 0;
 void	expander(char **res, char *tmp, int *i, t_env *new_env)
 {
-	int		start;
-	char	*var;
-	char	*exit_code_str;
+	int	start;
+	char *var_name;
 
-	(void)new_env;
 	(*i)++;
-	var = 0;
 	start = *i;
-	if ((tmp[start] == ' ') || (tmp[start] == '\0') || (tmp[start] == DQ))
+	if (tmp[start] == ' ' || tmp[start] == '\0' || tmp[start] == DQ)
 		return (append_to_str(res, tmp, *i, start - 1));
-	else if (ft_isdigit(tmp[*i])) //digit 0 - 9 -> skip num then append to str
-	{
-		while (tmp[*i] && tmp[*i] != DQ && tmp[*i] != ' ')
-			(*i)++;
-		return (append_to_str(res, tmp, *i, start + 1));
-	}
-	else if (tmp[*i] == '?') //mise a jour du code d erreur
-	{
-		exit_code_str = ft_itoa(g_ret_value);
-		*res = ft_strjoin(*res, exit_code_str); 
-		free(exit_code_str);// Move past the '?'
-		(*i)++;
-		return ;//move past the ?
-	}// find exit error
+	else if (ft_isdigit(tmp[*i]) || tmp[*i] == '?')
+		return (handle_special_cases(res, tmp, i));
 	else
-	{ ///check for tmp[i] == '_'
+	{
 		while (ft_isalnum(tmp[*i]) || tmp[*i] == '_')
 			(*i)++;
-		append_to_str(&var, tmp, *i, start);
-		if (get_env_val(new_env, var))
-			*res = ft_strjoin(*res, get_env_val(new_env, var)); //GET REAL VALUE
-		else
-			*res = ft_strjoin("", *res);
-		return ;
+		var_name = ft_substr(tmp, start, *i - start);
+		handle_variable(res, var_name, new_env);
+		free(var_name);
 	}
 }
 
+void	handle_special_cases(char **res, char *tmp, int *i)
+{
+	char	*exit_code_str;
+
+	if (ft_isdigit(tmp[*i]))
+	{
+		int start = *i;
+		while (tmp[*i] && tmp[*i] != DQ && tmp[*i] != ' ')
+			(*i)++;
+		append_to_str(res, tmp, *i, start + 1);
+	}
+	else if (tmp[*i] == '?')
+	{
+		exit_code_str = ft_itoa(g_ret_value);
+		*res = ft_strjoin(*res, exit_code_str);
+		free(exit_code_str);
+		(*i)++;
+	}
+}
+
+void	handle_variable(char **res, char *var_name, t_env *new_env)
+{
+	if (get_env_val(new_env, var_name))
+		*res = ft_strjoin(*res, get_env_val(new_env, var_name));
+	else
+		*res = ft_strjoin(*res, "");
+}
 void	append_to_str(char **res, char *tmp, int end, int start)
 {
 	char	*new_part;

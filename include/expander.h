@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 11:44:00 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:59:08 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env);
 void	append_to_str(char **res, char *tmp, int end, int start);
 void	handle_nq(char **res, char *tmp, int *i, t_env *new_env);
 void	dup_word(char **res, char *str, int *i);
+void	handle_special_cases(char **res, char *tmp, int *i);
+void	handle_variable(char **res, char *var_name, t_env *new_env);
+
 
 #endif
