@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 10:00:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:42:04 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ static char	*node_to_line(t_env *node)
 	return (line);
 }
 
-char	**env_to_array(t_env *env, int len)
+char	**env_to_array(t_env *env)
 {
 	t_env	*temp;
 	int		i;
+	int		len;
 	char	**array;
-	char	*line;
-	char	*templine;
 
 	len = get_env_len(env);
 	array = malloc((len + 1) * sizeof(char *));
