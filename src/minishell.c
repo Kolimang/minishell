@@ -44,8 +44,7 @@ int	check_commands(char **cmds, int *i)
 		if (cmds[*i] && (cmds[*i][0] == '\0'))
 		{
 			*i = -1;
-			return (merror(NULL, NULL,
-					"syntax error near unexpected token `|'", 258));
+			return (merror(NULL, NULL, "|", 258));
 		}
 		(*i)++;
 	}
@@ -111,22 +110,6 @@ int	execute(t_envs *envs)
 	return (EXIT_SUCCESS);
 }
 
-int	main(int ac, char **av, char **o_env)
-{
-	t_envs	*envs;
-
-	(void)ac;
-	(void)av;
-	g_ret_value = 0;
-	init_signals();
-	if (init_envs(&envs, o_env) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	//set_shlvl(l_env);
-	if (change_term_attr() == 1 || execute(envs) == EXIT_FAILURE)
-		return (cleanup_envs(envs, EXIT_FAILURE));
-	return (cleanup_envs(envs, EXIT_SUCCESS));
-}
-
 int	init_envs(t_envs **envs, char **o_env)
 {
 	*envs = malloc(sizeof(t_envs));
@@ -147,6 +130,7 @@ int	init_envs(t_envs **envs, char **o_env)
 	}
 	return (EXIT_SUCCESS); 
 }
+
 int	cleanup_envs(t_envs *envs, int exit_code)
 {
 	free_env(envs->l_env);
@@ -154,3 +138,18 @@ int	cleanup_envs(t_envs *envs, int exit_code)
 	return (exit_code);
 }
 
+int	main(int ac, char **av, char **o_env)
+{
+	t_envs	*envs;
+
+	(void)ac;
+	(void)av;
+	g_ret_value = 0;
+	init_signals();
+	if (init_envs(&envs, o_env) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	//set_shlvl(l_env);
+	if (change_term_attr() == 1 || execute(envs) == EXIT_FAILURE)
+		return (cleanup_envs(envs, EXIT_FAILURE));
+	return (cleanup_envs(envs, EXIT_SUCCESS));
+}
