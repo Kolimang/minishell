@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 18:13:22 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:49:27 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,49 +39,49 @@ static int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 	return (0);
 }
 
-static int	go_home(char *dest_path, char *curr_path, t_env *env)
+static char *get_home_path(t_env *env)
 {
-	t_env	*head;
-    char    *home_path;
-    char    *new_path;
+    t_env *head;
 
-	if (!env)
-		return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
-	head = env;
-	while (head)
-	{
-		if (ft_strncmp(head->var_name, "HOME", 5) == 0)
-		{
-            home_path = head->var_val;
-			if (!home_path || home_path[0] == '\0')
-				return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
-			if (access(home_path, R_OK) == 0)
-			{
-				curr_path = getcwd(NULL, 0);
-                if (!curr_path)
-                    return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
-                
-                if (chdir(home_path) != 0)
-                {
-                    free(curr_path);
-                    return (ft_putstr_fd("cd: cannot change directory\n", 2), 1);
-                }
-
-                new_path = getcwd(NULL, 0);
-                if (!new_path)
-                {
-                    free(curr_path);
-                    return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
-                }
-
-				return (update_pwd(new_path, curr_path, env), 0);
-			}
-			return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
-		}
-		head = head->next;
-	}
-	return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
+    if (!env)
+        return (NULL);
+    head = env;
+    while (head)
+    {
+        if (ft_strncmp(head->var_name, "HOME", 5) == 0)
+            return (head->var_val);
+        head = head->next;
+    }
+    return (NULL);
 }
+
+static int go_home(char *dest_path, char *curr_path, t_env *env)
+{
+    char *home_path;
+    char *new_path;
+
+    home_path = get_home_path(env);
+    if (!home_path || home_path[0] == '\0')
+        return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
+    if (access(home_path, R_OK) != 0)
+        return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
+    curr_path = getcwd(NULL, 0);
+    if (!curr_path)
+        return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
+    if (chdir(home_path) != 0)
+    {
+        free(curr_path);
+        return (ft_putstr_fd("cd: cannot change directory\n", 2), 1);
+    }
+    new_path = getcwd(NULL, 0);
+    if (!new_path)
+    {
+        free(curr_path);
+        return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
+    }
+    return (update_pwd(new_path, curr_path, env), 0); 
+}
+
 static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 {
 	t_env	*head;
