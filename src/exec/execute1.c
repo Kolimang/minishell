@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:35:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:46:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
 int	is_builtin(char *cmd)
 {
 	if(cmd == NULL)
-		return(0);
+		return (0);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)

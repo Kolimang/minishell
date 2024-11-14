@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/12 14:43:56 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:45:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_export(char **args, t_env **env)
 		{
 			res = check_name(args[i]);
 			if (res)
-				return(merror(args[0], NULL, args[i], 10));
+				return (merror(args[0], NULL, args[i], 10));
 			check_value(args[i], &name, &value, &mode);
 			update_env(name, value, env, mode);
 			i++;
