@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 16:23:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:08:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_full_path(char **full_cmd, t_env *l_env)
 	paths = get_paths(l_env);
 	if (!paths)
 		return (NULL);
-	full_cmd[0] = ft_strjoin_replace("/", full_cmd[0], 2);
+	full_cmd[0] = ft_strjoin_replace("/", full_cmd[0], 's');
 	while (paths[i])
 	{
 		full_path = ft_strjoin(paths[i], full_cmd[0]);

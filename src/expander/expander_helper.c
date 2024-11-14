@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 19:07:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:09:36 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 	else if (tmp[*i] == '?') //mise a jour du code d erreur
 	{
 		exit_code_str = ft_itoa(g_ret_value);
-		*res = ft_strjoin(*res, exit_code_str); 
+		*res = ft_strjoin_replace(*res, exit_code_str, 'f');
 		free(exit_code_str);// Move past the '?'
 		(*i)++;
 		return ;//move past the ?
@@ -64,9 +64,9 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 			(*i)++;
 		append_to_str(&var, tmp, *i, start);
 		if (get_env_val(new_env, var))
-			*res = ft_strjoin(*res, get_env_val(new_env, var)); //GET REAL VALUE
+			*res = ft_strjoin_replace(*res, get_env_val(new_env, var), 'f'); //GET REAL VALUE // DEBUG changed
 		else
-			*res = ft_strjoin("", *res);
+			*res = ft_strjoin_replace("", *res, 's');
 		return ;
 	}
 }
@@ -83,6 +83,7 @@ void	append_to_str(char **res, char *tmp, int end, int start)
 	if (*res)
 	{
 		new_res = ft_strjoin(*res, new_part);
+		free(*res);//ADDED - fixing leaks
 		*res = new_res;
 	}
 	else
