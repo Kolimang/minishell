@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:41:43 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:20:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 }
 
 //check EXIIIIIIT attention 
-void	exec(t_list *cmds, t_env **local_env, char **global_env)
+void	exec(t_list *cmds, t_envs *envs)
 {
 	t_command	*cmd;
 	t_io_fd		*io;
@@ -53,18 +53,19 @@ void	exec(t_list *cmds, t_env **local_env, char **global_env)
 	{
 		cmd->builtin = is_builtin(cmd->args[0]);
 		if (cmd->builtin && !(cmds->next))
-			execute_nofork(cmd, io, local_env, cmds);
+			execute_nofork(cmd, io, envs->l_env, cmds);
 		else
-			execute_fork(cmds, io, *local_env, global_env);
+			execute_fork(cmds, io, envs);
 	}
 	reset_io(io, cmd);
 	free(io);
 }
 
-int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
+int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 {
 	t_command	*cmd;
 	t_list		*tmp;
+
 	tmp = cmds;
 	while (tmp)
 	{
@@ -73,16 +74,16 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env)
 			break ;
 		if (pipe(io->pipe) == -1)
 			return (-1);
-		create_child(cmd, io, l_env, g_env);
+		create_child(cmd, io, envs, cmds);
 		tmp = tmp->next;
 	}
 	if (tmp)
-		create_child(cmd, io, l_env, g_env);
+		create_child(cmd, io, envs, cmds);
 	wait_children(cmds);
 	return (0);
 }
 
-void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
+void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	t_redir	*redir;
 
@@ -99,7 +100,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env)
 		if (set_fds(cmd, io) == -1)
 			exit(EXIT_FAILURE);
 		if (cmd->args && cmd->args[0])
-			exec_cmd(cmd, l_env, g_env);
+			exec_cmd(cmd, envs, cmds);
 		exit(g_ret_value);
 	}
 	if (cmd->prevpipe)

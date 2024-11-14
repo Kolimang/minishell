@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/29 10:43:18 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:04:31 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,40 @@ int	add_env_var(t_env **env, const char *var_name, const char *var_val,
 	}
 	return (0);
 }
-
-t_env	*init_env(char **original_env)
+t_env *init_env(char **original_env)
 {
-	t_env	*env;
-	t_env	*current;
-	char	*sep;
-	int		index;
-	int		i;
+    t_env *env = NULL;
+    t_env *current;
+    char *sep;
+    int index = 0;
+    int i = -1;
 
-	env = NULL;
-	index = 0;
-	i = -1;
-	while (original_env[++i])
-	{
-		sep = ft_strchr(original_env[i], '=');
-		if (sep)
-		{
-			*sep = '\0';
-			current = create_env_node(original_env[i], sep + 1, index++);
-			if (!current)
-				return (NULL);
-			*sep = '=';
-			if (add_env_var(&env, current->var_name, current->var_val,
-				current->index) == EXIT_FAILURE)
-				return (NULL);
-		}
-	}
-	return (env);
+    while (original_env[++i])
+    {
+        // Make a temporary copy of the current environment string
+        char *temp = strdup(original_env[i]);
+        if (!temp)
+            return NULL; // Handle memory allocation failure
+
+        // Find the separator in the copy
+        sep = strchr(temp, '=');
+        if (sep)
+        {
+            *sep = '\0'; // Temporarily split key and value
+            current = create_env_node(temp, sep + 1, index++);
+            if (!current)
+            {
+                free(temp);  // Free the copy before returning
+                return NULL;
+            }
+            if (add_env_var(&env, current->var_name, current->var_val, current->index) == EXIT_FAILURE)
+            {
+                free(temp);
+                return NULL;
+            }
+        }
+        free(temp); // Free the copy after use
+    }
+    return env;
 }
+

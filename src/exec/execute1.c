@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:42:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:22:22 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ char	*build_full_cmd(char *pathname, t_command *cmd)
 
 int	execute_command(char *pathname, char **full, char **g_env)
 {
+	//transformer l_env en char
 	if (execve(pathname, full, g_env) == -1)
 	{
 		perror("Execution failure");
@@ -173,10 +174,11 @@ int	execute_command(char *pathname, char **full, char **g_env)
 		free(pathname);
 		exit(127);
 	}
+	printf("hey\n");
 	return (0);
 }
 
-int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
+int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
 	char	**full_cmd;
@@ -185,20 +187,20 @@ int	exec_cmd(t_command *cmd, t_env *l_env, char **g_env)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		g_ret_value = exec_builtin(cmd, &l_env, g_env, 1);
+		g_ret_value = exec_builtin(cmd, envs->l_env, cmds, 1);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');
 		if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
 			pathname = find_path(full_cmd, cmd->args[0]);
 		else
-			pathname = get_full_path(full_cmd, l_env);
+			pathname = get_full_path(full_cmd, *(envs->l_env));
 		if (!pathname)
 			exit(merror(cmd->args[0], NULL, NULL, 127));
 		real_full = build_full_cmd(pathname, cmd);
 		full = ft_split(real_full, ' ');
 		free(real_full);
-		execute_command(pathname, full, g_env);
+		execute_command(pathname, full,envs->g_env);
 		free_tab(full);
 		free_tab(full_cmd);
 	}

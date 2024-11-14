@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec_hrdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/04 13:41:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:56:00 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <minishell.h>
 
-void	pre_exec(t_list *cmds, t_env *local_env, char **global_env)
+void	pre_exec(t_list *cmds, t_envs *envs)
 {
 	t_command	*cmd;
 	t_list		*tmp_cmds;
-
-	(void)global_env;
 	tmp_cmds = cmds;
 	while (tmp_cmds)
 	{
 		cmd = init_hrdoc(tmp_cmds);
-		if (get_hrdoc(cmd, local_env) == -1)
+		if (get_hrdoc(cmd, *(envs->l_env)) == -1)
 			return ;
 		tmp_cmds = tmp_cmds->next;
 	}

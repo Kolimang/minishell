@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 17:02:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:16:57 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_commands(char **cmds, int *i)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
+int	handle_commands(t_envs *envs, char **cmds, int *i)
 {
 	t_list		*lexemes;
 	t_list		*commands;
@@ -65,9 +65,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 		lexemes = ft_tokenize(cmds[*i]);
 		if (!lexemes)
 			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
-		ft_expand_lexeme_list(lexemes, *env);
-		if (DEBUG) // DEBUG
-			ft_print_lexemes(lexemes, 2, ' ', "Lexemes: ");
+		ft_expand_lexeme_list(lexemes, *(envs->l_env));
 		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
 		if (!command)
 			return (g_ret_value); // DEBUG
@@ -75,19 +73,18 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 			commands = ft_lstnew(command);
 		else
 			ft_lstadd_back(&commands, ft_lstnew(command));
-		if (DEBUG) // DEBUG
-			ft_print_command(command);
 		(*i)++;
 	}
 	array_str_free(cmds, ft_arraylen(cmds));
-	pre_exec(commands, *env, g_env);
-	exec(commands, env, g_env);
+	pre_exec(commands, envs);
+	exec(commands,envs);
 	free_lists(lexemes, NULL);// free_lists(lexemes, commands); 
 	return (0);
 }
 
-int	execute(t_env **env, char**g_env)
+int	execute(t_envs *envs)
 {
+	// t_env **env, char**g_env
 	int		i;
 	char	*cmd;
 	char	**cmds;
@@ -99,7 +96,7 @@ int	execute(t_env **env, char**g_env)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			ft_exit(NULL, *env, 1, 0); // have set flag-argument to zero -- correct ?
+			ft_exit(NULL, *(envs->l_env), 1, 0); // have set flag-argument to zero -- correct ?
 		ft_add_cmd_to_history(cmd);
 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
@@ -109,7 +106,7 @@ int	execute(t_env **env, char**g_env)
 				return (EXIT_FAILURE);
 			i = 0;
 			if (check_commands(cmds, &i) == EXIT_SUCCESS)
-				handle_commands(env, cmds, &i, g_env);
+				handle_commands(envs, cmds, &i);
 			else
 				array_str_free(cmds, ft_arraylen(cmds));
 			//system("leaks minishell");// works only on MacOS ?
@@ -120,22 +117,34 @@ int	execute(t_env **env, char**g_env)
 
 int	main(int ac, char **av, char **o_env)
 {
-	t_env	*l_env;
+	t_envs *envs;
 
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
 	init_signals();
-	l_env = init_env(o_env);
-	if (!l_env || change_term_attr() == 1)
+	envs = malloc(sizeof(t_envs));
+	if (!envs)
+		return (EXIT_FAILURE); 
+	envs->g_env = o_env;
+	envs->l_env = malloc(sizeof(t_env *));  
+    if (!envs->l_env)
+    {
+        free(envs);
+        return (EXIT_FAILURE);
+    }
+	*(envs->l_env) = init_env(o_env);
+	if (!envs->l_env || change_term_attr() == 1)
 		return (EXIT_FAILURE);
-	//set_shlvl(l_env);
-	if (execute(&l_env, o_env) == EXIT_FAILURE)
+	//set_shlvl(l_env)
+	if (execute(envs) == EXIT_FAILURE)
 	{
-		free_env(&l_env);
+		free_env(envs->l_env);
+		free(envs);
 		return (EXIT_FAILURE);
 	}
 	//handle_commands(env, &i, o_env);
-	free_env(&l_env);
+	free_env(envs->l_env);
+	free(envs);
 	return (EXIT_SUCCESS);
 }

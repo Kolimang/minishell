@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/05 16:46:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:53:36 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 extern int	g_ret_value;
 
 int	check_commands(char **cmds, int *i);
-int	handle_commands (t_env **env, char **cmds, int *i, char **g_env);
-int	execute(t_env **env, char **g_env);
+int	handle_commands (t_envs *envs, char **cmds, int *i);
+int	execute(t_envs *envs);
 int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
 //testlina

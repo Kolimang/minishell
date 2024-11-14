@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:50:16 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:51:10 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 # define EXEC_H
 
 //execute
-void		exec(t_list *cmds, t_env **local_env, char **global_env);
-int			execute_fork(t_list *cmds, t_io_fd *io, t_env *l_env, char **g_env);
-void		create_child(t_command *cmd, t_io_fd *io, t_env *l_env, char **g_env);
+void		exec(t_list *cmds, t_envs *envs);
+int			execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs);
+void		create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 void		wait_children(t_list *cmds);
 
 //execute1
 int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds);
 int			exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag);
 int			is_builtin(char *cmd);
-int			exec_cmd(t_command *cmd, t_env *l_env, char **g_env);
+int			exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds);
 char		*find_path(char **full_cmd, char *cmd);
 void		free_tab(char **paths);
 char		*get_full_path(char **full_cmd, t_env *l_env);
 char		**get_paths(t_env *l_env);
 
 //exec_hrdoc
-void		pre_exec(t_list *cmds, t_env *local_env, char **global_env);
+void		pre_exec(t_list *cmds, t_envs *envs);
 t_command	*init_hrdoc (t_list *cmd);
 int			get_hrdoc(t_command *cmd, t_env *local_env);
 void		child_heredoc_process(t_command *cmd, t_env *local_env, int	pipe_fd[2], t_redir *redir);
