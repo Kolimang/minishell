@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/13 15:36:09 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:49:42 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_io_fd
 	int	std_out;//backup des stdio
 	int	fd_in;
 	int	fd_out;
-	// int	fd_tmp;//for closing multi fds 
+	// int	fd_tmp;//for closing multi fds
 }	t_io_fd;
 
 typedef struct s_command

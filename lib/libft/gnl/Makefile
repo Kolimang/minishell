@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 15:59:07 by jrichir           #+#    #+#              #
-#    Updated: 2024/10/29 09:54:19 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/14 13:49:55 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@
 # When wildcard % appears in the dependency list, it is replaced with the same
 # string that was used to perform substitution in the target.
 
-# Inside actions we can use:  
+# Inside actions we can use:
 #     $@ to represent the full target name of the current target  
 #     $? returns the dependencies that are newer than the current target  
 #     $* returns the text that corresponds to % in the target     

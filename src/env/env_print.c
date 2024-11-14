@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 17:27:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:51:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	print_env_unsorted(t_env *env)
 	return (0);
 }
 
-// mode 1 --> export() without arg 
+// mode 1 --> export() without arg
 //      \__ includes empty-string variables AND NULL-valued variables
 // mode 2 --> env() without arg
 //      \__ includes empty-string variables but not NULL-valued variables

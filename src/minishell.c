@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 17:02:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:50:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	handle_commands(t_env **env, char **cmds, int *i, char **g_env)
 	array_str_free(cmds, ft_arraylen(cmds));
 	pre_exec(commands, *env, g_env);
 	exec(commands, env, g_env);
-	free_lists(lexemes, NULL);// free_lists(lexemes, commands); 
+	free_lists(lexemes, commands);//free_lists(lexemes, NULL);
 	return (0);
 }
 

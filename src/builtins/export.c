@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 13:45:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:52:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,3 @@ int	ft_export(char **args, t_env **env)
 	}
 	return (set_exit_status(res));
 }
-// IMPPRITANT LE TEST a += test devrait export la variable quand meme 

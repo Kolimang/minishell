@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:34:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:51:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 	return (0);
 }
 
-//check EXIIIIIIT attention 
+//check EXIIIIIIT attention
 void	exec(t_list *cmds, t_env **local_env, char **global_env)
 {
 	t_command	*cmd;

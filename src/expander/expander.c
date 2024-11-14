@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/13 15:24:35 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:51:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 // 	// else
 // 	// 	process_hrdoc(line, new_env); // temp, to be replaced by process_hrdoc(lexeme);
 // 	// 	//process_hrdoc(ls_hd_lexemes, new_env)
-// 	// //error ?? 
+// 	// //error ??
 // }
 
 // char	*find_var(char *var, t_env *new_env) //getenv

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/13 15:35:56 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:52:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	arg_is_number(char *arg)
 // 	free_env(&env);
 // 	exit(g_ret_value); // Check if I should really return that value
 // }
-// version for printinf exit with no pipe 
+// version for printinf exit with no pipe
 int	ft_exit(char **args, t_env *env, int eof, int flag)
 {
 	int	argc;
