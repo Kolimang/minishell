@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:45:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:47:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 	tmp = cmd->ls_redirs;
 	if (cmd->prevpipe || has_redir_in(cmd->ls_redirs))
 	{
-		if(redir_infile(cmd, io) == -1)
+		if (redir_infile(cmd, io) == -1)
 			return (-1);
 		if (dup2(io->fd_in, STDIN_FILENO) == -1)
 			return (perror("dup2 failed for fd_in"), -1);
@@ -188,7 +188,7 @@ int	set_fds(t_command *cmd, t_io_fd *io)
 	}
 	if (cmd->nextpipe || has_redir_out(cmd->ls_redirs))
 	{
-		if(redir_outfile(cmd, io) == -1)
+		if (redir_outfile(cmd, io) == -1)
 			return (-1);
 		if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 			return (perror("dup2 failed for fd_out"), -1);
