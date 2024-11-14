@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 16:47:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 11:51:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,44 @@ void	ft_printarray(char **array, char separator)
 
 void	ft_print_list(t_list *list, char *title)
 {
+	t_list	*temp;
+
+	temp = list;
 	if (!list)
 		return ;
 	if (title && title[0] != '\0')
 		printf("%s\n", title);
-	while (list)
+	while (temp)
 	{
-		printf("%s\n", (char *)list->content);
-		list = list->next;
+		printf("%s\n", (char *)temp->content);
+		temp = temp->next;
 	}
 }
 
 void	ft_print_lexemes(t_list *list, int option, char separator, char *title)
 {
 	t_lexeme	*lex;
+	t_list		*temp;
 
 	if (!list)
 		return ;
-	if (title && title[0] != '\0')
+	if (!title || title[0] == '\0')
+		return;
+	if (separator == '\n')
+		printf("%s\n", title);
+	else
+		printf("%s ", title);
+	temp = list;
+	while (temp)
 	{
-		if (separator == '\n')
-			printf("%s\n", title);
-		else
-			printf("%s ", title);
-	}
-	while (list)
-	{
-		lex = list->content;
+		lex = temp->content;
 		if (option == 1)
 			printf("%s", lex->str);
 		else if (option == 2)
 			printf("%s", lex->value);
-		if (list->next)
+		if (temp->next)
 			printf("%c", separator);
-		list = list->next;
+		temp = temp->next;
 	}
 	if (separator != '\n')
 		printf("\n");
