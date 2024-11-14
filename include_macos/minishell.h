@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 15:48:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:30:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # include "parser.h"
 # include "utils.h"
 # include "expander.h"
-
 # include "exec.h"
 # include "builtin.h"
 

@@ -2,12 +2,15 @@
 -> valgrind sur MacOS sans readline
 https://github.com/mdabir1203/Valgrind_Suppression_MacOs
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=valgrind/ignore_readline.supp -s ./minishell
+
+valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=msh_mac.log ./minishell
+cat ./msh_mac.log | ./parse_valgrind_suppressions.sh > msh_mac.supp
 
 -> valgrind sur Linux sans readline
 https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
-valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minimalraw.log ./minimal
-cat ./minimalraw.log | ./parse_valgrind_suppressions.sh > minimal.supp
+valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minishell_raw.log ./minishell
+cat ./minimshell_raw.log | ./parse_valgrind_suppressions.sh > minishell.supp
 valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh.supp -s ./minishell
 
 echo hey guys | cat > f

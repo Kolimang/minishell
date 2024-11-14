@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 16:36:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:45:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ static int	invalid_identifier(char *cmd, char *arg, int type)
 int	merror(char *cmd, char *arg, char *arg_q, int type)
 {
 	if (type == 1)
-		return(nofileordir(cmd, arg, type));
+		return (nofileordir(cmd, arg, type));
 	else if (type == 11)
-		return(nofileordir(cmd, arg, type));
+		return (nofileordir(cmd, arg, type));
 	else if (type == 10)
-		return(invalid_identifier(cmd, arg_q, type));
+		return (invalid_identifier(cmd, arg_q, type));
 	else if (type == 258)
-		return(syntaxerror(arg_q, type));
+		return (syntaxerror(arg_q, type));
 	else if (type == 127)
-		return(cmdnotfound(cmd, type));
+		return (cmdnotfound(cmd, type));
 	else if (type == 1271)
-		return(nofileordir(cmd, arg, 127));
+		return (nofileordir(cmd, arg, 127));
 	if (cmd)
 	{
 		write(2, cmd, ft_strlen(cmd));

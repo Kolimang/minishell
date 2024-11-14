@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 18:15:02 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:48:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <sys/stat.h> //added by lina 
+
 int	is_directory(char *path)
 {
-	struct stat statbuf;
+	struct stat	statbuf;
 
 	if (stat(path, &statbuf) != 0)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/30 10:04:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	handle_hrdoc_exp(char **res, char *tmp, int *i, t_env *new_env)
 		var_name = ft_substr(tmp, start, *i - start);
 		var_value = get_env_val(new_env, var_name);
 		if (var_value)
-			*res = ft_strjoin(*res, var_value);
+			*res = ft_strjoin_replace(*res, var_value, 'f');
 		free(var_name);
 	}
 	else
@@ -59,6 +59,7 @@ static char	*expand_hrdoc(char *tmp, t_env *new_env)
 	}
 	return (res);
 }
+
 char	*process_hrdoc(char *line, t_env *new_env)
 {
 	char	*tmp;

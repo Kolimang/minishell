@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 13:14:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:42:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_env	*clone_env(t_env *env)
 	t_env	*clone;
 	char	**env_as_array;
 
-	env_as_array = env_to_array(env, get_env_len(env));
+	env_as_array = env_to_array(env);
 	clone = init_env(env_as_array);
 	array_str_free(env_as_array, ft_arraylen(env_as_array));
 	return (clone);

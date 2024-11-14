@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/06 11:03:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:48:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_echo(char **args)
 		while (args[i])
 		{
 			if (!is_no_newl_option(args[i]))
-				break;
+				break ;
 			newline = 0;
 			i++;
 		}

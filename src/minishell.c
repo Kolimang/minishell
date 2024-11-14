@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 18:12:56 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:50:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	array_str_free(cmds, ft_arraylen(cmds));
 	pre_exec(commands, envs);
 	exec(commands, envs);
-	free_lists(lexemes, NULL);
+	free_lists(lexemes, commands);
 	return (0);
 }
 
@@ -87,7 +87,7 @@ int	execute(t_envs *envs)
 	char	*cmd;
 	char	**cmds;
 
-	printf("\033[0;38;5;214m=== MiNiSHELL %s ===\033[0m\n\n", VERSION);
+	printf("\033[0;38;5;214m === MiNiSHELL === \033[0m\n\n");
 	while (1)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");

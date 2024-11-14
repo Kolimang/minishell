@@ -91,6 +91,7 @@ void	append_to_str(char **res, char *tmp, int end, int start)
 	if (*res)
 	{
 		new_res = ft_strjoin(*res, new_part);
+		free(*res);//ADDED - fixing leaks
 		*res = new_res;
 	}
 	else

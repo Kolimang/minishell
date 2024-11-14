@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 11:55:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 09:57:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ void	free_commands(t_list *ls_commands)
 			free(redir->value);
 			free(redir);
 			free(temp2);
+			temp2 = NULL;
 		}
 		free(cmd);
 		free(temp);
+		temp = NULL;
 	}
 }
 

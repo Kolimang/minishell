@@ -56,7 +56,7 @@ valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh.sup
 echo hey guys | cat > file
 
 [WiP] minishell.c -> execute()
-		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels) 
+		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels)
 				commence ou se termine par un pipe (auquel cas `syntax error`)
 		\_ [v] Rework execute() function to make it shorter (split it into two or three func())
 		\_ [ ] Set appropriate return value when syntax error
@@ -127,11 +127,11 @@ echo hey guys | cat > file
 		\_ [ ] echo --(
 		\_ [ ] echo () hey
 		\_ [ ] $VAR (where 'VAR' has been previously exported with value "echo test")
-		\_ [ ] CAS CHIANTS !!! 
+		\_ [ ] CAS CHIANTS !!!
 		\_ [v] echo hello >1 >>2 >3
 		\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
 		--> faire des listes chainees pour les input/output, pour pouvoir supprimer les noeuds/files/fd dejas traites
-		--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere 
+		--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere
 		(par exemple, pour les inputs, f pour file, h pour heredoc)
 		\_ [ ] cat <<eof | (donne un prompt pour le heredoc suivi d'un prompt pour completer la commande... qu'on peut terminer par un pipe, et rebelote)
 		\_ [ ] cat (donne un prompt pour completer la commande, comme qd la commande se termine par un pipe, ET PUIS CA LOOPE jusqu'a Ctrl-D ou Ctrl-C)

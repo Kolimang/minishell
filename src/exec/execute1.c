@@ -12,20 +12,20 @@
 
 #include <minishell.h>
 
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
+int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env)
 {
 	int	ret_value;
 
 	if (set_fds(cmd, io) == -1)
 		return (-1);
-	ret_value = exec_builtin(cmd, l_env, cmds, 0);
+	ret_value = exec_builtin(cmd, l_env, g_env, 0);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
 // res = -1; --> Error: unknown built-in command
-int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
+int	exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag)
 {
 	int	res;
 
@@ -50,8 +50,8 @@ int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
 
 int	is_builtin(char *cmd)
 {
-	if(cmd == NULL)
-		return(0);
+	if (cmd == NULL)
+		return (0);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, "cd", 3) == 0)
@@ -98,7 +98,7 @@ char	*get_full_path(char **full_cmd, t_env *l_env)
 	paths = get_paths(l_env);
 	if (!paths)
 		return (NULL);
-	full_cmd[0] = ft_strjoin("/", full_cmd[0]);
+	full_cmd[0] = ft_strjoin_replace("/", full_cmd[0], 's');
 	while (paths[i])
 	{
 		full_path = ft_strjoin(paths[i], full_cmd[0]);
