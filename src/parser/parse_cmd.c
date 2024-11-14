@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:42:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:16:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 int	is_redir_symbol(t_lexeme *node)
 {
 	if (ft_strncmp(node->value, ">>", 2) == 0
-	|| ft_strncmp(node->value, "<<", 2) == 0
-	|| ft_strncmp(node->value, "<", 1) == 0
-	|| ft_strncmp(node->value, ">", 1) == 0)
+		|| ft_strncmp(node->value, "<<", 2) == 0
+		|| ft_strncmp(node->value, "<", 1) == 0
+		|| ft_strncmp(node->value, ">", 1) == 0)
 		return (1);
 	return (0);
 }
