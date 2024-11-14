@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 14:04:41 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:14:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static char	*expand_hrdoc(char *tmp, t_env *new_env)
 	}
 	return (res);
 }
+
 char	*process_hrdoc(char *line, t_env *new_env)
 {
 	char	*tmp;

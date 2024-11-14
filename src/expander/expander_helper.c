@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:09:36 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 			(*i)++;
 		append_to_str(&var, tmp, *i, start);
 		if (get_env_val(new_env, var))
-			*res = ft_strjoin_replace(*res, get_env_val(new_env, var), 'f'); //GET REAL VALUE // DEBUG changed
+			*res = ft_strjoin_replace(*res, get_env_val(new_env, var), 'f'); //GET REAL VALUE
 		else
 			*res = ft_strjoin_replace("", *res, 's');
 		return ;

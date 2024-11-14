@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:05:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	init_command(t_command *command)
 	command->nextpipe = 0;
 	command->fd_hrdoc = -3;
 }
-
-
 
 // Turn lexemes-list into commands-list
 t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
@@ -72,17 +70,14 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 
 	node = (*ls_lexemes)->content;
 	if (!is_redir_symbol(node))
-		return (set_as_arg(command, node), 0);
+		return (mark_as_arg(command, node), 0);
 	if (!(*ls_lexemes)->next)
-		return (merror("minishell", NULL,
-				"syntax error near unexpected token `newline\'", 258));
+		return (merror(NULL, NULL, "newline", 258));
 	nextnode = (*ls_lexemes)->next->content;
 	if (is_redir_symbol(nextnode))
-		return (merror("minishell: syntax error near unexpected token",
-				NULL, nextnode->value, 258));
+		return (merror(NULL, NULL, nextnode->value, 258));
 	if (ft_strlen(node->value) > 2)
-		return (merror("minishell",
-				NULL, "syntax error (bad redirection symbol)", 258));
+		return (merror(NULL, NULL, &node->value[2], 258));
 	temp = ls_lexemes;
 	if (ft_strncmp(node->value, ">>", 3) == 0)
 		ft_add_redir(temp, command, nextnode->value, APPEND);

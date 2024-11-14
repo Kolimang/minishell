@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/11 15:48:16 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:30:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@
 # include "sighandle.h"
 # include "env.h"
 # include "tokens.h"
+# include "parser.h"
 # include "utils.h"
 # include "expander.h"
-# include "parser.h"
 # include "exec.h"
 # include "builtin.h"
 

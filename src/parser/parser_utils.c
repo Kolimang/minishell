@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:22:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**get_args(t_list *ls_lexemes, int argc)
 	return (args);
 }
 
-void	set_as_arg(t_command *command, t_lexeme *node)
+void	mark_as_arg(t_command *command, t_lexeme *node)
 {
 	command->argc += 1;
 	node->type = 2;

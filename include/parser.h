@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:03:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:39:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int			is_redir_symbol(t_lexeme *node);
 int			handle_lexemes(t_list **ls_lexemes, t_command *command, int flag);
 void		ft_add_redir(t_list **ls_lexemes, t_command *command, char *redirvalue,
 				int type);
+void		mark_as_arg(t_command *command, t_lexeme *node);
 
 #endif
