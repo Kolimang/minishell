@@ -21,6 +21,8 @@ static int	check_name(char *name)
 	i = 1;
 	while (name[i])
 	{
+		if (name[i] == '+' && name[i + 1] && name[i + 1] == '=')
+			break ;
 		if (name[i] == '=')
 			break ;
 		if (!ft_isalnum(name[i]) && name[i] != '_')
@@ -30,7 +32,7 @@ static int	check_name(char *name)
 	return (0);
 }
 
-static int	check_value(char *str, char **name, char **value)
+static int	check_value(char *str, char **name, char **value, int *mode)
 {
 	char	*equal;
 	char	*temp;
@@ -40,7 +42,13 @@ static int	check_value(char *str, char **name, char **value)
 	if (equal)
 	{
 		len = equal - str;
-		*name = ft_substr(str, 0, (size_t)len);
+		if (str[len - 1] && str[len - 1] == '+')
+		{
+			*mode = 1;
+			*name = ft_substr(str, 0, (size_t)len - 1);
+		}
+		else
+			*name = ft_substr(str, 0, (size_t)len);
 		*value = ft_substr(str, len + 1, ft_strlen(str) - (size_t)(len + 1));
 		temp = ft_strtrim(*value, " \"\'");
 		free(*value);
@@ -60,8 +68,10 @@ int	ft_export(char **args, t_env **env)
 	char	*value;
 	int		i;
 	int		res;
+	int		mode;
 
 	res = 0;
+	mode = 0;
 	if (args && !args[1])
 		return (set_exit_status(print_env(*env, 1)));
 	if (args && args[1])
@@ -71,12 +81,9 @@ int	ft_export(char **args, t_env **env)
 		{
 			res = check_name(args[i]);
 			if (res)
-				merror(args[0], NULL, args[i], 10);
-			else
-			{
-				check_value(args[i], &name, &value);
-				update_env(name, value, env);
-			}
+				return(merror(args[0], NULL, args[i], 10));
+			check_value(args[i], &name, &value, &mode);
+			update_env(name, value, env, mode);
 			i++;
 		}
 	}
