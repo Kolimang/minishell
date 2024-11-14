@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 17:09:31 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:29:32 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,12 @@ int	init_envs(t_envs **envs, char **o_env)
 		return (EXIT_FAILURE);
 	}
 	*((*envs)->l_env) = init_env(o_env);
-	if (!(*envs)->l_env) // Ensure l_env is not NULL after initialization
+	if (!(*envs)->l_env)
 	{
 		free(*envs);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS); // Return success if l_env is properly initialized
+	return (EXIT_SUCCESS); 
 }
 int	cleanup_envs(t_envs *envs, int exit_code)
 {
@@ -153,35 +153,4 @@ int	cleanup_envs(t_envs *envs, int exit_code)
 	free(envs);
 	return (exit_code);
 }
-// int	main(int ac, char **av, char **o_env)
-// {
-// 	t_envs *envs;
 
-// 	(void)ac;
-// 	(void)av;
-// 	g_ret_value = 0;
-// 	init_signals();
-// 	envs = malloc(sizeof(t_envs));
-// 	if (!envs)
-// 		return (EXIT_FAILURE); 
-// 	envs->g_env = o_env;
-// 	envs->l_env = malloc(sizeof(t_env *));  
-//     if (!envs->l_env)
-//     {
-//         free(envs);
-//         return (EXIT_FAILURE);
-//     }
-// 	*(envs->l_env) = init_env(o_env);
-// 	if (!envs->l_env || change_term_attr() == 1)
-// 		return (EXIT_FAILURE);
-// 	//set_shlvl(l_env)
-// 	if (execute(envs) == EXIT_FAILURE)
-// 	{
-// 		free_env(envs->l_env);
-// 		free(envs);
-// 		return (EXIT_FAILURE);
-// 	}
-// 	free_env(envs->l_env);
-// 	free(envs);
-// 	return (EXIT_SUCCESS);
-// }

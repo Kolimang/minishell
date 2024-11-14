@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 17:06:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:29:10 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	main(int ac, char **av, char **o_env);
 int	ft_check_input_cmd(char **cmdref);
 int	init_envs(t_envs **envs, char **o_env);
 int	cleanup_envs(t_envs *envs, int exit_code);
-//testlina
-//t_list *mock_command_line(void);
 
 // added by jp - Comment out on Linux Mint
 int	rl_replace_line(char *, int);
