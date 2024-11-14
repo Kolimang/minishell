@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 16:22:22 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:42:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
 	else if (cmd->builtin == 6)
 		res = ft_env(cmd->args, *l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmd->args, *l_env, 0, flag);
+	   res = ft_exit(cmds, *l_env, 0, flag);
 	else
 		res = -1;
 	return (res);
@@ -174,7 +174,6 @@ int	execute_command(char *pathname, char **full, char **g_env)
 		free(pathname);
 		exit(127);
 	}
-	printf("hey\n");
 	return (0);
 }
 
