@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:51:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:54:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 // 	while (new_env) // determiner le new_env structu
 // 	{
 // 		if (ft_strncmp(new_env->var_name, var, ft_strlen(var) + 1) == 0)
-// 		{	
+// 		{
 // 			var = new_env->var_val;
 // 			return (var);
 // 		}

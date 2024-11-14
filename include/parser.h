@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 13:49:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:54:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef enum e_tok_type
 	INFILE = 1,
 	HERE_DOC,
 	OUTFILE,
-	APPEND,	
+	APPEND,
 }	t_tok_type;
 
 typedef enum e_builtin_type
@@ -26,7 +26,7 @@ typedef enum e_builtin_type
 	B_ECHO = 1,
 	B_CD,
 	B_PWD,
-	B_EXPORT,	
+	B_EXPORT,
 	B_UNSET,
 	B_ENV,
 	B_EXIT,
