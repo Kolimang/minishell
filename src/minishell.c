@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 16:16:57 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:36:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	main(int ac, char **av, char **o_env)
 	if (!envs)
 		return (EXIT_FAILURE); 
 	envs->g_env = o_env;
-	envs->l_env = malloc(sizeof(t_env *));  
+	envs->l_env = malloc(sizeof(t_env *));
     if (!envs->l_env)
     {
         free(envs);
@@ -143,7 +143,6 @@ int	main(int ac, char **av, char **o_env)
 		free(envs);
 		return (EXIT_FAILURE);
 	}
-	//handle_commands(env, &i, o_env);
 	free_env(envs->l_env);
 	free(envs);
 	return (EXIT_SUCCESS);
