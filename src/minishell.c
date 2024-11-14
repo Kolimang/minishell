@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 17:30:23 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:12:56 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_check_input_cmd(char **cmdref)
 	{
 		last = cmd[(int)ft_strlen(cmd) - 1];
 		if (cmd[0] == '|' || last == '|')
-			return (merror(NULL, NULL, "|", 258)); //return (merror(NULL, NULL, "syntax error near unexpected token `|'", 258));
+			return (merror(NULL, NULL, "|", 258));
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
@@ -45,7 +45,7 @@ int	check_commands(char **cmds, int *i)
 		{
 			*i = -1;
 			return (merror(NULL, NULL,
-				"syntax error near unexpected token `|'", 258));
+					"syntax error near unexpected token `|'", 258));
 		}
 		(*i)++;
 	}
@@ -77,7 +77,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	}
 	array_str_free(cmds, ft_arraylen(cmds));
 	pre_exec(commands, envs);
-	exec(commands,envs);
+	exec(commands, envs);
 	free_lists(lexemes, NULL);
 	return (0);
 }
@@ -110,6 +110,7 @@ int	execute(t_envs *envs)
 	}
 	return (EXIT_SUCCESS);
 }
+
 int	main(int ac, char **av, char **o_env)
 {
 	t_envs	*envs;
@@ -120,10 +121,9 @@ int	main(int ac, char **av, char **o_env)
 	init_signals();
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	//set_shlvl(l_env)
+	//set_shlvl(l_env);
 	if (change_term_attr() == 1 || execute(envs) == EXIT_FAILURE)
 		return (cleanup_envs(envs, EXIT_FAILURE));
-
 	return (cleanup_envs(envs, EXIT_SUCCESS));
 }
 

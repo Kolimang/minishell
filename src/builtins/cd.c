@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 17:53:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:13:22 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static int	go_home(char *dest_path, char *curr_path, t_env *env)
 	}
 	return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
 }
-
 static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 {
 	t_env	*head;
