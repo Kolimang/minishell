@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:03:41 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 06:54:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:11:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	change_term_attr(void)
 		perror("tcgetattr");
 		return (1);
 	}
-	//myterm.c_cc[VQUIT] = 0;
 	myterm.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &myterm) == -1)
 	{
