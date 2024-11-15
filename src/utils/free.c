@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:25:35 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:36:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	free_ls_lxm(t_list *ls_lxm)
 
 void	free_commands(t_list *ls_cmds)
 {
-	t_cmd	*cmd;
+	t_cmd		*cmd;
 	t_redir		*redir;
 	t_list		*temp;
 	t_list		*temp2;
