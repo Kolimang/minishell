@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 04:03:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:16:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	        execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cm
 int	        pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int	        exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int			is_builtin(char *cmd);
-//int			exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds);
 int			exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 char		*find_path(char **full_cmd, char *cmd);
 void		free_tab(char **paths);

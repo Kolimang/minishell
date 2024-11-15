@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 18:49:27 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 10:22:00 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
             return (merror("cd", NULL, NULL, 16));
         if (chdir((const char *)dest_path) != 0)
             return (free(curr_path), merror("cd", NULL, NULL, 17));
-        //free(curr_path);//DEBUG : I get double free if uncommented
         new_path = getcwd(NULL, 0);
         if (!new_path)
             return (merror("cd", NULL, NULL, 20));
