@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:38:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:42:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@
 // Declare global var
 extern int	g_ret_value;
 
-int	check_commands(char **cmds, int *i);
 int	handle_commands(t_envs *envs, char **cmds, int *i);
 int	minishell(t_envs *envs);
 int	main(int ac, char **av, char **o_env);
-int	ft_check_input_cmd(char **cmdref);
 
 // Commented out on Linux
 int	rl_replace_line(char *, int);
