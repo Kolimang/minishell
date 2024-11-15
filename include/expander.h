@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 16:59:08 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:05:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env);
 void	dup_word(char **res, char *str, int *i);
 void	handle_special_cases(char **res, char *tmp, int *i);
 void	handle_variable(char **res, char *var_name, t_env *new_env);
-
 
 #endif

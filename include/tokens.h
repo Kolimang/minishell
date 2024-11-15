@@ -6,18 +6,17 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:19:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
-// [str]   Original string
-// [value] Value after expansion
-// [type]  If heredoc token, then type = 1;
-// 			else if command arg, then type = 2;
-// 			else type = 0
+// str    Original string
+// value  Value after expansion
+// type   1 = heredoc token
+//		  2 = command argument
 typedef struct s_lexeme
 {
 	int					index;
@@ -45,25 +44,32 @@ typedef struct s_cmd_data
 int			ft_check_input_cmd(char **cmdref);
 int			check_commands(char **cmds, int *i);
 
+// handle_symbols1.c
+int			is_operator(char c);
+void		lex_handle_operators(char *cmd, int i, t_cmd_data *data);
+void		lex_handle_spaces(char *cmd, int i, t_cmd_data *data);
+void		lex_handle_regular(char *cmd, int i, t_cmd_data *data);
+int			lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
+
+// handle_symbols2.c
+void		lex_handle_quotes(char *cmd, int i, t_cmd_data *data);
+void		lex_handle_sq(char *cmd, int i, t_cmd_data *data);
+void		lex_handle_dq(char *cmd, int i, t_cmd_data *data);
+
+// heredoc.c
+t_list		*lex_handle_heredoc(t_cmd_data *dt, char *delim);
+char		*find_delim(t_list *tokens);
+
+// history.c
+void		ft_add_cmd_to_history(char *cmd);
+
 // lexemes.c
 t_lexeme	*create_lexeme(char *str);
 int			init_lexeme(char *lex_str, t_cmd_data *data, t_list	**ls_lxm);
 
-// ... .c
+// tokenize.c
 void		init_cmd_data(t_cmd_data *data);
-void		ft_add_cmd_to_history(char *cmd);
-int			is_operator(char c); // add dashes (- & --) in the set ?
-char		*find_delim(t_list *tokens);
 t_list		*ft_tokenize(char *cmd);
-void		lex_handle_operators(char *cmd, int i, t_cmd_data *data);
-void		lex_handle_spaces(char *cmd, int i, t_cmd_data *data);
-void		lex_handle_quotes(char *cmd, int i, t_cmd_data *data);
-void		lex_handle_sq(char *cmd, int i, t_cmd_data *data);
-void		lex_handle_dq(char *cmd, int i, t_cmd_data *data);
-void		lex_handle_regular(char *cmd, int i, t_cmd_data *data);
-int			lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
-t_list		*lex_handle_heredoc(t_cmd_data *dt, char *delim);
-//void		lex_handle_dashes(char *cmd, int i, t_cmd_data *data);
 int			create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lxm);
 void		reset_token_data(t_cmd_data *data, char c);
 void		set_token_len(char *cmd, int i, t_cmd_data *data);

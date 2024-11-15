@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:42:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:06:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef	struct s_envs
+typedef struct s_envs
 {
 	char	**g_env;
-	t_env	**l_env; 
+	t_env	**l_env;
 }	t_envs;
 
 t_env	*init_env(char **original_env);

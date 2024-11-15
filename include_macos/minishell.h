@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:03:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:28:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	minishell(t_envs *envs);
 int	main(int ac, char **av, char **o_env);
 
 // Commented out on Linux
-int	rl_replace_line(char *, int);
+int	rl_replace_line(char *str, int number);
 
 #endif
