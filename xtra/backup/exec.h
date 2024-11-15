@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 02:56:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:43:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	        close_fds(t_command *cmd, t_io_fd *io);
 void		wait_children(t_list *cmds);
 
 //execute1
+//int		execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env);
+//int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds);
 int	        execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+//int		exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag);
 int			exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag);
 int			is_builtin(char *cmd);
 int			exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds);
@@ -51,6 +54,7 @@ void		init_io_fd(t_io_fd *io);
 void		reset_io(t_io_fd *io, t_command *cmd);
 int			handle_error(const char *msg);
 int			is_last(t_list *curr);
+// int			is_last(t_list *curr, t_redir *redir);
 void		handle_closing(t_command *cmd, t_io_fd *io);
 
 void		return_error(char *arg);

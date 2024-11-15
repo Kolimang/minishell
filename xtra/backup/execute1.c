@@ -6,12 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 02:55:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 16:42:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+//int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
 int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	ret_value;
@@ -24,6 +25,7 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 	return (ret_value);
 }
 
+// res = -1; --> Error: unknown built-in command
 int	exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag)
 {
 	int	res;
@@ -165,6 +167,7 @@ char	*build_full_cmd(char *pathname, t_command *cmd)
 
 int	execute_command(char *pathname, char **full, char **g_env)
 {
+	//transformer l_env en char
 	if (execve(pathname, full, g_env) == -1)
 	{
 		perror("Execution failure");
@@ -184,7 +187,7 @@ int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		g_ret_value = exec_builtin(cmd, envs, cmds, 1);
+		g_ret_value = exec_builtin(cmd, envs, cmds, 1);//g_ret_value = exec_builtin(cmd, envs->l_env, cmds, 1);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 13:50:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 03:16:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 		(*i)++;
 	}
 	array_str_free(cmds, ft_arraylen(cmds));
+	free_lexemes(lexemes);
 	pre_exec(commands, envs);
 	exec(commands, envs);
-	free_lists(lexemes, commands);
+	free_commands(commands);
 	return (0);
 }
 

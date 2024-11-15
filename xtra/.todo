@@ -1,43 +1,14 @@
-==586385== LEAK SUMMARY:
-==586385==    definitely lost: 2,318 bytes in 87 blocks
-==586385==    indirectly lost: 4,407 bytes in 160 blocks
-==586385==      possibly lost: 0 bytes in 0 blocks
-==586385==    still reachable: 141 bytes in 6 blocks
-==586385==         suppressed: 208,301 bytes in 228 blocks
-
-==586030== LEAK SUMMARY:
-==586030==    definitely lost: 2,318 bytes in 87 blocks
-==586030==    indirectly lost: 4,407 bytes in 160 blocks
-==586030==      possibly lost: 0 bytes in 0 blocks
-==586030==    still reachable: 146 bytes in 7 blocks
-==586030==         suppressed: 208,301 bytes in 228 blocks
-
-==90754==    definitely lost: 1,184 bytes in 37 blocks
-==90754==    indirectly lost: 1,543 bytes in 74 blocks
-==90754==      possibly lost: 0 bytes in 0 blocks
-==90754==    still reachable: 305,803 bytes in 224 blocks
-==90754==         suppressed: 18,003 bytes in 163 blocks
-
-==88042==    definitely lost: 1,189 bytes in 38 blocks
-==88042==    indirectly lost: 1,543 bytes in 74 blocks
-==88042==      possibly lost: 0 bytes in 0 blocks
-==88042==    still reachable: 301,741 bytes in 219 blocks
-==88042==         suppressed: 18,003 bytes in 163 blocks
-
 ## To do :
 
--> [fixed] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
-
--> [done] proteger ft_unset() si pas d'environnement
-
--> export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
+-> [v] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
+-> [v] proteger ft_unset() si pas d'environnement
+-> [v] export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
+-> [v] rework fonction merror en fonction du type d'erreur
 
 -> revoir pertinence du pointeur &i dans execute ?
 
 -> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
 	-> [this one is fixed] pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
-
--> rework fonction merror en fonction du type d'erreur
 
 -> signaux sans sigaction ?
 
