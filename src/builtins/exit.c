@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:56:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static int	arg_is_number(char *arg)
 	return (1);
 }
 
-char **get_exit_args(t_list	*cmds)
+char	**get_exit_args(t_list	*cmds)
 {
-	t_list		*temp;
+	t_list	*temp;
 	t_cmd	*cmd;
 
 	temp = cmds;
@@ -46,7 +46,7 @@ char **get_exit_args(t_list	*cmds)
 
 t_cmd *get_exit_cmd(t_list	*cmds)
 {
-	t_list		*temp;
+	t_list	*temp;
 	t_cmd	*cmd;
 
 	temp = cmds;
@@ -76,9 +76,9 @@ int	handle_eof(int eof, t_envs *envs)
 
 int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 {
-	char		**args;
-	int			argc;
-	int			ret;
+	char	**args;
+	int		argc;
+	int		ret;
 	t_cmd	*cmd;
 
 	handle_eof(eof, envs);
