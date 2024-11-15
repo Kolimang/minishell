@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 06:50:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:06:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	main(int ac, char **av, char **o_env)
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
-	signal(SIGQUIT, SIG_IGN);//init_signals();
+	signal(SIGQUIT, SIG_IGN);
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	//set_shlvl(l_env);
