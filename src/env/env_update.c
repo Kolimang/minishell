@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:41:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:31:23 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	replace_head(t_env **env, t_env *new)
 
 static int	insert_inside(t_env **env, t_env *new)
 {
-	t_env *curr;
+	t_env	*curr;
 
 	curr = *env;
 	while (curr)

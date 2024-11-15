@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 16:04:31 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:30:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int	add_env_var(t_env **env, const char *var_name, const char *var_val,
 	}
 	return (0);
 }
-t_env *init_env(char **original_env)
+
+t_env	*init_env(char **original_env)
 {
-    t_env	*env;
-    t_env	*current;
-    char	*sep;
-    int		index;
-    int		i;
+	t_env	*env;
+	t_env	*c;
+	char	*sep;
+	int		index;
+	int		i;
 
 	env = NULL;
 	index = 0;
@@ -72,16 +73,14 @@ t_env *init_env(char **original_env)
 		if (sep)
 		{
 			*sep = '\0';
-			current = create_env_node(original_env[i], sep + 1, index++);
-			if (!current)
+			c = create_env_node(original_env[i], sep + 1, index++);
+			if (!c)
 				return (NULL);
 			*sep = '=';
-			if (add_env_var(&env, current->var_name, current->var_val,
-				current->index) == EXIT_FAILURE)
+			if (add_env_var(&env, c->var_name, c->var_val, c->index) == 1)
 				return (NULL);
-			free_env(&current);
+			free_env(&c);
 		}
 	}
 	return (env);
 }
-

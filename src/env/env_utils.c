@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:41:55 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:32:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	set_shlvl(t_env **env)
 	if (!current)
 		current = "0";
 	val = ft_atoi(current);
-	if (val < 0 ||  val >= 1000)
+	if (val < 0 || val >= 1000)
 	{
 		val = 0;
-		ft_putstr_fd("minishell: warning: SHLVL too high or low, resetting to 0\n", 2);
+		ft_putstr_fd("minishell: warning:resetting to 0\n", 2);
 	}
 	tmp = ft_itoa(val + 1);
 	cmd = malloc(sizeof(char *) * 3);
 	if (!cmd)
-		return;
+		return ;
 	cmd[0] = ft_strdup("export");
 	cmd[1] = ft_strjoin("SHLVL=", tmp);
 	cmd[2] = NULL;
@@ -80,7 +80,7 @@ static char	*node_to_line(t_env *node)
 	templine = ft_strjoin(node->var_name, "=");
 	if (!templine)
 		return (NULL);
-	line =  ft_strjoin(templine, node->var_val);
+	line = ft_strjoin(templine, node->var_val);
 	free(templine);
 	if (!line)
 		return (NULL);

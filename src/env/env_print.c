@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:36:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:31:13 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	print_env_sorted(t_env *env)
 	t_env	*clone;
 	t_env	*sorted;
 
-	clone  = clone_env(env);
+	clone = clone_env(env);
 	sort_env(&clone);
 	while (clone && clone->var_name)
 	{
