@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 11:03:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	handle_special_cases(char **res, char *tmp, int *i)
 	}
 	else if (tmp[*i] == '?')
 	{
-		exit_code_str = ft_itoa(g_ret_value);
+		exit_code_str = ft_itoa(g_ret_val);
 		*res = ft_strjoin(*res, exit_code_str);
 		free(exit_code_str);
 		(*i)++;

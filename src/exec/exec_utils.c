@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	reset_io(t_io_fd *io, t_cmd *cmd)
 
 int	handle_error(const char *msg)
 {
-	g_ret_value = EXIT_FAILURE;
+	g_ret_val = EXIT_FAILURE;
 	write(2, "minishell: ", 12);
 	perror(msg);
 	return (-1);
@@ -58,7 +58,7 @@ int	handle_error(const char *msg)
 
 void	return_error(char *arg)
 {
-	g_ret_value = EXIT_FAILURE;
+	g_ret_val = EXIT_FAILURE;
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("\n", 2);
 	exit(EXIT_FAILURE);

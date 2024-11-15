@@ -6,14 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:28:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 // Global var definition
-int		g_ret_value;
+int		g_ret_val;
 
 void	the_execution(t_list *commands, t_envs *envs)
 {
@@ -24,7 +24,7 @@ void	the_execution(t_list *commands, t_envs *envs)
 
 int	handle_commands(t_envs *envs, char **cmds, int *i)
 {
-	t_list		*lexemes;
+	t_list		*lxms;
 	t_list		*commands;
 	t_cmd	*command;
 
@@ -32,18 +32,18 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	*i = 0;
 	while (cmds[*i])
 	{
-		lexemes = ft_tokenize(cmds[*i]);
-		if (!lexemes)
+		lxms = ft_tokenize(cmds[*i]);
+		if (!lxms)
 			return (free_arr(cmds, array_len(cmds)), 1);
-		ft_expand_lexeme_list(lexemes, *(envs->l_env));
-		command = ft_parse_lexemes(lexemes, *i, array_len(cmds));
+		ft_expand_lexeme_list(lxms, *(envs->l_env));
+		command = ft_parse_lexemes(lxms, *i, array_len(cmds));
 		if (!command)
-			return (free_ls_lxm(lexemes), free_arr(cmds, array_len(cmds)), g_ret_value);
+			return (free_ls(lxms), free_arr(cmds, array_len(cmds)), g_ret_val);
 		if (!commands)
 			commands = ft_lstnew(command);
 		else
 			ft_lstadd_back(&commands, ft_lstnew(command));
-		free_ls_lxm(lexemes);
+		free_ls(lxms);
 		(*i)++;
 	}
 	free_arr(cmds, array_len(cmds));
@@ -107,7 +107,7 @@ int	main(int ac, char **av, char **o_env)
 
 	(void)ac;
 	(void)av;
-	g_ret_value = 0;
+	g_ret_val = 0;
 	signal(SIGQUIT, SIG_IGN);
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

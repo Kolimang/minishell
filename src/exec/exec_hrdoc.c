@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_hrdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:38:05 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	parent_heredoc_process(t_cmd *cmd, pid_t pid, int pipe_fd[2])
 	}
 	else if (WIFSIGNALED(status))
 	{
-		g_ret_value = WTERMSIG(status);
+		g_ret_val = WTERMSIG(status);
 		close(pipe_fd[0]);
 		return (-1);
 	}

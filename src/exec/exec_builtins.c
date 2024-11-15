@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ int	is_builtin(char *cmd)
 
 int	pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
-	g_ret_value = exec_builtin(cmd, io, envs, cmds);
+	g_ret_val = exec_builtin(cmd, io, envs, cmds);
 	return (0);
 }

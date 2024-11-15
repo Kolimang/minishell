@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:37:58 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 			exit(EXIT_FAILURE);
 		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, io, envs, cmds);
-		exit(g_ret_value);
+		exit(g_ret_val);
 	}
 	close_fds(cmd, io);
 	io->fd_in = io->pipe[0];
@@ -92,9 +92,9 @@ void	wait_children(t_list *cmds)
 		cmd = tmp->content;
 		waitpid(cmd->pid, &status, 0);
 		if (WIFEXITED(status))
-			g_ret_value = WEXITSTATUS(status);
+			g_ret_val = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			g_ret_value = 128 + WTERMSIG(status);
+			g_ret_val = 128 + WTERMSIG(status);
 		tmp = tmp->next;
 	}
 }

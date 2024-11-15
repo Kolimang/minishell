@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	handle_eof(int eof, t_envs *envs)
 	ft_printf("\033[A\033[11C");
 	ft_printf("exit\n");
 	cleanup_envs(envs, 0);
-	exit(g_ret_value);
+	exit(g_ret_val);
 }
 
 int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
@@ -92,12 +92,12 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 		merror(args[0], args[1], NULL, 22);
 	if (args && args[1] && arg_is_number(args[1])
 		&& ft_atoi(args[1]) >= 0)
-		g_ret_value = ft_atoi(args[1]) % 256;
+		g_ret_val = ft_atoi(args[1]) % 256;
 	else if (argc > 2)
 		merror(args[0], NULL, NULL, 13);
 	free_commands(cmds);
 	cleanup_envs(envs, 0);
 	if (io)
 		free(io);
-	exit(g_ret_value);
+	exit(g_ret_val);
 }

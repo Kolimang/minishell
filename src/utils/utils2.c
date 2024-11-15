@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/13 16:09:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ char	*ft_strjoin_replace(char *s1, char *s2, char autoref_string)
 
 int	set_exit_status(int exitcode)
 {
-	g_ret_value = exitcode;
+	g_ret_val = exitcode;
 	return (exitcode);
 }

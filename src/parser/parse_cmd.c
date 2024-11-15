@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:38:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 		ret = handle_lexemes(&temp, command, 1);
 		if (ret)
 		{
-			g_ret_value = ret;
+			g_ret_val = ret;
 			return (NULL);
 		}
 		temp = temp->next;
