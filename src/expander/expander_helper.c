@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:43:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:03:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	dup_word(char **res, char *str, int *i)
 
 void	expander(char **res, char *tmp, int *i, t_env *new_env)
 {
-	int	start;
-	char *var_name;
+	int		start;
+	char	*var_name;
 
 	(*i)++;
 	start = *i;
@@ -55,10 +55,11 @@ void	expander(char **res, char *tmp, int *i, t_env *new_env)
 void	handle_special_cases(char **res, char *tmp, int *i)
 {
 	char	*exit_code_str;
+	int		start;
 
 	if (ft_isdigit(tmp[*i]))
 	{
-		int start = *i;
+		start = *i;
 		while (tmp[*i] && tmp[*i] != DQ && tmp[*i] != ' ')
 			(*i)++;
 		append_to_str(res, tmp, *i, start + 1);
@@ -79,6 +80,7 @@ void	handle_variable(char **res, char *var_name, t_env *new_env)
 	else
 		*res = ft_strjoin(*res, "");
 }
+
 void	append_to_str(char **res, char *tmp, int end, int start)
 {
 	char	*new_part;

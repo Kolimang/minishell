@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:31:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:06:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	free_lists(t_list *ls_lexemes, t_list *ls_commands);
 
 // errors.c
 int		merror(char *cmd, char *arg, char *arg_q, int type);
+
+// errors2.c
+int		syntaxerror(char *arg_q, int type);
+int		invalid_identifier(char *cmd, char *arg, int type);
 
 // utils.c
 int		is_directory(char *path);

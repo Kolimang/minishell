@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:16:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:23:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,29 @@
 
 //execute
 void		exec(t_list *cmds, t_envs *envs);
+int			execute_command(char *pathname, char **full, char **g_env);
+int			exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int			handle_single_command(t_command *cmd, t_io_fd *io);
+
+//exec_child
 int			execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs);
 void		create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int	        close_fds(t_command *cmd, t_io_fd *io);
 void		wait_children(t_list *cmds);
+t_io_fd		*initialize_io_fd(void);
 
-//execute1
-int	        execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
-int	        pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
-int	        exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
-int			is_builtin(char *cmd);
-int			exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+//exec_paths
 char		*find_path(char **full_cmd, char *cmd);
 void		free_tab(char **paths);
 char		*get_full_path(char **full_cmd, t_env *l_env);
 char		**get_paths(t_env *l_env);
+char		*build_full_cmd(char *pathname, t_command *cmd);
+
+//exec_builtins
+int	        execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int	        pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int	        exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int			is_builtin(char *cmd);
 
 //exec_hrdoc
 void		pre_exec(t_list *cmds, t_envs *envs);

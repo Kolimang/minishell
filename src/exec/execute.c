@@ -6,21 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:03:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:19:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-t_io_fd	*initialize_io_fd(void)
-{
-	t_io_fd	*io;
-
-	io = malloc(sizeof(t_io_fd));
-	if (io)
-		init_io_fd(io);
-	return (io);
-}
 
 int	handle_single_command(t_command *cmd, t_io_fd *io)
 {
@@ -61,79 +51,43 @@ void	exec(t_list *cmds, t_envs *envs)
 	free(io);
 }
 
-int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
+int	execute_command(char *pathname, char **full, char **g_env)
 {
-	t_command	*cmd;
-	t_list		*tmp;
-
-	tmp = cmds;
-	while (tmp)
+	if (execve(pathname, full, g_env) == -1)
 	{
-		cmd = tmp->content;
-		if (!tmp->next)
-			break ;
-		if (pipe(io->pipe) == -1)
-			return (-1);
-		create_child(cmd, io, envs, cmds);
-		tmp = tmp->next;
+		perror("Execution failure");
+		free_tab(full);
+		free(pathname);
+		exit(127);
 	}
-	if (tmp)
-		create_child(cmd, io, envs, cmds);
-	wait_children(cmds);
 	return (0);
 }
 
-int	close_fds(t_command *cmd, t_io_fd *io)
+int	exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
-	if (cmd->prevpipe)
-		close(io->fd_in);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
+	char	*pathname;
+	char	**full_cmd;
+	char	*real_full;
+	char	**full;
+
+	cmd->builtin = is_builtin(cmd->args[0]);
+	if (cmd->builtin)
+		pre_exec_builtin(cmd, io, envs, cmds);	
+	else
+	{
+		full_cmd = ft_split(cmd->args[0], ' ');
+		if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
+			pathname = find_path(full_cmd, cmd->args[0]);
+		else
+			pathname = get_full_path(full_cmd, *(envs->l_env));
+		if (!pathname)
+			exit(merror(cmd->args[0], NULL, NULL, 127));
+		real_full = build_full_cmd(pathname, cmd);
+		full = ft_split(real_full, ' ');
+		free(real_full);
+		execute_command(pathname, full,envs->g_env);
+		free_tab(full);
+		free_tab(full_cmd);
+	}
 	return (0);
-}
-
-void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
-{
-	t_redir	*redir;
-
-	if (cmd->ls_redirs)
-		redir = cmd->ls_redirs->content;
-	cmd->pid = fork();
-	signal(SIGINT, sig_handler_child);
-	if (cmd->pid == -1)
-	{
-		handle_error("fork");
-		return ;
-	}
-	if (cmd->pid == 0)
-	{
-		if (set_fds(cmd, io) == -1)
-			exit(EXIT_FAILURE);
-		if (cmd->args && cmd->args[0])
-			exec_cmd(cmd, io, envs, cmds);
-		exit(g_ret_value);
-	}
-	close_fds(cmd, io);
-	io->fd_in = io->pipe[0];
-}
-
-void	wait_children(t_list *cmds)
-{
-	t_command	*cmd;
-	t_list		*tmp;
-	int			status;
-
-	tmp = cmds;
-	while (tmp)
-	{
-		cmd = tmp->content;
-		waitpid(cmd->pid, &status, 0);
-		if (WIFEXITED(status))
-			g_ret_value = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			g_ret_value = 128 + WTERMSIG(status);
-		tmp = tmp->next;
-	}
 }
