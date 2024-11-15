@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:56:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:57:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**get_exit_args(t_list	*cmds)
 	return (NULL);
 }
 
-t_cmd *get_exit_cmd(t_list	*cmds)
+t_cmd	*get_exit_cmd(t_list	*cmds)
 {
 	t_list	*temp;
 	t_cmd	*cmd;
