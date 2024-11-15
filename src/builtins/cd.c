@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 11:52:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:45:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 
 static char	*get_home_path(t_env *env)
 {
-	t_env *head;
+	t_env	*head;
 
 	if (!env)
 		return (NULL);
@@ -57,8 +57,8 @@ static char	*get_home_path(t_env *env)
 
 static int	go_home(char *dest_path, char *curr_path, t_env *env)
 {
-	char *home_path;
-	char *new_path;
+	char	*home_path;
+	char	*new_path;
 
 	home_path = get_home_path(env);
 	if (!home_path || home_path[0] == '\0')
@@ -112,7 +112,7 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 
 static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 {
-	char *new_path;
+	char	*new_path;
 
 	if (allowedoption && dest_path[0] == '-')
 		return (merror("cd", dest_path, NULL, 19));
