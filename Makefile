@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/15 15:12:55 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/15 15:19:40 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,8 +80,8 @@ FILES     := 	builtins/cd \
 				lexer/tokenize \
 				parser/parse_cmd \
 				parser/parser_utils \
-				signals/signals.c \
-				signals/signals2.c \
+				signals/signals \
+				signals/signals2 \
 				utils/errors \
 				utils/errors2 \
 				utils/free \
@@ -121,7 +121,7 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@) # Create the directory for the object file if it doesn't exist
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	make clean -C lib/libft/
