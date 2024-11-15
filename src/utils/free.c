@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:22:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_arr(char **array, int limit)
 	free(array);
 }
 
-void	free_ls_lxmt_list *ls_lexemes)
+void	free_ls_lxm(t_list *ls_lexemes)
 {
 	t_lexeme	*lex;
 	t_list		*temp;
@@ -79,6 +79,6 @@ void	free_commands(t_list *ls_commands)
 
 void	free_lists(t_list *ls_lexemes, t_list *ls_commands)
 {
-	free_ls_lxmls_lexemes);
+	free_ls_lxm(ls_lexemes);
 	free_commands(ls_commands);
 }
