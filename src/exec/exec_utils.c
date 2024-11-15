@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/05 12:13:34 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_io_fd(t_io_fd *io)
 	}
 }
 
-void	reset_io(t_io_fd *io, t_command *cmd)
+void	reset_io(t_io_fd *io, t_cmd *cmd)
 {
 	if (dup2(io->std_in, STDIN_FILENO) == -1)
 	{

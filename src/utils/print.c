@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:45:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_printarray(char **array, char separator)
 	while (array[i])
 	{
 		ft_printf("%s", array[i]);
-		if (i < (ft_arraylen(array) - 1))
+		if (i < (array_len(array) - 1))
 			ft_printf("%c", separator);
 		i++;
 	}
@@ -74,7 +74,7 @@ void	ft_print_lexemes(t_list *list, int option, char separator, char *title)
 		printf("\n");
 }
 
-void	ft_print_command(t_command *command)
+void	ft_print_cmd(t_cmd *command)
 {
 	ft_printf("argc             : %d\n", command->argc);
 	ft_printf("args             : ");
@@ -88,7 +88,7 @@ void	ft_print_command(t_command *command)
 	ft_printf("--- --- --- --- --- ---\n");
 }
 
-void	ft_print_redir(t_command *command)
+void	ft_print_redir(t_cmd *command)
 {
 	t_redir	*redir;
 	t_list	*rdlist;
@@ -104,7 +104,7 @@ void	ft_print_redir(t_command *command)
 	{
 		rdlist = command->ls_redirs;
 		redir = rdlist->content;
-		ft_printf("%s (type:%d)", redir->value, redir->type);
+		ft_printf("%s (type:%d)", redir->val, redir->type);
 		if (command->ls_redirs->next)
 			ft_printf(", ");
 		command->ls_redirs = command->ls_redirs->next;

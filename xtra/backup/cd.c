@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 18:49:27 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:52:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int	ft_cd(char **args, t_env *env)
 	res = 0;
 	dest_path = NULL;
 	curr_path = NULL;
-	argc = ft_arraylen(args);
+	argc = array_len(args);
 	if (argc == 1 || (argc == 2 && !ft_strncmp(args[1], "--", 3))
 		|| !ft_strncmp(args[1], "~", 2))
 	{

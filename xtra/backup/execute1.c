@@ -6,14 +6,14 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 16:42:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+//int	execute_nofork(t_cmd *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
+int	execute_nofork(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	ret_value;
 
@@ -26,7 +26,7 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 }
 
 // res = -1; --> Error: unknown built-in command
-int	exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag)
+int	exec_builtin(t_cmd *cmd, t_envs *envs, t_list *cmds, int flag)
 {
 	int	res;
 
@@ -146,7 +146,7 @@ char	*find_path(char **full_cmd, char *cmd)
 	return (NULL);
 }
 
-char	*build_full_cmd(char *pathname, t_command *cmd)
+char	*build_full_cmd(char *pathname, t_cmd *cmd)
 {
 	char	*real_full;
 	char	*temp;
@@ -178,7 +178,7 @@ int	execute_command(char *pathname, char **full, char **g_env)
 	return (0);
 }
 
-int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
+int	exec_cmd(t_cmd *cmd, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
 	char	**full_cmd;

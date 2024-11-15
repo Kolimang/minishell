@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 11:24:35 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+int	execute_nofork(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	ret_value;
 
@@ -24,7 +24,7 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 	return (ret_value);
 }
 
-int	exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+int	exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	res;
 
@@ -68,7 +68,7 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-int	pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+int	pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	g_ret_value = exec_builtin(cmd, io, envs, cmds);
 	return (0);

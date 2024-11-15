@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 07:08:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_command(t_command *command)
+void	init_cmd(t_cmd *command)
 {
 	command->pid = 0;
 	command->argc = 0;
@@ -25,17 +25,17 @@ void	init_command(t_command *command)
 }
 
 // Turn lexemes-list into commands-list
-t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
+t_cmd	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 {
-	t_command	*command;
+	t_cmd	*command;
 	t_list		*temp;
 	int			i;
 	int			ret;
 
-	command = malloc(sizeof(t_command));
+	command = malloc(sizeof(t_cmd));
 	if (!command)
 		return (NULL);
-	init_command(command);
+	init_cmd(command);
 	check_pipes(command, id, nb_commands);
 	i = 0;
 	temp = ls_lexemes;
@@ -63,7 +63,7 @@ int	is_redir_symbol(t_lexeme *node)
 	return (0);
 }
 
-int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
+int	handle_lexemes(t_list **ls_lexemes, t_cmd *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
@@ -91,14 +91,14 @@ int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 	return (0);
 }
 
-void	ft_add_redir(t_list **ls_lexemes, t_command *cmd, char *value, int type)
+void	ft_add_redir(t_list **ls_lexemes, t_cmd *cmd, char *value, int type)
 {
 	t_redir	*redir;
 	t_list	**temp;
 
 	temp = ls_lexemes;
 	redir = malloc(sizeof(t_redir));
-	redir->value = ft_strdup(value);
+	redir->val = ft_strdup(value);
 	redir->type = type;
 	if (!cmd->ls_redirs)
 		cmd->ls_redirs = ft_lstnew(redir);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 11:44:44 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 {
 	t_list		*lexemes;
 	t_list		*commands;
-	t_command	*command;
+	t_cmd	*command;
 
 	commands = NULL;
 	*i = 0;
@@ -34,11 +34,11 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	{
 		lexemes = ft_tokenize(cmds[*i]);
 		if (!lexemes)
-			return (array_str_free(cmds, ft_arraylen(cmds)), 1);
+			return (free_arr(cmds, array_len(cmds)), 1);
 		ft_expand_lexeme_list(lexemes, *(envs->l_env));
-		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
+		command = ft_parse_lexemes(lexemes, *i, array_len(cmds));
 		if (!command)
-			return (free_lexemes(lexemes), array_str_free(cmds, ft_arraylen(cmds)), g_ret_value);
+			return (free_lexemes(lexemes), free_arr(cmds, array_len(cmds)), g_ret_value);
 		if (!commands)
 			commands = ft_lstnew(command);
 		else
@@ -46,7 +46,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 		free_lexemes(lexemes);
 		(*i)++;
 	}
-	array_str_free(cmds, ft_arraylen(cmds));
+	free_arr(cmds, array_len(cmds));
 	the_execution(commands, envs);
 	return (0);
 }
@@ -74,7 +74,7 @@ int	minishell(t_envs *envs)
 			if (check_commands(cmds, &i) == EXIT_SUCCESS)
 				handle_commands(envs, cmds, &i);
 			else
-				array_str_free(cmds, ft_arraylen(cmds));
+				free_arr(cmds, array_len(cmds));
 		}
 	}
 	return (EXIT_SUCCESS);

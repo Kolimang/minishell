@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 11:11:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*find_path(char **full_cmd, char *cmd)
 	return (NULL);
 }
 
-char	*build_full_cmd(char *pathname, t_command *cmd)
+char	*build_full_cmd(char *pathname, t_cmd *cmd)
 {
 	char	*real_full;
 	char	*temp;

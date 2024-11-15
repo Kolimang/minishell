@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 11:18:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_io_fd	*initialize_io_fd(void)
 
 int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 	t_list		*tmp;
 
 	tmp = cmds;
@@ -44,7 +44,7 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 	return (0);
 }
 
-int	close_fds(t_command *cmd, t_io_fd *io)
+int	close_fds(t_cmd *cmd, t_io_fd *io)
 {
 	if (cmd->prevpipe)
 		close(io->fd_in);
@@ -55,7 +55,7 @@ int	close_fds(t_command *cmd, t_io_fd *io)
 	return (0);
 }
 
-void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	t_redir	*redir;
 
@@ -82,7 +82,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 
 void	wait_children(t_list *cmds)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 	t_list		*tmp;
 	int			status;
 

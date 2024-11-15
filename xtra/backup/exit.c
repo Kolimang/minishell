@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 17:09:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	arg_is_number(char *arg)
 // 		ft_printf("\033[A\033[11C");
 // 	ft_printf("exit\n");
 // 	ret = 0;
-// 	argc = ft_arraylen(args);
+// 	argc = array_len(args);
 // 	if (args && args[1] && !arg_is_number(args[1]))
 // 	{
 // 		g_ret_value = 255;
@@ -49,7 +49,7 @@ static int	arg_is_number(char *arg)
 // 		g_ret_value = 1;
 // 		merror(args[0], NULL, "too many arguments", 1);
 // 	}
-// 	array_str_free(args, ft_arraylen(args));
+// 	free_arr(args, array_len(args));
 // 	free_env(&env);
 // 	exit(g_ret_value); // Check if I should really return that value
 // }
@@ -58,7 +58,7 @@ static int	arg_is_number(char *arg)
 char **get_exit_args(t_list	*cmds)
 {
 	t_list		*temp;
-	t_command	*cmd;
+	t_cmd	*cmd;
 
 	temp = cmds;
 	while (temp)
@@ -78,7 +78,7 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, int flag)
 	char		**args;
 	int			argc;
 	int			ret;
-	t_command	*cmd;
+	t_cmd	*cmd;
 
 	if (eof)
 		ft_printf("\033[A\033[11C");
@@ -86,7 +86,7 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, int flag)
 		ft_printf("exit\n");
 	ret = 0;
 	args = get_exit_args(cmds);
-	argc = ft_arraylen(args);
+	argc = array_len(args);
 	if (args && args[1] && !arg_is_number(args[1]))
 		merror(args[0], args[1], NULL, 22);
 	if (args && args[1] && arg_is_number(args[1])

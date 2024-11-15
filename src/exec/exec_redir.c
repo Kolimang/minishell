@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 09:32:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	is_redir_in(t_redir *redir)
 	return (0);
 }
 
-int	redir_infile(t_command *cmd, t_io_fd *io)
+int	redir_infile(t_cmd *cmd, t_io_fd *io)
 {
 	t_list	*tmp;
 	t_redir	*redir;
@@ -95,15 +95,15 @@ int	redir_infile(t_command *cmd, t_io_fd *io)
 	return (1);
 }
 
-int	get_infile(t_command *cmd, t_redir *redir, t_io_fd *io)
+int	get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 {
 	if (redir->type == INFILE)
 	{
 		if (io->fd_in > 0)
 			close(io->fd_in);
-		io->fd_in = open(redir->value, O_RDONLY);
+		io->fd_in = open(redir->val, O_RDONLY);
 		if (io->fd_in == -1)
-			return (handle_error(redir->value));
+			return (handle_error(redir->val));
 	}
 	else if (redir->type == HERE_DOC)
 	{
@@ -129,7 +129,7 @@ int	is_redir_out(t_redir *redir)
 	return (0);
 }
 
-int	redir_outfile(t_command *cmd, t_io_fd *io)
+int	redir_outfile(t_cmd *cmd, t_io_fd *io)
 {
 	t_list	*tmp;
 	t_redir	*redir;
@@ -158,16 +158,16 @@ int	redir_outfile(t_command *cmd, t_io_fd *io)
 	return (1);
 }
 
-int	get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
+int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 {
 	if (io->fd_out != -2)
 		close(io->fd_out);
 	if (redir->type == OUTFILE)
-		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		io->fd_out = open(redir->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (redir->type == APPEND)
-		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		io->fd_out = open(redir->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (io->fd_out == -1)
-		return (handle_error(redir->value));
+		return (handle_error(redir->val));
 	if (!cmd->nextpipe)
 	{
 		signal(SIGINT, newline_hook);
@@ -177,7 +177,7 @@ int	get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 	return (0);
 }
 
-int	set_fds(t_command *cmd, t_io_fd *io)
+int	set_fds(t_cmd *cmd, t_io_fd *io)
 {
 	t_list	*tmp;
 

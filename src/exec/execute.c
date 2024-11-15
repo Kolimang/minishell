@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 11:19:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	handle_single_command(t_command *cmd, t_io_fd *io)
+int	handle_single_command(t_cmd *cmd, t_io_fd *io)
 {
 	if (set_fds(cmd, io) == -1)
 	{
@@ -25,7 +25,7 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 
 void	exec(t_list *cmds, t_envs *envs)
 {
-	t_command	*cmd;
+	t_cmd	*cmd;
 	t_io_fd		*io;
 
 	if (!cmds)
@@ -63,7 +63,7 @@ int	execute_command(char *pathname, char **full, char **g_env)
 	return (0);
 }
 
-int	exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
 	char	**full_cmd;

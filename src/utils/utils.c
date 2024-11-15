@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 14:48:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:52:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	char_in_set(char *s, char c)
 	return (0);
 }
 
-int	ft_arraylen(char **array)
+int	array_len(char **array)
 {
 	int	i;
 
