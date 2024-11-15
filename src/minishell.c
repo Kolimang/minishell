@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:51:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:02:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	the_execution(t_list *commands, t_envs *envs)
 
 int	handle_commands(t_envs *envs, char **cmds, int *i)
 {
-	t_list		*lxms;
-	t_list		*commands;
+	t_list	*lxms;
+	t_list	*commands;
 	t_cmd	*command;
 
 	commands = NULL;
