@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 04:19:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:26:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define DQ 34
 
 # define VERSION "v0.7"
-# define DEBUG 1
+# define DEBUG 0
 
 // Declare global var
 extern int	g_ret_value;
