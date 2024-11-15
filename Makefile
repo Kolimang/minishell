@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/15 13:47:53 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/15 15:12:55 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ else
 
 #	Paths to readline library (installed with brew)
 	ifeq ($(USER), jrichir)
-#	    RL_H    	+= /Users/jrichir/mybin/opt/readline/include
 		RL_H    	:= /Users/jrichir/.brew/opt/readline/include
 		RL_LIB  	:= /Users/jrichir/mybin/opt/readline/lib
 	else
@@ -43,22 +42,56 @@ else
 endif
 
 CFLAGS    := -I$(INC_DIR) -I$(INC_DIR2) -g3 -Wall -Wextra -Werror
-# CFLAGS    := -I$(INC_DIR) -g -fsanitize=address
-# CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fsanitize=address
-# CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
 LIBFT     := lib/libft/libft.a
 
 RM        := rm -f
 
-# Use wildcard to collect all .c files recursively in src/ and subdirectories
-SRCS := $(wildcard $(SRC_DIR)*/*.c) $(wildcard $(SRC_DIR)*/**/*.c)
-OBJS := $(OBJ_DIR)minishell.o $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRCS:$(SRC_DIR)minishell.c=))
+FILES     := 	builtins/cd \
+				builtins/echo \
+				builtins/env \
+				builtins/exit \
+				builtins/export \
+				builtins/pwd \
+				builtins/unset\
+				env/env_free \
+				env/env_init \
+				env/env_print \
+				env/env_sort \
+				env/env_update \
+				env/env_utils \
+				exec/exec_builtins \
+				exec/exec_child \
+				exec/exec_hrdoc \
+				exec/exec_paths \
+				exec/exec_redir_in \
+				exec/exec_redir_out \
+				exec/exec_utils \
+				exec/execute \
+				expander/exp_hr \
+				expander/expander_helper \
+				expander/expander \
+				lexer/check_input \
+				lexer/handle_symbols1 \
+				lexer/handle_symbols2 \
+				lexer/heredoc \
+				lexer/history \
+				lexer/lexemes \
+				lexer/tokenize \
+				parser/parse_cmd \
+				parser/parser_utils \
+				signals/signals.c \
+				signals/signals2.c \
+				utils/errors \
+				utils/errors2 \
+				utils/free \
+				utils/print \
+				utils/utils \
+				utils/utils2 \
+				minishell
 
-#Back-up:
-#FILES     := minishell
-#SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-#OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+SRCS      := $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+OBJS      := $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
 
 # --------------------------------- RULES --------------------------------------
 
@@ -86,7 +119,6 @@ $(OBJ_DIR):
 		mkdir -p $(OBJ_DIR); \
 	fi
 
-# Ensure the directory structure for object files exists before compiling
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@) # Create the directory for the object file if it doesn't exist
 	@$(CC) $(CFLAGS) -c $< -o $@
