@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 13:47:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 09:32:39 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,8 +168,12 @@ int	get_outfile(t_command *cmd, t_redir *redir, t_io_fd *io)
 		io->fd_out = open(redir->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (io->fd_out == -1)
 		return (handle_error(redir->value));
-	if (!cmd->nextpipe && io->pipe[1] != -1)
-		close(io->pipe[1]);
+	if (!cmd->nextpipe)
+	{
+		signal(SIGINT, newline_hook);
+		if (io->pipe[1] != -1)
+			close(io->pipe[1]);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 06:49:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 09:42:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exec(t_list *cmds, t_envs *envs)
 	cmd = cmds->content;
 	if (cmds->next == NULL && !(cmd->args[0]))
 	{
-		if (handle_single_command(cmd, io) == -1) // free io before return ?
+		if (handle_single_command(cmd, io) == -1)
 			return ;
 	}
 	else

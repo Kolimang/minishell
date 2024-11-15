@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 07:20:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 09:35:54 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	free_commands(t_list *ls_commands)
 	t_list		*temp;
 	t_list		*temp2;
 
-	ft_printf("free commands");
 	while (ls_commands)
 	{
 		temp = ls_commands;

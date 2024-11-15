@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 07:17:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 09:58:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,29 @@ t_command *get_exit_cmd(t_list	*cmds)
 	t_list		*temp;
 	t_command	*cmd;
 
-	ft_printf("top %p\n", cmds);//DEBUG
 	temp = cmds;
 	while (temp)
 	{
 		cmd = cmds->content;
 		if (!ft_strncmp(cmd->args[0], "exit", 5))
 		{
-			ft_printf("hip %p\n", cmd);//DEBUG
+			if (temp->next)
+				cmd->eflag = 1;
 			return (cmd);
 		}
 		temp = temp->next;
 	}
 	return (NULL);
+}
+
+int	handle_eof(int eof, t_envs *envs)
+{
+	if (!eof)
+		return (0);
+	ft_printf("\033[A\033[11C");
+	ft_printf("exit\n");
+	cleanup_envs(envs, 0);
+	exit(g_ret_value);
 }
 
 int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
@@ -71,17 +81,13 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 	int			ret;
 	t_command	*cmd;
 
+	handle_eof(eof, envs);
 	cmd = get_exit_cmd(cmds);
-	//ft_print_command(cmd);
+	printf("%d\n", cmd->eflag);
 	args = get_exit_args(cmds);
 	argc = ft_arraylen(args);
-	if (eof)
-		ft_printf("\033[A\033[11C");
-	ft_printf("bloblo %p\n", cmd);//DEBUG
-
-	if ((*cmd).eflag == 0)
+	if (cmd->eflag == 1)
 		ft_printf("exit\n");
-	ft_printf("blabla\n");//DEBUG
 	ret = 0;
 	if (args && args[1] && !arg_is_number(args[1]))
 		merror(args[0], args[1], NULL, 22);
