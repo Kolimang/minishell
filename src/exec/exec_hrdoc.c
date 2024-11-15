@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 05:00:52 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 06:50:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env,
 	char	*line;
 
 	close(pipe_fd[0]);
+	signal(SIGINT, sig_handler_hrdoc);
 	while (1)
 	{
 		line = readline("> ");
@@ -82,7 +83,7 @@ void	child_heredoc_process(t_command *cmd, t_env *local_env,
 		if (!line)
 			break ;
 		if (ft_strncmp(line, redir->value,
-				ft_strlen(redir->value) + 1) == 0)
+				ft_strlen(redir->value) + 1) == 0 || *(sig_status()) == 1)
 		{
 			free(line);
 			break ;

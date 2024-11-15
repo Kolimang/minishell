@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 06:00:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 06:50:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int	minishell(t_envs *envs)
 	char	*cmd;
 	char	**cmds;
 
-	printf("\033[0;38;5;214m === MiNiSHELL === \033[0m\n\n");
 	while (1)
 	{
+		signal(SIGINT, sig_handler_main);
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
 			ft_exit(NULL, envs, 1, NULL);
@@ -139,7 +139,7 @@ int	main(int ac, char **av, char **o_env)
 	(void)ac;
 	(void)av;
 	g_ret_value = 0;
-	init_signals();
+	signal(SIGQUIT, SIG_IGN);//init_signals();
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	//set_shlvl(l_env);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 03:55:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 06:49:33 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 	if (cmd->ls_redirs)
 		redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
-	// signal here
+	signal(SIGINT, sig_handler_child);
 	if (cmd->pid == -1)
 	{
 		handle_error("fork");

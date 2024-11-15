@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 03:43:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 07:08:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	init_command(t_command *command)
 	command->argc = 0;
 	command->args = NULL;
 	command->ls_redirs = NULL;
+	command->eflag = 0;
 	command->prevpipe = 0;
 	command->nextpipe = 0;
 	command->fd_hrdoc = -3;
-	command->exitflag = 0;
 }
 
 // Turn lexemes-list into commands-list

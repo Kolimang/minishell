@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 04:22:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 07:07:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int	execute_command(char *pathname, char **full, char **g_env)
 
 int	pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
-	cmd->exitflag = 1;
+	cmd->eflag = 1;
 	g_ret_value = exec_builtin(cmd, io, envs, cmds);
 	return (0);
 }
