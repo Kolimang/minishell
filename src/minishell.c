@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 11:40:38 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:44:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 // Global var definition
 int		g_ret_value;
+
+void	the_execution(t_list *commands, t_envs *envs)
+{
+	pre_exec(commands, envs);
+	exec(commands, envs);
+	free_commands(commands);
+}
 
 int	handle_commands(t_envs *envs, char **cmds, int *i)
 {
@@ -40,9 +47,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 		(*i)++;
 	}
 	array_str_free(cmds, ft_arraylen(cmds));
-	pre_exec(commands, envs);
-	exec(commands, envs);
-	free_commands(commands);
+	the_execution(commands, envs);
 	return (0);
 }
 
