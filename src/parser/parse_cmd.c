@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_cmd(t_cmd *command)
 }
 
 // Turn lexemes-list into commands-list
-t_cmd	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
+t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 {
 	t_cmd	*command;
 	t_list		*temp;
@@ -38,7 +38,7 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 	init_cmd(command);
 	check_pipes(command, id, nb_commands);
 	i = 0;
-	temp = ls_lexemes;
+	temp = ls_lxm;
 	while (temp)
 	{
 		ret = handle_lexemes(&temp, command, 1);
@@ -49,7 +49,7 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 		}
 		temp = temp->next;
 	}
-	command->args = get_args(ls_lexemes, command->argc);
+	command->args = get_args(ls_lxm, command->argc);
 	return (check_cmd(command));
 }
 
@@ -63,23 +63,23 @@ int	is_redir_symbol(t_lexeme *node)
 	return (0);
 }
 
-int	handle_lexemes(t_list **ls_lexemes, t_cmd *command, int flag)
+int	handle_lexemes(t_list **ls_lxm, t_cmd *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
 	t_list		**temp;
 
-	node = (*ls_lexemes)->content;
+	node = (*ls_lxm)->content;
 	if (!is_redir_symbol(node))
 		return (mark_as_arg(command, node), 0);
-	if (!(*ls_lexemes)->next)
+	if (!(*ls_lxm)->next)
 		return (merror(NULL, NULL, "newline", 258));
-	nextnode = (*ls_lexemes)->next->content;
+	nextnode = (*ls_lxm)->next->content;
 	if (is_redir_symbol(nextnode))
 		return (merror(NULL, NULL, nextnode->value, 258));
 	if (ft_strlen(node->value) > 2)
 		return (merror(NULL, NULL, &node->value[2], 258));
-	temp = ls_lexemes;
+	temp = ls_lxm;
 	if (ft_strncmp(node->value, ">>", 3) == 0)
 		ft_add_redir(temp, command, nextnode->value, APPEND);
 	else if (ft_strncmp(node->value, "<<", 3) == 0)
@@ -91,12 +91,12 @@ int	handle_lexemes(t_list **ls_lexemes, t_cmd *command, int flag)
 	return (0);
 }
 
-void	ft_add_redir(t_list **ls_lexemes, t_cmd *cmd, char *value, int type)
+void	ft_add_redir(t_list **ls_lxm, t_cmd *cmd, char *value, int type)
 {
 	t_redir	*redir;
 	t_list	**temp;
 
-	temp = ls_lexemes;
+	temp = ls_lxm;
 	redir = malloc(sizeof(t_redir));
 	redir->val = ft_strdup(value);
 	redir->type = type;

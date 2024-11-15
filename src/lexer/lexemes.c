@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 05:59:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_lexeme	*create_lexeme(char *str)
 	return (lex);
 }
 
-int	init_lexeme(char *lex_str, t_cmd_data *data, t_list	**ls_lexemes)
+int	init_lexeme(char *lex_str, t_cmd_data *data, t_list	**ls_lxm)
 {
 	t_lexeme	*lex;
 
@@ -41,10 +41,10 @@ int	init_lexeme(char *lex_str, t_cmd_data *data, t_list	**ls_lexemes)
 	lex->str = lex_str;
 	lex->value = NULL;
 	lex->type = 0;
-	if (!*ls_lexemes)
-		*ls_lexemes = ft_lstnew(lex);
+	if (!*ls_lxm)
+		*ls_lxm = ft_lstnew(lex);
 	else
-		ft_lstadd_back(ls_lexemes, ft_lstnew(lex));
+		ft_lstadd_back(ls_lxm, ft_lstnew(lex));
 	return (0);
 }
 

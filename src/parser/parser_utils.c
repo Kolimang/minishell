@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**get_args(t_list *ls_lexemes, int argc)
+char	**get_args(t_list *ls_lxm, int argc)
 {
 	t_list		*temp;
 	t_lexeme	*node;
@@ -24,7 +24,7 @@ char	**get_args(t_list *ls_lexemes, int argc)
 		return (NULL);
 	args[argc] = NULL;
 	i = 0;
-	temp = ls_lexemes;
+	temp = ls_lxm;
 	while (temp)
 	{
 		node = temp->content;
