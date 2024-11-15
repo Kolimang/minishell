@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 11:05:49 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:23:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	syntaxerror(char *arg_q, int type)
 	return (set_exit_status(type));
 }
 
-int	invalid_identifier(char *cmd, char *arg, int type)
+int	invalid_identifier(char *cmd, char *arg)
 {
 	write(2, "minishell: ", 11);
 	if (cmd)

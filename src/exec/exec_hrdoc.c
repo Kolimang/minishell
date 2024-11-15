@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:13:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_hrdoc(t_cmd *cmd, t_env *l_env)
 			if (pid == -1)
 				return (handle_error("fork failed"));
 			if (pid == 0)
-				child_hd(cmd, l_env, pipe_fd, redir);
+				child_hd(l_env, pipe_fd, redir);
 			else if (parent_heredoc_process(cmd, pid, pipe_fd) == -1)
 				return (-1);
 		}
@@ -69,7 +69,7 @@ int	get_hrdoc(t_cmd *cmd, t_env *l_env)
 	return (0);
 }
 
-void	child_hd(t_cmd *cmd, t_env *l_env, int pipe_fd[2], t_redir *r)
+void	child_hd(t_env *l_env, int pipe_fd[2], t_redir *r)
 {
 	char	*ln;
 

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 16:10:04 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 17:02:25 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:15:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	handle_nq(char **res, char *tmp, int *i, t_env *new_env)
 	}
 }
 
-char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env)
+char	*handle_exp(char *tmp, t_env *new_env)
 {
 	char	*res;
 	char	*temp_res;
@@ -121,7 +121,7 @@ void	expand_lexeme(t_lexeme *lex, t_env *new_env)
 	tmp = ft_strdup(lex->str);
 	if (!tmp)
 		exit(EXIT_FAILURE);
-	clean_str = handle_exp(tmp, lex, new_env);
+	clean_str = handle_exp(tmp, new_env);
 	if (lex->value)
 		free(lex->value);
 	lex->value = ft_strdup(clean_str);

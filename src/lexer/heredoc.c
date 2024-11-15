@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:02:12 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 14:20:51 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:19:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ t_list	*lex_handle_heredoc(t_cmd_data *dt, char *delim)
 
 char	*find_delim(t_list *list)
 {
-	int			i;
 	t_lexeme	*lex;
 	t_lexeme	*next_lex;
 
-	i = 0;
 	while (list)
 	{
 		lex = list->content;

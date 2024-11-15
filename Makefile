@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/08 16:01:41 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/15 13:47:53 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ else
 	LIBREADLFLAGS 	:= -I$(RL_H) -L$(RL_LIB) -lreadline
 endif
 
-CFLAGS    := -I$(INC_DIR) -I$(INC_DIR2) -g3 -fno-omit-frame-pointer
+CFLAGS    := -I$(INC_DIR) -I$(INC_DIR2) -g3 -Wall -Wextra -Werror
 # CFLAGS    := -I$(INC_DIR) -g -fsanitize=address
 # CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fsanitize=address
-# CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g
+# CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror -g -fno-omit-frame-pointer
 
 LIBFT     := lib/libft/libft.a
 

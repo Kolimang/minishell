@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:20:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ t_list	*ft_tokenize(char *cmd)
 	int			i;
 	t_cmd_data	data;
 	t_list		*ls_lxm;
-	t_list		*ls_hd_lexemes;
 
 	if (ft_strlen(cmd) <= 0)
 		return (NULL);
 	init_cmd_data(&data);
 	i = -1;
 	ls_lxm = NULL;
-	ls_hd_lexemes = NULL;
 	while (++i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);

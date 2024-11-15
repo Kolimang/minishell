@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:22:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 {
 	t_cmd		*command;
 	t_list		*temp;
-	int			i;
 	int			ret;
 
 	command = malloc(sizeof(t_cmd));
@@ -37,11 +36,10 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 		return (NULL);
 	init_cmd(command);
 	check_pipes(command, id, nb_commands);
-	i = 0;
 	temp = ls_lxm;
 	while (temp)
 	{
-		ret = handle_lexemes(&temp, command, 1);
+		ret = handle_lexemes(&temp, command);
 		if (ret)
 		{
 			g_ret_val = ret;
@@ -63,7 +61,7 @@ int	is_redir_symbol(t_lexeme *node)
 	return (0);
 }
 
-int	handle_lexemes(t_list **ls_lxm, t_cmd *command, int flag)
+int	handle_lexemes(t_list **ls_lxm, t_cmd *command)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;

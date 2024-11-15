@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:05:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:15:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	ft_expand_lexeme_list(t_list *list, t_env *env);
 void	handle_sq(char **res, char *tmp, int *i, int start);
 void	handle_dq(char **res, char *tmp, int *i, t_env *new_env);
-char	*handle_exp(char *tmp, t_lexeme *lex, t_env *new_env);
+char	*handle_exp(char *tmp, t_env *new_env);
 void	process_regular(t_lexeme *lex, t_env *new_env);
 char	*process_hrdoc(char *line, t_env *new_env);
 void	expand_lexeme(t_lexeme *lex, t_env *new_env);

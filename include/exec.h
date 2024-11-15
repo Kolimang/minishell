@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 13:25:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:04:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		is_builtin(char *cmd);
 void	pre_exec(t_list *cmds, t_envs *envs);
 t_cmd	*init_hrdoc(t_list *cmd);
 int		get_hrdoc(t_cmd *cmd, t_env *l_env);
-void	child_hd(t_cmd *cmd, t_env *l_env, int pipe_fd[2], t_redir *redir);
+void	child_hd(t_env *l_env, int pipe_fd[2], t_redir *redir);
 int		parent_heredoc_process(t_cmd *cmd, pid_t pid, int pipe_fd[2]);
 
 //exec_redir

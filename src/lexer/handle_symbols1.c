@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/08 16:30:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:27:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
 		data->bool_endstr = 1;
 		data->bool_delimit_tok = 1;
 		if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
-			return (merror, NULL, NULL, 774);
+			return (merror(NULL, NULL, NULL, 774));
 	}
 	return (0);
 }

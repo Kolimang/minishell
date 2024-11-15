@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:57:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ int	close_fds(t_cmd *cmd, t_io_fd *io)
 
 void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
-	t_redir	*redir;
-
-	if (cmd->ls_redirs)
-		redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
 	signal(SIGINT, sig_handler_child);
 	if (cmd->pid == -1)

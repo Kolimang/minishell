@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_update.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:31:23 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:55:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	insert_in_env(t_env **env, const char *var_name,
 		const char *var_val, int index)
 {
 	t_env	*new;
-	t_env	*curr;
 
 	new = create_env_node(var_name, var_val, index);
 	if (!new)

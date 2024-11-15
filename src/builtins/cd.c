@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:59:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:51:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_home_path(t_env *env)
 	return (NULL);
 }
 
-static int	go_home(char *dest_path, char *curr_path, t_env *env)
+static int	go_home(char *curr_path, t_env *env)
 {
 	char	*home_path;
 	char	*new_path;
@@ -122,7 +122,7 @@ int	ft_cd(char **args, t_env *env)
 	argc = array_len(args);
 	if (argc == 1 || (argc == 2 && !ft_strncmp(args[1], "--", 3))
 		|| !ft_strncmp(args[1], "~", 2))
-		res = go_home(dest_path, curr_path, env);
+		res = go_home(curr_path, env);
 	else if (!ft_strncmp(args[1], "-", 2)
 		|| (!ft_strncmp(args[1], "--", 3) && !ft_strncmp(args[2], "-", 2)))
 		res = go_prev(dest_path, curr_path, env);

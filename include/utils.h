@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 14:23:42 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		merror(char *cmd, char *arg, char *arg_q, int type);
 
 // errors2.c
 int		syntaxerror(char *arg_q, int type);
-int		invalid_identifier(char *cmd, char *arg, int type);
+int		invalid_identifier(char *cmd, char *arg);
 
 // utils.c
 int		is_directory(char *path);

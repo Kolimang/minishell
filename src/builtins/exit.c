@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:57:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:52:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 {
 	char	**args;
 	int		argc;
-	int		ret;
 	t_cmd	*cmd;
 
 	handle_eof(eof, envs);
@@ -87,7 +86,6 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 	argc = array_len(args);
 	if (cmd->eflag == 0)
 		ft_printf("exit\n");
-	ret = 0;
 	if (args && args[1] && !arg_is_number(args[1]))
 		merror(args[0], args[1], NULL, 22);
 	if (args && args[1] && arg_is_number(args[1])
