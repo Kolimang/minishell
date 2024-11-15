@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 15:03:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 07:08:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,103 +14,95 @@
 
 void	init_command(t_command *command)
 {
-	command->index = 0;
+	command->pid = 0;
 	command->argc = 0;
 	command->args = NULL;
 	command->ls_redirs = NULL;
-	command->io = NULL;
+	command->eflag = 0;
 	command->prevpipe = 0;
 	command->nextpipe = 0;
-	command->is_hrdoc = 0;
-}
-
-char	**get_args(t_list *ls_lexemes, int argc)
-{
-	t_lexeme	*node;
-	char		**args;
-	int			i;
-
-	args = malloc((argc + 1) * sizeof(char *));
-	if (!args)
-		return (NULL);
-	args[argc] = NULL;
-	i = 0;
-	while (ls_lexemes)
-	{
-		node = ls_lexemes->content;
-		if (node->type == 2)
-		{
-			args[i] = node->value;
-			i++;
-		}
-		ls_lexemes = ls_lexemes->next;
-	}
-	return (args);
+	command->fd_hrdoc = -3;
 }
 
 // Turn lexemes-list into commands-list
 t_command	*ft_parse_lexemes(t_list *ls_lexemes, int id, int nb_commands)
 {
 	t_command	*command;
-	t_list		*start;
+	t_list		*temp;
 	int			i;
+	int			ret;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
 		return (NULL);
 	init_command(command);
-	command->index = id;
-	if (id < nb_commands - 1)
-		command->nextpipe = 1;
-	else if (id > 0)
-		command->prevpipe = 1;
+	check_pipes(command, id, nb_commands);
 	i = 0;
-	start = ls_lexemes;
-	while (ls_lexemes)
+	temp = ls_lexemes;
+	while (temp)
 	{
-		handle_lexemes(&ls_lexemes, command);
-		ls_lexemes = ls_lexemes->next;
+		ret = handle_lexemes(&temp, command, 1);
+		if (ret)
+		{
+			g_ret_value = ret;
+			return (NULL);
+		}
+		temp = temp->next;
 	}
-	command->args = get_args(start, command->argc);
+	command->args = get_args(ls_lexemes, command->argc);
 	return (check_cmd(command));
 }
 
-void	handle_lexemes(t_list **ls_lexemes, t_command *command)
+int	is_redir_symbol(t_lexeme *node)
+{
+	if (ft_strncmp(node->value, ">>", 2) == 0
+		|| ft_strncmp(node->value, "<<", 2) == 0
+		|| ft_strncmp(node->value, "<", 1) == 0
+		|| ft_strncmp(node->value, ">", 1) == 0)
+		return (1);
+	return (0);
+}
+
+int	handle_lexemes(t_list **ls_lexemes, t_command *command, int flag)
 {
 	t_lexeme	*node;
 	t_lexeme	*nextnode;
+	t_list		**temp;
 
 	node = (*ls_lexemes)->content;
-	if ((*ls_lexemes)->next && (*ls_lexemes)->next->content)
-		nextnode = (*ls_lexemes)->next->content;
-	if (ft_strncmp(node->value, "<<", 2) == 0)
-	{
-		ft_add_redir(ls_lexemes, command, nextnode->value, HERE_DOC);
-		command->is_hrdoc = 1;
-	}
-	else if (ft_strncmp(node->value, ">>", 2) == 0)
-		ft_add_redir(ls_lexemes, command, nextnode->value, APPEND);
-	else if (ft_strncmp(node->value, "<", 1) == 0)
-		ft_add_redir(ls_lexemes, command, nextnode->value, INFILE);
-	else if (ft_strncmp(node->value, ">", 1) == 0)
-		ft_add_redir(ls_lexemes, command, nextnode->value, OUTFILE);
-	else
-	{
-		command->argc += 1;
-		node->type = 2;
-	}
+	if (!is_redir_symbol(node))
+		return (mark_as_arg(command, node), 0);
+	if (!(*ls_lexemes)->next)
+		return (merror(NULL, NULL, "newline", 258));
+	nextnode = (*ls_lexemes)->next->content;
+	if (is_redir_symbol(nextnode))
+		return (merror(NULL, NULL, nextnode->value, 258));
+	if (ft_strlen(node->value) > 2)
+		return (merror(NULL, NULL, &node->value[2], 258));
+	temp = ls_lexemes;
+	if (ft_strncmp(node->value, ">>", 3) == 0)
+		ft_add_redir(temp, command, nextnode->value, APPEND);
+	else if (ft_strncmp(node->value, "<<", 3) == 0)
+		ft_add_redir(temp, command, nextnode->value, HERE_DOC);
+	else if (ft_strncmp(node->value, "<", 2) == 0)
+		ft_add_redir(temp, command, nextnode->value, INFILE);
+	else if (ft_strncmp(node->value, ">", 2) == 0)
+		ft_add_redir(temp, command, nextnode->value, OUTFILE);
+	return (0);
 }
 
 void	ft_add_redir(t_list **ls_lexemes, t_command *cmd, char *value, int type)
 {
 	t_redir	*redir;
+	t_list	**temp;
 
+	temp = ls_lexemes;
 	redir = malloc(sizeof(t_redir));
-	redir->value = value;
+	redir->value = ft_strdup(value);
 	redir->type = type;
 	if (!cmd->ls_redirs)
 		cmd->ls_redirs = ft_lstnew(redir);
 	else
 		ft_lstadd_back(&cmd->ls_redirs, ft_lstnew(redir));
-	*ls_lexemes = (*ls_lexemes)->next;
+	*temp = (*temp)->next;
 }

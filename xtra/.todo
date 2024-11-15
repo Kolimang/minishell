@@ -1,0 +1,124 @@
+## To do :
+
+-> [v] segfault quand cmd avec pipe (`echo A | cat > file`)  suivie de cmd sans pipe (ex `$?`)
+-> [v] proteger ft_unset() si pas d'environnement
+-> [v] export -> trier une copie de l'env, qu'on print puis qu'on free immediatement
+-> [v] rework fonction merror en fonction du type d'erreur
+
+-> revoir pertinence du pointeur &i dans execute ?
+
+-> verifier exit codes : cf. https://tldp.org/LDP/abs/html/exitcodes.html
+	-> [this one is fixed] pas le bon exit code quand `Permission denied` sur un executable (chmod -x executable) : on return 1, on devrait return 126
+
+-> signaux sans sigaction ?
+
+-> mettre le dollar du prompt en couleur qd exit-status precedent en erreur ?
+
+-> valgrind sur MacOS sans readline
+https://github.com/mdabir1203/Valgrind_Suppression_MacOs
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=ignore_readline.supp -s ./minishell
+
+-> valgrind sur Linux sans readline
+https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
+valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minimalraw.log ./minimal
+cat ./minimalraw.log | ./parse_valgrind_suppressions.sh > minimal.supp
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh.supp -s ./minishell
+echo hey guys | cat > file
+
+[WiP] minishell.c -> execute()
+		\_ [v] Avant de split *cmd en **cmds, verifier si la commande globale (apres trim des espaces eventuels)
+				commence ou se termine par un pipe (auquel cas `syntax error`)
+		\_ [v] Rework execute() function to make it shorter (split it into two or three func())
+		\_ [ ] Set appropriate return value when syntax error
+		\_ [ ] Investigate memory leaks / protect mallocs back to main
+
+[WiP] Tokenization:
+		\_ [v] Fix bugs
+				\_ [v] commande <f_ ok mais commande <f__ plante ('_' etant un espace, pas un underscore)
+				\_ [v] commande <f c donne < c, le f token f disparait!
+		[WiP] split at pipes and handle command by command (lexer->parsing->exec)
+		\_ [wip] Heredoc implementation
+				\_ [ ] handle heredocs with <<- operator (requires adapting find_delim() function)
+				\_ [v] handle multiple heredoc-inputs (cat <<eo >f | cat <<eo >>f)
+				\_ [v] send heredoc lexemes to expansion
+				\_ /!\ heredoc input lines should not update command history !
+		\_ [v] Fix undesired whitespace in "lina"'bouma'
+		\_ [v] Handle correctly whether there is a space separating two tokens or not. Ex: echo "$HOME"test /// echo $"USER"
+		\_ [v] Fix crash with ft_strncmp in lex_handle_heredoc (null adress)
+		\_ [v] Norm: splitter la fonction tokenize en plein de fonctions
+		\_ [v] Gerer les operateurs : <, << (heredoc), >, >> (append), | (pipe)
+		\_ [ ] Gerer dash et double dash pour les options ?
+		\_ [ ] Gerer les chemins de fichier (par exemple vers l'executable a executer ou vers fichier i/o)
+		\_ [ ] tokenize.c : Protect values returned from ft_substr/ft_strtrim (which are malloced, protect all the way back up to exiting the main)
+
+[ ] Parsing :
+		\_ [v] For each command, go from lexeme-linked-list list to cmd-struct.
+		\_ [v] Handle multiple input files/heredoc (delimiters) or multiple outputs/appends for a single command
+		\_ [v] Discard command like [$a=lina] (si y a un signe egal et pas de cmd/executable, autrement dit au niveau du parseur s'il y a un seul argument et qu'il contient un signe egal, alors on ignore la commande)
+		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
+
+[WiP] Exec :
+		\_ [ ] pipe a une taille limitee, passer en un bloc bcp de donnees ne fonctionne sans doute pas (tester avec un gros fichier) : il faut lire et ecrire en meme temps, et supprimer ce qu'on a deja lu
+
+[ ] Built-ins :
+		\_ [ ] /!\ Pass environment as a double pointer up to inside exec_builtin() function /!\
+		\_ [wip] echo with option -n
+		\_ [wip] cd
+				\_ [?] handle cd - (goes to OLDPWD if the env var is set) ; (and cd -- ?)
+		\_ [v?] pwd with no options
+		\_ [ ] export with no options
+				\_ [ ] OLDPWD and PWD can have the same value, no need to check for duplicate value
+				\_ [?] Quand on exporte plusieurs variables en une fois et qu'une seule a un identifiant invalide, les autres doivent etres creees: OUI.
+				\_ [ ] Si plusieurs identifiants sont invalides, il faut afficher un msg pour chaque identifiant invalide
+		\_ [ ] Test unset with no options
+		\_ [v] env with no options or arguments
+		\_ [ ] exit with no options
+
+[ ] Signaux :
+		\_ [ ] Use pre-existing struct termios --> permet de masquer l'affichage de '^C' qd on fait Control-C
+
+[ ] Gestion des erreurs :
+		\_ [ ] Vérifier valeurs de retours
+		\_ [ ] Vérifier messages d'erreur
+
+[ ] QA checks
+		\_ [ ] Maximum user-input size ? Test very long command/arguments
+		\_ [ ] Norm compliance
+		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
+		\_ [ ] Memory leaks
+		\_ [ ] Protect mallocs back to main()
+		\_ [ ] Protect fd's (open() might fail), close fd's
+		\_ [ ] Norm compliance again :-)
+
+[ ] Testing :
+		\_ [ ] echo echo test
+		\_ [ ] echo ()
+		\_ [ ] echo -(
+		\_ [ ] echo --(
+		\_ [ ] echo () hey
+		\_ [ ] $VAR (where 'VAR' has been previously exported with value "echo test")
+		\_ [ ] CAS CHIANTS !!!
+		\_ [v] echo hello >1 >>2 >3
+		\_ [v] cat <<eof <file1 >file2 [VS] cat <file1 <<eof >file2
+		--> faire des listes chainees pour les input/output, pour pouvoir supprimer les noeuds/files/fd dejas traites
+		--> plus faire une t_list pour les input et une autre pour les output ou chaque noeud contient juste un caractere
+		(par exemple, pour les inputs, f pour file, h pour heredoc)
+		\_ [ ] cat <<eof | (donne un prompt pour le heredoc suivi d'un prompt pour completer la commande... qu'on peut terminer par un pipe, et rebelote)
+		\_ [ ] cat (donne un prompt pour completer la commande, comme qd la commande se termine par un pipe, ET PUIS CA LOOPE jusqu'a Ctrl-D ou Ctrl-C)
+		\_ [ ] . (bash error: `.: filename argument required` (sans les backticks); valeur de retour: 2)
+		\_ [ ] space then enter
+		\_ [ ] pipe alone // space pipe // multiple spaces pipe // command beginning by a pipe (| echo hello)
+		\_ [ ] zut | echo hello
+		\_ [ ] <<eof
+		\_ [ ] << eof | ls
+		\_ [ ] zut | ls
+		\_ [ ] echo (passe une ligne avant de rendre le prompt)
+		\_ [ ] [Gérer ?] echo hey >&1 (ok, = stdout) [VS] echo hey >& 1 (ok, = stdout) [VS] echo hey > &1 (syntax error near unexpected token `&')
+
+[ ] Finalization :
+		\_ [ ] Make sure project compiles with -Wall -Wextra -Werror
+		\_ [ ] Remove wildcards from Makefile and reference all file names
+		\_ [ ] Remove -g and -fsanitize flags from the CC flags in Makefile
+		\_ [ ] Remove unnecessary files/folder from remote (.todo, /test, valgrind's ignore_readline.supp, ...)
+		\_ [ ] Final norm check / leak check

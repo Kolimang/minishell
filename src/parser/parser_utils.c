@@ -6,11 +6,43 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/17 15:04:33 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 15:42:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	**get_args(t_list *ls_lexemes, int argc)
+{
+	t_list		*temp;
+	t_lexeme	*node;
+	char		**args;
+	int			i;
+
+	args = malloc((argc + 1) * sizeof(char *));
+	if (!args)
+		return (NULL);
+	args[argc] = NULL;
+	i = 0;
+	temp = ls_lexemes;
+	while (temp)
+	{
+		node = temp->content;
+		if (node->type == 2)
+		{
+			args[i] = ft_strdup(node->value);
+			i++;
+		}
+		temp = temp->next;
+	}
+	return (args);
+}
+
+void	mark_as_arg(t_command *command, t_lexeme *node)
+{
+	command->argc += 1;
+	node->type = 2;
+}
 
 t_command	*check_cmd(t_command *command)
 {
@@ -22,34 +54,10 @@ t_command	*check_cmd(t_command *command)
 	return (command);
 }
 
-void	ft_print_command(t_command *command)
+void	check_pipes(t_command *command, int id, int nb_commands)
 {
-	ft_printf("index            : %d\n", command->index);
-	ft_printf("argc             : %d\n", command->argc);
-	ft_printf("args             : ");
-	ft_printarray(command->args, ' ');
-	ft_printf("redir            : ");
-	ft_print_redir(command);
-	if (!command->ls_redirs)
-		ft_printf("(null)");
-	ft_printf("\n");
-	ft_printf("prevpipe         : %d\n", command->prevpipe);
-	ft_printf("nextpipe         : %d\n", command->nextpipe);
-	ft_printf("--- --- --- --- --- ---\n");
-}
-
-void	ft_print_redir(t_command *command)
-{
-	t_redir	*redir;
-	t_list	*rdlist;
-
-	while (command->ls_redirs)
-	{
-		rdlist = command->ls_redirs;
-		redir = rdlist->content;
-		ft_printf("%s (%d)", redir->value, redir->type);
-		if (command->ls_redirs->next)
-			ft_printf(", ");
-		command->ls_redirs = command->ls_redirs->next;
-	}
+	if (id < nb_commands - 1)
+		command->nextpipe = 1;
+	else if (id > 0)
+		command->prevpipe = 1;
 }

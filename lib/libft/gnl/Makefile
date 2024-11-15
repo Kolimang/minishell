@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 15:59:07 by jrichir           #+#    #+#              #
-#    Updated: 2024/03/19 13:40:24 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/14 13:49:55 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@
 # When wildcard % appears in the dependency list, it is replaced with the same
 # string that was used to perform substitution in the target.
 
-# Inside actions we can use:  
+# Inside actions we can use:
 #     $@ to represent the full target name of the current target  
 #     $? returns the dependencies that are newer than the current target  
 #     $* returns the text that corresponds to % in the target     
@@ -48,9 +48,14 @@
 # ------------------------------- VARIABLES ------------------------------------
 
 NAME := gnl.a
-CC := cc
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Linux)
+    CC			:=	cc -g3 -fno-omit-frame-pointer -Wno-unused-result
+else
+    CC			:=	cc -g3 -fno-omit-frame-pointer
+endif
 CFLAGS := -Wall -Wextra -Werror
-INC = -I include
+INC := -I include
 AR := ar -cr
 RM := rm -f
 

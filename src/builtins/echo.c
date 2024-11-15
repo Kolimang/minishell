@@ -6,11 +6,27 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/10/18 13:12:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 13:48:46 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static int	is_no_newl_option(char *arg)
+{
+	int	i;
+
+	if (arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_echo(char **args)
 {
@@ -21,10 +37,12 @@ int	ft_echo(char **args)
 	newline = 1;
 	if (args && args[1])
 	{
-		if (ft_strncmp(args[1], "-n", 2) == 0)
+		while (args[i])
 		{
-			i = 2;
+			if (!is_no_newl_option(args[i]))
+				break ;
 			newline = 0;
+			i++;
 		}
 		while (args[i])
 		{
@@ -36,5 +54,5 @@ int	ft_echo(char **args)
 	}
 	if (newline == 1)
 		ft_printf("\n");
-	return (0);
+	return (set_exit_status(0));
 }

@@ -6,11 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/17 12:48:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 14:42:04 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 void	set_shlvl(t_env *env)
 {
@@ -25,35 +25,77 @@ void	set_shlvl(t_env *env)
 	val = ft_atoi(current);
 	tmp = ft_itoa(val + 1);
 	cmd = malloc (sizeof(char *) * 3);
-	//to finish once export is coded 
+	//ft_export
+	//to finish once export is coded
 	free(cmd);
 	free(tmp);
 }
 
-t_env	*create_env_node(const char *var_name, const char *var_val, int index)
-{
-	t_env	*new_node;
-
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return (NULL);
-	new_node->var_name = ft_strdup(var_name);
-	new_node->var_val = ft_strdup(var_val);
-	new_node->index = index;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void	free_env(t_env *env)
+char	*get_env_val(t_env *env, const char *var_name)
 {
 	t_env	*temp;
 
-	while (env)
+	temp = env;
+	while (temp)
 	{
-		temp = env;
-		env = env->next;
-		free(temp->var_name);
-		free(temp->var_val);
-		free(temp);
+		if (ft_strncmp(temp->var_name, var_name, ft_strlen(var_name) + 1) == 0)
+			return (temp->var_val);
+		temp = temp->next;
 	}
+	return (NULL);
+}
+
+int	get_env_len(t_env *env)
+{
+	t_env	*temp;
+	int		len;
+
+	if (!env)
+		return (0);
+	temp = env;
+	len = 0;
+	while (temp)
+	{
+		temp = temp->next;
+		len += 1;
+	}
+	return (len);
+}
+
+static char	*node_to_line(t_env *node)
+{
+	char	*line;
+	char	*templine;
+
+	templine = ft_strjoin(node->var_name, "=");
+	if (!templine)
+		return (NULL);
+	line =  ft_strjoin(templine, node->var_val);
+	free(templine);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
+char	**env_to_array(t_env *env)
+{
+	t_env	*temp;
+	int		i;
+	int		len;
+	char	**array;
+
+	len = get_env_len(env);
+	array = malloc((len + 1) * sizeof(char *));
+	if (!array)
+		return (NULL);
+	temp = env;
+	i = 0;
+	while (temp)
+	{
+		array[i] = node_to_line(temp);
+		temp = temp->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }
