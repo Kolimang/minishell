@@ -40,13 +40,20 @@
 // 	return (set_exit_status(0));
 // }
 // suggestion
+
+// int	ft_pwd(char **args, t_env *env)
+// {
+// 	char	*path;
+// 	t_env	*head;
+
+// 	if (args && args[1])
+// 		return (merror(args[0], NULL, NULL, 13)); // too many arguments
+// 	...
 int	ft_pwd(char **args, t_env *env)
 {
 	char	*path;
 	t_env	*head;
 
-	if (args && args[1])
-		return (merror(args[0], NULL, NULL, 13));
 	if (!env)
 		return (set_exit_status(1));
 	head = env;

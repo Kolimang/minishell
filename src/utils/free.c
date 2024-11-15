@@ -30,7 +30,9 @@ void	free_lexemes(t_list *ls_lexemes)
 {
 	t_lexeme	*lex;
 	t_list		*temp;
+	int			i;
 
+	i = 0;
 	while (ls_lexemes)
 	{
 		temp = ls_lexemes;
@@ -42,7 +44,10 @@ void	free_lexemes(t_list *ls_lexemes)
 		lex = NULL;
 		free(temp);
 		temp = NULL;
+		i++;
 	}
+	if (DEBUG)
+		ft_printf("%d lexemes freed.\n", i);
 }
 
 void	free_commands(t_list *ls_commands)

@@ -12,37 +12,38 @@
 
 #include <minishell.h>
 
-int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
+//int	execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds)
+int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	ret_value;
 
 	if (set_fds(cmd, io) == -1)
 		return (-1);
-	ret_value = exec_builtin(cmd, l_env, cmds, 0);
+	ret_value = exec_builtin(cmd, envs, cmds, 0);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
 // res = -1; --> Error: unknown built-in command
-int	exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag)
+int	exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag)
 {
 	int	res;
 
 	if (cmd->builtin == 1)
 		res = ft_echo(cmd->args);
 	else if (cmd->builtin == 2)
-		res = ft_cd(cmd->args, *l_env);
+		res = ft_cd(cmd->args, *envs->l_env);
 	else if (cmd->builtin == 3)
-		res = ft_pwd(cmd->args, *l_env);
+		res = ft_pwd(cmd->args, *envs->l_env);
 	else if (cmd->builtin == 4)
-		res = ft_export(cmd->args, l_env);
+		res = ft_export(cmd->args, envs->l_env);
 	else if (cmd->builtin == 5)
-		res = ft_unset(cmd->args, l_env);
+		res = ft_unset(cmd->args, envs->l_env);
 	else if (cmd->builtin == 6)
-		res = ft_env(cmd->args, *l_env);
+		res = ft_env(cmd->args, *envs->l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmds, *l_env, 0, flag);
+	   res = ft_exit(cmds, envs, 0, flag);
 	else
 		res = -1;
 	return (res);
@@ -186,7 +187,7 @@ int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		g_ret_value = exec_builtin(cmd, envs->l_env, cmds, 1);
+		g_ret_value = exec_builtin(cmd, envs, cmds, 1);//g_ret_value = exec_builtin(cmd, envs->l_env, cmds, 1);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');

@@ -92,7 +92,7 @@ int	execute(t_envs *envs)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			ft_exit(NULL, *(envs->l_env), 1, 0);
+			ft_exit(NULL, envs, 1, 0);
 		ft_add_cmd_to_history(cmd);
 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
@@ -129,13 +129,6 @@ int	init_envs(t_envs **envs, char **o_env)
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS); 
-}
-
-int	cleanup_envs(t_envs *envs, int exit_code)
-{
-	free_env(envs->l_env);
-	free(envs);
-	return (exit_code);
 }
 
 int	main(int ac, char **av, char **o_env)

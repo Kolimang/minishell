@@ -116,10 +116,10 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 
     if (allowedoption && dest_path[0] == '-')
         return (merror("cd", dest_path, NULL, 19));
-    else if (!is_directory(dest_path))
-        return (merror("cd", dest_path, NULL, 11));
     else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
         return (merror("cd", dest_path, NULL, 1));
+    else if (!is_directory(dest_path))
+        return (merror("cd", dest_path, NULL, 11));
     else if (access(dest_path, X_OK) != 0)
         return (merror("cd", dest_path, NULL, 15));
     else

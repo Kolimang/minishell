@@ -22,9 +22,10 @@ void		wait_children(t_list *cmds);
 
 //execute1
 //int		execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, char **g_env);
-int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds);
+//int			execute_nofork(t_command *cmd, t_io_fd *io, t_env **l_env, t_list *cmds);
+int	        execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 //int		exec_builtin(t_command *cmd, t_env **l_env, char **g_env, int flag);
-int			exec_builtin(t_command *cmd, t_env **l_env, t_list *cmds, int flag);
+int			exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag);
 int			is_builtin(char *cmd);
 int			exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds);
 char		*find_path(char **full_cmd, char *cmd);

@@ -30,3 +30,10 @@ void	free_env(t_env **envdp)
 		temp = NULL;
 	}
 }
+
+int	cleanup_envs(t_envs *envs, int exit_code)
+{
+	free_env(envs->l_env);
+	free(envs);
+	return (exit_code);
+}

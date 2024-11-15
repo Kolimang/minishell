@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:30:59 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 02:46:04 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_check_input_cmd(char **cmdref);
 //testlina
 //t_list *mock_command_line(void);
 
-// Commented out on Ubuntu/Mint
+// Commented out on Linux
 int	rl_replace_line(char *, int);
 
 #endif

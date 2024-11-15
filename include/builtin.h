@@ -35,6 +35,6 @@ int		ft_unset(char **args, t_env **env);
 
 // exit.c
 //int		ft_exit(char **args, t_env *env, int eof, int flag);
-int	ft_exit(t_list *cmds, t_env *env, int eof, int flag);
+int	ft_exit(t_list *cmds, t_envs *envs, int eof, int flag);
 
 #endif

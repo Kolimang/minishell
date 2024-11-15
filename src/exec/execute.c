@@ -52,7 +52,7 @@ void	exec(t_list *cmds, t_envs *envs)
 	{
 		cmd->builtin = is_builtin(cmd->args[0]);
 		if (cmd->builtin && !(cmds->next))
-			execute_nofork(cmd, io, envs->l_env, cmds);
+			execute_nofork(cmd, io, envs, cmds);
 		else
 			execute_fork(cmds, io, envs);
 	}

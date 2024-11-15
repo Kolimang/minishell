@@ -73,7 +73,7 @@ char **get_exit_args(t_list	*cmds)
 	return (NULL);
 }
 
-int	ft_exit(t_list *cmds, t_env *env, int eof, int flag)
+int	ft_exit(t_list *cmds, t_envs *envs, int eof, int flag)
 {
 	char		**args;
 	int			argc;
@@ -95,6 +95,6 @@ int	ft_exit(t_list *cmds, t_env *env, int eof, int flag)
 	else if (argc > 2)
 		merror(args[0], NULL, NULL, 13);
 	free_commands(cmds);
-	free_env(&env);
+	cleanup_envs(envs, 0);//free_env(&env);
 	exit(g_ret_value);
 }

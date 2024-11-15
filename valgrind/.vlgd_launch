@@ -11,6 +11,6 @@ cat ./msh_mac.log | ./parse_valgrind_suppressions.sh > msh_mac.supp
 https://wiki.wxwidgets.org/Valgrind_Suppression_File_Howto
 valgrind --leak-check=full --show-reachable=yes --error-limit=no --gen-suppressions=all --log-file=minishell_raw.log ./minishell
 cat ./minimshell_raw.log | ./parse_valgrind_suppressions.sh > minishell.supp
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh.supp -s ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind/msh_linux.supp -s ./minishell
 
 echo hey guys | cat > f

@@ -101,9 +101,8 @@ static int	generic(char *cmd, char *arg, int type)
 	}
 	if (arg)
 	{
-		write(2, "'", 1);
 		write(2, arg, ft_strlen(arg));
-		write(2, "' : ", 4);
+		write(2, ": ", 2);
 	}
 	if (type <= 20)
 		write_msg(type);
