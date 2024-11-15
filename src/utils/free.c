@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 09:35:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:46:18 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	free_lexemes(t_list *ls_lexemes)
 		temp = NULL;
 		i++;
 	}
-	if (DEBUG)
-		ft_printf("%d lexemes freed.\n", i);
 }
 
 void	free_commands(t_list *ls_commands)

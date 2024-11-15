@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 09:58:53 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:37:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,9 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 
 	handle_eof(eof, envs);
 	cmd = get_exit_cmd(cmds);
-	printf("%d\n", cmd->eflag);
 	args = get_exit_args(cmds);
 	argc = ft_arraylen(args);
-	if (cmd->eflag == 1)
+	if (cmd->eflag == 0)
 		ft_printf("exit\n");
 	ret = 0;
 	if (args && args[1] && !arg_is_number(args[1]))

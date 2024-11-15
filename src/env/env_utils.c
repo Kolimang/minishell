@@ -3,30 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 14:42:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:41:55 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	set_shlvl(t_env *env)
+void	set_shlvl(t_env **env)
 {
 	char	*current;
 	char	**cmd;
 	char	*tmp;
 	int		val;
 
-	current = get_env_val(env, "SHLVL");
+	current = get_env_val(*env, "SHLVL");
 	if (!current)
 		current = "0";
 	val = ft_atoi(current);
+	if (val < 0 ||  val >= 1000)
+	{
+		val = 0;
+		ft_putstr_fd("minishell: warning: SHLVL too high or low, resetting to 0\n", 2);
+	}
 	tmp = ft_itoa(val + 1);
-	cmd = malloc (sizeof(char *) * 3);
-	//ft_export
-	//to finish once export is coded
+	cmd = malloc(sizeof(char *) * 3);
+	if (!cmd)
+		return;
+	cmd[0] = ft_strdup("export");
+	cmd[1] = ft_strjoin("SHLVL=", tmp);
+	cmd[2] = NULL;
+	ft_export(cmd, env);
+	free(cmd[1]);
 	free(cmd);
 	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 14:42:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:42:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_env_val(t_env *env, const char *var_name);
 t_env	*create_env_node(const char *var_name, const char *var_val, int index);
 void	free_env(t_env **env);
 int		cleanup_envs(t_envs *envs, int exit_code);
-void	set_shlvl(t_env *env);
+void	set_shlvl(t_env **env);
 
 int		update_env(char *name, char *value, t_env **env, int mode);
 int		print_env_sorted(t_env *env);
