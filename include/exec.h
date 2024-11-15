@@ -17,6 +17,7 @@
 void		exec(t_list *cmds, t_envs *envs);
 int			execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs);
 void		create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int	        close_fds(t_command *cmd, t_io_fd *io);
 void		wait_children(t_list *cmds);
 
 //execute1

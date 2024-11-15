@@ -82,6 +82,17 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 	return (0);
 }
 
+int	close_fds(t_command *cmd, t_io_fd *io)
+{
+	if (cmd->prevpipe)
+		close(io->fd_in);
+	if (io->pipe[0] != -1)
+		close(io->pipe[1]);
+	if (cmd->fd_hrdoc != -3)
+		close(cmd->fd_hrdoc);
+	return (0);
+}
+
 void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	t_redir	*redir;
@@ -89,6 +100,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 	if (cmd->ls_redirs)
 		redir = cmd->ls_redirs->content;
 	cmd->pid = fork();
+	// signal here
 	if (cmd->pid == -1)
 	{
 		handle_error("fork");
@@ -102,12 +114,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 			exec_cmd(cmd, envs, cmds);
 		exit(g_ret_value);
 	}
-	if (cmd->prevpipe)
-		close(io->fd_in);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
+	close_fds(cmd, io);
 	io->fd_in = io->pipe[0];
 }
 
