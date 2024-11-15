@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:48:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 11:00:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,7 @@ int	ft_cd(char **args, t_env *env)
 	argc = ft_arraylen(args);
 	if (argc == 1 || (argc == 2 && !ft_strncmp(args[1], "--", 3))
 		|| !ft_strncmp(args[1], "~", 2))
-	{
 		res = go_home(dest_path, curr_path, env);
-	}
 	else if (!ft_strncmp(args[1], "-", 2)
 		|| (!ft_strncmp(args[1], "--", 3) && !ft_strncmp(args[2], "-", 2)))
 		res = go_prev(dest_path, curr_path, env);

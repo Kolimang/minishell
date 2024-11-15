@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 09:54:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:48:05 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	res;
 
-	printf("%d\n", cmd->eflag);
 	if (cmd->builtin == 1)
 		res = ft_echo(cmd->args);
 	else if (cmd->builtin == 2)
@@ -178,7 +177,6 @@ int	execute_command(char *pathname, char **full, char **g_env)
 
 int	pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
-	cmd->eflag = 1;
 	g_ret_value = exec_builtin(cmd, io, envs, cmds);
 	return (0);
 }
