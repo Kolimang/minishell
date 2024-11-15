@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 07:08:37 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:45:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_print_command(t_command *command)
 	ft_printf("\n");
 	ft_printf("prevpipe         : %d\n", command->prevpipe);
 	ft_printf("nextpipe         : %d\n", command->nextpipe);
-	//ft_printf("eflag         : %d\n", command->eflag);
+	ft_printf("eflag            : %d\n", command->eflag);
 	ft_printf("--- --- --- --- --- ---\n");
 }
 

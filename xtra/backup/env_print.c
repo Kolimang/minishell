@@ -6,11 +6,30 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:36:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:35:14 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// static int	print_value(t_env *node)
+// {
+// 	char	*val;
+// 	int		last;
+
+// 	val = node->var_val;
+// 	if (val)
+// 	{
+// 		last = (int)(ft_strlen(val) - 1);
+// 		ft_printf("=");
+// 		if (val[0] != '\"')
+// 			ft_printf("\"");
+// 		ft_printf("%s", val);
+// 		if (val[last] != '\"')
+// 			ft_printf("\"");
+// 		ft_printf("\n");
+// 	}
+// }
 
 int	print_env_sorted(t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/10/28 18:05:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:41:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,9 @@ int	update_env(char *name, char *value, t_env **env, int mode)
 				head->var_val = ft_strdup(value);
 			else if (mode == 1)
 				head->var_val = ft_strjoin(temp, value);
-			free(temp);
-			return (0);
+			return (free(temp), 0);
 		}
 		head = head->next;
 	}
-	insert_in_env(env, name, value, 1);
-	return (0);
+	return (insert_in_env(env, name, value, 1), 0);
 }

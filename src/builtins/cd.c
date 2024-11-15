@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:22:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:48:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 	return (0);
 }
 
-static char *get_home_path(t_env *env)
+static char	*get_home_path(t_env *env)
 {
     t_env *head;
 
@@ -55,7 +55,7 @@ static char *get_home_path(t_env *env)
     return (NULL);
 }
 
-static int go_home(char *dest_path, char *curr_path, t_env *env)
+static int	go_home(char *dest_path, char *curr_path, t_env *env)
 {
     char *home_path;
     char *new_path;

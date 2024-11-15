@@ -6,13 +6,13 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:06:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:58:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// Global var definition (declaration in header file)
+// Global var definition
 int		g_ret_value;
 
 int	ft_check_input_cmd(char **cmdref)
@@ -75,7 +75,7 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 		free_lexemes(lexemes);
 		(*i)++;
 	}
-	array_str_free(cmds, ft_arraylen(cmds));	
+	array_str_free(cmds, ft_arraylen(cmds));
 	pre_exec(commands, envs);
 	exec(commands, envs);
 	free_commands(commands);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 19:40:34 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 10:43:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/14 17:01:19 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	append_to_str(char **res, char *tmp, int end, int start)
 	if (*res)
 	{
 		new_res = ft_strjoin(*res, new_part);
-		free(*res);
+		free(*res);//ADDED - fixing leaks
 		*res = new_res;
 	}
 	else
