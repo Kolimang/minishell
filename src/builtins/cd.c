@@ -6,38 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:45:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:59:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static int	update_pwd(char *dest_path, char *curr_path, t_env *env)
-{
-	t_env	*head;
-
-	if (!env)
-		return (1);
-	head = env;
-	while (head)
-	{
-		if (ft_strncmp(head->var_name, "PWD", 4) == 0)
-		{
-			if (head->var_val)
-				free(head->var_val);
-			head->var_val = ft_strdup(dest_path);
-		}
-		if (ft_strncmp(head->var_name, "OLDPWD", 7) == 0)
-		{
-			if (head->var_val)
-				free(head->var_val);
-			head->var_val = ft_strdup(curr_path);
-		}
-		head = head->next;
-	}
-	free(curr_path);
-	return (0);
-}
 
 static char	*get_home_path(t_env *env)
 {
@@ -79,7 +52,7 @@ static int	go_home(char *dest_path, char *curr_path, t_env *env)
 		free(curr_path);
 		return (merror("cd", NULL, NULL, 16));
 	}
-	return (update_pwd(new_path, curr_path, env), 0); 
+	return (update_pwd(new_path, curr_path, env), 0);
 }
 
 static int	go_prev(char *dest_path, char *curr_path, t_env *env)

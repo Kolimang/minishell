@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 10:19:14 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 13:00:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int		ft_echo(char **args);
 int		ft_cd(char **args, t_env *env);
 
 // pwd.c
+int		update_pwd(char *dest_path, char *curr_path, t_env *env);
 int		ft_pwd(char **args, t_env *env);
 
 // export.c
