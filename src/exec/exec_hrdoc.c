@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_hrdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:16:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:38:05 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	pre_exec(t_list *cmds, t_envs *envs)
 {
 	t_cmd	*cmd;
-	t_list		*tmp_cmds;
+	t_list	*tmp_cmds;
 
 	tmp_cmds = cmds;
 	while (tmp_cmds)

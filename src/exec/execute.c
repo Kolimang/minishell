@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:41:39 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	handle_single_command(t_cmd *cmd, t_io_fd *io)
 	if (set_fds(cmd, io) == -1)
 	{
 		reset_io(io, cmd);
-		// free io ?
 		return (-1);
 	}
 	return (0);
@@ -26,7 +25,7 @@ int	handle_single_command(t_cmd *cmd, t_io_fd *io)
 void	exec(t_list *cmds, t_envs *envs)
 {
 	t_cmd	*cmd;
-	t_io_fd		*io;
+	t_io_fd	*io;
 
 	if (!cmds)
 		return ;
@@ -72,7 +71,7 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		pre_exec_builtin(cmd, io, envs, cmds);	
+		pre_exec_builtin(cmd, io, envs, cmds);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');
@@ -85,7 +84,7 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 		real_full = build_full_cmd(pathname, cmd);
 		full = ft_split(real_full, ' ');
 		free(real_full);
-		execute_command(pathname, full,envs->g_env);
+		execute_command(pathname, full, envs->g_env);
 		free_tab(full);
 		free_tab(full_cmd);
 	}

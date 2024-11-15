@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:00:40 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:37:58 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_io_fd	*initialize_io_fd(void)
 int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 {
 	t_cmd	*cmd;
-	t_list		*tmp;
+	t_list	*tmp;
 
 	tmp = cmds;
 	while (tmp)
@@ -83,8 +83,8 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 void	wait_children(t_list *cmds)
 {
 	t_cmd	*cmd;
-	t_list		*tmp;
-	int			status;
+	t_list	*tmp;
+	int		status;
 
 	tmp = cmds;
 	while (tmp)

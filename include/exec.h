@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:01:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 12:43:01 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			is_redir_out(t_redir *redir);
 int			redir_outfile(t_cmd *cmd, t_io_fd *io);
 int			get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io);
 int			set_fds(t_cmd *cmd, t_io_fd *io) ;
+int			has_redir_in(t_list *ls_redir);
 
 //exec_utils
 void		init_io_fd(t_io_fd *io);
