@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 15:39:14 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 03:42:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_command
 	int		prevpipe;
 	int		nextpipe;
 	int		fd_hrdoc;
+	int		exitflag;
 	t_builtin_type	builtin;
 }	t_command;
 

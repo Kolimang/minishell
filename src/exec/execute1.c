@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 02:55:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 04:22:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	execute_nofork(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 
 	if (set_fds(cmd, io) == -1)
 		return (-1);
-	ret_value = exec_builtin(cmd, envs, cmds, 0);
+	ret_value = exec_builtin(cmd, io, envs, cmds);
 	if (cmd->fd_hrdoc != -3)
 		close(cmd->fd_hrdoc);
 	return (ret_value);
 }
 
-int	exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag)
+int	exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	res;
 
@@ -41,7 +41,7 @@ int	exec_builtin(t_command *cmd, t_envs *envs, t_list *cmds, int flag)
 	else if (cmd->builtin == 6)
 		res = ft_env(cmd->args, *envs->l_env);
 	else if (cmd->builtin == 7)
-	   res = ft_exit(cmds, envs, 0, flag);
+	   res = ft_exit(cmds, envs, 0, io);
 	else
 		res = -1;
 	return (res);
@@ -175,7 +175,14 @@ int	execute_command(char *pathname, char **full, char **g_env)
 	return (0);
 }
 
-int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
+int	pre_exec_builtin(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+{
+	cmd->exitflag = 1;
+	g_ret_value = exec_builtin(cmd, io, envs, cmds);
+	return (0);
+}
+
+int	exec_cmd(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
 	char	**full_cmd;
@@ -184,7 +191,7 @@ int	exec_cmd(t_command *cmd, t_envs *envs, t_list *cmds)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		g_ret_value = exec_builtin(cmd, envs, cmds, 1);
+		pre_exec_builtin(cmd, io, envs, cmds);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');

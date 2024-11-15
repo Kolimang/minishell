@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 03:16:02 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/15 06:00:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,22 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 		ft_expand_lexeme_list(lexemes, *(envs->l_env));
 		command = ft_parse_lexemes(lexemes, *i, ft_arraylen(cmds));
 		if (!command)
-			return (g_ret_value);
+			return (free_lexemes(lexemes), array_str_free(cmds, ft_arraylen(cmds)), g_ret_value);
 		if (!commands)
 			commands = ft_lstnew(command);
 		else
 			ft_lstadd_back(&commands, ft_lstnew(command));
+		free_lexemes(lexemes);
 		(*i)++;
 	}
-	array_str_free(cmds, ft_arraylen(cmds));
-	free_lexemes(lexemes);
+	array_str_free(cmds, ft_arraylen(cmds));	
 	pre_exec(commands, envs);
 	exec(commands, envs);
 	free_commands(commands);
 	return (0);
 }
 
-int	execute(t_envs *envs)
+int	minishell(t_envs *envs)
 {
 	int		i;
 	char	*cmd;
@@ -93,7 +93,7 @@ int	execute(t_envs *envs)
 	{
 		cmd = readline("\033[0;32mminishell$\033[0m ");
 		if (!cmd)
-			ft_exit(NULL, envs, 1, 0);
+			ft_exit(NULL, envs, 1, NULL);
 		ft_add_cmd_to_history(cmd);
 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
@@ -143,7 +143,7 @@ int	main(int ac, char **av, char **o_env)
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	//set_shlvl(l_env);
-	if (change_term_attr() == 1 || execute(envs) == EXIT_FAILURE)
+	if (change_term_attr() == 1 || minishell(envs) == EXIT_FAILURE)
 		return (cleanup_envs(envs, EXIT_FAILURE));
 	return (cleanup_envs(envs, EXIT_SUCCESS));
 }

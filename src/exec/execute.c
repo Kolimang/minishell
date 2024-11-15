@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/14 16:48:05 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/15 03:55:38 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	handle_single_command(t_command *cmd, t_io_fd *io)
 	if (set_fds(cmd, io) == -1)
 	{
 		reset_io(io, cmd);
+		// free io ?
 		return (-1);
 	}
 	return (0);
@@ -45,7 +46,7 @@ void	exec(t_list *cmds, t_envs *envs)
 	cmd = cmds->content;
 	if (cmds->next == NULL && !(cmd->args[0]))
 	{
-		if (handle_single_command(cmd, io) == -1)
+		if (handle_single_command(cmd, io) == -1) // free io before return ?
 			return ;
 	}
 	else
@@ -111,7 +112,7 @@ void	create_child(t_command *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 		if (set_fds(cmd, io) == -1)
 			exit(EXIT_FAILURE);
 		if (cmd->args && cmd->args[0])
-			exec_cmd(cmd, envs, cmds);
+			exec_cmd(cmd, io, envs, cmds);
 		exit(g_ret_value);
 	}
 	close_fds(cmd, io);
