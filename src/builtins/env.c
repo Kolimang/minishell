@@ -18,9 +18,9 @@ int	ft_env(char **args, t_env *env)
 	int		print;
 
 	if (!env)
-		return (merror(args[0], NULL, "no environment set", 1));
+		return (merror(args[0], NULL, NULL, 12));
 	if (args && args[1])
-		return (merror(args[0], NULL, "too many arguments", 1));
+		return (merror(args[0], NULL, NULL, 13));
 	print = 0;
 	temp = env;
 	while (temp)
@@ -30,7 +30,7 @@ int	ft_env(char **args, t_env *env)
 		temp = temp->next;
 	}
 	if (print == 0)
-		return (merror(args[0], NULL, NULL, 1271));
+		return (merror(args[0], NULL, NULL, 381));
 	if (args && !args[1])
 		print_env(env, 2);
 	return (set_exit_status(0));

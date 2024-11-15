@@ -88,12 +88,12 @@ int	ft_exit(t_list *cmds, t_env *env, int eof, int flag)
 	args = get_exit_args(cmds);
 	argc = ft_arraylen(args);
 	if (args && args[1] && !arg_is_number(args[1]))
-		merror(args[0], args[1], "numeric argument required", 1);
+		merror(args[0], args[1], NULL, 22);
 	if (args && args[1] && arg_is_number(args[1])
 		&& ft_atoi(args[1]) >= 0)
 		g_ret_value = ft_atoi(args[1]) % 256;
 	else if (argc > 2)
-		merror(args[0], NULL, "too many arguments", 1);
+		merror(args[0], NULL, NULL, 13);
 	free_commands(cmds);
 	free_env(&env);
 	exit(g_ret_value);

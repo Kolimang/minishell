@@ -62,22 +62,22 @@ static int go_home(char *dest_path, char *curr_path, t_env *env)
 
     home_path = get_home_path(env);
     if (!home_path || home_path[0] == '\0')
-        return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
+        return (merror("cd", NULL, NULL, 14));
     if (access(home_path, R_OK) != 0)
-        return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
+        return (merror("cd", NULL, NULL, 15));
     curr_path = getcwd(NULL, 0);
     if (!curr_path)
-        return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
+        return (merror("cd", NULL, NULL, 16));
     if (chdir(home_path) != 0)
     {
         free(curr_path);
-        return (ft_putstr_fd("cd: cannot change directory\n", 2), 1);
+        return (merror("cd", NULL, NULL, 17));
     }
     new_path = getcwd(NULL, 0);
     if (!new_path)
     {
         free(curr_path);
-        return (ft_putstr_fd("cd: error retrieving current directory\n", 2), 1);
+        return (merror("cd", NULL, NULL, 16));
     }
     return (update_pwd(new_path, curr_path, env), 0); 
 }
@@ -87,7 +87,7 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 	t_env	*head;
 
 	if (!env)
-		return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
+		return (merror("cd", NULL, NULL, 18));
 	head = env;
 	while (head)
 	{
@@ -95,7 +95,7 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 		{
 			dest_path = head->var_val;
 			if (!dest_path || dest_path[0] == '\0')
-				return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
+				return (merror("cd", NULL, NULL, 18));
 			if (access(dest_path, R_OK) == 0)
 			{
 				curr_path = getcwd(NULL, 0);
@@ -103,11 +103,11 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 				ft_printf("%s\n", dest_path);
 				return (update_pwd(dest_path, curr_path, env), 0);
 			}
-			return (ft_putstr_fd("cd: Permission denied\n", 2), 1);
+			return (merror("cd", NULL, NULL, 15));
 		}
 		head = head->next;
 	}
-	return (ft_putstr_fd("cd: OLDPWD not set\n", 2), 1);
+	return (merror("cd", NULL, NULL, 18));
 }
 
 static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
@@ -115,24 +115,24 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
     char *new_path;
 
     if (allowedoption && dest_path[0] == '-')
-        return (merror("cd", dest_path, "no option supported for cd", 1));
+        return (merror("cd", dest_path, NULL, 19));
     else if (!is_directory(dest_path))
         return (merror("cd", dest_path, NULL, 11));
     else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
         return (merror("cd", dest_path, NULL, 1));
     else if (access(dest_path, X_OK) != 0)
-        return (merror("cd", dest_path, "Permission denied", 1));
+        return (merror("cd", dest_path, NULL, 15));
     else
     {
         curr_path = getcwd(NULL, 0);
         if (!curr_path)
-            return (merror("cd", NULL, "Error retrieving current directory", 1));
+            return (merror("cd", NULL, NULL, 16));
         if (chdir((const char *)dest_path) != 0)
-            return (free(curr_path), ft_putstr_fd("cd: cannot change directory\n", 2), 1);
-        free(curr_path);
+            return (free(curr_path), merror("cd", NULL, NULL, 17));
+        //free(curr_path);//DEBUG : I get double free if uncommented
         new_path = getcwd(NULL, 0);
         if (!new_path)
-            return (merror("cd", NULL, "Error retrieving new directory", 1));
+            return (merror("cd", NULL, NULL, 20));
         return (update_pwd(new_path, curr_path, env), 0);
     }
 }

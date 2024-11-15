@@ -71,7 +71,7 @@ int	ft_unset(char **args, t_env **env)
 	int	i;
 
 	if (args && !args[1])
-		return (merror(args[0], NULL, "not enough arguments", 1));
+		return (merror(args[0], NULL, NULL, 21));
 	if (args && args[1])
 	{
 		if (!env || !*env)

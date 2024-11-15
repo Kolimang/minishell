@@ -74,10 +74,7 @@ int	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
 		data->bool_endstr = 1;
 		data->bool_delimit_tok = 1;
 		if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
-		{
-			printf("minishell: syntax error: unclosed quote\n");
-			return (set_exit_status(258));
-		}
+			return (merror, NULL, NULL, 774);
 	}
 	return (0);
 }
