@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 18:54:04 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/16 15:29:41 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,58 +31,52 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 	while (tmp)
 	{
 		cmd = tmp->content;
-		if (!tmp->next)
-			break ;
-		if (pipe(io->pipe) == -1)
-			return (-1);
-		create_child(cmd, io, envs, cmds);
+		if (tmp->next)
+		{
+			if (pipe(io->pipe) == -1)
+				return (-1);
+		}
+		io->fd_in = create_child(cmd, io, envs, cmds);
 		tmp = tmp->next;
 	}
-	if (tmp)
-		create_child(cmd, io, envs, cmds);
-	close (io->pipe[1]);
-	close(io->pipe[0]);
 	wait_children(cmds);
 	return (0);
 }
 
-int	close_fds(t_cmd *cmd, t_io_fd *io)
-{
-	//(void)io;
-	if (!cmd->nextpipe)
-		close(io->pipe[1]);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
-	return (0);
-}
+// int	close_fds(t_cmd *cmd, t_io_fd *io)
+// {
+// 	if (cmd->prevpipe)
+// 		close(io->fd_in);
+// 	close(io->pipe[1]);
+// 	if (cmd->fd_hrdoc != -3)
+// 		close(cmd->fd_hrdoc);
+// 	return (0);
+// }
 
-void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+int	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	cmd->pid = fork();
 	signal(SIGINT, sig_handler_child);
 	if (cmd->pid == -1)
 	{
 		handle_error("fork");
-		return ;
+		return (-1) ;
 	}
 	if (cmd->pid == 0)
 	{
-		if(cmd->prevpipe == 0)
-			close (io->pipe[0]);
-		if(cmd->nextpipe == 0)
-			close(io->pipe[1]);
 		if (set_fds(cmd, io) == -1)
-			exit(EXIT_FAILURE);
-		
+			exit(EXIT_FAILURE);	
 		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, io, envs, cmds);
 		exit(g_ret_val);
-		close_fds(cmd, io);
 	}
-
-	io->fd_in = io->pipe[0];
+	if (cmd->prevpipe)
+		close(io->fd_in);
+	close(io->pipe[1]);
+	if (cmd->fd_hrdoc != -3)
+		close(cmd->fd_hrdoc);
+	//close_fds(cmd, io);
+	return(io->pipe[0]);
 }
 
 void	wait_children(t_list *cmds)

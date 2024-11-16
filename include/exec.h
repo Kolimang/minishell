@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 14:04:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/16 15:27:23 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		handle_single_command(t_cmd *cmd, t_io_fd *io);
 
 //exec_child
 int		execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs);
-void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		close_fds(t_cmd *cmd, t_io_fd *io);
 void	wait_children(t_list *cmds);
 t_io_fd	*initialize_io_fd(void);
@@ -49,10 +49,10 @@ int		parent_heredoc_process(t_cmd *cmd, pid_t pid, int pipe_fd[2]);
 //exec_redir
 int		is_redir_in(t_redir *redir);
 int		redir_infile(t_cmd *cmd, t_io_fd *io);
-int		get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io);
+int		get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io, int fd);
 int		is_redir_out(t_redir *redir);
 int		redir_outfile(t_cmd *cmd, t_io_fd *io);
-int		get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io);
+int		get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io, int fd);
 int		set_fds(t_cmd *cmd, t_io_fd *io);
 int		has_redir_in(t_list *ls_redir);
 
