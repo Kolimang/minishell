@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:02:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 09:38:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	minishell(t_envs *envs)
 	while (1)
 	{
 		signal(SIGINT, sig_handler_main);
-		cmd = readline("\033[0;32mminishell$\033[0m ");
+		cmd = readline("\001\033[0;32m\002minishell$\001\033[0m\002 ");
 		if (!cmd)
 			ft_exit(NULL, envs, 1, NULL);
 		ft_add_cmd_to_history(cmd);
