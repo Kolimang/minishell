@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 18:10:06 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:07:13 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	is_redir_in(t_redir *redir)
 	return (0);
 }
 
-int	redir_infile(t_cmd *cmd, t_io_fd *io)
+int	redir_infile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
 {
 	t_list	*tmp;
 	t_redir	*redir;
@@ -73,8 +73,12 @@ int	redir_infile(t_cmd *cmd, t_io_fd *io)
 	}
 	if (!has_infile)
 	{
-		if (cmd->prevpipe)
-			io->fd_in = io->pipe[0];
+		if (i > 0)
+		{
+			io->fd_in = fd[i - 1][0];
+		}
+		else if (i == 0)
+			io->fd_in = fd[i][0];
 		else
 			io->fd_in = STDIN_FILENO;
 	}

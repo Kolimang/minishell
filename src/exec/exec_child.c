@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 18:54:04 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:09:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,68 +22,145 @@ t_io_fd	*initialize_io_fd(void)
 	return (io);
 }
 
-int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
-{
-	t_cmd	*cmd;
-	t_list	*tmp;
+// int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
+// {
+// 	t_cmd	*cmd;
+// 	t_list	*tmp;
+// 	int		**fds;
 
-	tmp = cmds;
-	while (tmp)
-	{
-		cmd = tmp->content;
-		if (!tmp->next)
-			break ;
-		if (pipe(io->pipe) == -1)
-			return (-1);
-		create_child(cmd, io, envs, cmds);
-		tmp = tmp->next;
-	}
-	if (tmp)
-		create_child(cmd, io, envs, cmds);
-	close (io->pipe[1]);
-	close(io->pipe[0]);
-	wait_children(cmds);
-	return (0);
+// 	tmp = cmds;
+// 	io->pipes = get_pipes(tmp);
+// 	fds = malloc (sizeof(int *) * io->pipes);
+// 	int i = 0;
+// 	while (tmp)
+// 	{
+// 		cmd = tmp->content;
+// 		if (!tmp->next)
+// 			break ;
+// 		if (pipe(fds[i][2]) == -1)
+// 			return (-1);
+// 		create_child(cmd, io, envs, cmds);
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	if (tmp)
+// 		create_child(cmd, io, envs, cmds);
+// 	close_fds(fds, io->pipes);
+// 	wait_children(cmds);
+// 	return (0);
+// }
+int get_pipes(t_list *cmds)
+{
+    int count = 0;
+    t_list *tmp = cmds;
+
+    while (tmp && tmp->next)
+    {
+        count++;
+        tmp = tmp->next;
+    }
+    return count;
+}
+void free_fds(int **fds, int pipes)
+{
+    for (int i = 0; i < pipes; i++)
+        free(fds[i]);
+    free(fds);
+}
+int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
+{
+    t_cmd *cmd;
+    t_list *tmp;
+    int **fds;
+
+    tmp = cmds;
+    io->pipes = get_pipes(tmp);
+    fds = malloc(sizeof(int *) * io->pipes);
+    if (!fds)
+        return (perror("malloc failed for fds"), -1);
+    for (int j = 0; j < io->pipes; j++)
+    {
+        fds[j] = malloc(sizeof(int) * 2);
+        if (!fds[j])
+        {
+            while (--j >= 0)
+                free(fds[j]);
+            free(fds);
+            return (perror("malloc failed for fds[j]"), -1);
+        }
+    }
+    int i = 0;
+    while (tmp && tmp->next)
+    {
+        cmd = tmp->content;
+        if (pipe(fds[i]) == -1)
+        {
+            perror("pipe failed");
+            close_fds(fds, i);
+            free_fds(fds, io->pipes);
+            return (-1);
+        }
+        create_child(cmd, io, envs, cmds, fds, i);
+		printf("%d\n", i);
+        tmp = tmp->next;
+       	if(tmp->next) 
+			i++;
+    }
+    if (tmp)
+    {
+        cmd = tmp->content;
+        create_child(cmd, io, envs, cmds, fds, i);
+    }
+    close_fds(fds, io->pipes);
+    free_fds(fds, io->pipes);
+    wait_children(cmds);
+    return (0);
 }
 
-int	close_fds(t_cmd *cmd, t_io_fd *io)
+void close_fds(int **fds, int pipes)
 {
-	//(void)io;
-	if (!cmd->nextpipe)
-		close(io->pipe[1]);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
-	return (0);
+    for (int i = 0; i < pipes; i++)
+    {
+        close(fds[i][0]);
+        close(fds[i][1]);
+    }
 }
 
-void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
-{
-	cmd->pid = fork();
-	signal(SIGINT, sig_handler_child);
-	if (cmd->pid == -1)
-	{
-		handle_error("fork");
-		return ;
-	}
-	if (cmd->pid == 0)
-	{
-		if(cmd->prevpipe == 0)
-			close (io->pipe[0]);
-		if(cmd->nextpipe == 0)
-			close(io->pipe[1]);
-		if (set_fds(cmd, io) == -1)
-			exit(EXIT_FAILURE);
-		
-		if (cmd->args && cmd->args[0])
-			exec_cmd(cmd, io, envs, cmds);
-		exit(g_ret_val);
-		close_fds(cmd, io);
-	}
 
-	io->fd_in = io->pipe[0];
+void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds, int i)
+{
+    cmd->pid = fork();
+    if (cmd->pid == -1)
+    {
+        perror("fork failed");
+        return;
+    }
+    if (cmd->pid == 0)
+    {
+        signal(SIGINT, SIG_DFL);
+        if (set_fds(cmd, io, fds, i) == -1)
+        {
+            perror("Failed to set file descriptors");
+            exit(EXIT_FAILURE);
+        }
+		close_fds(fds, io->pipes);
+        if (cmd->args && cmd->args[0])
+            exec_cmd(cmd, io, envs, cmds);
+        exit(EXIT_FAILURE);
+    }
+
 }
+
+// int close_fds(t_cmd *cmd, t_io_fd *io)
+// {
+//     if (!cmd->nextpipe)
+//         close(io->pipe[1]);
+//     if (io->pipe[0] != -1 && cmd->prevpipe)
+//         close(io->pipe[0]);  
+//     if (cmd->fd_hrdoc != -3)
+//         close(cmd->fd_hrdoc);
+//     return (0);
+// }
 
 void	wait_children(t_list *cmds)
 {

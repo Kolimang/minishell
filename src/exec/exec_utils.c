@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:08:51 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	init_io_fd(t_io_fd *io)
 {
-	io->pipe[0] = -1;
-	io->pipe[1] = -1;
+	io->pipes = 0;
 	io->fd_in = STDIN_FILENO;
-	io->fd_out = -2;
+	io->fd_out =-2;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)
