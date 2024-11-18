@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 14:27:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:27:44 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_operator(char c)
 {
 	char	*set;
 
-	set = "<|>";
+	set = "<>";
 	return (char_in_set(set, c));
 }
 

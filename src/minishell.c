@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 09:38:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:31:13 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,41 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	return (0);
 }
 
+char **cmd_split(char *input)
+{
+	int	i;
+	int	in_sq;
+	int	in_dq;
+
+	in_sq = 0;
+	in_dq = 0;
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '\"')
+		{
+
+			if (in_dq == 0)
+				in_dq = 1;
+			else
+				in_dq = 0;
+		}
+		else if (input[i] == '\'')
+		{
+
+			if (in_sq == 0)
+				in_sq = 1;
+			else
+				in_sq = 0;
+		}
+		else if (input[i] == '|')
+			if (in_sq == 0 && in_dq == 0)
+				input[i] = 6;
+		i++;
+	}
+	return (ft_split(input, 6));
+}
+
 int	minishell(t_envs *envs)
 {
 	int		i;
@@ -66,7 +101,7 @@ int	minishell(t_envs *envs)
 		ft_add_cmd_to_history(cmd);
 		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
-			cmds = ft_split(cmd, '|');
+			cmds = cmd_split(cmd);
 			free(cmd);
 			if (!cmds)
 				return (EXIT_FAILURE);
