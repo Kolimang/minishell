@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 20:12:58 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ t_cmd	*check_cmd(t_cmd *command)
 	return (command);
 }
 
-void	check_pipes(t_cmd *command, int id, int nb_commands)
+// void	check_pipes(t_cmd *command, int id, int nb_commands)
+// {
+// 	if (id < nb_commands - 1)
+// 		command->nextpipe = 1;
+// 	else if (id > 0)
+// 		command->prevpipe = 1;
+// }
+void check_pipes(t_cmd *command, int id, int nb_commands)
 {
-	if (id < nb_commands - 1)
-		command->nextpipe = 1;
-	else if (id > 0)
-		command->prevpipe = 1;
+    command->prevpipe = (id > 0);
+    command->nextpipe = (id < nb_commands - 1);
 }

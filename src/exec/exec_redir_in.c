@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 19:58:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:16:11 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,12 @@ int redir_infile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
     }
     if (!has_infile)
     {
-		
         if (cmd->prevpipe && cmd->nextpipe)
-        {
 			io->fd_in = fd[i - 1][0];
-		}  // Use previous pipe's read end
         else if (cmd->prevpipe)
-		{io->fd_in = fd[i][0];
-		dprintf(2, "fd : %d\n", i);}
+		io->fd_in = fd[i][0];
 		else
-            io->fd_in = STDIN_FILENO;  // Default to standard input
+            io->fd_in = STDIN_FILENO;
     }
 
     return (1);
