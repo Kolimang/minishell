@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:19:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:41:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_cmd_data
 }	t_cmd_data;
 
 // check_input.c
+char		**cmd_split(char *input);
 int			ft_check_input_cmd(char **cmdref);
 int			check_commands(char **cmds, int *i);
 

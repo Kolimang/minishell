@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 12:31:13 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 12:41:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,6 @@ int	handle_commands(t_envs *envs, char **cmds, int *i)
 	free_arr(cmds, array_len(cmds));
 	the_execution(commands, envs);
 	return (0);
-}
-
-char **cmd_split(char *input)
-{
-	int	i;
-	int	in_sq;
-	int	in_dq;
-
-	in_sq = 0;
-	in_dq = 0;
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] == '\"')
-		{
-
-			if (in_dq == 0)
-				in_dq = 1;
-			else
-				in_dq = 0;
-		}
-		else if (input[i] == '\'')
-		{
-
-			if (in_sq == 0)
-				in_sq = 1;
-			else
-				in_sq = 0;
-		}
-		else if (input[i] == '|')
-			if (in_sq == 0 && in_dq == 0)
-				input[i] = 6;
-		i++;
-	}
-	return (ft_split(input, 6));
 }
 
 int	minishell(t_envs *envs)
