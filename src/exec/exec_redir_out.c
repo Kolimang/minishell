@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 14:05:20 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:53:46 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ int	redir_outfile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
 			if (get_outfile(cmd, redir, io) == -1)
 				return (-1);
 			has_outfile = 1;
-			close(fd[i][1]);
 		}
 		tmp = tmp->next;
 	}
 	if (!has_outfile)
 	{
-		if (cmd->nextpipe && !cmd->prevpipe)
+		if (cmd->nextpipe)
 			io->fd_out = fd[i][1];
 		else
 			io->fd_out = STDOUT_FILENO;
@@ -76,7 +75,7 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 		return (handle_error(redir->val));
 	if (cmd->nextpipe)
 	{
-		signal(SIGINT, newline_hook);
+		//signal(SIGINT, newline_hook);
 	}
 	return (0);
 }
@@ -110,3 +109,29 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
     return 0;
 }
 
+// int set_fds(t_cmd *cmd, t_io_fd *io, int **fds, int i)
+// {
+//     // Redirect input if necessary
+//     if (redir_infile(cmd, io, fds, i) == -1)
+//         return -1;
+
+//     // Redirect output if necessary
+//     if (redir_outfile(cmd, io, fds, i) == -1)
+//         return -1;
+
+//     // Apply the file descriptors using dup2()
+//     if (io->fd_in != STDIN_FILENO) {
+//         if (dup2(io->fd_in, STDIN_FILENO) == -1) {
+//             perror("dup2 failed for fd_in");
+//             return -1;
+//         }
+//     }
+    
+//     if (io->fd_out != STDOUT_FILENO) {
+//         if (dup2(io->fd_out, STDOUT_FILENO) == -1) {
+//             perror("dup2 failed for fd_out");
+//             return -1;
+//         }
+//     }
+//     return 0;
+// }

@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 14:09:17 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:44:09 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,28 +92,30 @@ int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
     int i = 0;
     while (tmp && tmp->next)
     {
+		
         cmd = tmp->content;
         if (pipe(fds[i]) == -1)
         {
             perror("pipe failed");
-            close_fds(fds, i);
+            //close_fds(fds, i);
             free_fds(fds, io->pipes);
             return (-1);
         }
         create_child(cmd, io, envs, cmds, fds, i);
 		printf("%d\n", i);
         tmp = tmp->next;
-       	if(tmp->next) 
+		if(tmp->next) 
 			i++;
     }
+	printf("here%d\n", i);
     if (tmp)
     {
         cmd = tmp->content;
         create_child(cmd, io, envs, cmds, fds, i);
     }
-    close_fds(fds, io->pipes);
+    // close_fds(fds, io->pipes);
     free_fds(fds, io->pipes);
-    wait_children(cmds);
+	wait_children(cmds);
     return (0);
 }
 
@@ -125,7 +127,6 @@ void close_fds(int **fds, int pipes)
         close(fds[i][1]);
     }
 }
-
 
 void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds, int i)
 {
@@ -143,12 +144,16 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds
             perror("Failed to set file descriptors");
             exit(EXIT_FAILURE);
         }
-		close_fds(fds, io->pipes);
+		// for (int j = 0; j < io->pipes; j++)
+        // {
+		// 	if (j != i - 1 )
+        //         close(fds[j][0]);
+		// 	close(fds[j][1]);
+        // }
         if (cmd->args && cmd->args[0])
             exec_cmd(cmd, io, envs, cmds);
         exit(EXIT_FAILURE);
     }
-
 }
 
 // int close_fds(t_cmd *cmd, t_io_fd *io)

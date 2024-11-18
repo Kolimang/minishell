@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 10:54:50 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:29:01 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	execute_nofork(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	int	ret_value;
 
-	if (set_fds(cmd, io, NULL) == -1)
+	if (set_fds(cmd, io, NULL, 0) == -1)
 		return (-1);
 	ret_value = exec_builtin(cmd, io, envs, cmds);
 	if (cmd->fd_hrdoc != -3)

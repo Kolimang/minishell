@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 14:07:13 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:58:48 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,37 +52,39 @@ int	is_redir_in(t_redir *redir)
 	return (0);
 }
 
-int	redir_infile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
+int redir_infile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
 {
-	t_list	*tmp;
-	t_redir	*redir;
-	int		has_infile;
+    t_list *tmp;
+    t_redir *redir;
+    int has_infile = 0;
 
-	has_infile = 0;
-	tmp = cmd->ls_redirs;
-	while (tmp)
-	{
-		redir = tmp->content;
-		if (is_redir_in(redir))
-		{
-			if (get_infile(cmd, redir, io) == -1)
-				return (-1);
-			has_infile = 1;
-		}
-		tmp = tmp->next;
-	}
-	if (!has_infile)
-	{
-		if (i > 0)
-		{
+    tmp = cmd->ls_redirs;
+    while (tmp)
+    {
+        redir = tmp->content;
+        if (is_redir_in(redir))
+        {
+            if (get_infile(cmd, redir, io) == -1)
+                return (-1);
+            has_infile = 1;
+        }
+        tmp = tmp->next;
+    }
+    if (!has_infile)
+    {
+		
+        if (cmd->prevpipe && cmd->nextpipe)
+        {
 			io->fd_in = fd[i - 1][0];
-		}
-		else if (i == 0)
-			io->fd_in = fd[i][0];
+		}  // Use previous pipe's read end
+        else if (cmd->prevpipe)
+		{io->fd_in = fd[i][0];
+		dprintf(2, "fd : %d\n", i);}
 		else
-			io->fd_in = STDIN_FILENO;
-	}
-	return (1);
+            io->fd_in = STDIN_FILENO;  // Default to standard input
+    }
+
+    return (1);
 }
 
 int	get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
