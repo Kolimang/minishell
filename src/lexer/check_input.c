@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 14:34:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 15:03:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**cmd_split(char *input)
 
 int	ft_check_input_cmd(char **cmdref)
 {
-	char	last;
+	int		last;
 	char	*cmd;
 
 	cmd = ft_strtrim_replace(cmdref);
@@ -70,9 +70,16 @@ int	ft_check_input_cmd(char **cmdref)
 		return (EXIT_FAILURE);
 	if ((int)ft_strlen(cmd) > 0)
 	{
-		last = cmd[(int)ft_strlen(cmd) - 1];
-		if (cmd[0] == '|' || last == '|')
+		last = ft_strlen(cmd) - 1;
+		if (cmd[0] == '|')
 			return (merror(NULL, NULL, "|", 258));
+		else if (cmd[last] == '|')
+		{
+			if (last - 1 >= 0 && cmd[last - 1] == '>')
+				return (merror(NULL, NULL, "newline", 258));
+			else
+				return (merror(NULL, NULL, "|", 258));
+		}
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
