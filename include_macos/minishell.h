@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:28:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/18 16:51:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <dirent.h> //cd rework: opendir, readdir, ... // opendir() returns a DIR *pointer to a malloc'ed zone, or null if error
 # include <termios.h>
 # include "../lib/libft/libft.h"
 
