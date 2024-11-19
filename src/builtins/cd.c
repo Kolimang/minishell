@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 17:21:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 14:14:03 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,7 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 {
 	char	*new_path;
-	DIR		*dirp;
-	int 	res;
 
-	dirp = opendir(dest_path);
-	if (!dirp)
-	{
-		ft_printf("dest does not exist :-( ; good idea to also check if current exists, then...\n");
-		dirp = opendir(curr_path);
-		if (!dirp)
-		{
-			ft_printf("current does not exist either! Danger zone, hem, let's go to home.\n");
-			if (curr_path)
-				free(curr_path);
-			curr_path = ft_strdup("/Users/jrichir");
-			new_path = ft_strdup("/Users/jrichir");
-			res = go_home(curr_path, env);
-			return (update_pwd(new_path, curr_path, env), 0);
-			//return (0); // 1 ?
-		}
-		return (0); // 1 ?
-	}
 	if (allowedoption && dest_path[0] == '-')
 		return (merror("cd", dest_path, NULL, 19));
 	else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
