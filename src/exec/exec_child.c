@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 19:44:09 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:30:18 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,28 +92,25 @@ int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
     int i = 0;
     while (tmp && tmp->next)
     {
-		
         cmd = tmp->content;
         if (pipe(fds[i]) == -1)
         {
             perror("pipe failed");
-            //close_fds(fds, i);
+            close_fds(fds, i);
             free_fds(fds, io->pipes);
             return (-1);
         }
         create_child(cmd, io, envs, cmds, fds, i);
-		printf("%d\n", i);
         tmp = tmp->next;
 		if(tmp->next) 
 			i++;
     }
-	printf("here%d\n", i);
     if (tmp)
     {
         cmd = tmp->content;
         create_child(cmd, io, envs, cmds, fds, i);
     }
-    // close_fds(fds, io->pipes);
+    close_fds(fds, io->pipes);
     free_fds(fds, io->pipes);
 	wait_children(cmds);
     return (0);
@@ -121,10 +118,10 @@ int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 
 void close_fds(int **fds, int pipes)
 {
-    for (int i = 0; i < pipes; i++)
+   for (int j = 0; j < pipes; j++)
     {
-        close(fds[i][0]);
-        close(fds[i][1]);
+    	close(fds[j][0]);
+        close(fds[j][1]);
     }
 }
 
@@ -144,12 +141,25 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds
             perror("Failed to set file descriptors");
             exit(EXIT_FAILURE);
         }
-		// for (int j = 0; j < io->pipes; j++)
-        // {
-		// 	if (j != i - 1 )
-        //         close(fds[j][0]);
-		// 	close(fds[j][1]);
-        // }
+		 if (!cmd->prevpipe && cmd->nextpipe)  // First command
+        {
+            // For cat: close read end, keep write end
+            close(fds[0][0]);
+        }
+        else if (cmd->prevpipe && !cmd->nextpipe)  // Last command
+        {
+            close(fds[0][1]);
+        }
+        else if (cmd->prevpipe && cmd->nextpipe)  // Middle command (for longer pipes)
+        {
+            for (int j = 0; j < io->pipes; j++)
+            {
+                if (j != i - 1)
+                    close(fds[j][0]);
+                if (j != i)
+                    close(fds[j][1]);
+            }
+        }
         if (cmd->args && cmd->args[0])
             exec_cmd(cmd, io, envs, cmds);
         exit(EXIT_FAILURE);

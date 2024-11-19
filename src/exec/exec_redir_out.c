@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/18 19:53:46 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:28:24 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 		return (handle_error(redir->val));
 	if (cmd->nextpipe)
 	{
-		//signal(SIGINT, newline_hook);
+		signal(SIGINT, newline_hook);
 	}
 	return (0);
 }
@@ -92,7 +92,8 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
             perror("dup2 failed for fd_in");
             return -1;
         }
-		// close(io->fd_in);
+		if (io->fd_in != STDIN_FILENO)
+			close(io->fd_in);
     }
     if (cmd->nextpipe || has_redir_out(cmd->ls_redirs))
     {
@@ -103,8 +104,8 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
             perror("dup2 failed for fd_out");
             return -1;
         }
-		// if(!cmd->nextpipe)
-        // 	close(io->fd_out);
+		if (io->fd_out != STDOUT_FILENO)
+			close(io->fd_out);
     }
     return 0;
 }
