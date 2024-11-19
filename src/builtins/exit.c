@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:52:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:26:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 		ft_printf("exit\n");
 	if (args && args[1] && !arg_is_number(args[1]))
 		merror(args[0], args[1], NULL, 22);
+	else if (argc > 2)
+		return(merror(args[0], NULL, NULL, 13));
 	if (args && args[1] && arg_is_number(args[1])
 		&& ft_atoi(args[1]) >= 0)
 		g_ret_val = ft_atoi(args[1]) % 256;
-	else if (argc > 2)
-		merror(args[0], NULL, NULL, 13);
 	free_commands(cmds);
 	cleanup_envs(envs, 0);
 	if (io)

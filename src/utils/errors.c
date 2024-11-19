@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/19 15:03:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:21:53 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,24 @@ static int	write_msg2(int type)
 	return (0);
 }
 
+static int	get_return_value(int *ret, int type)
+{
+	if (type > 100 && type <= 258)
+		*ret = type;
+	else if (type > 258)
+		*ret = type / 3;
+	else if (type == 22)
+		*ret = 2;
+	else
+		*ret = 1;
+	return (*ret);
+}
+
 static int	generic(char *cmd, char *arg, int type)
 {
 	int	ret;
 
-	if (type > 100 && type <= 258)
-		ret = type;
-	else if (type > 258)
-		ret = type / 3;
-	else
-		ret = 1;
+	ret = get_return_value(&ret, type);
 	write(2, "minishell: ", 11);
 	if (cmd)
 	{
