@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/19 12:30:18 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:32:01 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,16 +141,9 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds
             perror("Failed to set file descriptors");
             exit(EXIT_FAILURE);
         }
-		 if (!cmd->prevpipe && cmd->nextpipe)  // First command
-        {
-            // For cat: close read end, keep write end
+		 if (!cmd->prevpipe && cmd->nextpipe)
             close(fds[0][0]);
-        }
-        else if (cmd->prevpipe && !cmd->nextpipe)  // Last command
-        {
-            close(fds[0][1]);
-        }
-        else if (cmd->prevpipe && cmd->nextpipe)  // Middle command (for longer pipes)
+       else if (cmd->prevpipe && cmd->nextpipe)
         {
             for (int j = 0; j < io->pipes; j++)
             {
@@ -160,11 +153,54 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds
                     close(fds[j][1]);
             }
         }
+		else if (cmd->prevpipe && !cmd->nextpipe)
+			close(fds[i][1]);
         if (cmd->args && cmd->args[0])
             exec_cmd(cmd, io, envs, cmds);
         exit(EXIT_FAILURE);
     }
 }
+// void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds, int **fds, int i)
+// {
+//     cmd->pid = fork();
+//     if (cmd->pid == -1)
+//     {
+//         perror("fork failed");
+//         return;
+//     }
+//     if (cmd->pid == 0)  // Child process
+//     {
+//         signal(SIGINT, SIG_DFL);
+//         if (set_fds(cmd, io, fds, i) == -1)
+//         {
+//             perror("Failed to set file descriptors");
+//             exit(EXIT_FAILURE);
+//         }
+
+//         // Close unused FDs
+//         for (int j = 0; j < io->pipes; j++)
+//         {
+//             if (j != i - 1) // Not the previous pipe's read end
+//                 close(fds[j][0]);
+//             if (j != i)     // Not the current pipe's write end
+//                 close(fds[j][1]);
+//         }
+
+//         // Execute the command
+//         if (cmd->args && cmd->args[0])
+//             exec_cmd(cmd, io, envs, cmds);
+//         exit(EXIT_FAILURE);
+//     }
+//     else  // Parent process
+//     {
+//         // Parent should close the pipe ends it no longer needs
+//         if (i > 0) // Close the read end of the previous pipe
+//             close(fds[i - 1][0]);
+//         if (i < io->pipes) // Close the write end of the current pipe
+//             close(fds[i][1]);
+//     }
+// }
+
 
 // int close_fds(t_cmd *cmd, t_io_fd *io)
 // {
