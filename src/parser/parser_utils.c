@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:25:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 10:57:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	check_pipes(t_cmd *command, int id, int nb_commands)
 {
 	if (id < nb_commands - 1)
 		command->nextpipe = 1;
-	else if (id > 0)
+	if (id > 0)
 		command->prevpipe = 1;
 }
