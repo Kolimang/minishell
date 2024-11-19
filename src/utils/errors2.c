@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 14:38:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 15:02:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ int	syntaxerror(char *arg_q, int type)
 	write(2, arg_q, ft_strlen(arg_q));
 	write(2, "'\n", 2);
 	return (set_exit_status(type));
+}
+
+int	fail_current_dir(void)
+{
+	write(2, "cd: error retrieving current directory: ", 40);
+	write(2, "getcwd: cannot access parent directories: ", 42);
+	write(2, "No such file or directory\n", 26);
+	return (set_exit_status(0));
 }
 
 int	invalid_identifier(char *cmd, char *arg)
