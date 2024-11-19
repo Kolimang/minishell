@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/19 14:14:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:37:55 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ static char	*get_home_path(t_env *env)
 		head = head->next;
 	}
 	return (NULL);
+}
+
+char *expand_tilde_path(char *unexpanded_path, t_env *env)
+{
+	char	*abs_path;
+
+	abs_path = ft_strjoin(get_home_path(env), &unexpanded_path[1]);
+	//free(unexpanded_path); // at the moment, double free with it, but I may need to reinstore later when reverting to original go() function
+	return (abs_path);
 }
 
 static int	go_home(char *curr_path, t_env *env)
@@ -83,30 +92,46 @@ static int	go_prev(char *dest_path, char *curr_path, t_env *env)
 	return (merror("cd", NULL, NULL, 18));
 }
 
+// static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
+// {
+// 	char	*new_path;
+
+// 	if (allowedoption && dest_path[0] == '-')
+// 		return (merror("cd", dest_path, NULL, 19));
+// 	else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
+// 		return (merror("cd", dest_path, NULL, 1));
+// 	else if (!is_directory(dest_path))
+// 		return (merror("cd", dest_path, NULL, 11));
+// 	else if (access(dest_path, X_OK) != 0)
+// 		return (merror("cd", dest_path, NULL, 15));
+// 	else
+// 	{
+// 		curr_path = getcwd(NULL, 0);
+// 		if (!curr_path)
+// 			return (merror("cd", NULL, NULL, 16));
+// 		if (chdir((const char *)dest_path) != 0)
+// 			return (free(curr_path), merror("cd", NULL, NULL, 17));
+// 		new_path = getcwd(NULL, 0);
+// 		if (!new_path)
+// 			return (merror("cd", NULL, NULL, 20));
+// 		return (update_pwd(new_path, curr_path, env), 0);
+// 	}
+// }
+
 static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 {
 	char	*new_path;
+	char	*exp_path;
 
-	if (allowedoption && dest_path[0] == '-')
-		return (merror("cd", dest_path, NULL, 19));
-	else if (!dest_path || dest_path[0] == '\0' || access(dest_path, F_OK) != 0)
-		return (merror("cd", dest_path, NULL, 1));
-	else if (!is_directory(dest_path))
-		return (merror("cd", dest_path, NULL, 11));
-	else if (access(dest_path, X_OK) != 0)
-		return (merror("cd", dest_path, NULL, 15));
-	else
-	{
-		curr_path = getcwd(NULL, 0);
-		if (!curr_path)
-			return (merror("cd", NULL, NULL, 16));
-		if (chdir((const char *)dest_path) != 0)
-			return (free(curr_path), merror("cd", NULL, NULL, 17));
-		new_path = getcwd(NULL, 0);
-		if (!new_path)
-			return (merror("cd", NULL, NULL, 20));
-		return (update_pwd(new_path, curr_path, env), 0);
-	}
+	(void)allowedoption;
+	exp_path = expand_tilde_path(dest_path, env);
+	curr_path = getcwd(NULL, 0);
+	if (chdir(exp_path) != 0)
+		return (free(curr_path), merror("cd-hi-han", NULL, NULL, 17));
+	new_path = getcwd(NULL, 0);
+	if (!new_path)
+		return (merror("cd-ppoueeeettt", NULL, NULL, 20));
+	return (update_pwd(new_path, curr_path, env), 0);
 }
 
 int	ft_cd(char **args, t_env *env)
