@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/15 15:19:40 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/19 14:19:06 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ OBJ_DIR   := build/
 NAME      := minishell
 
 CC		  := cc
+CFLAGS    := -g3 -Wall -Wextra -Werror
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
@@ -41,7 +42,7 @@ else
 	LIBREADLFLAGS 	:= -I$(RL_H) -L$(RL_LIB) -lreadline
 endif
 
-CFLAGS    := -I$(INC_DIR) -I$(INC_DIR2) -g3 -Wall -Wextra -Werror
+CFLAGS    += -I$(INC_DIR) -I$(INC_DIR2)
 
 LIBFT     := lib/libft/libft.a
 
