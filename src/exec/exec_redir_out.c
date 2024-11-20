@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/19 12:28:24 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:56:05 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,30 +109,3 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
     }
     return 0;
 }
-
-// int set_fds(t_cmd *cmd, t_io_fd *io, int **fds, int i)
-// {
-//     // Redirect input if necessary
-//     if (redir_infile(cmd, io, fds, i) == -1)
-//         return -1;
-
-//     // Redirect output if necessary
-//     if (redir_outfile(cmd, io, fds, i) == -1)
-//         return -1;
-
-//     // Apply the file descriptors using dup2()
-//     if (io->fd_in != STDIN_FILENO) {
-//         if (dup2(io->fd_in, STDIN_FILENO) == -1) {
-//             perror("dup2 failed for fd_in");
-//             return -1;
-//         }
-//     }
-    
-//     if (io->fd_out != STDOUT_FILENO) {
-//         if (dup2(io->fd_out, STDOUT_FILENO) == -1) {
-//             perror("dup2 failed for fd_out");
-//             return -1;
-//         }
-//     }
-//     return 0;
-// }
