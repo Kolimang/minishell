@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 16:03:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:15:56 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int redir_infile(t_cmd *cmd, t_io_fd *io)
 		else
             io->fd_in = STDIN_FILENO;
     }
-
     return (1);
 }
 

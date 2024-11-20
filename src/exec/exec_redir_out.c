@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 16:03:14 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:23:12 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,59 +73,29 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 	if (io->fd_out == -1)
 		return (handle_error(redir->val));
 	if (cmd->nextpipe)
-	{
 		signal(SIGINT, newline_hook);
-	}
 	return (0);
 }
 
-
-int set_fds(t_cmd *cmd, t_io_fd *io)
+int	set_fds(t_cmd *cmd, t_io_fd *io)
 {
-        if (redir_infile(cmd, io) == -1) 
-            return -1;
-        if (dup2(io->fd_in, STDIN_FILENO) == -1)
-        {
-            perror("dup2 failed for fd_in");
-            return -1;
-        }
-		if (io->fd_in != STDIN_FILENO)
-			close(io->fd_in);
-        if (redir_outfile(cmd, io) == -1) 
-            return -1;
-        if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-        {
-            perror("dup2 failed for fd_out");
-            return -1;
-        }
-		if (io->fd_out != STDOUT_FILENO)
-			close(io->fd_out);
-    return 0;
+	if (redir_infile(cmd, io) == -1)
+		return (-1);
+	if (dup2(io->fd_in, STDIN_FILENO) == -1)
+	{
+		perror("dup2 failed for fd_in");
+		return (-1);
+	}
+	if (io->fd_in != STDIN_FILENO)
+		close(io->fd_in);
+	if (redir_outfile(cmd, io) == -1)
+		return (-1);
+	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
+	{
+		perror("dup2 failed for fd_out");
+		return (-1);
+	}
+	if (io->fd_out != STDOUT_FILENO)
+		close(io->fd_out);
+	return (0);
 }
-
-// int set_fds(t_cmd *cmd, t_io_fd *io, int **fds, int i)
-// {
-//     // Redirect input if necessary
-//     if (redir_infile(cmd, io, fds, i) == -1)
-//         return -1;
-
-//     // Redirect output if necessary
-//     if (redir_outfile(cmd, io, fds, i) == -1)
-//         return -1;
-
-//     // Apply the file descriptors using dup2()
-//     if (io->fd_in != STDIN_FILENO) {
-//         if (dup2(io->fd_in, STDIN_FILENO) == -1) {
-//             perror("dup2 failed for fd_in");
-//             return -1;
-//         }
-//     }
-    
-//     if (io->fd_out != STDOUT_FILENO) {
-//         if (dup2(io->fd_out, STDOUT_FILENO) == -1) {
-//             perror("dup2 failed for fd_out");
-//             return -1;
-//         }
-//     }
-//     return 0;
-// }
