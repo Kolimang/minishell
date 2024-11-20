@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/19 12:28:24 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:27:48 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	redir_outfile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
 
 	has_outfile = 0;
 	tmp = cmd->ls_redirs;
-	
 	while (tmp)
 	{
 		redir = tmp->content;
@@ -81,11 +80,9 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 }
 
 
-int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
+int set_fds(t_cmd *cmd, t_io_fd *io)
 {
-    if (cmd->prevpipe || has_redir_in(cmd->ls_redirs))
-    {
-        if (redir_infile(cmd, io, fd, i) == -1) 
+        if (redir_infile(cmd, io) == -1) 
             return -1;
         if (dup2(io->fd_in, STDIN_FILENO) == -1)
         {
@@ -94,9 +91,6 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
         }
 		if (io->fd_in != STDIN_FILENO)
 			close(io->fd_in);
-    }
-    if (cmd->nextpipe || has_redir_out(cmd->ls_redirs))
-    {
         if (redir_outfile(cmd, io, fd, i) == -1) 
             return -1;
         if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -106,7 +100,6 @@ int set_fds(t_cmd *cmd, t_io_fd *io, int **fd, int i)
         }
 		if (io->fd_out != STDOUT_FILENO)
 			close(io->fd_out);
-    }
     return 0;
 }
 

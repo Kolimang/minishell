@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 10:34:51 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:27:23 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_io_fd
 	int	std_out;
 	int	fd_in;
 	int	fd_out;
+	int	**fds;
 }	t_io_fd;
 
 typedef struct s_command
@@ -53,6 +54,7 @@ typedef struct s_command
 	int				nextpipe;
 	int				fd_hrdoc;
 	t_builtin_type	builtin;
+	int i;
 }	t_cmd;
 
 typedef struct s_redir
