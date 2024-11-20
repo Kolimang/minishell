@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/20 13:58:55 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/20 16:58:44 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ LIBFT     := lib/libft/libft.a
 RM        := rm -f
 
 FILES     := 	builtins/cd \
+				builtins/cd2 \
 				builtins/echo \
 				builtins/env \
 				builtins/exit \
