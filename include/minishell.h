@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:26:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:42:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
-# include <dirent.h> //cd rework: opendir, readdir, ... // opendir() returns a DIR *pointer to a malloc'ed zone, or null if error
 # include <termios.h>
 # include "../lib/libft/libft.h"
-
-//cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory (== exit code 0)
 
 // Include project headers
 # include "sighandle.h"
@@ -58,6 +55,7 @@ int	main(int ac, char **av, char **o_env);
 // Platform-dependant portions
 # ifdef __APPLE__
 #  define ERR_NUM_ARG 255
+
 int	rl_replace_line(char *str, int nb);
 # else
 #  define ERR_NUM_ARG 2
