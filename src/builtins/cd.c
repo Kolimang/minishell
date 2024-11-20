@@ -6,38 +6,11 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 13:27:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:33:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static int	go_home(char *curr_path, t_env *env)
-{
-	char	*home_path;
-	char	*new_path;
-
-	home_path = get_env_val(env, "HOME");
-	if (!home_path || home_path[0] == '\0')
-		return (merror("cd", NULL, NULL, 14));
-	if (access(home_path, R_OK) != 0)
-		return (merror("cd", NULL, NULL, 15));
-	curr_path = getcwd(NULL, 0);
-	//if (!curr_path)
-	//	return (merror("cd", NULL, NULL, 16));
-	if (chdir(home_path) != 0)
-	{
-		free(curr_path);
-		return (merror("cd-bouillon", NULL, NULL, 17));
-	}
-	new_path = getcwd(NULL, 0);
-	if (!new_path)
-	{
-		free(curr_path);
-		return (merror("cd-cata", NULL, NULL, 16));
-	}
-	return (update_pwd(new_path, curr_path, env), 0);
-}
 
 static int	go_safe(t_env *env)
 {
@@ -108,22 +81,20 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 			go_safe(env);
 			return (merror("cd", NULL, NULL, 16));
 		}
-		//if (!curr_path)
-		//	return (merror("cd", NULL, NULL, 16));
 		if (!new_path)
 			return (merror("cd", NULL, NULL, 20));
 		return (update_pwd(new_path, curr_path, env), 0);
 	}
 }
 
-static int	go_tilde(char *dest_path, char *curr_path, t_env *env, int allowedoption)
+static int	go_tilde(char *dest_path, char *curr_path, t_env *env,
+						int allowedoption)
 {
 	char	*new_path;
 	char	*exp_path;
 
 	(void)allowedoption;
 	exp_path = expand_tilde_path(dest_path, env);
-	//ft_printf("expanded path: %s\n", exp_path);//DEBUG
 	curr_path = getcwd(NULL, 0);
 	if (chdir(exp_path) != 0)
 		return (free(curr_path), merror("cd", NULL, NULL, 17));
