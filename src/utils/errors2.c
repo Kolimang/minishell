@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/19 15:02:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 12:26:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	syntaxerror(char *arg_q, int type)
 	return (set_exit_status(type));
 }
 
+// error 16
 int	fail_current_dir(void)
 {
 	write(2, "cd: error retrieving current directory: ", 40);
