@@ -6,11 +6,29 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 13:01:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:25:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static int	update_data(char *path, t_env *head, t_env *env)
+{
+	char	*home;
+
+	if (!env)
+		return (1);
+	home = get_env_val(env, "HOME");
+	if (head->var_val)
+		free(head->var_val);
+	if (path)
+		head->var_val = ft_strdup(path);
+	else if (home)
+		head->var_val = ft_strdup(get_env_val(env, "HOME"));
+	else
+		head->var_val = ft_strdup("/");
+	return (0);
+}
 
 int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 {
@@ -24,27 +42,9 @@ int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 	while (head)
 	{
 		if (ft_strncmp(head->var_name, "PWD", 4) == 0)
-		{
-			if (head->var_val)
-				free(head->var_val);
-			if (dest_path)
-				head->var_val = ft_strdup(dest_path);
-			else if (home)
-				head->var_val = ft_strdup(get_env_val(env, "HOME"));
-			else
-				head->var_val = ft_strdup("/");
-		}
+			update_data(dest_path, head, env);
 		if (ft_strncmp(head->var_name, "OLDPWD", 7) == 0)
-		{
-			if (head->var_val)
-				free(head->var_val);
-			if (curr_path)
-				head->var_val = ft_strdup(curr_path);
-			else if (home)
-				head->var_val = ft_strdup(get_env_val(env, "HOME"));
-			else
-				head->var_val = ft_strdup("/");
-		}
+			update_data(curr_path, head, env);
 		head = head->next;
 	}
 	free(curr_path);
