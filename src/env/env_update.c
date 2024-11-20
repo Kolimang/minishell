@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 13:55:06 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 15:30:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int	update_env(char *name, char *value, t_env **env, int mode)
 	temp = NULL;
 	while (head)
 	{
-		if (value && !ft_strncmp(head->var_name, name, ft_strlen(name) + 1))
+		if (!ft_strncmp(head->var_name, name, ft_strlen(name) + 1))
 		{
-			if (head->var_val)
+			if (value && head->var_val)
 			{
 				temp = ft_strdup(head->var_val);
 				free(head->var_val);
 			}
-			if (mode == 0)
+			if (value && mode == 0)
 				head->var_val = ft_strdup(value);
-			else if (mode == 1)
+			else if (value && mode == 1)
 				head->var_val = ft_strjoin(temp, value);
 			return (free(temp), 0);
 		}
