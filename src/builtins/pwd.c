@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 13:53:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:01:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 {
 	t_env	*head;
+	char	*home;
 
 	if (!env)
 		return (1);
+	home = get_env_val(env, "HOME");
 	head = env;
 	while (head)
 	{
@@ -25,13 +27,23 @@ int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 		{
 			if (head->var_val)
 				free(head->var_val);
-			head->var_val = ft_strdup(dest_path);
+			if (dest_path)
+				head->var_val = ft_strdup(dest_path);
+			else if (home)
+				head->var_val = ft_strdup(get_env_val(env, "HOME"));
+			else
+				head->var_val = ft_strdup("/");
 		}
 		if (ft_strncmp(head->var_name, "OLDPWD", 7) == 0)
 		{
 			if (head->var_val)
 				free(head->var_val);
-			head->var_val = ft_strdup(curr_path);
+			if (curr_path)
+				head->var_val = ft_strdup(curr_path);
+			else if (home)
+				head->var_val = ft_strdup(get_env_val(env, "HOME"));
+			else
+				head->var_val = ft_strdup("/");
 		}
 		head = head->next;
 	}
