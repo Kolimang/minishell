@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 13:27:48 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:03:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_redir_out(t_redir *redir)
 	return (0);
 }
 
-int	redir_outfile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
+int	redir_outfile(t_cmd *cmd, t_io_fd *io)
 {
 	t_list	*tmp;
 	t_redir	*redir;
@@ -55,7 +55,7 @@ int	redir_outfile(t_cmd *cmd, t_io_fd *io, int **fd, int i)
 	if (!has_outfile)
 	{
 		if (cmd->nextpipe)
-			io->fd_out = fd[i][1];
+			io->fd_out = io->fds[cmd->i][1];
 		else
 			io->fd_out = STDOUT_FILENO;
 	}
@@ -91,7 +91,7 @@ int set_fds(t_cmd *cmd, t_io_fd *io)
         }
 		if (io->fd_in != STDIN_FILENO)
 			close(io->fd_in);
-        if (redir_outfile(cmd, io, fd, i) == -1) 
+        if (redir_outfile(cmd, io) == -1) 
             return -1;
         if (dup2(io->fd_out, STDOUT_FILENO) == -1)
         {

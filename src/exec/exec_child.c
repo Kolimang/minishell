@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 13:27:19 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:11:49 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,19 +148,33 @@ int **prepare_pipes(int pipe_count)
         perror("Failed to allocate pipes");
     return (fds);
 }
+
+int get_command_index(t_list *cmds, t_list *current)
+{
+    int index = 0;
+    while (cmds)
+    {
+        if (cmds == current)
+            return index;
+        index++;
+        cmds = cmds->next;
+    }
+    return -1; // Return -1 if the current node is not found (shouldn't happen)
+}
+
 int process_command(t_list **tmp, t_envs *envs, t_list *cmds, t_io_fd *io)
 {
     t_cmd *cmd;
 
     cmd = (*tmp)->content;
-    cmd->i = get_command_index(cmds, *tmp); // Assign the correct index to cmd->i
-    if (pipe(io->fds[cmd->i]) == -1) // Use io->fds
+    cmd->i = get_command_index(cmds, *tmp);
+    if (pipe(io->fds[cmd->i]) == -1)
     {
         perror("pipe failed");
         return (-1);
     }
-    create_child(cmd, io, envs, cmds); // Pass io instead of fds
-    *tmp = (*tmp)->next; // Move to the next command in the list
+    create_child(cmd, io, envs, cmds);
+    *tmp = (*tmp)->next;
     return (0);
 }
 
@@ -182,7 +196,6 @@ int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
     io->fds = prepare_pipes(io->pipes); // Prepare fds directly in io->fds
     if (!io->fds && io->pipes > 0)
         return (-1);
-
     while (tmp && tmp->next)
     {
         if (process_command(&tmp, envs, cmds, io) == -1) // Pass io with fds
@@ -231,7 +244,7 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
     if (cmd->pid == 0)
     {
         signal(SIGINT, SIG_DFL);
-        if (set_fds(cmd, io, io->fds, i) == -1)
+        if (set_fds(cmd, io) == -1)
         {
             perror("Failed to set file descriptors");
             exit(EXIT_FAILURE);
@@ -242,7 +255,7 @@ void create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
             close_child(io->fds, io->pipes, cmd->i);
 		else if (cmd->prevpipe && cmd->nextpipe==0 && cmd->i != 0)
 		{	
-			close(io->fds[cmd->i][0]);
+			//close(io->fds[cmd->i][0]);
 			close(io->fds[cmd->i][1]);
 		}
         if (cmd->args && cmd->args[0])
