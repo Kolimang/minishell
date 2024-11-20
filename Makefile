@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/19 14:19:06 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/20 13:58:55 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,13 @@ OBJ_DIR   := build/
 NAME      := minishell
 
 CC		  := cc
-CFLAGS    := -g3 -Wall -Wextra -Werror
+CFLAGS    := -I$(INC_DIR) -g3 -Wall -Wextra -Werror
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
-	INC_DIR2		:= $(ROOT_DIR)/include_linux
     CFLAGS			+=	-Wno-unused-result
 	LIBREADLFLAGS	:= -lreadline
 else
-	INC_DIR2		:= $(ROOT_DIR)/include_macos
-
 #	Paths to readline library (installed with brew)
 	ifeq ($(USER), jrichir)
 		RL_H    	:= /Users/jrichir/.brew/opt/readline/include
@@ -41,8 +38,6 @@ else
 	endif
 	LIBREADLFLAGS 	:= -I$(RL_H) -L$(RL_LIB) -lreadline
 endif
-
-CFLAGS    += -I$(INC_DIR) -I$(INC_DIR2)
 
 LIBFT     := lib/libft/libft.a
 
