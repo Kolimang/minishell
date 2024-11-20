@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 16:46:54 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 13:52:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int	handle_commands(t_envs *envs, char **cmds, int *i);
 int	minishell(t_envs *envs);
 int	main(int ac, char **av, char **o_env);
 
-// Commented out bcz conflict with other prototype found in PATH on Linux
-//int	rl_replace_line(char *, int);
+// Platform-dependant portions
+# ifdef __APPLE__
+#  define ERR_NUM_ARG 255
+int	rl_replace_line(char *, int);
+# else
+#  define ERR_NUM_ARG 2
+# endif
 
 #endif
