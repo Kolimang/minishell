@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 14:22:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:31:33 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_cmd(t_cmd *command)
 	command->prevpipe = 0;
 	command->nextpipe = 0;
 	command->fd_hrdoc = -3;
+	command->i = 0;
 }
 
 // Turn lexemes-list into commands-list

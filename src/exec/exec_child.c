@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 17:23:07 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:34:25 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	process_command(t_list **tmp, t_envs *envs, t_list *cmds, t_io_fd *io)
 	t_cmd	*cmd;
 
 	cmd = (*tmp)->content;
+	cmd->i = 0;
 	cmd->i = get_command_index(cmds, *tmp);
 	if (pipe(io->fds[cmd->i]) == -1)
 		return (perror("pipe failed"), -1);
