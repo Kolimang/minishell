@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:41:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:24:37 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	handle_single_command(t_cmd *cmd, t_io_fd *io)
 {
-	if (set_fds(cmd, io) == -1)
+	if (set_fds(cmd, io, NULL, 0) == -1)
 	{
 		reset_io(io, cmd);
 		return (-1);
