@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 13:52:28 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/20 16:26:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **o_env);
 // Platform-dependant portions
 # ifdef __APPLE__
 #  define ERR_NUM_ARG 255
-int	rl_replace_line(char *, int);
+int	rl_replace_line(char *str, int nb);
 # else
 #  define ERR_NUM_ARG 2
 # endif
