@@ -52,34 +52,38 @@ int	is_redir_in(t_redir *redir)
 	return (0);
 }
 
-int redir_infile(t_cmd *cmd, t_io_fd *io)
+void	set_infile(t_cmd *cmd, t_io_fd *io)
 {
-    t_list *tmp;
-    t_redir *redir;
-    int has_infile = 0;
-
-    tmp = cmd->ls_redirs;
-    while (tmp)
-    {
-        redir = tmp->content;
-        if (is_redir_in(redir))
-        {
-            if (get_infile(cmd, redir, io) == -1)
-                return (-1);
-            has_infile = 1;
-        }
-        tmp = tmp->next;
-    }
-    if (!has_infile)
-    {
-        if (cmd->prevpipe && cmd->nextpipe)
-			io->fd_in = io->fds[cmd->i - 1][0];
-        else if (cmd->prevpipe)
+	if (cmd->prevpipe && cmd->nextpipe)
+		io->fd_in = io->fds[cmd->i - 1][0];
+	else if (cmd->prevpipe)
 		io->fd_in = io->fds[cmd->i][0];
-		else
-            io->fd_in = STDIN_FILENO;
-    }
-    return (1);
+	else
+		io->fd_in = STDIN_FILENO;
+}
+
+int	redir_infile(t_cmd *cmd, t_io_fd *io)
+{
+	t_list	*tmp;
+	t_redir	*redir;
+	int		has_infile;
+
+	has_infile = 0;
+	tmp = cmd->ls_redirs;
+	while (tmp)
+	{
+		redir = tmp->content;
+		if (is_redir_in(redir))
+		{
+			if (get_infile(cmd, redir, io) == -1)
+				return (-1);
+			has_infile = 1;
+		}
+		tmp = tmp->next;
+	}
+	if (!has_infile)
+		set_infile(cmd, io);
+	return (1);
 }
 
 int	get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io)

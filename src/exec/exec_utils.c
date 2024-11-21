@@ -12,41 +12,6 @@
 
 #include <minishell.h>
 
-void	init_io_fd(t_io_fd *io)
-{
-	io->pipes = 0;
-	io->fd_in = STDIN_FILENO;
-	io->fd_out =-2;
-	io->std_in = dup(STDIN_FILENO);
-	io->std_out = dup(STDOUT_FILENO);
-	if (io->std_in == -1 || io->std_out == -1)
-	{
-		perror("Failed to duplicate");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	reset_io(t_io_fd *io, t_cmd *cmd)
-{
-	if (dup2(io->std_in, STDIN_FILENO) == -1)
-	{
-		perror("Failed to reset stdin");
-		exit(EXIT_FAILURE);
-	}
-	if (dup2(io->std_out, STDOUT_FILENO) == -1)
-	{
-		perror("Failed to reset stdout");
-		exit(EXIT_FAILURE);
-	}
-	if (cmd->fd_hrdoc != -3)
-	{
-		close(cmd->fd_hrdoc);
-		cmd->fd_hrdoc = -3;
-	}
-	close(io->std_in);
-	close(io->std_out);
-}
-
 int	handle_error(const char *msg)
 {
 	g_ret_val = EXIT_FAILURE;

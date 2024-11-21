@@ -14,6 +14,7 @@
 # define EXEC_H
 
 //execute
+void	reset_io(t_io_fd *io, t_cmd *cmd);
 void	exec(t_list *cmds, t_envs *envs);
 int		execute_command(char *pathname, char **full, char **g_env);
 int		exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
@@ -25,6 +26,13 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 void	close_fds(int **fds, int pipes);
 void	wait_children(t_list *cmds);
 t_io_fd	*initialize_io_fd(void);
+
+//exec_child_utils
+t_io_fd	*initialize_io_fd(void);
+int	get_pipes(t_list *cmds);
+void	free_fds(int **fds, int pipes);
+int	**allocate_pipes(int pipe_count);
+int	**prepare_pipes(int pipe_count);
 
 //exec_paths
 char	*find_path(char **full_cmd, char *cmd);
@@ -38,6 +46,7 @@ int		execute_nofork(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		is_builtin(char *cmd);
+int	pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_envs *envs);
@@ -58,15 +67,10 @@ int		has_redir_in(t_list *ls_redir);
 
 //exec_utils
 void	init_io_fd(t_io_fd *io);
-void	reset_io(t_io_fd *io, t_cmd *cmd);
 int		handle_error(const char *msg);
 int		is_last(t_list *curr);
 void	handle_closing(t_cmd *cmd, t_io_fd *io);
-
 void	return_error(char *arg);
 
-//debbuuuugggg
-void	eprintf(const char *format, ...);
-void	debug_print_fds(const char *msg, t_cmd *cmd, t_io_fd *io);
 
 #endif
