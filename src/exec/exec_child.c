@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 18:54:04 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:18:59 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,38 +28,29 @@ int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
 	t_list	*tmp;
 
 	tmp = cmds;
+	//init child count
 	while (tmp)
 	{
 		cmd = tmp->content;
-		if (!tmp->next)
-			break ;
-		if (pipe(io->pipe) == -1)
-			return (-1);
-		create_child(cmd, io, envs, cmds);
+		create_child(tmp, io, envs, cmds);
 		tmp = tmp->next;
 	}
-	if (tmp)
-		create_child(cmd, io, envs, cmds);
-	close (io->pipe[1]);
-	close(io->pipe[0]);
 	wait_children(cmds);
 	return (0);
 }
 
-int	close_fds(t_cmd *cmd, t_io_fd *io)
+void	create_child(t_list *cmds, t_io_fd *io, t_envs *envs, t_list *all)
 {
-	//(void)io;
-	if (!cmd->nextpipe)
-		close(io->pipe[1]);
-	if (io->pipe[0] != -1)
-		close(io->pipe[1]);
-	if (cmd->fd_hrdoc != -3)
-		close(cmd->fd_hrdoc);
-	return (0);
-}
+	int pipes[2];
 
-void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
-{
+	t_cmd *cmd = cmds->content;
+	if (cmds->next)
+	{
+		if(pipe(io->pipe) == -1)
+		{
+			exit(1);
+		}
+	}
 	cmd->pid = fork();
 	signal(SIGINT, sig_handler_child);
 	if (cmd->pid == -1)
@@ -67,24 +58,31 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 		handle_error("fork");
 		return ;
 	}
+	if(pipe(pipes) == -1)
+		exit(1);
 	if (cmd->pid == 0)
-	{
-		if(cmd->prevpipe == 0)
-			close (io->pipe[0]);
-		if(cmd->nextpipe == 0)
-			close(io->pipe[1]);
-		if (set_fds(cmd, io) == -1)
-			exit(EXIT_FAILURE);
-		
-		if (cmd->args && cmd->args[0])
-			exec_cmd(cmd, io, envs, cmds);
-		exit(g_ret_val);
-		close_fds(cmd, io);
-	}
-
-	io->fd_in = io->pipe[0];
+		is_child(cmd, io, all, envs);
+	else
+		is_parent(cmds, io);
 }
 
+void is_child(t_list *cmds, t_io_fd *io, t_list *all, t_envs *envs)
+{
+	t_cmd *cmd;
+	if(io->fd_in != STDIN_FILENO)
+	{
+		dup2(io->fd_in, STDIN_FILENO);
+		close(io->fd_in);
+	}
+	if(cmds->next)
+	{
+		dup2(io->pipe[1], STDOUT_FILENO);
+		close(io->pipe[1]);
+		close(io->pipe[0]);
+	}
+	set_fds(cmd, io);
+	exec_cmd(cmd, io, envs, all);
+}
 void	wait_children(t_list *cmds)
 {
 	t_cmd	*cmd;
