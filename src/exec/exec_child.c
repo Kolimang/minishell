@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 17:34:25 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:26:14 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_io_fd(t_io_fd *io)
 {
 	io->pipes = 0;
 	io->fd_in = STDIN_FILENO;
-	io->fd_out = -2;
+	io->fd_out = STDOUT_FILENO;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)
@@ -34,9 +34,9 @@ void	close_child(int **fds, int pipes, int i)
 	while (j < pipes)
 	{
 		if (j != i - 1)
-			close(fds[j][0]);
+			close(fds[i][0]);
 		if (j != i)
-			close(fds[j][1]);
+			close(fds[i + 1][1]);
 		j++;
 	}
 }
