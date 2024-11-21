@@ -1,64 +1,162 @@
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Addr1
-   fun:ft_strlen
-   fun:ft_strdup
-   fun:update_pwd
-   fun:go_prev
-   fun:ft_cd
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-   fun:minishell
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Addr1
-   fun:ft_strlcpy
-   fun:ft_strdup
-   fun:update_pwd
-   fun:go_prev
-   fun:ft_cd
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-   fun:minishell
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Addr1
-   fun:ft_strlen
-   fun:ft_strlcpy
-   fun:ft_strdup
-   fun:update_pwd
-   fun:go_prev
-   fun:ft_cd
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-   fun:minishell
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
+   rule001
    Memcheck:Leak
-   match-leak-kinds: definite
+   match-leak-kinds: reachable
    fun:malloc
-   fun:ft_calloc
-   fun:handle_exp
-   fun:expand_lexeme
-   fun:ft_expand_lexeme_list
-   fun:handle_commands
-   fun:minishell
-   fun:main
+   fun:xmalloc
+   fun:sh_get_home_dir
+   fun:tilde_expand_word
+   fun:tilde_expand
+   fun:_rl_read_init_file
+   fun:rl_read_init_file
+   fun:rl_initialize
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule002
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:__setenv_locked
+   fun:setenv
+   fun:_rl_get_screen_size
+   fun:expand_prompt
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule003
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:__setenv_locked
+   fun:setenv
+   fun:sh_set_lines_and_columns
+   fun:_rl_get_screen_size
+   fun:expand_prompt
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule004
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:reallocf
+   fun:LI_get_thread_info
+   fun:LI_set_thread_list
+   fun:endpwent
+   fun:sh_get_home_dir
+   fun:tilde_expand_word
+   fun:tilde_expand
+   fun:_rl_read_init_file
+   fun:rl_read_init_file
+   fun:rl_initialize
+   fun:readline
+}
+{
+   rule005
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:xrealloc
+   fun:expand_prompt
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   obj:./minishell
+   obj:./minishell
+   obj:./minishell
+   obj:./minishell
+}
+{
+   rule006
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_nc_setupterm
+   fun:tgetent
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule007
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:bind_termcap_arrow_keys
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule008
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:rl_initialize
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule009
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:bind_arrow_keys_internal
+   fun:rl_initialize
+   fun:readline
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+#
+#
+# ########################################################
+#
+#  Below are rules converted from Linux suppression file 
+#
+# ########################################################
+#
+#
+#
+{
+   rule_L001
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -68,11 +166,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L002
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
@@ -81,19 +180,12 @@
    fun:rl_expand_prompt
    fun:rl_set_prompt
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:init_envs
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L003
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -107,10 +199,10 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
+   obj:./minishell
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L004
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -118,11 +210,12 @@
    obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L005
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
@@ -134,11 +227,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L006
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -148,21 +242,23 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L007
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L008
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -172,11 +268,12 @@
    obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L009
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -189,22 +286,24 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L010
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
    fun:xmalloc
    fun:rl_set_prompt
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L011
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -213,11 +312,11 @@
    fun:rl_expand_prompt
    fun:rl_set_prompt
    fun:readline
-   fun:minishell
-   fun:main
+   fun:execute
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L012
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -230,26 +329,37 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L013
    Memcheck:Leak
-   match-leak-kinds: definite
-   fun:realloc
-   fun:getcwd
-   fun:go
-   fun:ft_cd
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-   fun:minishell
-   fun:main
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:ft_add_cmd_to_history
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L014
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:ft_add_cmd_to_history
+   obj:./minishell
+   obj:./minishell
+   fun:start
+}
+{
+   rule_L015
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
@@ -266,7 +376,7 @@
    fun:readline
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L016
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -276,11 +386,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L017
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
@@ -292,23 +403,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
-   fun:xmalloc
-   fun:alloc_history_entry
-   fun:add_history
-   fun:ft_add_cmd_to_history
-   fun:minishell
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L018
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -320,11 +420,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L019
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -337,11 +438,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L020
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -354,22 +456,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   fun:malloc
-   fun:xmalloc
-   fun:add_history
-   fun:ft_add_cmd_to_history
-   fun:minishell
-   fun:main
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L021
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
@@ -381,22 +473,23 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L022
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
    fun:xmalloc
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   fun:execute
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L023
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
@@ -409,11 +502,12 @@
    fun:tgetent_sp
    fun:_rl_init_terminal_io
    fun:rl_initialize
-   fun:readline
-   fun:minishell
+   obj:./minishell
+   obj:./minishell
+   fun:execute
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L024
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
@@ -422,11 +516,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L025
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -440,10 +535,9 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L026
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -453,11 +547,12 @@
    fun:rl_redisplay
    fun:readline_internal_setup
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L027
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -466,11 +561,12 @@
    fun:rl_redisplay
    fun:readline_internal_setup
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L028
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:realloc
@@ -479,28 +575,12 @@
    fun:rl_initialize_funmap
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: indirect
-   fun:malloc
-   fun:ft_strdup
-   fun:create_env_node
-   fun:add_env_var
-   fun:init_env
-   fun:clone_env
-   fun:print_env_sorted
-   fun:print_env
-   fun:ft_export
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L029
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -508,11 +588,11 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   fun:execute
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L030
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -521,11 +601,12 @@
    fun:rl_initialize_funmap
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L031
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -537,11 +618,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L032
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -552,28 +634,11 @@
    obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   fun:execute
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: indirect
-   fun:malloc
-   fun:create_env_node
-   fun:add_env_var
-   fun:init_env
-   fun:clone_env
-   fun:print_env_sorted
-   fun:print_env
-   fun:ft_export
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L033
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:calloc
@@ -583,11 +648,12 @@
    fun:_rl_init_terminal_io
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
+   rule_L034
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -597,28 +663,12 @@
    fun:rl_bind_keyseq_if_unbound_in_map
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   match-leak-kinds: definite
-   fun:malloc
-   fun:create_env_node
-   fun:add_env_var
-   fun:init_env
-   fun:clone_env
-   fun:print_env_sorted
-   fun:print_env
-   fun:ft_export
-   fun:exec_builtin
-   fun:execute_nofork
-   fun:exec
-   fun:handle_commands
-}
-{
-   <insert_a_suppression_name_here>
+   rule_L035
    Memcheck:Leak
    match-leak-kinds: reachable
    fun:malloc
@@ -629,6 +679,7 @@
    obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
    fun:rl_initialize
    fun:readline
-   fun:minishell
-   fun:main
+   obj:./minishell
+   obj:./minishell
+   fun:start
 }
