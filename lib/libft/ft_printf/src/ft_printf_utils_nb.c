@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils_nb.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:17:53 by jrichir           #+#    #+#             */
-/*   Updated: 2024/03/20 13:56:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 12:20:35 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ ssize_t	ft_putunsnbr_base(unsigned long int ulnbr, char *base)
 		if (result == -1)
 			return (-1);
 	}
-	return (write(1, &unit, 1));
+	return (write(2, &unit, 1));
 }
 
 ssize_t	ft_putnbr_base(long long int nbr, char *base)
@@ -71,7 +71,7 @@ ssize_t	ft_putnbr_base(long long int nbr, char *base)
 	if (nbr < 0)
 	{
 		nbr *= -1;
-		result = write(1, "-", 1);
+		result = write(2, "-", 1);
 		if (result == -1)
 			return (-1);
 	}
@@ -83,7 +83,7 @@ ssize_t	ft_putnbr_base(long long int nbr, char *base)
 		if (result == -1)
 			return (-1);
 	}
-	return (write(1, &unit, 1));
+	return (write(2, &unit, 1));
 }
 
 int	ft_unsnbrlen_base(unsigned long int nb, int radix)
