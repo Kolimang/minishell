@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/18 12:41:53 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 02:41:04 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,15 @@ int			check_commands(char **cmds, int *i);
 // handle_symbols1.c
 int			is_operator(char c);
 void		lex_handle_operators(char *cmd, int i, t_cmd_data *data);
+void		lex_handle_post_operator(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_spaces(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_regular(char *cmd, int i, t_cmd_data *data);
-int			lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 
 // handle_symbols2.c
 void		lex_handle_quotes(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_sq(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_dq(char *cmd, int i, t_cmd_data *data);
+int			lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 
 // heredoc.c
 t_list		*lex_handle_heredoc(t_cmd_data *dt, char *delim);

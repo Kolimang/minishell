@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 14:22:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 02:09:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef enum e_tok_type
 	HERE_DOC,
 	OUTFILE,
 	APPEND,
+	OTHER
 }	t_tok_type;
 
 typedef enum e_builtin_type
@@ -29,7 +30,7 @@ typedef enum e_builtin_type
 	B_EXPORT,
 	B_UNSET,
 	B_ENV,
-	B_EXIT,
+	B_EXIT
 }	t_builtin_type;
 
 typedef struct s_io_fd

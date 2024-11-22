@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 14:22:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 02:14:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,13 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 
 int	is_redir_symbol(t_lexeme *node)
 {
-	if (ft_strncmp(node->value, ">>", 2) == 0
+	if (ft_strncmp(node->value, "<<<", 3) == 0
+		|| ft_strncmp(node->value, ">>", 2) == 0
 		|| ft_strncmp(node->value, "<<", 2) == 0
+		|| ft_strncmp(node->value, "<>", 2) == 0
+		|| ft_strncmp(node->value, "<&", 2) == 0
+		|| ft_strncmp(node->value, ">&", 2) == 0
+		|| ft_strncmp(node->value, ">|", 2) == 0
 		|| ft_strncmp(node->value, "<", 1) == 0
 		|| ft_strncmp(node->value, ">", 1) == 0)
 		return (1);
@@ -73,20 +78,20 @@ int	handle_lexemes(t_list **ls_lxm, t_cmd *command)
 	if (!(*ls_lxm)->next)
 		return (merror(NULL, NULL, "newline", 258));
 	nextnode = (*ls_lxm)->next->content;
-	if (is_redir_symbol(nextnode))
+	if (is_redir_symbol(nextnode) || nextnode->value[0] == '|')//DEBUG
 		return (merror(NULL, NULL, nextnode->value, 258));
-	if (ft_strlen(node->value) > 2)
+	if (ft_strlen(node->value) > 2 && ft_strncmp(node->value, "<<", 2))
 		return (merror(NULL, NULL, &node->value[2], 258));
 	temp = ls_lxm;
 	if (ft_strncmp(node->value, ">>", 3) == 0)
-		ft_add_redir(temp, command, nextnode->value, APPEND);
+		return (ft_add_redir(temp, command, nextnode->value, APPEND), 0);
 	else if (ft_strncmp(node->value, "<<", 3) == 0)
-		ft_add_redir(temp, command, nextnode->value, HERE_DOC);
+		return (ft_add_redir(temp, command, nextnode->value, HERE_DOC), 0);
 	else if (ft_strncmp(node->value, "<", 2) == 0)
-		ft_add_redir(temp, command, nextnode->value, INFILE);
+		return (ft_add_redir(temp, command, nextnode->value, INFILE), 0);
 	else if (ft_strncmp(node->value, ">", 2) == 0)
-		ft_add_redir(temp, command, nextnode->value, OUTFILE);
-	return (0);
+		return (ft_add_redir(temp, command, nextnode->value, OUTFILE), 0);
+	return (ft_add_redir(temp, command, nextnode->value, OTHER), 0);
 }
 
 void	ft_add_redir(t_list **ls_lxm, t_cmd *cmd, char *value, int type)
