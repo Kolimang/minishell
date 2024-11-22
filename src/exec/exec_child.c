@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/21 17:26:14 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:01:16 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	init_io_fd(t_io_fd *io)
 {
 	io->pipes = 0;
-	io->fd_in = STDIN_FILENO;
-	io->fd_out = STDOUT_FILENO;
 	io->std_in = dup(STDIN_FILENO);
 	io->std_out = dup(STDOUT_FILENO);
 	if (io->std_in == -1 || io->std_out == -1)
@@ -31,12 +29,11 @@ void	close_child(int **fds, int pipes, int i)
 	int	j;
 
 	j = 0;
+	(void)i;
 	while (j < pipes)
 	{
-		if (j != i - 1)
-			close(fds[i][0]);
-		if (j != i)
-			close(fds[i + 1][1]);
+			close(fds[j][0]);
+			close(fds[j][1]);
 		j++;
 	}
 }
@@ -54,12 +51,7 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 			perror("Failed to set file descriptors");
 			exit(EXIT_FAILURE);
 		}
-		if (!cmd->prevpipe && cmd->nextpipe)
-			close(io->fds[0][0]);
-		else if (cmd->prevpipe && cmd->nextpipe)
-			close_child(io->fds, io->pipes, cmd->i);
-		else if (cmd->prevpipe && !cmd->nextpipe)
-			close(io->fds[cmd->i][1]);
+		close_child(io->fds, io->pipes, 0);
 		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, io, envs, cmds);
 		exit(EXIT_FAILURE);

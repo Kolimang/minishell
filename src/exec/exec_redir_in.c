@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/21 17:21:46 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:04:22 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,10 @@ int	is_redir_in(t_redir *redir)
 
 void	set_infile(t_cmd *cmd, t_io_fd *io)
 {
-	if (cmd->prevpipe && cmd->nextpipe)
-		io->fd_in = io->fds[cmd->i - 1][0];
-	else if (cmd->prevpipe)
-		io->fd_in = io->fds[cmd->i][0];
+	if (cmd->prevpipe)
+		cmd->fd_in = io->fds[cmd->i - 1][0];
 	else
-		io->fd_in = STDIN_FILENO;
+		cmd->fd_in = STDIN_FILENO;
 }
 
 int	redir_infile(t_cmd *cmd, t_io_fd *io)
@@ -74,19 +72,20 @@ int	redir_infile(t_cmd *cmd, t_io_fd *io)
 
 int	get_infile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 {
+	(void)io;
 	if (redir->type == INFILE)
 	{
-		if (io->fd_in > 0)
-			close(io->fd_in);
-		io->fd_in = open(redir->val, O_RDONLY);
-		if (io->fd_in == -1)
+		if (cmd->fd_in > 0)
+			close(cmd->fd_in);
+		cmd->fd_in = open(redir->val, O_RDONLY);
+		if (cmd->fd_in == -1)
 			return (handle_error(redir->val));
 	}
 	else if (redir->type == HERE_DOC)
 	{
-		if (io->fd_in != cmd->fd_hrdoc)
-			close(io->fd_in);
-		io->fd_in = cmd->fd_hrdoc;
+		if (cmd->fd_in != cmd->fd_hrdoc)
+			close(cmd->fd_in);
+		cmd->fd_in = cmd->fd_hrdoc;
 	}
 	if (redir->type == INFILE && is_last_redir(cmd->ls_redirs))
 	{
