@@ -1,181 +1,24 @@
-==43231== Memcheck, a memory error detector
-==43231== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==43231== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==43231== Command: ./minishell
-==43231== Parent PID: 36800
-==43231== 
-==43231== Invalid read of size 1
-==43231==    at 0x112A4E: ft_strlen (ft_strlen.c:20)
-==43231==    by 0x112828: ft_strdup (ft_strdup.c:20)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A82D: update_pwd (pwd.c:43)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==  Address 0x4b869b0 is 0 bytes inside a block of size 26 free'd
-==43231==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x10A757: update_data (pwd.c:23)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231==  Block was alloc'd at
-==43231==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x11283B: ft_strdup (ft_strdup.c:21)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x1098CE: go (cd.c:86)
-==43231==    by 0x109BA0: ft_cd (cd.c:131)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231== 
-==43231== Invalid read of size 1
-==43231==    at 0x1129F1: ft_strlcpy (ft_strlcpy.c:23)
-==43231==    by 0x112869: ft_strdup (ft_strdup.c:26)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A82D: update_pwd (pwd.c:43)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==  Address 0x4b869b0 is 0 bytes inside a block of size 26 free'd
-==43231==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x10A757: update_data (pwd.c:23)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231==  Block was alloc'd at
-==43231==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x11283B: ft_strdup (ft_strdup.c:21)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x1098CE: go (cd.c:86)
-==43231==    by 0x109BA0: ft_cd (cd.c:131)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231== 
-==43231== Invalid read of size 1
-==43231==    at 0x1129DE: ft_strlcpy (ft_strlcpy.c:25)
-==43231==    by 0x112869: ft_strdup (ft_strdup.c:26)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A82D: update_pwd (pwd.c:43)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==  Address 0x4b869b0 is 0 bytes inside a block of size 26 free'd
-==43231==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x10A757: update_data (pwd.c:23)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231==  Block was alloc'd at
-==43231==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x11283B: ft_strdup (ft_strdup.c:21)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x1098CE: go (cd.c:86)
-==43231==    by 0x109BA0: ft_cd (cd.c:131)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231== 
-==43231== Invalid read of size 1
-==43231==    at 0x112A4E: ft_strlen (ft_strlen.c:20)
-==43231==    by 0x112A1E: ft_strlcpy (ft_strlcpy.c:30)
-==43231==    by 0x112869: ft_strdup (ft_strdup.c:26)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A82D: update_pwd (pwd.c:43)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==  Address 0x4b869b0 is 0 bytes inside a block of size 26 free'd
-==43231==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x10A757: update_data (pwd.c:23)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x109687: go_prev (cd.c:52)
-==43231==    by 0x109AF6: ft_cd (cd.c:125)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231==  Block was alloc'd at
-==43231==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x11283B: ft_strdup (ft_strdup.c:21)
-==43231==    by 0x10A76A: update_data (pwd.c:25)
-==43231==    by 0x10A866: update_pwd (pwd.c:45)
-==43231==    by 0x1098CE: go (cd.c:86)
-==43231==    by 0x109BA0: ft_cd (cd.c:131)
-==43231==    by 0x10BACC: exec_builtin (exec_builtins.c:34)
-==43231==    by 0x10BA40: execute_nofork (exec_builtins.c:21)
-==43231==    by 0x10D4EE: exec (execute.c:45)
-==43231==    by 0x110E1B: the_execution (minishell.c:21)
-==43231==    by 0x110FDB: handle_commands (minishell.c:50)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231== 
-==43231== Invalid read of size 1
-==43231==    at 0x10EA76: lex_handle_operators (handle_symbols1.c:45)
-==43231==    by 0x10F2BC: ft_tokenize (tokenize.c:42)
-==43231==    by 0x110E8A: handle_commands (minishell.c:35)
-==43231==    by 0x1110EA: minishell (minishell.c:75)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231==  Address 0x4bab92f is 1 bytes before a block of size 13 alloc'd
-==43231==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==43231==    by 0x112E83: ft_substr (ft_substr.c:31)
-==43231==    by 0x112DED: ft_strtrim (ft_strtrim.c:49)
-==43231==    by 0x110D03: ft_strtrim_replace (utils2.c:22)
-==43231==    by 0x10E707: check_commands (check_input.c:100)
-==43231==    by 0x1110CF: minishell (minishell.c:74)
-==43231==    by 0x11126E: main (minishell.c:115)
-==43231== 
+==44880== Memcheck, a memory error detector
+==44880== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==44880== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==44880== Command: ./minishell
+==44880== Parent PID: 36800
+==44880== 
+==44880== 
+==44880== HEAP SUMMARY:
+==44880==     in use at exit: 208,277 bytes in 228 blocks
+==44880==   total heap usage: 1,489 allocs, 1,261 frees, 260,271 bytes allocated
+==44880== 
+==44880== LEAK SUMMARY:
+==44880==    definitely lost: 0 bytes in 0 blocks
+==44880==    indirectly lost: 0 bytes in 0 blocks
+==44880==      possibly lost: 0 bytes in 0 blocks
+==44880==    still reachable: 0 bytes in 0 blocks
+==44880==         suppressed: 208,277 bytes in 228 blocks
+==44880== 
+==44880== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+--44880-- 
+--44880-- used_suppression:     62 [msh]rl_* xtra/valgrind/msh_mac_supp.supp:10 suppressed: 204,177 bytes in 221 blocks
+--44880-- used_suppression:      4 [msh]add_history xtra/valgrind/msh_mac_supp.supp:17 suppressed: 4,100 bytes in 7 blocks
+==44880== 
+==44880== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
