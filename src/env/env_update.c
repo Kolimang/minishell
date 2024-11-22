@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:01:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 14:21:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	insert_in_env(t_env **env, char *var_name,
 	t_env	*new;
 
 	new = create_env_node(var_name, var_val, index);
-	free(var_name);
+	//free(var_name);
 	free(var_val);
 	if (!new)
 		return ;

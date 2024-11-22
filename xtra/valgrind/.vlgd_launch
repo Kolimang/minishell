@@ -19,4 +19,8 @@ Valgrind sur Linux sans readline [ https://wiki.wxwidgets.org/Valgrind_Suppressi
 		\_ [2.1] check suppression file and remove what should not be suppressed
 		\_ [2.2] valgrind --leak-check=full --show-leak-kinds=all --suppressions=xtra/valgrind/msh_linux.supp --log-file=xtra/valgrind/msh_linux_leaks.log -s ./minishell
 
+[ LINUX PC PORTABLE ]
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=/home/jp/git/19/minishell/xtra/valg
+rind/msh_mac_supp.supp --log-file=xtra/valgrind/msh_linux_leaks.log -s ./minishell
+
 echo hey guys | cat > f
