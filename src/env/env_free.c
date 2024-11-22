@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/08 12:38:34 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 05:59:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ void	free_env(t_env **envdp)
 		free(temp);
 		temp = NULL;
 	}
+	//free(envdp);//DEBUG
 }
 
 int	cleanup_envs(t_envs *envs, int exit_code)
 {
 	free_env(envs->l_env);
+	free(envs->l_env);//DEBUG
 	free(envs);
 	return (exit_code);
 }

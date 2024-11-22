@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 01:47:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 04:25:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int	ft_check_input_cmd(char **cmdref)
 	//int		last;
 	char	*cmd;
 
-	cmd = ft_strtrim_replace(cmdref);
+	*cmdref = ft_strtrim_replace(cmdref);
+	cmd = *cmdref;
 	if (!cmd)
 		return (EXIT_FAILURE);
 	if ((int)ft_strlen(cmd) > 0)

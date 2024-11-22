@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:33:12 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 03:31:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ static int	go_tilde(char *dest_path, char *curr_path, t_env *env,
 
 	(void)allowedoption;
 	exp_path = expand_tilde_path(dest_path, env);
+	if (!exp_path)
+		return (g_ret_val);
 	curr_path = getcwd(NULL, 0);
 	if (chdir(exp_path) != 0)
 		return (free(curr_path), merror("cd", NULL, NULL, 17));

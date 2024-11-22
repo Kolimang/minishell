@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 13:54:15 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 05:28:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 int	print_env_sorted(t_env *env)
 {
 	t_env	*clone;
+	t_env	*temp;
 
 	clone = clone_env(env);
 	sort_env(&clone);
-	while (clone && clone->var_name)
+	temp = clone;
+	while (temp && temp->var_name)
 	{
-		ft_printf("declare -x %s", clone->var_name);
-		if (clone->var_val)
-			ft_printf("=\"%s\"\n", clone->var_val);
+		ft_printf("declare -x %s", temp->var_name);
+		if (temp->var_val)
+			ft_printf("=\"%s\"\n", temp->var_val);
 		else
 			ft_printf("\n");
-		clone = clone->next;
+		temp = temp->next;
 	}
 	free_env(&clone);
 	return (0);
