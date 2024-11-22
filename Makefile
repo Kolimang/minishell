@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/20 16:58:44 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/22 03:00:07 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ FILES     := 	builtins/cd \
 				env/env_update \
 				env/env_utils \
 				exec/exec_builtins \
+				exec/exec_child_utils \
+				exec/exec_parent\
 				exec/exec_child \
 				exec/exec_hrdoc \
 				exec/exec_paths \

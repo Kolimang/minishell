@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 02:14:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 03:03:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_cmd(t_cmd *command)
 	command->prevpipe = 0;
 	command->nextpipe = 0;
 	command->fd_hrdoc = -3;
+	command->i = 0;
 }
 
 // Turn lexemes-list into commands-list

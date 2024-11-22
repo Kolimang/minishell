@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 02:09:50 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 03:03:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ typedef enum e_builtin_type
 
 typedef struct s_io_fd
 {
-	int	pipe[2];
+	int	pipes;
 	int	std_in;
 	int	std_out;
 	int	fd_in;
 	int	fd_out;
+	int	**fds;
 }	t_io_fd;
 
 typedef struct s_command
@@ -54,6 +55,7 @@ typedef struct s_command
 	int				nextpipe;
 	int				fd_hrdoc;
 	t_builtin_type	builtin;
+	int i;
 }	t_cmd;
 
 typedef struct s_redir

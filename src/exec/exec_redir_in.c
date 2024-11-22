@@ -6,25 +6,11 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:38:49 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 18:10:06 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:21:46 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	has_redir_in(t_list *ls_redir)
-{
-	t_list	*redir;
-
-	redir = ls_redir;
-	while (redir)
-	{
-		if (is_redir_in(redir->content))
-			return (1);
-		redir = redir->next;
-	}
-	return (0);
-}
 
 int	is_last_redir(t_list *ls_redir)
 {
@@ -52,6 +38,16 @@ int	is_redir_in(t_redir *redir)
 	return (0);
 }
 
+void	set_infile(t_cmd *cmd, t_io_fd *io)
+{
+	if (cmd->prevpipe && cmd->nextpipe)
+		io->fd_in = io->fds[cmd->i - 1][0];
+	else if (cmd->prevpipe)
+		io->fd_in = io->fds[cmd->i][0];
+	else
+		io->fd_in = STDIN_FILENO;
+}
+
 int	redir_infile(t_cmd *cmd, t_io_fd *io)
 {
 	t_list	*tmp;
@@ -72,12 +68,7 @@ int	redir_infile(t_cmd *cmd, t_io_fd *io)
 		tmp = tmp->next;
 	}
 	if (!has_infile)
-	{
-		if (cmd->prevpipe)
-			io->fd_in = io->pipe[0];
-		else
-			io->fd_in = STDIN_FILENO;
-	}
+		set_infile(cmd, io);
 	return (1);
 }
 

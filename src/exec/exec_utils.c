@@ -3,28 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:59:16 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/21 17:22:15 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_io_fd(t_io_fd *io)
+int	handle_error(const char *msg)
 {
-	io->pipe[0] = -1;
-	io->pipe[1] = -1;
-	io->fd_in = STDIN_FILENO;
-	io->fd_out = -2;
-	io->std_in = dup(STDIN_FILENO);
-	io->std_out = dup(STDOUT_FILENO);
-	if (io->std_in == -1 || io->std_out == -1)
-	{
-		perror("Failed to duplicate");
-		exit(EXIT_FAILURE);
-	}
+	g_ret_val = EXIT_FAILURE;
+	write(2, "minishell: ", 12);
+	perror(msg);
+	return (-1);
 }
 
 void	reset_io(t_io_fd *io, t_cmd *cmd)
@@ -48,14 +41,6 @@ void	reset_io(t_io_fd *io, t_cmd *cmd)
 	close(io->std_out);
 }
 
-int	handle_error(const char *msg)
-{
-	g_ret_val = EXIT_FAILURE;
-	write(2, "minishell: ", 12);
-	perror(msg);
-	return (-1);
-}
-
 void	return_error(char *arg)
 {
 	g_ret_val = EXIT_FAILURE;
@@ -67,4 +52,18 @@ void	return_error(char *arg)
 int	is_last(t_list *curr)
 {
 	return (curr->next == NULL);
+}
+
+int	has_redir_in(t_list *ls_redir)
+{
+	t_list	*redir;
+
+	redir = ls_redir;
+	while (redir)
+	{
+		if (is_redir_in(redir->content))
+			return (1);
+		redir = redir->next;
+	}
+	return (0);
 }
