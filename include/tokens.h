@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 12:59:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 15:15:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cmd_data
 char		**cmd_split(char *input);
 int			ft_check_input_cmd(char **cmdref);
 int			check_commands(char **cmds, int *i);
+int			check_consec_pipes(char **cmd);
 
 // handle_symbols1.c
 int			is_redir_chr(char c);

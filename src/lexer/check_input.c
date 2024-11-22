@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 12:57:39 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 15:36:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,42 @@ int	ft_check_input_cmd(char **cmdref)
 	if (!cmd)
 		return (EXIT_FAILURE);
 	if ((int)ft_strlen(cmd) > 0)
-	{
 		if (cmd[0] == '|')
+			return (merror(NULL, NULL, "|", 258));
+	if ((int)ft_strlen(cmd) > 1)
+	{
+		if (cmd[ft_strlen(cmd) - 1] == '|'
+			&& !char_in_set("<>", cmd[ft_strlen(cmd) - 2]))
 			return (merror(NULL, NULL, "|", 258));
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
+	if (check_consec_pipes(cmdref) != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+int	check_consec_pipes(char **cmdref)
+{
+	int		i;
+	int		j;
+	char	*cmd;
+
+	cmd = *cmdref;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '|')
+		{
+			j = 1;
+			while (cmd[i + j] && cmd[i + j] == ' ')
+				j++;
+			if (cmd[i + j] && cmd[i + j] == '|')
+				return (merror(NULL, NULL, "|", 258));
+		}
+		i++;
+	}
+	return (0);
 }
 
 int	check_commands(char **cmds, int *i)
