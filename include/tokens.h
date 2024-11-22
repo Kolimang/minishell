@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 02:41:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 07:12:22 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int			init_lexeme(char *lex_str, t_cmd_data *data, t_list	**ls_lxm);
 void		init_cmd_data(t_cmd_data *data);
 t_list		*ft_tokenize(char *cmd);
 int			create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lxm);
-void		reset_token_data(t_cmd_data *data, char c);
+//void		reset_token_data(t_cmd_data *data, char c); DEBUG, test
+void	reset_token_data(t_cmd_data *data, char *cmd, int i);
 void		set_token_len(char *cmd, int i, t_cmd_data *data);
 
 #endif

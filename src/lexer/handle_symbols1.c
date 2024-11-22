@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 02:41:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 07:23:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ void	lex_handle_operators(char *cmd, int i, t_cmd_data *data)
 			data->bool_delimit_tok = 1;
 		else if (i > 0 && is_operator(cmd[i - 1]))
 		{
+			// ADD ci-dessous <& et >&
 			if (cmd[i - 1] == '>' && cmd[i] == '<')
 				data->bool_delimit_tok = 1;
 			else if (i > 1 && cmd[i - 2] == '<' && cmd[i - 1] == '>')
 				data->bool_delimit_tok = 1;
+			else if (i > 2 && cmd[i - 3] == '<' && cmd[i - 2] == '<'
+						&& cmd[i - 1] == '<')//DEBUG added
+				data->bool_delimit_tok = 1;//DEBUG added
 			else if (i > 1 && cmd[i - 2] == '<' && cmd[i - 1] == '<'
 						&& cmd[i] != '<')
 				data->bool_delimit_tok = 1;
@@ -62,7 +66,8 @@ void	lex_handle_post_operator(char *cmd, int i, t_cmd_data *data)
 			else if (i > 1 && cmd[i -2] == '>')
 				data->bool_delimit_tok = 1;
 		}
-	}	
+	}
+	// else precedent == &...
 }
 
 void	lex_handle_spaces(char *cmd, int i, t_cmd_data *data)

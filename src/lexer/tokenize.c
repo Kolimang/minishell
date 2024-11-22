@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 06:26:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 07:11:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,21 @@ int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lxm)
 		}
 		else
 			free(lex_str);
-		reset_token_data(data, cmd[i]);
+		reset_token_data(data, cmd, i);//DEBUG test, before  reset_token_data(data, cmd[i]);
 	}
 	return (0);
 }
 
-void	reset_token_data(t_cmd_data *data, char c)
+//void	reset_token_data(t_cmd_data *data, char c)//DEBUG changed
+void	reset_token_data(t_cmd_data *data, char *cmd, int i)//DEBUG changed
 {
 	if (!data)
 		return ;
+	if (i > 0)// DEBUG test
+		cmd[i - 1] = ' ';//DEBUG test
 	data->tok_start += data->tok_len;
 	data->tok_id++;
-	if (c == ' ')
+	if (cmd[i] == ' ')
 		data->bool_tok_in_progress = 0;
 	data->bool_delimit_tok = 0;
 }
