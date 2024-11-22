@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:25:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 00:44:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ static int	update_data(char *path, t_env *head, t_env *env)
 int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 {
 	t_env	*head;
-	char	*home;
 
 	if (!env)
 		return (1);
-	home = get_env_val(env, "HOME");
 	head = env;
 	while (head)
 	{
