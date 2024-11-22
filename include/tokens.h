@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 07:12:22 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 11:42:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			ft_check_input_cmd(char **cmdref);
 int			check_commands(char **cmds, int *i);
 
 // handle_symbols1.c
-int			is_operator(char c);
+int			is_redir_chr(char c);
 void		lex_handle_operators(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_post_operator(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_spaces(char *cmd, int i, t_cmd_data *data);

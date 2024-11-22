@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 03:03:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 11:40:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	check_pipes(t_cmd *command, int id, int nb_commands);
 t_cmd	*check_cmd(t_cmd *command);
 t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands);
 char	**get_args(t_list *ls_lxm, int argc);
-int		is_redir_symbol(t_lexeme *node);
+int		is_redir_op(t_lexeme *node);
 int		handle_lexemes(t_list **ls_lxm, t_cmd *command);
 void	ft_add_redir(t_list **ls_lxm, t_cmd *command, char *redirvalue,
 			int type);

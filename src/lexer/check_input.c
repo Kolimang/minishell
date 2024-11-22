@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 04:25:01 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 11:42:26 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	checks_on_pipe_char(char *input, int i, int *in_sq, int *in_dq)
 	}
 	else if (*c == '|' && *in_sq == 0 && *in_dq == 0)
 	{
-		if (i == 0 || !is_operator(input[i - 1]))
+		if (i == 0 || !is_redir_chr(input[i - 1]))
 			*c = 6;
 	}
 }

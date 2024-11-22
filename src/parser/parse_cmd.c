@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 03:03:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 11:40:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 	return (check_cmd(command));
 }
 
-int	is_redir_symbol(t_lexeme *node)
+int	is_redir_op(t_lexeme *node)
 {
 	if (ft_strncmp(node->value, "<<<", 3) == 0
 		|| ft_strncmp(node->value, ">>", 2) == 0
@@ -60,6 +60,7 @@ int	is_redir_symbol(t_lexeme *node)
 		|| ft_strncmp(node->value, "<>", 2) == 0
 		|| ft_strncmp(node->value, "<&", 2) == 0
 		|| ft_strncmp(node->value, ">&", 2) == 0
+		|| ft_strncmp(node->value, "&>", 2) == 0
 		|| ft_strncmp(node->value, ">|", 2) == 0
 		|| ft_strncmp(node->value, "<", 1) == 0
 		|| ft_strncmp(node->value, ">", 1) == 0)
@@ -74,12 +75,12 @@ int	handle_lexemes(t_list **ls_lxm, t_cmd *command)
 	t_list		**temp;
 
 	node = (*ls_lxm)->content;
-	if (!is_redir_symbol(node))
+	if (!is_redir_op(node))
 		return (mark_as_arg(command, node), 0);
 	if (!(*ls_lxm)->next)
 		return (merror(NULL, NULL, "newline", 258));
 	nextnode = (*ls_lxm)->next->content;
-	if (is_redir_symbol(nextnode) || nextnode->value[0] == '|')//DEBUG
+	if (is_redir_op(nextnode) || char_in_set("|&", nextnode->value[0]))//DEBUG
 		return (merror(NULL, NULL, nextnode->value, 258));
 	if (ft_strlen(node->value) > 2 && ft_strncmp(node->value, "<<", 2))
 		return (merror(NULL, NULL, &node->value[2], 258));
