@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:01:16 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:52:49 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	close_child(int **fds, int pipes, int i)
 	(void)i;
 	while (j < pipes)
 	{
-			close(fds[j][0]);
-			close(fds[j][1]);
+		close(fds[j][0]);
+		close(fds[j][1]);
 		j++;
 	}
 }

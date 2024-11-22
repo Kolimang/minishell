@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:51:12 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 16:10:05 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:22:41 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,14 @@ int	pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	g_ret_val = exec_builtin(cmd, io, envs, cmds);
 	return (0);
+}
+
+int	free_all(int **fds, int pipes)
+{
+	if (fds)
+	{
+		close_fds(fds, pipes);
+		free_fds(fds, pipes);
+	}
+	return (-1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:06:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 14:23:03 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int		handle_error(const char *msg);
 int		is_last(t_list *curr);
 void	handle_closing(t_cmd *cmd, t_io_fd *io);
 void	return_error(char *arg);
+int		free_all(int **fds, int pipes);
 
 #endif

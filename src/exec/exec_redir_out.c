@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:06:35 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:16:15 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,27 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 	return (0);
 }
 
-int set_fds(t_cmd *cmd, t_io_fd *io)
+int	set_fds(t_cmd *cmd, t_io_fd *io)
 {
-    cmd->fd_in = STDIN_FILENO;
-    cmd->fd_out = STDOUT_FILENO;
-    if (redir_infile(cmd, io) == -1)
-        return (-1);
-    if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
-    {
-        perror("dup2 failed for fd_in");
-        return (-1);
-    }
-    if (cmd->fd_in != STDIN_FILENO)
-        close(cmd->fd_in);
-    if (redir_outfile(cmd, io) == -1)
-        return (-1);
-    if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
-    {
-        perror("dup2 failed for fd_out");
-        return (-1);
-    }
-    if (cmd->fd_out != STDOUT_FILENO)
-        close(cmd->fd_out);
-    return (0);
+	cmd->fd_in = STDIN_FILENO;
+	cmd->fd_out = STDOUT_FILENO;
+	if (redir_infile(cmd, io) == -1)
+		return (-1);
+	if (dup2(cmd->fd_in, STDIN_FILENO) == -1)
+	{
+		perror("dup2 failed for fd_in");
+		return (-1);
+	}
+	if (cmd->fd_in != STDIN_FILENO)
+		close(cmd->fd_in);
+	if (redir_outfile(cmd, io) == -1)
+		return (-1);
+	if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+	{
+		perror("dup2 failed for fd_out");
+		return (-1);
+	}
+	if (cmd->fd_out != STDOUT_FILENO)
+		close(cmd->fd_out);
+	return (0);
 }

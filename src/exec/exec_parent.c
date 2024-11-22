@@ -6,16 +6,18 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:00:15 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:07:16 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:22:23 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	get_command_index(t_list *cmds, t_list *current)
+int	get_command_index(t_list *tmp, t_list *current)
 {
-	int	index;
+	int		index;
+	t_list	*cmds;
 
+	cmds = tmp;
 	index = 0;
 	while (cmds)
 	{
@@ -27,58 +29,57 @@ int	get_command_index(t_list *cmds, t_list *current)
 	return (-1);
 }
 
-int	free_all(int **fds, int pipes)
+void	set_index(t_list *cmds)
 {
-	if (fds)
+	t_list	*tmp;
+	t_cmd	*cmd;
+
+	tmp = cmds;
+	while (tmp)
 	{
-		close_fds(fds, pipes);
-		free_fds(fds, pipes);
+		cmd = tmp->content;
+		cmd->i = get_command_index(cmds, tmp);
+		tmp = tmp->next;
 	}
-	return (-1);
-}
-int process_command(t_list **tmp, t_envs *envs, t_list *cmds, t_io_fd *io)
-{
-    t_cmd *cmd;
-    cmd = (*tmp)->content;
-    create_child(cmd, io, envs, cmds);
-    *tmp = (*tmp)->next;
-    return (0);
 }
 
-int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
+int	process_command(t_list **tmp, t_envs *envs, t_list *cmds, t_io_fd *io)
 {
-    t_list *tmp;
-    tmp = cmds;
-    io->pipes = get_pipes(tmp);
-    io->fds = prepare_pipes(io->pipes);
-    if (!io->fds && io->pipes > 0)
-        return (-1);
-    tmp = cmds;
-    while(tmp)
-    {
-        t_cmd *cmd = tmp->content;
-        cmd->i = get_command_index(cmds, tmp);
-        tmp = tmp->next;
-    }
-    int j = 0;
-    while(j < io->pipes)
-    {
-        if (pipe(io->fds[j]) == -1)
-            return (perror("pipe failed"), -1);
-        j++;
-    }
-    tmp = cmds;
-    while (tmp && tmp->next)
-    {
-        if (process_command(&tmp, envs, cmds, io) == -1)
-            return (free_all(io->fds, io->pipes));
-    }
-    if (tmp)
-        create_child(tmp->content, io, envs, cmds);
-    close_fds(io->fds, io->pipes);
-    free_fds(io->fds, io->pipes);
-    wait_children(cmds);
-    return (0);
+	t_cmd	*cmd;
+
+	cmd = (*tmp)->content;
+	create_child(cmd, io, envs, cmds);
+	*tmp = (*tmp)->next;
+	return (0);
+}
+
+int	execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
+{
+	t_list	*tmp;
+	int		j;
+
+	tmp = cmds;
+	io->pipes = get_pipes(tmp);
+	io->fds = prepare_pipes(io->pipes);
+	if (!io->fds && io->pipes > 0)
+		return (-1);
+	set_index(tmp);
+	j = -1;
+	while (++j < io->pipes)
+	{
+		if (pipe(io->fds[j]) == -1)
+			return (perror("pipe failed"), -1);
+	}
+	while (tmp && tmp->next)
+	{
+		if (process_command(&tmp, envs, cmds, io) == -1)
+			return (free_all(io->fds, io->pipes));
+	}
+	if (tmp)
+		create_child(tmp->content, io, envs, cmds);
+	close_fds(io->fds, io->pipes);
+	wait_children(cmds);
+	return (0);
 }
 
 void	close_fds(int **fds, int pipes)
@@ -92,4 +93,5 @@ void	close_fds(int **fds, int pipes)
 		close(fds[j][1]);
 		j++;
 	}
+	free_fds(fds, pipes);
 }
