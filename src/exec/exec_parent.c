@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 17:00:15 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:04:40 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:07:16 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int execute_fork(t_list *cmds, t_io_fd *io, t_envs *envs)
     {
         t_cmd *cmd = tmp->content;
         cmd->i = get_command_index(cmds, tmp);
-        ft_printf("idx[%d]\n", cmd->i);
         tmp = tmp->next;
     }
     int j = 0;

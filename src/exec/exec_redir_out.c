@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:05:20 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:06:35 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ int set_fds(t_cmd *cmd, t_io_fd *io)
         perror("dup2 failed for fd_out");
         return (-1);
     }
-
     if (cmd->fd_out != STDOUT_FILENO)
         close(cmd->fd_out);
-
     return (0);
 }
