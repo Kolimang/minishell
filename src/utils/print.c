@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/15 12:17:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 12:37:34 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_print_cmd(t_cmd *command)
 {
 	ft_printf("argc             : %d\n", command->argc);
 	ft_printf("args             : ");
-	ft_printarray(command->args, ' ');
+	ft_printarray(command->args, ';');
 	ft_printf("redir            : ");
 	ft_print_redir(command);
 	ft_printf("\n");
