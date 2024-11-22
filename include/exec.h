@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 18:57:26 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 16:09:25 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:06:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_io_fd	*initialize_io_fd(void);
 
 //exec_child_utils
 t_io_fd	*initialize_io_fd(void);
-int	get_pipes(t_list *cmds);
+int		get_pipes(t_list *cmds);
 void	free_fds(int **fds, int pipes);
-int	**allocate_pipes(int pipe_count);
-int	**prepare_pipes(int pipe_count);
+int		**allocate_pipes(int pipe_count);
+int		**prepare_pipes(int pipe_count);
 
 //exec_paths
 char	*find_path(char **full_cmd, char *cmd);
@@ -46,7 +46,7 @@ int		execute_nofork(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 int		is_builtin(char *cmd);
-int	pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
+int		pre_exec_builtin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds);
 
 //exec_hrdoc
 void	pre_exec(t_list *cmds, t_envs *envs);
@@ -71,6 +71,5 @@ int		handle_error(const char *msg);
 int		is_last(t_list *curr);
 void	handle_closing(t_cmd *cmd, t_io_fd *io);
 void	return_error(char *arg);
-
 
 #endif

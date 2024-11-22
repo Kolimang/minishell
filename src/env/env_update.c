@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 05:04:44 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 13:01:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ static int	insert_inside(t_env **env, t_env *new)
 }
 
 static void	insert_in_env(t_env **env, char *var_name,
-		char *var_val, int index)//DEBUG removed const char*
+		char *var_val, int index)
 {
 	t_env	*new;
 
 	new = create_env_node(var_name, var_val, index);
-	free(var_name);//DEBUG
-	free(var_val);//DEBUG
+	free(var_name);
+	free(var_val);
 	if (!new)
 		return ;
 	if (!(*env))
@@ -97,7 +97,7 @@ int	update_env(char *name, char *value, t_env **env, int mode)
 				head->var_val = ft_strdup(value);
 			else if (value && mode == 1)
 				head->var_val = ft_strjoin(temp, value);
-			return (free(temp), free(name), free(value), 0);//debug
+			return (free(temp), free(name), free(value), 0);
 		}
 		head = head->next;
 	}

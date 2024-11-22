@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 04:41:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 13:00:09 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	set_shlvl(t_env **env)
 	cmd[1] = ft_strjoin("SHLVL=", tmp);
 	cmd[2] = NULL;
 	ft_export(cmd, env);
-	free_arr(cmd, array_len(cmd));//debug
-	//free(cmd[1]);
-	//free(cmd);
+	free_arr(cmd, array_len(cmd));
 	free(tmp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 11:10:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 12:51:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ t_list	*ft_tokenize(char *cmd)
 	while (++i <= (int)ft_strlen(cmd))
 	{
 		lex_handle_operators(cmd, i, &data);
-		//lex_handle_post_operator(cmd, i, &data);//DEBUG added
 		lex_handle_spaces(cmd, i, &data);
 		lex_handle_quotes(cmd, i, &data);
 		lex_handle_regular(cmd, i, &data);
@@ -71,18 +70,17 @@ int	create_node(char *cmd, int i, t_cmd_data *data, t_list	**ls_lxm)
 		}
 		else
 			free(lex_str);
-		reset_token_data(data, cmd, i);//DEBUG test, before  reset_token_data(data, cmd[i]);
+		reset_token_data(data, cmd, i);
 	}
 	return (0);
 }
 
-//void	reset_token_data(t_cmd_data *data, char c)//DEBUG changed
-void	reset_token_data(t_cmd_data *data, char *cmd, int i)//DEBUG changed
+void	reset_token_data(t_cmd_data *data, char *cmd, int i)
 {
 	if (!data)
 		return ;
-	if (i > 0)// DEBUG test
-		cmd[i - 1] = ' ';//DEBUG test
+	if (i > 0)
+		cmd[i - 1] = ' ';
 	data->tok_start += data->tok_len;
 	data->tok_id++;
 	if (cmd[i] == ' ')

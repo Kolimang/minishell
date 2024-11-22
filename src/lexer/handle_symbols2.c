@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 02:39:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 12:54:19 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ int	lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data)
 			return (merror(NULL, NULL, NULL, 774));
 	}
 	return (0);
+}
+
+void	lex_handle_regular(char *cmd, int i, t_cmd_data *data)
+{
+	if (!char_in_set("<> \'\"", cmd[i]))
+		data->bool_tok_in_progress = 1;
 }

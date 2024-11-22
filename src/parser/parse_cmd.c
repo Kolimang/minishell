@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 11:40:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/22 12:47:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	handle_lexemes(t_list **ls_lxm, t_cmd *command)
 	if (!(*ls_lxm)->next)
 		return (merror(NULL, NULL, "newline", 258));
 	nextnode = (*ls_lxm)->next->content;
-	if (is_redir_op(nextnode) || char_in_set("|&", nextnode->value[0]))//DEBUG
+	if (is_redir_op(nextnode) || char_in_set("|&", nextnode->value[0]))
 		return (merror(NULL, NULL, nextnode->value, 258));
 	if (ft_strlen(node->value) > 2 && ft_strncmp(node->value, "<<", 2))
 		return (merror(NULL, NULL, &node->value[2], 258));
