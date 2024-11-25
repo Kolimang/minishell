@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/14 13:48:46 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/25 12:03:47 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	is_no_newl_option(char *arg)
 	int	i;
 
 	if (arg[0] != '-')
+		return (0);
+	if (!ft_strncmp(arg, "-", 2))
 		return (0);
 	i = 1;
 	while (arg[i])
