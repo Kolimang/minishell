@@ -6,7 +6,7 @@
 /*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/20 16:30:59 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:57:19 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ int	execute_command(char *pathname, char **full, char **g_env)
 	return (0);
 }
 
+static void	exec_buildin(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
+{
+	pre_exec_builtin(cmd, io, envs, cmds);
+	exit(0);
+}
+
 int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
@@ -71,7 +77,7 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
-		pre_exec_builtin(cmd, io, envs, cmds);
+		exec_buildin(cmd, io, envs, cmds);
 	else
 	{
 		full_cmd = ft_split(cmd->args[0], ' ');
