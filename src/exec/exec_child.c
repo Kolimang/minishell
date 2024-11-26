@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:52:49 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/26 11:27:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	close_child(int **fds, int pipes, int i)
 
 void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
+	if (!ft_strncmp(cmd->args[0], "./minishell", 12))
+		signal(SIGINT, SIG_IGN);
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		return (perror("fork failed"));
