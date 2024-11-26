@@ -6,11 +6,23 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 15:36:19 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:44:51 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	is_consec_pipes(char *input, int i)
+{
+	int		j;
+
+	j = 1;
+	while (input[i + j] && input[i + j] == ' ')
+		j++;
+	if (input[i + j] && input[i + j] == '|')
+		return (merror(NULL, NULL, "|", 258));
+	return (0);
+}
 
 void	checks_on_pipe_char(char *input, int i, int *in_sq, int *in_dq)
 {
@@ -33,10 +45,38 @@ void	checks_on_pipe_char(char *input, int i, int *in_sq, int *in_dq)
 	}
 	else if (*c == '|' && *in_sq == 0 && *in_dq == 0)
 	{
+		if (is_consec_pipes(input, i))
+			return ((void)ft_printf("BEURK BEURK BEURK"));//DEBUG DEBUG
 		if (i == 0 || !is_redir_chr(input[i - 1]))
 			*c = 6;
 	}
 }
+
+// void	checks_on_pipe_char(char *input, int i, int *in_sq, int *in_dq)
+// {
+// 	char	*c;
+
+// 	c = &input[i];
+// 	if (*c == '\"')
+// 	{
+// 		if (*in_dq == 0)
+// 			*in_dq = 1;
+// 		else
+// 			*in_dq = 0;
+// 	}
+// 	else if (*c == '\'')
+// 	{
+// 		if (*in_sq == 0)
+// 			*in_sq = 1;
+// 		else
+// 			*in_sq = 0;
+// 	}
+// 	else if (*c == '|' && *in_sq == 0 && *in_dq == 0)
+// 	{
+// 		if (i == 0 || !is_redir_chr(input[i - 1]))
+// 			*c = 6;
+// 	}
+// }
 
 char	**cmd_split(char *input)
 {
@@ -85,33 +125,33 @@ int	ft_check_input_cmd(char **cmdref)
 	}
 	else if (cmd[0] == '\0')
 		return (EXIT_FAILURE);
-	if (check_consec_pipes(cmdref) != 0)
-		return (EXIT_FAILURE);
+	//if (check_consec_pipes(cmdref) != 0)
+	//	return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int	check_consec_pipes(char **cmdref)
-{
-	int		i;
-	int		j;
-	char	*cmd;
+// int	check_consec_pipes(char **cmdref)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*cmd;
 
-	cmd = *cmdref;
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] == '|')
-		{
-			j = 1;
-			while (cmd[i + j] && cmd[i + j] == ' ')
-				j++;
-			if (cmd[i + j] && cmd[i + j] == '|')
-				return (merror(NULL, NULL, "|", 258));
-		}
-		i++;
-	}
-	return (0);
-}
+// 	cmd = *cmdref;
+// 	i = 0;
+// 	while (cmd[i])
+// 	{
+// 		if (cmd[i] == '|')
+// 		{
+// 			j = 1;
+// 			while (cmd[i + j] && cmd[i + j] == ' ')
+// 				j++;
+// 			if (cmd[i + j] && cmd[i + j] == '|')
+// 				return (merror(NULL, NULL, "|", 258));
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	check_commands(char **cmds, int *i)
 {

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 12:47:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:04:12 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 
 int	is_redir_op(t_lexeme *node)
 {
+	int	len;
+
+	len = ft_strlen(node->value) + 1;
+	if (ft_strncmp(node->value, "<<<", len) == 0
+		|| ft_strncmp(node->value, ">>", len) == 0
+		|| ft_strncmp(node->value, "<<", len) == 0
+		|| ft_strncmp(node->value, "<>", len) == 0
+		|| ft_strncmp(node->value, "<&", len) == 0
+		|| ft_strncmp(node->value, ">&", len) == 0
+		|| ft_strncmp(node->value, "&>", len) == 0
+		|| ft_strncmp(node->value, ">|", len) == 0
+		|| ft_strncmp(node->value, "<", len) == 0
+		|| ft_strncmp(node->value, ">", len) == 0)
+		return (1);
+	return (0);
+}
+
+/*
+int	is_redir_op(t_lexeme *node)
+{
 	if (ft_strncmp(node->value, "<<<", 3) == 0
 		|| ft_strncmp(node->value, ">>", 2) == 0
 		|| ft_strncmp(node->value, "<<", 2) == 0
@@ -67,6 +87,7 @@ int	is_redir_op(t_lexeme *node)
 		return (1);
 	return (0);
 }
+*/
 
 int	handle_lexemes(t_list **ls_lxm, t_cmd *command)
 {
