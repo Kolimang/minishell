@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/25 12:30:32 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 13:21:25 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int	go(char *dest_path, char *curr_path, t_env *env, int allowedoption)
 		if (chdir((const char *)dest_path) != 0)
 			return (free(curr_path), merror("cd", NULL, NULL, 17));
 		new_path = getcwd(NULL, 0);
-		ft_printf("new path: %s\n", new_path);//DEBUG
 		if (!curr_path && !new_path)
 		{
 			go_safe(env);
