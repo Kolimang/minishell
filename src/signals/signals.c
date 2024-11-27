@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:03:41 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/25 16:58:53 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 15:34:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	change_term_attr(void)
 {
-	/*
 	struct termios	myterm;
 
 	if (tcgetattr(STDIN_FILENO, &myterm) == -1)
@@ -28,7 +27,6 @@ int	change_term_attr(void)
 		perror("tcsetattr");
 		return (1);
 	}
-	*/
 	return (0);
 }
 

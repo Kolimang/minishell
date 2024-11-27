@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/25 12:35:45 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 15:39:10 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	update_pwd(char *dest_path, char *curr_path, t_env *env)
 			update_data(curr_path, head, env);
 		head = head->next;
 	}
-	//free(curr_path);// If line active, get error "pointer being freed was not allocated" when using `cd`
 	return (0);
 }
 

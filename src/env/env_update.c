@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/25 15:38:27 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 15:37:31 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	update_env(char *name, char *value, t_env **env, int mode)
 				head->var_val = ft_strdup(value);
 			else if (value && mode == 1)
 				head->var_val = ft_strjoin(temp, value);
-			//return (free(temp), free(name), free(value), 0); // was causing error "pointer being freed was not allocated when doing `export ZZ` twice"
 			return (free(temp), 0);
 		}
 		head = head->next;
