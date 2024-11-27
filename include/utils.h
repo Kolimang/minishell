@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 11:15:43 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 14:30:40 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		is_directory(char *path);
 int		char_in_set(char *s, char c);
 int		array_len(char **array);
 char	*expand_tilde_path(char *unexpanded_path, t_env *env);
-char	*get_home_path(t_env *env);
+void	switch_bool(int *val);
 
 // utils2.c
 char	*ft_strtrim_replace(char **str);

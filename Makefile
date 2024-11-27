@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/22 03:00:07 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/27 14:39:27 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,8 +71,9 @@ FILES     := 	builtins/cd \
 				expander/expander_helper \
 				expander/expander \
 				lexer/check_input \
-				lexer/handle_symbols1 \
-				lexer/handle_symbols2 \
+				lexer/handle_symbols \
+				lexer/handle_redir \
+				lexer/handle_quotes \
 				lexer/heredoc \
 				lexer/history \
 				lexer/lexemes \

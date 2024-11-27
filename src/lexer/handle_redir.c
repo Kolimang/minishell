@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:16:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 12:55:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 14:36:11 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int	is_redir_chr(char c)
 
 	set = "<&>|";
 	return (char_in_set(set, c));
-}
-
-int	in_quotes(t_cmd_data *data)
-{
-	return (data->bool_in_dq || data->bool_in_sq);
 }
 
 void	lex_matching_operators(char *cmd, int i, t_cmd_data *data)
@@ -58,22 +53,4 @@ void	lex_handle_operators(char *cmd, int i, t_cmd_data *data)
 			lex_matching_operators(cmd, i, data);
 	}
 	data->bool_tok_in_progress = 1;
-}
-
-void	lex_handle_spaces(char *cmd, int i, t_cmd_data *data)
-{
-	if (cmd[i] == ' ')
-	{
-		if (data->bool_tok_in_progress == 1
-			&& data->bool_in_sq == 0
-			&& data->bool_in_dq == 0)
-			data->bool_delimit_tok = 1;
-		else if (data->bool_tok_in_progress == 0
-			&& data->bool_in_sq == 0
-			&& data->bool_in_dq == 0
-			&& cmd[i + 1] != '\0')
-			data->tok_start += 1;
-		else if (data->bool_in_sq == 1 || data->bool_in_dq == 1)
-			data->bool_tok_in_progress = 1;
-	}
 }

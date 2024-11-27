@@ -6,11 +6,19 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:13:29 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 14:29:07 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	switch_bool(int *val)
+{
+	if (*val == 0)
+		*val = 1;
+	else
+		*val = 0;
+}
 
 int	is_directory(char *path)
 {
