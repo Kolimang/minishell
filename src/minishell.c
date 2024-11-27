@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/26 16:15:03 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 13:41:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int	minishell(t_envs *envs)
 		if (!cmd)
 			ft_exit(NULL, envs, 1, NULL);
 		ft_add_cmd_to_history(cmd);
-		//if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
-		if (1)
+		if (ft_check_input_cmd(&cmd) == EXIT_SUCCESS)
 		{
 			cmds = cmd_split(cmd);
 			free(cmd);
