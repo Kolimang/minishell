@@ -1,9 +1,8 @@
 # minishell
-[Work in progress] 42's minishell project - Create a basic shell in C
+42 minishell project
 
-** Questions en suspens / Points a garder en tête **
-1. L'historique doit-il perdurer quand on quitte minishell puis le relance ?
-2. expand $SHLVL en fonction du niveau de fork
+The goal of the project is to code a basic shell in C, taking bash as a reference.
+This project was done by Lina (lboumahd) and Jean-Pascal (jrichir).
 
-
-Latest update 3.11 is in final exec :))
+Project status :
+Evaluation phase.
