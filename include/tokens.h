@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/27 14:39:07 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/27 14:41:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		lex_handle_regular(char *cmd, int i, t_cmd_data *data);
 int			lex_handle_end_of_cmd(char *cmd, int i, t_cmd_data *data);
 
 // handle_quotes.c
+void		updt_quote_status(char c, int *in_sq, int *in_dq);
+int			in_quotes(t_cmd_data *data);
 void		lex_handle_quotes(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_sq(char *cmd, int i, t_cmd_data *data);
 void		lex_handle_dq(char *cmd, int i, t_cmd_data *data);
