@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/27 15:39:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:38:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	update_data(char *path, t_env *head, t_env *env)
 	if (!env)
 		return (1);
 	home = get_env_val(env, "HOME");
-	if (head->var_val)
-		free(head->var_val);
 	if (path)
 	{
 		head->var_val = ft_strdup(path);

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/28 13:18:24 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:30:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 		real_full = build_full_cmd(pathname, cmd);
 		full = ft_split(real_full, ' ');
 		free(real_full);
-		execute_command(pathname, full, envs->g_env);
+		execute_command(pathname, full, env_to_array(*envs->l_env));
 		free_tab(full);
 		free_tab(full_cmd);
 	}
