@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/25 19:57:19 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:18:24 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,14 @@ int	execute_command(char *pathname, char **full, char **g_env)
 {
 	if (execve(pathname, full, g_env) == -1)
 	{
-		perror("Execution failure");
 		free_tab(full);
+		if (is_directory(pathname))
+		{
+			merror(pathname, NULL, NULL, 126);
+			free(pathname);
+			exit(126);
+		}
+		perror("Execution failure");
 		free(pathname);
 		exit(127);
 	}
