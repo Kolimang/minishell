@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir_out.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:21:00 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 14:16:15 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:16:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	get_outfile(t_cmd *cmd, t_redir *redir, t_io_fd *io)
 		cmd->fd_out = open(redir->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (cmd->fd_out == -1)
 		return (handle_error(redir->val));
-	if (cmd->nextpipe)
+	if (!cmd->nextpipe)
 		signal(SIGINT, newline_hook);
 	return (0);
 }

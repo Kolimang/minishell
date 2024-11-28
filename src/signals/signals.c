@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:03:41 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/27 15:34:57 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:14:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,25 @@ int	change_term_attr(void)
 	return (0);
 }
 
-int	*sig_status(void)
+void	set_signals_parent(void)
 {
-	static int	*triggered;
-
-	if (!triggered)
-	{
-		triggered = (int *)malloc(sizeof(int));
-		*triggered = 0;
-	}
-	return (triggered);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, sig_handler_main);
 }
 
-void	sig_handler_child(int signum)
+void	set_signals_child(void)
 {
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		signal(SIGINT, sig_handler_child);
-	}
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+}
+
+void	set_signals_hrdoc(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, sig_handler_hrdoc);
 }
 
 void	sig_handler_main(int signum)
@@ -59,17 +59,5 @@ void	sig_handler_main(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-	}
-}
-
-void	sig_handler_hrdoc(int signum)
-{
-	int	*triggered;
-
-	triggered = sig_status();
-	if (signum == SIGINT)
-	{
-		*triggered = 1;
-		signal(SIGINT, sig_handler_hrdoc);
 	}
 }

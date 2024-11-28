@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 14:13:44 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/28 14:13:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ void	child_hd(t_env *l_env, int pipe_fd[2], t_redir *r)
 	char	*ln;
 
 	close(pipe_fd[0]);
-	signal(SIGINT, sig_handler_hrdoc);
+	set_signals_hrdoc();
 	while (1)
 	{
 		ln = readline("> ");
 		ln = process_hrdoc(ln, l_env);
 		if (!ln)
 			break ;
-		if (!ft_strncmp(ln, r->val, ft_strlen(r->val) + 1) || *(sig_status()))
+		if (!ft_strncmp(ln, r->val, ft_strlen(r->val) + 1) || sig_status())
 		{
 			free(ln);
 			break ;
