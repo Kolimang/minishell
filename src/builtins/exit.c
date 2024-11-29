@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 16:08:23 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 21:32:21 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	get_ret_value(char *arg)
 	if (nb >= 0)
 		g_ret_val = nb % 256;
 	else
-		g_ret_val = (256 + nb) % 256;
+		g_ret_val = 256 + (nb % 256);
 }
 
 int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
