@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 09:07:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 09:12:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ static int	write_msg2(int type)
 	return (0);
 }
 
-// For type 22, exit code is 255 on MacOS but 2 on Linux, hence the constant
-// ERR_NUM_ARG which is defined depending on OS by the preprocessor.
 static int	get_return_value(int *ret, int type)
 {
 	if (type > 100 && type <= 258)
