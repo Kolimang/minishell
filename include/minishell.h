@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:42:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 15:21:17 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -56,7 +57,9 @@ int	main(int ac, char **av, char **o_env);
 # ifdef __APPLE__
 #  define ERR_NUM_ARG 255
 
-int	rl_replace_line(char *str, int nb);
+int		rl_replace_line(char *str, int nb);
+void	rl_clear_history(void);
+
 # else
 #  define ERR_NUM_ARG 2
 # endif
