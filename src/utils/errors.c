@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 13:57:00 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 09:07:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	write_msg2(int type)
 {
 	if (type == 381)
 		write(2, "No such file or directory\n", 26);
+	else if (type == 126)
+		write(2, "is a directory\n", 15);
 	else if (type == 127)
 		write(2, "command not found\n", 18);
 	else if (type == 21)
