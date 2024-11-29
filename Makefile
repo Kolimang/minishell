@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/27 14:39:27 by jrichir          ###   ########.fr        #
+#    Updated: 2024/11/29 22:31:32 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ FILES     := 	builtins/cd \
 				builtins/echo \
 				builtins/env \
 				builtins/exit \
+				builtins/exit2 \
 				builtins/export \
 				builtins/pwd \
 				builtins/unset\
@@ -105,7 +106,7 @@ $(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT)
 	@echo "  __  __ _       _      _          _ _   ﾟ ‧  ✩"
 	@echo " |  \/  (_)     (_)    | |        | | |  ☾   ⋆ "
 	@echo " | \  / |_ _ __  _  ___| |__   ___| | |  ⋆ ‧ ₊ "
-	@echo " | |\/| | | '_ \| |/ __| '_ \ / _ \ | | ✩ ‧ ⋆ ‧"
+	@echo " | |\/| | | '_ \| |/ __|  _ \ / _ \ | | ✩ ‧ ⋆ ‧"
 	@echo " | |  | | | | | | |\__ \ | | |  __/ | |  ₊ ⋆ ‧ "
 	@echo " |_|  |_|_|_| |_|_||___/_| |_|\___|_|_| ⋆  ﾟ ✩ "
 	@echo "\033[0m"
