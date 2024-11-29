@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 05:58:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 12:20:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 		g_ret_val = ft_atoi(args[1]) % 256;
 	free_commands(cmds);
 	cleanup_envs(envs, 0);
+	rl_clean_history();
 	if (io)
 		free(io);
 	exit(g_ret_val);
