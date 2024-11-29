@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 12:20:48 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 16:08:23 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ static int	arg_is_number(char *arg)
 	int	i;
 
 	i = 0;
+	if (!char_in_set("+-", arg[i]) && !ft_isdigit(arg[i]))
+		return (0);
+	i++;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -74,6 +77,16 @@ int	handle_eof(int eof, t_envs *envs)
 	exit(g_ret_val);
 }
 
+void	get_ret_value(char *arg)
+{
+	int	nb = ft_atoi(arg);
+
+	if (nb >= 0)
+		g_ret_val = nb % 256;
+	else
+		g_ret_val = (256 + nb) % 256;
+}
+
 int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 {
 	char	**args;
@@ -90,12 +103,11 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 		merror(args[0], args[1], NULL, 22);
 	else if (argc > 2)
 		return (merror(args[0], NULL, NULL, 13));
-	if (args && args[1] && arg_is_number(args[1])
-		&& ft_atoi(args[1]) >= 0)
-		g_ret_val = ft_atoi(args[1]) % 256;
+	if (args && args[1] && arg_is_number(args[1]))
+		get_ret_value(args[1]);
 	free_commands(cmds);
 	cleanup_envs(envs, 0);
-	rl_clean_history();
+	rl_clear_history();
 	if (io)
 		free(io);
 	exit(g_ret_val);
