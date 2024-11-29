@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/20 16:58:25 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 22:19:29 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,9 @@ int		ft_unset(char **args, t_env **env);
 
 // exit.c
 int		ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io);
+
+// exit2.c
+char	**get_exit_args(t_list	*cmds);
+t_cmd	*get_exit_cmd(t_list *cmds);
 
 #endif

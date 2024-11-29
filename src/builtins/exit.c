@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 21:32:21 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 22:18:05 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,7 @@ static int	arg_is_number(char *arg)
 	return (1);
 }
 
-char	**get_exit_args(t_list	*cmds)
-{
-	t_list	*temp;
-	t_cmd	*cmd;
-
-	temp = cmds;
-	while (temp)
-	{
-		cmd = cmds->content;
-		if (!ft_strncmp(cmd->args[0], "exit", 5))
-		{
-			return (cmd->args);
-		}
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
-t_cmd	*get_exit_cmd(t_list	*cmds)
-{
-	t_list	*temp;
-	t_cmd	*cmd;
-
-	temp = cmds;
-	while (temp)
-	{
-		cmd = cmds->content;
-		if (!ft_strncmp(cmd->args[0], "exit", 5))
-		{
-			if (temp->next)
-				cmd->eflag = 1;
-			return (cmd);
-		}
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
-int	handle_eof(int eof, t_envs *envs)
+static int	handle_eof(int eof, t_envs *envs)
 {
 	if (!eof)
 		return (0);
@@ -77,7 +39,24 @@ int	handle_eof(int eof, t_envs *envs)
 	exit(g_ret_val);
 }
 
-void	get_ret_value(char *arg)
+static unsigned long long	ft_a_to_abs_ull(const char *str)
+{
+	unsigned long long	result;
+
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		result = (result * 10) + (*str - '0');
+		str++;
+	}
+	return (result);
+}
+
+static void	get_ret_value(char *arg)
 {
 	int	nb = ft_atoi(arg);
 
@@ -99,7 +78,8 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 	argc = array_len(args);
 	if (cmd->eflag == 0)
 		ft_printf("exit\n");
-	if (args && args[1] && !arg_is_number(args[1]))
+	if (args && args[1] &&
+		(!arg_is_number(args[1]) || ft_a_to_abs_ull(args[1]) > LLONG_MAX))
 		merror(args[0], args[1], NULL, 22);
 	else if (argc > 2)
 		return (merror(args[0], NULL, NULL, 13));
