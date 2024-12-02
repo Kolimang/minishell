@@ -6,7 +6,7 @@
 #    By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/26 22:18:44 by jrichir           #+#    #+#              #
-#    Updated: 2024/11/29 22:31:32 by jrichir          ###   ########.fr        #
+#    Updated: 2024/12/02 09:34:30 by jrichir          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJ_DIR   := build/
 NAME      := minishell
 
 CC		  := cc
-CFLAGS    := -I$(INC_DIR) -g3 -Wall -Wextra -Werror
+CFLAGS    := -I$(INC_DIR) -Wall -Wextra -Werror
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
