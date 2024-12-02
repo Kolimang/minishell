@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:07:33 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/27 15:54:08 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 10:50:56 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands)
 		temp = temp->next;
 	}
 	command->args = get_args(ls_lxm, command->argc);
-	if (command->args[0] && ft_strchr(command->args[0], ' '))
+	if (command->args[0] && 
+		(command->args[0][0] == '\0' || ft_strchr(command->args[0], ' ')))
 		return (free(command), merror(command->args[0], NULL, NULL, 127), NULL);
 	return (check_cmd(command));
 }
