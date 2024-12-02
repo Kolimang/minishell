@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 22:18:05 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 11:30:58 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ static unsigned long long	ft_a_to_abs_ull(const char *str)
 
 static void	get_ret_value(char *arg)
 {
-	int	nb = ft_atoi(arg);
+	int	nb;
 
+	nb = ft_atoi(arg);
 	if (nb >= 0)
 		g_ret_val = nb % 256;
 	else
@@ -78,8 +79,8 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 	argc = array_len(args);
 	if (cmd->eflag == 0)
 		ft_printf("exit\n");
-	if (args && args[1] &&
-		(!arg_is_number(args[1]) || ft_a_to_abs_ull(args[1]) > LLONG_MAX))
+	if (args && args[1]
+		&& (!arg_is_number(args[1]) || ft_a_to_abs_ull(args[1]) > LLONG_MAX))
 		merror(args[0], args[1], NULL, 22);
 	else if (argc > 2)
 		return (merror(args[0], NULL, NULL, 13));

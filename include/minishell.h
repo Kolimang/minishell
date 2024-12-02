@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:16:57 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/02 09:20:41 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 11:38:42 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,16 @@
 // Declare global var
 extern int	g_ret_val;
 
-int	handle_commands(t_envs *envs, char **cmds, int *i);
-int	minishell(t_envs *envs);
-int	main(int ac, char **av, char **o_env);
+int			handle_commands(t_envs *envs, char **cmds, int *i);
+int			minishell(t_envs *envs);
+int			main(int ac, char **av, char **o_env);
 
 // Platform-dependant portions
 # ifdef __APPLE__
 #  define ERR_NUM_ARG 255
 
-int		rl_replace_line(char *str, int nb);
-void	rl_clear_history(void);
-
+int			rl_replace_line(char *str, int nb);
+void		rl_clear_history(void);
 # else
 #  define ERR_NUM_ARG 2
 # endif

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/02 09:34:04 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 11:31:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_hrdoc(t_cmd *cmd, t_env *l_env)
 		{
 			if (pipe(pipe_fd) == -1)
 				return (handle_error("pipe creation failed"));
-			unset_signals();//DEBUG - TEST
+			unset_signals();
 			pid = fork();
 			if (pid == -1)
 				return (handle_error("fork failed"));
@@ -82,7 +82,6 @@ void	child_hd(t_env *l_env, int pipe_fd[2], t_redir *r)
 		ln = process_hrdoc(ln, l_env);
 		if (!ln)
 			break ;
-		
 		if (!ft_strncmp(ln, r->val, ft_strlen(r->val) + 1)
 			|| write(pipe_fd[1], ln, ft_strlen(ln)) == -1
 			|| write(pipe_fd[1], "\n", 1) == -1)
