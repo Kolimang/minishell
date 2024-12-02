@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:46:42 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/29 10:46:47 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/11/29 14:50:50 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	get_hrdoc(t_cmd *cmd, t_env *l_env)
 		{
 			if (pipe(pipe_fd) == -1)
 				return (handle_error("pipe creation failed"));
+			unset_signals();//DEBUG - TEST
 			pid = fork();
 			if (pid == -1)
 				return (handle_error("fork failed"));
@@ -81,15 +82,15 @@ void	child_hd(t_env *l_env, int pipe_fd[2], t_redir *r)
 		ln = process_hrdoc(ln, l_env);
 		if (!ln)
 			break ;
+		
 		if (!ft_strncmp(ln, r->val, ft_strlen(r->val) + 1)
 			|| write(pipe_fd[1], ln, ft_strlen(ln)) == -1
-			|| write(pipe_fd[1], "\n", 1) == -1
-			|| *sig_status())
+			|| write(pipe_fd[1], "\n", 1) == -1)
 		{
-			free(sig_status());
 			free(ln);
 			break ;
 		}
+		handle_hdoc_sigint(pipe_fd[1], ln);
 		free(ln);
 	}
 	close(pipe_fd[1]);
@@ -100,19 +101,23 @@ int	parent_heredoc_process(t_cmd *cmd, pid_t pid, int pipe_fd[2])
 {
 	int	status;
 
+	ft_printf("DEBUG HERE\n");//DEBUG DEBUG
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
 	{
+		ft_printf("Route 111\n");//DEBUG DEBUG
 		cmd->fd_hrdoc = pipe_fd[0];
 		return (0);
 	}
 	else if (WIFSIGNALED(status))
 	{
+		ft_printf("Route 222\n");//DEBUG DEBUG
 		g_ret_val = WTERMSIG(status);
 		close(pipe_fd[0]);
 		return (-1);
 	}
+	ft_printf("Route 333\n");//DEBUG DEBUG
 	close(pipe_fd[0]);
 	return (-1);
 }
