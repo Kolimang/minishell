@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 13:33:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 09:38:48 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void	sig_handler_main(int signum);
 
 // signals2.c
 void	unset_signals(void);
-void	newline_hook(int sig);
-int		*sig_status(void);
 void	sig_handler_hrdoc(int signum);
-void	handle_hdoc_sigint(int fd, char *ln);
 
 #endif

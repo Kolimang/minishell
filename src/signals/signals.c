@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:03:41 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 14:33:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 09:33:27 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	set_signals_parent(void)
 
 void	set_signals_child(void)
 {
-	ft_printf("hohoho\n");//DEBUG - TEST
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
