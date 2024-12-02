@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 12:44:04 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/29 09:12:02 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 13:37:59 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	write_msg(int type)
 		write(2, "No such file or directory\n", 26);
 	else if (type == 11)
 		write(2, "Not a directory\n", 16);
-	else if (type == 127)
-		write(2, "command not found\n", 18);
+	else if (type == 2)
+		write(2, "not supported\n", 14);
 	else if (type == 12)
 		write(2, "no environment set\n", 19);
 	else if (type == 13)

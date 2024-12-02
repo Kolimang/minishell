@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 03:03:10 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/02 13:37:45 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ t_cmd	*check_cmd(t_cmd *command)
 	{
 		free(command->args[0]);
 		return (NULL);
+	}
+	if (!ft_strncmp(command->args[0], ".", 2))
+	{
+		return (merror(command->args[0], NULL, NULL, 2), NULL);
 	}
 	return (command);
 }
