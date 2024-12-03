@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:26:40 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/03 13:23:42 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/03 17:02:32 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,17 @@ void	mark_as_arg(t_cmd *command, t_lexeme *node, t_env *env)
 
 t_cmd	*check_cmd(t_cmd *command)
 {
-	if (command->argc == 1 && ft_strchr(command->args[0], '='))
+	if (command->args[0] != NULL)
 	{
-		free(command->args[0]);
-		return (NULL);
-	}
-	if (!ft_strncmp(command->args[0], ".", 2))
-	{
-		return (merror(command->args[0], NULL, NULL, 2), NULL);
+		if (command->argc == 1 && ft_strchr(command->args[0], '='))
+		{
+			free(command->args[0]);
+			return (NULL);
+		}
+		if (!ft_strncmp(command->args[0], ".", 2))
+		{
+			return (merror(command->args[0], NULL, NULL, 2), NULL);
+		}
 	}
 	return (command);
 }
