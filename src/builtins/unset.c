@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/08 16:35:26 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/03 09:32:15 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	handle_unset(t_env **env, char *var_name)
 	t_env	*prev;
 	t_env	*curr;
 
+	if (*var_name == '_')
+		return (0);
 	curr = *env;
 	if (!ft_strncmp(curr->var_name, var_name, ft_strlen(var_name) + 1))
 	{
