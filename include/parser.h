@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/11/22 13:18:30 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:27:08 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,18 @@ typedef struct s_redir
 	t_tok_type	type;
 }	t_redir;
 
-void	check_pipes(t_cmd *command, int id, int nb_commands);
-t_cmd	*check_cmd(t_cmd *command);
-t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands);
-char	**get_args(t_list *ls_lxm, int argc);
+// parser_cmd.c
+t_cmd	*ft_parse_lexemes(t_list *ls_lxm, int id, int nb_commands, t_env *env);
 int		is_redir_op(t_lexeme *node);
-int		handle_lexemes(t_list **ls_lxm, t_cmd *command);
+int		handle_lexemes(t_list **ls_lxm, t_cmd *command, t_env *env);
 void	ft_add_redir(t_list **ls_lxm, t_cmd *command, char *redirvalue,
 			int type);
-void	mark_as_arg(t_cmd *command, t_lexeme *node);
+
+// parser_utils.c
+void	check_pipes(t_cmd *command, int id, int nb_commands);
+t_cmd	*check_cmd(t_cmd *command);
+char	**get_args(t_list *ls_lxm, int argc);
+void	mark_as_arg(t_cmd *command, t_lexeme *node, t_env *env);
+void	expand_nodes(t_lexeme **node1, t_lexeme **node2, t_env *env);
 
 #endif
