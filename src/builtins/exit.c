@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:08:58 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/02 11:30:58 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:55:52 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	handle_eof(int eof, t_envs *envs)
 	exit(g_ret_val);
 }
 
-static unsigned long long	ft_a_to_abs_ull(const char *str)
+static unsigned long long	is_overflow(const char *str)
 {
 	unsigned long long	result;
 
@@ -51,9 +51,11 @@ static unsigned long long	ft_a_to_abs_ull(const char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		result = (result * 10) + (*str - '0');
+		if (result > LLONG_MAX)
+			return (1);
 		str++;
 	}
-	return (result);
+	return (0);
 }
 
 static void	get_ret_value(char *arg)
@@ -80,7 +82,7 @@ int	ft_exit(t_list *cmds, t_envs *envs, int eof, t_io_fd *io)
 	if (cmd->eflag == 0)
 		ft_printf("exit\n");
 	if (args && args[1]
-		&& (!arg_is_number(args[1]) || ft_a_to_abs_ull(args[1]) > LLONG_MAX))
+		&& (!arg_is_number(args[1]) || is_overflow(args[1])))
 		merror(args[0], args[1], NULL, 22);
 	else if (argc > 2)
 		return (merror(args[0], NULL, NULL, 13));
