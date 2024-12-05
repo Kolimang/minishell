@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/28 14:17:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/05 12:25:47 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ void	create_child(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 	{
 		set_signals_child();
 		if (set_fds(cmd, io) == -1)
-		{
-			perror("Failed to set file descriptors");
 			exit(EXIT_FAILURE);
-		}
 		close_child(io->fds, io->pipes, 0);
 		if (cmd->args && cmd->args[0])
 			exec_cmd(cmd, io, envs, cmds);
