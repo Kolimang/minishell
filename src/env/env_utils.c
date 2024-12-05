@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/22 13:00:09 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/05 12:50:06 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	set_shlvl(t_env **env)
 	if (!current)
 		current = "0";
 	val = ft_atoi(current);
-	if (val < 0 || val >= 1000)
+	if (val < 0 || val >= 999)
 	{
-		val = 0;
-		ft_putstr_fd("minishell: warning:resetting to 0\n", 2);
+		val = -1;
+		ft_putstr_fd("minishell: warning: resetting SHLVL to 0\n", 2);
 	}
 	tmp = ft_itoa(val + 1);
 	cmd = malloc(sizeof(char *) * 3);
