@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
+/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/15 12:30:39 by lboumahd         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:03:01 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,30 @@ t_env	*init_env(char **original_env)
 		}
 	}
 	return (env);
+}
+
+int	set_new_env(char *name, char *value, t_env **env)
+{
+	t_env	*head;
+
+	head = malloc(sizeof(t_env));
+	if (!head)
+		return (-1);
+	*env = head;
+	head->next = NULL;
+	head->index = 0;
+	head->var_name = ft_strdup(name);
+	if (!head->var_name)
+		return (-1);
+	if (value)
+	{
+		head->var_val = ft_strdup(value);
+		if (!head->var_val)
+			return (-1);
+	}
+	if (add_env_var(env, "PWD", getcwd(NULL, 0), 0) != 0
+		|| add_env_var(env, "OLDPWD", "", 0) != 0
+		|| add_env_var(env, "PATH", "/bin", 0) != 0)
+		return (-1);
+	return (0);
 }

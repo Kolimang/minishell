@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:15:22 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/27 15:37:31 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/06 21:49:28 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	update_env(char *name, char *value, t_env **env, int mode)
 	char	*temp;
 
 	if (!*env)
-		return (1);
+		return (set_new_env(name, value, env));
 	head = *env;
 	temp = NULL;
 	while (head)
