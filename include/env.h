@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/06 21:44:11 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/06 23:14:20 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_env(t_env **env);
 int		cleanup_envs(t_envs *envs, int exit_code);
 void	set_shlvl(t_env **env);
 int		set_new_env(char *name, char *value, t_env **env);
-
+int		check_env(t_env **env);
 int		update_env(char *name, char *value, t_env **env, int mode);
 int		print_env_sorted(t_env *env);
 int		print_env_unsorted(t_env *env);

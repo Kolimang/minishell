@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 11:11:01 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/03 13:31:17 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/06 23:37:02 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int ac, char **av, char **o_env)
 	g_ret_val = 0;
 	if (init_envs(&envs, o_env) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	set_shlvl(envs->l_env);
+	check_env(envs->l_env);
 	if (change_term_attr() == 1 || minishell(envs) == EXIT_FAILURE)
 		return (cleanup_envs(envs, EXIT_FAILURE));
 	return (cleanup_envs(envs, EXIT_SUCCESS));
