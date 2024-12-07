@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 14:08:51 by jrichir           #+#    #+#             */
-/*   Updated: 2024/12/06 23:14:20 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/07 18:09:43 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ int		print_env_unsorted(t_env *env);
 int		get_env_len(t_env *env);
 t_env	*clone_env(t_env *env);
 char	**env_to_array(t_env *env);
+char	*get_env_node(t_env *env, const char *var_name);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 12:10:13 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/12/06 23:40:12 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/07 18:08:57 by jrichir          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,23 +105,9 @@ int	set_new_env(char *name, char *value, t_env **env)
 			return (-1);
 	}
 	if (add_env_var(env, "PWD", getcwd(NULL, 0), 0) != 0
-		|| add_env_var(env, "OLDPWD", "", 0) != 0
-		|| add_env_var(env, "PATH", "/bin", 0) != 0)
+		|| add_env_var(env, "OLDPWD", NULL, 0) != 0
+		|| add_env_var(env, "PATH", "/bin:/usr/bin:/usr/local/bin", 0) != 0)
 		return (-1);
 	return (0);
 }
 
-int	check_env(t_env **env)
-{
-	set_shlvl(env);
-	if (env && !get_env_val((*env), "PWD"))
-		if (add_env_var(env, "PWD", getcwd(NULL, 0), 0) != 0)
-			return (1);
-	if (env && !get_env_val((*env), "OLDPWD"))
-		if (add_env_var(env, "OLDPWD", "", 0) != 0)
-			return (1);
-	if (env && !get_env_val((*env), "PATH"))
-		if (add_env_var(env, "PATH", "/bin:/usr/bin:/usr/local/bin", 0) != 0)
-			return (1);
-	return (0);
-}
