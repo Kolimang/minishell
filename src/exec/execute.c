@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrichir <jrichir@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lboumahd <lboumahd@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 11:17:47 by lboumahd          #+#    #+#             */
-/*   Updated: 2024/11/28 14:30:56 by jrichir          ###   ########.fr       */
+/*   Updated: 2024/12/07 17:48:17 by lboumahd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 {
 	char	*pathname;
 	char	**full_cmd;
-	char	*real_full;
-	char	**full;
 
 	cmd->builtin = is_builtin(cmd->args[0]);
 	if (cmd->builtin)
@@ -93,11 +91,7 @@ int	exec_cmd(t_cmd *cmd, t_io_fd *io, t_envs *envs, t_list *cmds)
 			pathname = get_full_path(full_cmd, *(envs->l_env));
 		if (!pathname)
 			exit(merror(cmd->args[0], NULL, NULL, 127));
-		real_full = build_full_cmd(pathname, cmd);
-		full = ft_split(real_full, ' ');
-		free(real_full);
-		execute_command(pathname, full, env_to_array(*envs->l_env));
-		free_tab(full);
+		execute_command(pathname, cmd->args, env_to_array(*envs->l_env));
 		free_tab(full_cmd);
 	}
 	return (0);
